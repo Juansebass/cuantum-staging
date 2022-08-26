@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- state titulo form view -->
+    <record id="model_ati_state_titulo_view_form" model="ir.ui.view">
+        <field name="name">ati.state.titulo.view.form</field>
+        <field name="model">ati.state.titulo</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;">
+                                <field name="name" 
+                                        placeholder="Nombre de movimiento" 
+                                        required="1"
+                                        default_focus="1" class="oe_inline"/>
+                            </h3>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" />
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- state titulo tree view -->
+    <record id="model_ati_state_titulo_view_tree" model="ir.ui.view">
+        <field name="name">ati.state.titulo.view.tree</field>
+        <field name="model">ati.state.titulo</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

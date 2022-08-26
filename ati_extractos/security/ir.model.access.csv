@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ati_extracto_user,ati.extracto.user,model_ati_extracto,base.group_user,1,1,1,1
+access_ati_extracto_resumen_inversion_user,ati.extracto.resumen_inversion.user,model_ati_extracto_resumen_inversion,base.group_user,1,1,1,1
+access_ati_extracto_detalle_movimiento_user,ati.extracto.detalle_movimiento.user,model_ati_extracto_detalle_movimiento,base.group_user,1,1,1,1
+access_ati_extracto_detalle_titulos,ati.extracto.detalle_titulos.user,model_ati_extracto_detalle_titulos,base.group_user,1,1,1,1

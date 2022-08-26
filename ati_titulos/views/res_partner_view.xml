@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <record id="view_partner_property_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="act_in" />
+                <field name="vinculado" />
+                <field name="emisor" />
+                <field name="pagador" />
+                <field name="rep_legal" />
+                <field name="cuantum_contact" />
+                <field name="freelance" />
+            </field>
+            <page name="internal_notes" position="after">
+                <page name="vinculacion" string="Vinculacion">
+                    <group>
+                        <group>
+                            <field name="doc_enviada"/>
+                            <field name="documentacion_completa"/>
+                        </group>
+                        <group>
+                            <field name="busqueda_lista"/>
+                            <button name="enviar_calificado_crm" string="Aprobar opor. en CRM" class="oe_highlight" type="object"/>
+                        </group>
+                    </group>
+                    <group col="6" class="mt-2 mt-md-0">
+                        <group colspan="4">
+                            <field name="nota_riesgos" nolabel="1" placeholder="Notas extras..."/>
+                        </group>
+                    </group>
+                </page>
+                <page name="recursos_recompra" string="Recursos de Recompra">
+                    <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
+                    <field name="recursos_recompra_fcl_ids">
+                        <tree string="Recursos de Recompra" editable="bottom">
+                            <field name="name" />
+                            <field name="date" />
+                            <field name="movement_type" />
+                            <field name="value" />
+                        </tree>
+                    </field>
+                    <group name="totales_fcl" string="Totales FCL">
+                        <group>
+                            <field name="compra_fcl" />
+                            <field name="retiro_fcl" />
+                        </group>
+                        <group>
+                            <field name="adicion_fcl" />
+                            <field name="aplicacion_recaudo_fcl" />
+                        </group>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                <label for="total_fcl" string="TOTAL FCL"/>
+                                <div class="o_row">                  
+                                    <label for="total_fcl" string="$"/>                     
+                                    <field name="total_fcl"/>      
+                                </div>  
+                            </div>
+                    </group>
+
+                    <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
+                    <field name="recursos_recompra_csf_ids">
+                        <tree string="Recursos de Recompra" editable="bottom">
+                            <field name="name" />
+                            <field name="date" />
+                            <field name="movement_type" />
+                            <field name="value" />
+                        </tree>
+                    </field>
+                    <group name="totales_csf" string="Totales CSF">
+                        <group>
+                            <field name="compra_csf" />
+                            <field name="retiro_csf" />
+                        </group>
+                        <group>
+                            <field name="adicion_csf" />
+                            <field name="aplicacion_recaudo_csf" />
+                        </group>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                <label for="total_csf" string="TOTAL CSF"/>
+                                <div class="o_row">                  
+                                    <label for="total_csf" string="$"/>                     
+                                    <field name="total_csf"/>      
+                                </div>  
+                            </div>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <record id="res_partner_view_search_emisor_pagador" model="ir.ui.view">
+        <field name="name">res.partner.view.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <filter name="emisor" string="Emisor" domain="[('emisor', '=', True)]"/>
+                <filter name="pagador" string="Pagador" domain="[('pagador', '=', True)]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Actions Extracto -->
+    <record id="action_open_extracto" model="ir.actions.act_window">
+        <field name="name">Extractos</field>
+        <field name="res_model">ati.extracto</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu y Menus principales -->
+    <menuitem id="menu_extractos" sequence="5" name="Extractos" parent="ati_titulos.menu_tit" action="action_open_extracto"/>
+    
+
+</odoo>

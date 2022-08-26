@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record model="ir.ui.view" id="import_libranzas_view_form">
+		<field name="name">import.libranzas.view.form</field>
+		<field name="model">import.libranzas</field>
+		<field name="arch" type="xml">
+			<form string="Importar Libranzas">
+				<header>
+					<button name="btn_process" type="object" string="Procesar" states="draft" />
+					<field name="state" widget="statusbar" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="client_file" widget="binary"/>
+							<field name="month" />
+							<field name="year" />
+						</group>
+						<group>
+							<field name="delimiter" />
+							<field name="skip_first_line" />
+							<field name="client_match" />
+							<field name="responsable" readonly='1'/>
+                			<field name="fch_procesado" readonly='1'/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Contenido" >
+							<field name="file_content" readonly="1"/>
+						</page>
+						<page string="No procesados">
+							<field name="not_processed_content" readonly="1"/>
+						</page>
+                        <page string="Libranzas Cargadas">
+                                <field name="clientes_creados" readonly="1"/>
+                        </page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="import_libranzas_tree">
+		<field name="name">import.libranzas.view.tree</field>
+		<field name="model">import.libranzas</field>
+		<field name="arch" type="xml">
+		<tree string="Import Libranzas">
+			<field name="name" />
+			<field name="state" />
+			<field name="responsable" />
+            <field name="fch_procesado" />
+		</tree>
+		</field>
+	</record>
+
+</odoo>

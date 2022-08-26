@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="ext_movemnt_type_compra" model="ati.movement.type">
+        <field name="name">Compra</field>
+    </record>
+    <record id="ext_movemnt_type_retiro" model="ati.movement.type">
+        <field name="name">Retiro</field>
+    </record>
+    <record id="ext_movemnt_type_apl_rec" model="ati.movement.type">
+        <field name="name">Aplicación de recaudo</field>
+    </record>
+    <record id="ext_movemnt_type_adicion" model="ati.movement.type">
+        <field name="name">Adición</field>
+    </record>
+</odoo>

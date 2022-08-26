@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- state periodo form view -->
+    <record id="model_ati_state_periodo_view_form" model="ir.ui.view">
+        <field name="name">ati.state.periodo.view.form</field>
+        <field name="model">ati.state.periodo</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;">
+                                <field name="name" 
+                                        placeholder="Nombre del Periodo" 
+                                        required="1"
+                                        default_focus="1" class="oe_inline"/>
+                            </h3>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="month" />
+                            <field name="year" />
+                        </group>
+                        <group>
+                            <field name="state_cargue" />
+                            <field name="state_envio_extracto" />
+                            <field name="state_consulta_extracto" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- state periodo tree view -->
+    <record id="model_ati_state_periodo_view_tree" model="ir.ui.view">
+        <field name="name">ati.state.periodo.view.tree</field>
+        <field name="model">ati.state.periodo</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="month" />
+                <field name="year" />
+                <field name="state_cargue" />
+                <field name="state_envio_extracto" />
+                <field name="state_consulta_extracto" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

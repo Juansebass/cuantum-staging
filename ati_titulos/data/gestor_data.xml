@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="ext_gestor_fclibranzas" model="ati.gestor">
+        <field name="name">Fideicomiso Cuantum Libranzas</field>
+    </record>
+    <record id="ext_gestor_fcpstatum" model="ati.gestor">
+        <field name="name">Fondo de Capital Privado Statum</field>
+    </record>
+</odoo>

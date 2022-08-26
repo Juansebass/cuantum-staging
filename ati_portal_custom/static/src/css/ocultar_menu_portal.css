@@ -1,0 +1,22 @@
+
+a[title="Partes de horas"] {
+  display: none !important;
+}
+a[title="Tareas"] {
+  display: none !important;
+}
+a[title="Proyectos"] {
+  display: none !important;
+}
+a[title="Facturas"] {
+  display: none !important;
+}
+a[title="Órdenes de Compra"] {
+  display: none !important;
+}
+a[title="Solicitudes de Cotización"] {
+  display: none !important;
+}
+a[title="Tickets"] {
+  display: none !important;
+}

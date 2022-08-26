@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Categoria Inicial -->
+    <record id="module_category_cuantum" model="ir.module.category">
+        <field name="name">Cuantum</field>
+        <field name="sequence">1</field>
+    </record>
+    <!-- Sub Categorias -->
+    <record id="module_category_cuantum_cuantum" model="ir.module.category">
+        <field name="name">Cuantum</field>
+        <field name="sequence">1</field>
+        <field name="parent_id" ref="module_category_cuantum"/>
+    </record>
+
+    <!-- Grupos -->
+    <record id="group_cuatum_com_comprador" model="res.groups">
+        <field name="name">Comercial Comprador</field>
+        <field name="menu_access" eval="[(4,ref('crm.crm_menu_root'))]"/>
+        <field name="category_id" ref="module_category_cuantum_cuantum" />
+    </record>
+
+    <record id="group_cuatum_com_activo" model="res.groups">
+        <field name="name">Comercial Activo</field>
+        <field name="menu_access" eval="[(4,ref('crm.crm_menu_root'))]"/>
+        <field name="category_id" ref="module_category_cuantum_cuantum" />
+    </record>
+
+    <record id="group_cuatum_riesgos" model="res.groups">
+        <field name="name">Riesgos</field>
+        <field name="menu_access" eval="[(4,ref('crm.crm_menu_root'))]"/>
+        <field name="category_id" ref="module_category_cuantum_cuantum" />
+    </record>
+
+    <record id="group_cuatum_admin" model="res.groups">
+        <field name="name">Administrador</field>
+        <field name="category_id" ref="module_category_cuantum_cuantum" />
+        <field name="implied_ids" eval="[(4, ref('group_cuatum_riesgos')),(4, ref('group_cuatum_com_activo')),(4, ref('group_cuatum_com_comprador'))]" />
+    </record>
+
+    <!-- Reglas Riesgos -->
+    <record id="cuantum_riesgos_crm_lead" model="ir.rule">
+        <field name="name">Oportunidades Riesgos</field>
+        <field name="model_id" ref="crm.model_crm_lead" />
+        <field name="perm_read" eval="0" />
+        <field name="domain_force">[('state_id.name','=','Riesgos')]</field>
+        <field name="groups" eval="[(4,ref('group_cuatum_riesgos'))]" />
+    </record>
+
+    <!-- Reglas Compercial Activo -->
+    <record id="cuantum_com_activo_crm_lead" model="ir.rule">
+        <field name="name">Oportunidades Comercial Activo</field>
+        <field name="model_id" ref="crm.model_crm_lead" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="domain_force">[('create_uid.sale_team_id.id','=', user.sale_team_id.id)]</field>
+        <field name="groups" eval="[(4,ref('group_cuatum_com_activo'))]" />
+    </record>
+
+    <!-- Reglas Compercial Comprador -->
+    <record id="cuantum_com_comprador_crm_lead" model="ir.rule">
+        <field name="name">Oportunidades Comercial Comprador</field>
+        <field name="model_id" ref="crm.model_crm_lead" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="domain_force">[('create_uid.sale_team_id.id','=', user.sale_team_id.id)]</field>
+        <field name="groups" eval="[(4,ref('group_cuatum_com_comprador'))]" />
+    </record>
+
+
+</odoo>

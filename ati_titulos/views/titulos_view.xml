@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- titulos form view -->
+    <record id="model_ati_titulo_view_form" model="ir.ui.view">
+        <field name="name">ati.titulo.view.form</field>
+        <field name="model">ati.titulo</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <field name="is_parent" invisible="1" />
+                    <field name="is_son" invisible="1" />
+                    <widget name="web_ribbon" title="Padre" bg_color="bg-primary" attrs="{'invisible': [('is_parent', '!=', True)]}"/>
+                    <widget name="web_ribbon" title="Hijo" bg_color="bg-warning" attrs="{'invisible': [('is_son', '!=', True)]}"/>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="investment_type" />
+                            <field name="client" domain="[('vinculado', '=', True)]"/>
+                            <field name="manager" />
+                            <field name="issuing" domain="[('emisor', '=', True)]"/>
+                            <field name="payer" domain="[('pagador', '=', True)]"/>
+                            <field name="title" />
+                            <field name="date" />
+                            <field name="last_periodo" />
+                            <field name="is_parent" />
+                            <field name="parent_id" attrs="{'invisible': [('is_son', '!=', True)]}" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="value" />
+                            <field name="recaudo_total" />
+                            <field name="fee" />
+                            <field name="bonding_date" />
+                            <field name="redemption_date" />
+                            <field name="state_titulo" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="historico" string="Historico">
+                            <field name="tit_historico_ids">
+                                <tree editable="bottom">    
+                                    <field name="title"/>
+                                    <field name="client"/>
+                                    <field name="value"/>
+                                    <field name="recaudo"/>
+                                    <field name="date_create"/>
+                                    <field name="state_titulo"/>
+                                    <field name="periodo" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="hijos" string="Hijos" attrs="{'invisible': [('is_parent', '!=', True)]}">
+                            <field name="son_ids">
+                                <tree editable="bottom">    
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- titulo tree view -->
+    <record id="model_ati_titulo_view_tree" model="ir.ui.view">
+        <field name="name">ati.titulo.view.tree</field>
+        <field name="model">ati.titulo</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="client" />
+                <field name="last_periodo" />
+                <field name="title" />
+                <field name="state_titulo" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

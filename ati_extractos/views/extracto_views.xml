@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- extracto form view -->
+    <record id="model_ati_extracto_view_form" model="ir.ui.view">
+        <field name="name">ati.extracto.view.form</field>
+        <field name="model">ati.extracto</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="generar_extracto" type="object" string="Generar Extracto"/>
+                    <button name="enviar_extracto" type="object" string="Enviar Extracto"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="cliente">
+                        <group name="izquierda">
+                            <field name="cliente"></field>
+                            <field name="email_cliente"></field>
+                        </group>
+                        <group name="derecha">
+                            <field name="month"></field>
+                            <field name="year"></field>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="resum_inver" string="Resumen de Inversion">
+                            <field name="resumen_inversion_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="producto"/>
+                                    <field name="valor_actual"/>
+                                    <field name="valor_anterior"/>
+                                    <field name="diferencia"/>
+                                    <field name="rendimiento_causado"/>
+                                    <field name="tasa_rendimiento"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="det_mov" string="Detalle de Movimiento">
+                            <field name="detalle_movimiento_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="tipo"/>
+                                    <field name="valor"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="estado_port" string="Estado del Portafolio">
+                            <field name="detalle_titulos_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="titulo"/>
+                                    <field name="investment_type"/>
+                                    <field name="issuing"/>
+                                    <field name="payer"/>
+                                    <field name="value"/>
+                                    <field name="fee"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- extracto tree view -->
+    <record id="model_ati_extracto_view_tree" model="ir.ui.view">
+        <field name="name">ati.extracto.view.tree</field>
+        <field name="model">ati.extracto</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="month" />
+                <field name="year" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

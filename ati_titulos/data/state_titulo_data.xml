@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="ext_state_mora" model="ati.state.titulo">
+        <field name="name">Mora</field>
+    </record>
+    <record id="ext_state_vigente" model="ati.state.titulo">
+        <field name="name">Vigente</field>
+    </record>
+    <record id="ext_state_vencido" model="ati.state.titulo">
+        <field name="name">Vencido</field>
+    </record>
+    <record id="ext_state_opera" model="ati.state.titulo">
+        <field name="name">Opera</field>
+    </record>
+    <record id="ext_state_no_opera" model="ati.state.titulo">
+        <field name="name">No opera</field>
+    </record>
+    <record id="ext_state_fallecido" model="ati.state.titulo">
+        <field name="name">Falllecido</field>
+    </record>
+</odoo>

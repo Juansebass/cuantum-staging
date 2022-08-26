@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+
+    <record model="ir.ui.view" id="sale_order_line_cuantum_view_inherit">
+        <field name="name">sale.order.line.cuantum.view.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="date_order" position="after">
+                <field name="offer_type" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
+            </field>
+            <field name="payment_term_id" position="replace">
+                <field name="payment_term_id" invisible="1"/>
+            </field>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="n_titulo" attrs="{'column_invisible': [('parent.offer_type', '=',  'activo')]}"/>
+                <field name="emisor_line" attrs="{'column_invisible': [('parent.offer_type', '=',  'activo')]}"/>
+                <field name="pagador_line"/>
+                <field name="plazo_pago"/>
+                <field name="taza_retorno"/>
+                <field name="gestor_line"/>
+                <field name="reserva" attrs="{'column_invisible': [('parent.offer_type', '=',  'comprador')]}"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="string" >Monto / Cupo</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='tax_id']" position="replace">
+                <field name="tax_id" invisible="1"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']" position="replace">
+                <field name="price_subtotal" invisible="1"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='name']" position="replace">
+                <field name="name" invisible="1"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="replace">
+                <field name="product_uom_qty" invisible="1"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom']" position="replace">
+                <field name="product_uom" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

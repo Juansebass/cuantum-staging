@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="sale_order_portal_content_inherit_sale_management" name="Portal Ofertas" inherit_id="sale.sale_order_portal_content">
+
+        <xpath expr="//div[@id='informations']" position="replace">
+            <div t-if="sale_order.transaction_ids and not invoices and sale_order.state in ('sent', 'sale') and portal_confirmation == 'pay' and not success and not error" t-att-data-order-id="sale_order.id">
+                <t t-if="sale_order.transaction_ids">
+                    <t t-call="payment.transaction_status">
+                        <t t-set="tx" t-value="sale_order.get_portal_last_transaction()"/>
+                    </t>
+                </t>
+            </div>
+            <div class="row" id="so_date">
+                <div class="mb-3 col-6">
+                    <t t-if="sale_order.state in ['sale', 'done', 'cancel']">
+                        <strong>Fecha Confimacion de Oferta:</strong>
+                    </t>
+                    <t t-else="">
+                        <strong>Fecha de Oferta:</strong>
+                    </t>
+                    <span t-field="sale_order.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                </div>
+                <div class="mb-3 col-6" t-if="sale_order.validity_date">
+                    <strong>Fecha de vencimiento:</strong> <span t-field="sale_order.validity_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                </div>
+            </div>
+            <t t-set="invoices" t-value="[i for i in sale_order.invoice_ids if i.state not in ['draft', 'cancel']]"/>
+            <div t-if="invoices" class="row">
+                <div class="col">
+                    <strong class="d-block mb-1">Invoices</strong>
+                    <ul class="list-group mb-4">
+                        <t t-foreach="invoices" t-as="i">
+                            <t t-set="report_url" t-value="i.get_portal_url(report_type='pdf', download=True)"/>
+                            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                <div>
+                                    <a t-att-href="report_url">
+                                        <span t-esc="i.name"/>
+                                    </a>
+                                    <div class="small d-lg-inline-block">Date: <span class="text-muted" t-field="i.invoice_date"/></div>
+                                </div>
+                                <span t-if="i.payment_state in ('paid', 'in_payment')" class="small badge badge-success orders_label_text_align"><i class="fa fa-fw fa-check"/> <b>Paid</b></span>
+                                <span t-else="" class="small badge badge-info orders_label_text_align"><i class="fa fa-fw fa-clock-o"/> <b>Waiting Payment</b></span>
+                            </div>
+                        </t>
+                    </ul>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//section[@id='details']" position="replace">
+            <section id="details" style="page-break-inside: auto;" class="mt32">
+                <h3 id="details">Detalle de Oferta</h3>
+
+                <t t-set="display_discount" t-value="True in [line.discount &gt; 0 for line in sale_order.order_line]"/>
+
+                <table t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" class="table table-sm" id="sales_order_table">
+                    <thead class="bg-100">
+                        <tr>
+                            <th class="text-left">Descripción</th>
+                            <th t-if="sale_order.offer_type == 'comprador'" class="text-left">Nº de Titulo</th>
+                            <th t-if="sale_order.offer_type == 'comprador'" class="text-left">Emisor</th>
+                            <th class="text-left">Pagador</th>
+                            <th class="text-left">Plazo Estimado</th>
+                            <th class="text-left">Tasa Estimada</th>
+                            <th class="text-left">Gestor</th>
+                            <th t-if="sale_order.offer_type == 'activo'" class="text-left">Reserva</th>
+                            <th t-if="sale_order.offer_type == 'comprador'" class="text-left">Monto</th>
+                            <th t-if="sale_order.offer_type == 'activo'" class="text-left">Cupo</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+
+                        <t t-set="current_subtotal" t-value="0"/>
+
+                        <t t-foreach="sale_order.order_line" t-as="line">
+
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                            <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                <t t-if="not line.display_type">
+                                    <td id="product_name"><span t-field="line.name"/></td>
+                                    <td t-if="sale_order.offer_type == 'comprador'" id="titulo_name"><span t-field="line.n_titulo"/></td>
+                                    <td t-if="sale_order.offer_type == 'comprador'" id="emisor_name"><span t-field="line.emisor_line.name"/></td>
+                                    <td id="pagador_name"><span t-field="line.pagador_line.name"/></td>
+                                    <td id="plazo_estimado_name"><span t-field="line.plazo_pago"/></td>
+                                    <td id="taza_estimada_name"><span t-field="line.taza_retorno"/></td>
+                                    <td id="gestor_name"><span t-field="line.gestor_line"/></td>
+                                    <td t-if="sale_order.offer_type == 'activo'" id="reserva_name"><span t-field="line.reserva"/></td>
+                                    <td id="monto"><span t-field="line.price_total"/></td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td colspan="99">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <t t-set="current_section" t-value="line"/>
+                                    <t t-set="current_subtotal" t-value="0"/>
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                </t>
+                            </tr>
+
+                            <t t-if="current_section and (line_last or sale_order.order_line[line_index+1].display_type == 'line_section')">
+                                <tr class="is-subtotal text-right">
+                                    <td colspan="99">
+                                        <strong class="mr16">Subtotal</strong>
+                                        <span t-esc="current_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: sale_order.pricelist_id.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+
+                <div id="total" class="row" name="total" style="page-break-inside: avoid;">
+                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                        <t t-call="sale.sale_order_portal_content_totals_table"/>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+
+    </template>
+
+</odoo>
