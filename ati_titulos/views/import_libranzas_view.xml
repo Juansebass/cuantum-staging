@@ -17,6 +17,7 @@
 							<field name="client_file" widget="binary"/>
 							<field name="month" />
 							<field name="year" />
+							<field name="manager" />
 						</group>
 						<group>
 							<field name="delimiter" />

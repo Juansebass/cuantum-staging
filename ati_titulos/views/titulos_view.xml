@@ -50,6 +50,7 @@
                                     <field name="date_create"/>
                                     <field name="state_titulo"/>
                                     <field name="periodo" />
+                                    <field name="manager" />
                                 </tree>
                             </field>
                         </page>

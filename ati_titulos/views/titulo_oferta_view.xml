@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Titulos en oferta form view -->
+    <record id="model_ati_titulo_oferta_view_form" model="ir.ui.view">
+        <field name="name">ati.titulo.oferta.view.form</field>
+        <field name="model">ati.titulo.oferta</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;">
+                                <field name="name" 
+                                        placeholder="Nº de Titulo" 
+                                        required="1"
+                                        default_focus="1" class="oe_inline"/>
+                            </h3>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="manager" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="issuing" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="payer" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="bonding_date" />
+                            <field name="redemption_date" />
+                        </group>
+                        <group>
+                            <field name="investment_type" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="value" />
+                            <field name="fee" />
+                            <field name="odquirido" />
+                            <field name="cliente" options="{'no_create': True, 'no_create_edit':True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Titulos en oferta tree view -->
+    <record id="model_ati_titulo_oferta_view_tree" model="ir.ui.view">
+        <field name="name">ati.titulo.oferta.view.tree</field>
+        <field name="model">ati.titulo.oferta</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="investment_type" />
+                <field name="manager" />
+                <field name="issuing" />
+                <field name="payer" />
+                <field name="fee" />
+                <field name="value" />
+                <field name="odquirido" />
+                <field name="cliente" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

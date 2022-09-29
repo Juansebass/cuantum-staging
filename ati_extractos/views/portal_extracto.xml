@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_extractos" name="Portal Extractos" customize_show="True" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Extractos</t>
+                <t t-set="url" t-value="'/my/extracto'" />
+                <t t-set="placeholder_count" t-value="'count_extracto'" />
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_extracto" name="My Extracto">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Extractos</t>
+            </t>
+            <t t-if="not extractos">
+                <p>Actualmente no hay extractos para su cuenta.</p>
+            </t>
+            <t t-if="extractos" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Extracto #</th>
+                        <th class="text-right">Periodo</th>
+                        <th class="text-center"/>
+                    </tr>
+                </thead>
+                <t t-foreach="extractos" t-as="extracto">
+                    <tr>
+                        <td><a t-att-href="extracto.get_portal_url(report_type='pdf', download=True)"><t t-esc="extracto.name"/></a></td>
+                        <td class="text-right"><span t-field="extracto.month"/>/<span t-field="extracto.year"/></td>
+                        <td class="text-center">
+                            <span t-if="extracto.state == 'draft'" class="badge badge-pill badge-secondary"><i class="fa fa-fw fa-remove"/> Borrador</span>
+                            <span t-if="extracto.state == 'sent'" class="badge badge-pill badge-secondary"><i class="fa fa-fw fa-clock-o"/> Enviada</span>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-	<record model="ir.ui.view" id="import_factoring_view_form">
-		<field name="name">import.factoring.view.form</field>
-		<field name="model">import.factoring</field>
+	<record model="ir.ui.view" id="import_oferta_titulos_view_form">
+		<field name="name">ati.import.oferta.titulos.view.form</field>
+		<field name="model">ati.import.oferta.titulos</field>
 		<field name="arch" type="xml">
-			<form string="Importar Factoring">
+			<form string="Importar Ofertas de Titulos">
 				<header>
 					<button name="btn_process" type="object" string="Procesar" states="draft" />
 					<field name="state" widget="statusbar" />
@@ -15,14 +15,12 @@
 						<group>
 							<field name="name" />
 							<field name="client_file" widget="binary"/>
-							<field name="month" />
-							<field name="year" />
-							<field name="manager" />
+							<field name="investment_type" options="{'no_create': True, 'no_create_edit':True}"/>
+							<field name="manager" options="{'no_create': True, 'no_create_edit':True}"/>
 						</group>
 						<group>
 							<field name="delimiter" />
 							<field name="skip_first_line" />
-							<field name="client_match" />
 							<field name="responsable" readonly='1'/>
                 			<field name="fch_procesado" readonly='1'/>
 						</group>
@@ -31,11 +29,8 @@
 						<page string="Contenido" >
 							<field name="file_content" readonly="1"/>
 						</page>
-						<page string="No procesados">
-							<field name="not_processed_content" readonly="1"/>
-						</page>
-                        <page string="Libranzas Cargadas">
-                                <field name="clientes_creados" readonly="1"/>
+                        <page string="Titulos Cargados">
+                                <field name="ofertas_creadas" readonly="1"/>
                         </page>
 					</notebook>
 				</sheet>
@@ -43,11 +38,11 @@
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="import_factoring_tree">
-		<field name="name">import.factoring.view.tree</field>
-		<field name="model">import.factoring</field>
+	<record model="ir.ui.view" id="import_oferta_titulos_tree">
+		<field name="name">ati.import.oferta.titulos.view.tree</field>
+		<field name="model">ati.import.oferta.titulos</field>
 		<field name="arch" type="xml">
-		<tree string="Import Factoring">
+		<tree string="Import Oferta TItulos">
 			<field name="name" />
 			<field name="client_file" />
 			<field name="state" />

@@ -8,6 +8,19 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <!-- Actions Titulos Oferta -->
+    <record id="action_open_titulo_oferta" model="ir.actions.act_window">
+        <field name="name">Ofertas</field>
+        <field name="res_model">ati.titulo.oferta</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_open_carga_titulo_oferta" model="ir.actions.act_window">
+        <field name="name">Carga de Ofertas</field>
+        <field name="res_model">ati.import.oferta.titulos</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <!-- Actions Cargas -->
     <record id="action_open_carga_libranzas" model="ir.actions.act_window">
         <field name="name">Carga Libranzas</field>
@@ -91,11 +104,14 @@
     <!-- Menu y Menus principales -->
     <menuitem id="menu_tit" name="Titulos" web_icon="ati_titulos,static/description/icon.png"/>
     <menuitem id="menu_titulos" sequence="1" name="Titulos" parent="menu_tit" action="action_open_titulo"/>
-    <menuitem id="menu_carga_extractos" sequence="2" name="Carga de extractos" parent="menu_tit"/>
-    <menuitem id="menu_recursos_recompra" sequence="3" name="Carga recursos en p.recompra" parent="menu_tit"/>
-    <menuitem id="menu_conf" sequence="4" name="Configuraciones" parent="menu_tit"/>
+    <menuitem id="menu_titulos_ofer" sequence="2" name="Titulos en Oferta" parent="menu_tit" />
+    <menuitem id="menu_carga_extractos" sequence="3" name="Carga de extractos" parent="menu_tit"/>
+    <menuitem id="menu_recursos_recompra" sequence="4" name="Carga recursos en p.recompra" parent="menu_tit"/>
+    <menuitem id="menu_conf" sequence="5" name="Configuraciones" parent="menu_tit"/>
 
     <!-- Menus de tercer nivel-->
+    <menuitem id="menu_titulo_oferta" name="Titulos" parent="menu_titulos_ofer" action="action_open_titulo_oferta"/>
+    <menuitem id="menu_carga_titulo_oferta" name="Cargar Ofertas" parent="menu_titulos_ofer" action="action_open_carga_titulo_oferta"/>
     <menuitem id="menu_carga_libranzas" name="Cargar Libranzas" parent="menu_carga_extractos" action="action_open_carga_libranzas"/>
     <menuitem id="menu_carga_factoring" name="Cargar Factoring" parent="menu_carga_extractos" action="action_open_carga_factoring"/>
     <menuitem id="menu_carga_sentencias" name="Cargar Sentencias" parent="menu_carga_extractos" action="action_open_carga_sentencias"/>

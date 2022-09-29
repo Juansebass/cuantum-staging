@@ -14,12 +14,14 @@
     'website': 'http://www.autodidactati.com/',
     'license': '',
     'depends': [
-        'base','contacts','ati_titulos',
+        'base','contacts','ati_titulos','portal',
         ],
     'data': [
         'views/menu.xml',
         'views/extracto_views.xml',
+        'views/portal_extracto.xml',
         'security/ir.model.access.csv',
+        'report/report_extracto.xml',
         ],
     'installable': True,
     'application': True,

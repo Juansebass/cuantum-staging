@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="action_report_extracto" model="ir.actions.report">
+            <field name="name">Extracto</field>
+            <field name="model">ati.extracto</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">ati_extractos.report_extracto</field>
+            <field name="report_file">ati_extractos.report_extracto</field>
+    	    <field name="print_report_name">'Extracto - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_ati_extracto"/>
+            <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_extracto">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style type="text/css">
+                            .ultima:last-child{
+                              background-color: #eae8e9;
+                              font-weight: bold;
+                              color: black;
+                              }
+                        </style>
+                        <h2>Extracto <span t-field="o.name"/></h2>
+                        <br/>
+                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
+                        <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
+                            <thead>
+                                <tr class="text-center" style="background-color: #619f11; font-size: 14px;">
+                                    <th COLSPAN="7" style="color: white;width:100%;"><strong>Resumen de las inversiones</strong></th>          
+                                </tr>
+                                <tr style="background-color: #eae8e9; font-size: 12px; text-align: center; border-bottom: 2px solid black; border-top: 2px solid black;">
+                                    <th style="width:34%">Descripcion</th>
+                                    <th style="width:20%">Valor Actual</th>
+                                    <th style="width:20%">Valor Anterior</th>
+                                    <th style="width:20%">Diferencia</th>
+                                    <th style="width:2%">Participacion</th>
+                                    <th style="width:2%">Rendimiento Causado</th>
+                                    <th style="width:2%">Tasa rendimiento</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody" style="margin-bottom: 0px !important; padding-bottom: 0px !important;" >
+                                <tr class="ultima" style="color: black;" t-foreach="o.resumen_inversion_ids" t-as="i">
+                                  <td><t t-if="i.display_type != 'line_section'"><span t-if="i.name" t-field="i.name" /></t>
+                                              <t t-if="i.display_type == 'line_section'"><strong><span t-if="i.name != 'TOTAL'" t-field="i.name" style="font-weight: bold;"/></strong></t>
+                                              <span t-if="not i.name" style="font-weight: bold;"><strong>TOTAL</strong></span>
+                                              </td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-field="i.valor_actual"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-field="i.valor_anterior"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-field="i.diferencia"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">%</t><span t-if="i.display_type != 'line_section'" t-field="i.participacion"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">%</t><span t-if="i.display_type != 'line_section'" t-field="i.rendimiento_causado"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">%</t><span t-if="i.display_type != 'line_section'" t-field="i.tasa_rendimiento"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        
+                        <br/>
+                          <!-- #TODO desde aca se puede ocultar, hasta tener lo de los graficos resueltos -->
+                          <div class="row">
+                          <div class="col-5 text-center" style="border-top-left-radius: 25px;
+                                                                border-top-right-radius: 25px;
+                                                                background-color: #619f11;
+                                                                font-size: 14px; 
+                                                                color: white; 
+                                                                width:100%;
+                                                                padding: 5px;
+                                                                margin-right: 5px;
+                                                                font-weight: bold;">INVERSIONES POR FONDO</div>
+                          <div class="col-1"></div>
+                          <div class="col-5 text-center" style="border-top-left-radius: 25px;
+                                                                border-top-right-radius: 25px;
+                                                                background-color: #619f11;
+                                                                font-size: 14px;
+                                                                color: white; 
+                                                                width:100%;
+                                                                padding: 5px; 
+                                                                margin-left: 5px;
+                                                                font-weight: bold;">COMPOSICION DEL PORTAFOLIO</div>
+                          </div>                                      
+                          <div class="row">
+                                <div class="col-5 text-center" style="border: 1px solid black;">
+                                  CONTENIDO<br/>1 
+                                </div>
+                              <div class="col-1"></div>
+                              <div class="col-5 text-center" style="border: 1px solid black;">
+                                CONTENIDO<br/>2
+                              </div>
+                          </div>
+                         <!-- #TODO hasta aca se puede ocultar, hasta tener lo de los graficos resueltos -->
+                         <p style="page-break-before:always;"> </p>
+                       <br/>
+                       <div style="border-radius: 26px !important; border: 2px solid black; padding: 0px; margin-bottom: 0px !important;">
+                        <table class="table" style="border-radius: 25px; overflow: hidden;">
+                            <thead> 
+                                <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
+                                    <th COLSPAN="7" style="color: white;width:100%;">Estado del Portafolio</th>          
+                                </tr>
+                                <tr style="background-color: #eae8e9; font-size: 12px; border-bottom: 2px solid black;">
+                                    <th style="width:20%">Titulo</th>
+                                    <th style="width:10%">Tipo</th>
+                                    <th style="width:20%">Emisor</th>
+                                    <th style="width:20%">Pagador</th>
+                                    <th style="width:20%">Valor de portafolio</th>
+                                    <th style="width:10%">Tasa</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <tr t-foreach="o.detalle_titulos_ids" t-as="i">
+                                  <td><span t-field="i.titulo"/></td>
+                                  <td><span t-field="i.investment_type"/></td>
+                                  <td><span t-field="i.issuing"/></td>
+                                  <td><span t-field="i.payer"/></td>
+                                  <td>$<span t-field="i.value"/></td>
+                                  <td>%<span t-field="i.fee"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <br/>
+                        <div style="border-radius: 26px !important; border: 2px solid black; padding: 0px; margin-bottom: 0px !important;">
+                        <table class="table" style="border-radius: 25px; overflow: hidden;">
+                            <thead>
+                                <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
+                                    <th COLSPAN="7" style="color: white;width:100%; text-transform: uppercase;">Movimiento de Caja</th>          
+                                </tr>
+                                <tr style="background-color: #eae8e9; font-size: 12px; border-bottom: 2px solid black;">
+                                    <th style="width:50%">Descripcion</th>
+                                    <th style="width:50%">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.detalle_movimiento_ids" t-as="i">
+                                  <t t-if="i.display_type == 'line_section'">
+                                    <td style="background-color: #e9e9e9;"><span t-field="i.name"/></td>
+                                    <td style="background-color: #e9e9e9;"/>
+                                  </t>
+                                  <t t-if="i.display_type != 'line_section'">
+                                    <td><span t-field="i.name"/></td>
+                                    <td>$<span t-field="i.valor"/></td>
+                                  </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

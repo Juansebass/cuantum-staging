@@ -20,8 +20,10 @@
                     </div>
                     <group>
                         <group>
+                            <field name="code" />
                         </group>
                         <group>
+                            <field name="desc" />
                         </group>
                     </group>
                 </sheet>

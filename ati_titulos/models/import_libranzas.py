@@ -88,7 +88,7 @@ class ImportLibranzas(models.Model):
                         if len(partner_pagador) > 0:
                             vals['payer'] = partner_pagador.id
                         else:
-                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el pagador {1}, contenido de linea: {2}".format(i, pagador, line))
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el pagador {1}, contenido de linea: {2}, NO EXISTE".format(i, pagador, line))
                     else:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no contiene pagador, contenido de linea: {1}".format(i, line))
                     if fch_negociacion != '':
@@ -100,10 +100,10 @@ class ImportLibranzas(models.Model):
                     if tasa_desc != '':
                         vals['fee'] = float(tasa_desc.replace(',','.').replace('%',''))
 
-                    inves_type = self.env['ati.investment.type'].search([('name', '=', 'Libranzas')])
+                    inves_type = self.env['ati.investment.type'].search([('code', '=', 'LIB')])
                     vals['investment_type'] = inves_type.id
                     vals['client'] = client.id
-                    vals['manager'] = 1
+                    vals['manager'] = self.manager.id
                     vpn_des = vpn_des.replace('$','').replace(' ', '').replace('.', '').replace(',', '.')
                     vals['value'] = vpn_des
                     recaudo = recaudo.replace('$','').replace(' ', '').replace('.', '').replace(',', '.')
@@ -216,6 +216,7 @@ class ImportLibranzas(models.Model):
     month = fields.Char('Mes de Periodo')
     year = fields.Char('Año de Periodo')
     client_file = fields.Binary('Archivo')
+    manager = fields.Many2one('ati.gestor', 'Gestor', required=True)
     delimiter = fields.Char('Delimitador',default=";")
     fch_procesado = fields.Datetime('Fecha procesado')
     responsable = fields.Many2one('res.partner','Responsable de proceso')

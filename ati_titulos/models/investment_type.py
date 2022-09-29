@@ -9,3 +9,5 @@ class InvestmentType(models.Model):
     _name = 'ati.investment.type'
 
     name = fields.Char('Nombre')
+    code = fields.Char('Codigo')
+    desc = fields.Char('Descripción')

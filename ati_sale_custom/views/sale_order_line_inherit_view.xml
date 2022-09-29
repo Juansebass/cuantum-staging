@@ -6,8 +6,16 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <field name="date_order" position="after">
+            <field name="payment_term_id" position="after">
                 <field name="offer_type" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
+                <separator string="Cargar Ofertas" colspan="1"/>
+                <field name="gestor_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
+                <field name="tipo_producto_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
+                <button name='action_cargar_titulos_oferta' type="object"
+                                                            string="Cargar Ofertas"
+                                                            attrs="{'invisible':[('state','!=','draft')]}"
+                                                            class="oe_stat_button"
+                                                            icon="fa-refresh"/>
             </field>
             <field name="payment_term_id" position="replace">
                 <field name="payment_term_id" invisible="1"/>
