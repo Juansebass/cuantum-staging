@@ -37,6 +37,11 @@
         <field name="res_model">import.sentencias</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_open_carga_mutuos" model="ir.actions.act_window">
+        <field name="name">Carga Mutuos</field>
+        <field name="res_model">import.mutuo</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Actions Cargas Recursos de Recompra-->
     <record id="action_open_carga_recursos_fcl" model="ir.actions.act_window">
@@ -115,6 +120,7 @@
     <menuitem id="menu_carga_libranzas" name="Cargar Libranzas" parent="menu_carga_extractos" action="action_open_carga_libranzas"/>
     <menuitem id="menu_carga_factoring" name="Cargar Factoring" parent="menu_carga_extractos" action="action_open_carga_factoring"/>
     <menuitem id="menu_carga_sentencias" name="Cargar Sentencias" parent="menu_carga_extractos" action="action_open_carga_sentencias"/>
+    <menuitem id="menu_carga_mutuos" name="Cargar Mutuos" parent="menu_carga_extractos" action="action_open_carga_mutuos"/>
     <menuitem id="menu_carga_recursos_fcl" name="Fideicomiso Cuantum Libranzas (FCL)" parent="menu_recursos_recompra" action="action_open_carga_recursos_fcl"/>
     <menuitem id="menu_carga_recursos_csf" name="Gestores Cuantum (CSF)" parent="menu_recursos_recompra" action="action_open_carga_recursos_csf"/>
     <menuitem id="menu_state_titulo" name="Estado Titulos" parent="menu_conf" action="action_open_state_titulo"/>

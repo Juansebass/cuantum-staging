@@ -15,6 +15,7 @@ from . import investment_type
 from . import import_libranzas
 from . import import_sentencias
 from . import import_factoring
+from . import import_mutuos
 from . import recurso_recompra_fcl
 from . import recurso_recompra_csf
 from . import import_recursos_fcl

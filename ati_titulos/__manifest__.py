@@ -29,6 +29,7 @@
         'views/import_libranzas_view.xml',
         'views/import_factoring_view.xml',
         'views/import_sentencias_view.xml',
+        'views/import_mutuos_view.xml',
         'views/import_recursos_fcl.xml',
         'views/import_recursos_csf.xml',
         'views/import_titulo_oferta_view.xml',
