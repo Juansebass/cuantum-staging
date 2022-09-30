@@ -112,7 +112,7 @@
     <menuitem id="menu_titulos_ofer" sequence="2" name="Titulos en Oferta" parent="menu_tit" />
     <menuitem id="menu_carga_extractos" sequence="3" name="Carga de extractos" parent="menu_tit"/>
     <menuitem id="menu_recursos_recompra" sequence="4" name="Carga recursos en p.recompra" parent="menu_tit"/>
-    <menuitem id="menu_conf" sequence="5" name="Configuraciones" parent="menu_tit"/>
+    <menuitem id="menu_conf" sequence="10" name="Configuraciones" parent="menu_tit"/>
 
     <!-- Menus de tercer nivel-->
     <menuitem id="menu_titulo_oferta" name="Titulos" parent="menu_titulos_ofer" action="action_open_titulo_oferta"/>

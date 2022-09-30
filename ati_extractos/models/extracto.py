@@ -28,7 +28,7 @@ class Extracto(models.Model):
 
     detalle_titulos_ids = fields.One2many('ati.extracto.detalle_titulos','extracto_id','Detalle de Titulos')
 
-    state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado'),('send','Enviado')],string='Estado',default='draft')
+    state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado'),('validated','Validado'),('send','Enviado')],string='Estado',default='draft')
 
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
@@ -318,6 +318,24 @@ class Extracto(models.Model):
         #Asignamos responsable
         self.responsible = self.env.user.partner_id
 
+        #Cambiamos estado
+        self.state = 'processed'
+
+
+    def validar_extracto(self):
+        for rec in self:
+            if rec.state == 'processed':
+                rec.state = 'validated'
+            else:
+                raise ValidationError('El extracto debe estar en estado procesado para poder ser validado')
+
+    def unlink(self):
+        for rec in self:
+            if rec.state != 'draft':
+                raise ValidationError('Los extracto debe estar en borrador para poder ser eliminados')
+        return super(Extracto, self).unlink()
+
+
     def enviar_extracto(self):
         # Se valida si existe el periodo al cual se decea hacer un extractos, en el caso de existir se verifica que el 
         # estado del mismo se encuentre en estado abierto de cargue
@@ -330,6 +348,9 @@ class Extracto(models.Model):
                 raise ValidationError('No existe un periodo creado para el mes y año seleccionado')
         else:
             raise ValidationError('Debe introducir un mes y año de periodo para este cargue')
+        if self.state not in ['validated','send']:
+            raise ValidationError('El extracto debe estar validado para poder ser enviado')
+
 
         template_id = self.env.ref('ati_extractos.email_template_extracto').id
         compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
@@ -342,6 +363,9 @@ class Extracto(models.Model):
             'custom_layout': "mail.mail_notification_paynow",
             'force_email': True
         }
+
+        self.state = 'send'
+
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',

@@ -8,8 +8,9 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
-                    <button name="generar_extracto" type="object" string="Generar Extracto"/>
-                    <button name="enviar_extracto" type="object" string="Enviar Extracto"/>
+                    <button name="generar_extracto" type="object" string="Generar Extracto" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="validar_extracto" type="object" string="Validar" attrs="{'invisible': [('state', '!=', 'processed')]}"/>
+                    <button name="enviar_extracto" type="object" string="Enviar Extracto" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -20,12 +21,12 @@
                     </div>
                     <group name="cliente">
                         <group name="izquierda">
-                            <field name="cliente" />
+                            <field name="cliente" attrs="{'readonly': [('state', 'in', ['validated','send'])]}"/>
                             <field name="email_cliente" />
                         </group>
                         <group name="derecha">
-                            <field name="month" />
-                            <field name="year" />
+                            <field name="month" attrs="{'readonly': [('state', 'in', ['validated','send'])]}"/>
+                            <field name="year" attrs="{'readonly': [('state', 'in', ['validated','send'])]}"/>
                             <field name="responsible" readonly="1"/>
                         </group>
                     </group>
