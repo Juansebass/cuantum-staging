@@ -22,6 +22,7 @@
         'views/portal_extracto.xml',
         'security/ir.model.access.csv',
         'report/report_extracto.xml',
+        'data/mail_template_extracto.xml'
         ],
     'installable': True,
     'application': True,

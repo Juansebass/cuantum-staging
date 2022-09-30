@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="email_template_extracto" model="mail.template">
+            <field name="name">Extracto: envio a clientes</field>
+            <field name="model_id" ref="ati_extractos.model_ati_extracto" />
+            <field name="email_from">{{object.responsible.email_formatted}}</field>
+            <field name="partner_to">{{object.cliente.id}}</field>
+            <field name="subject">{{object.company_id.name}} Extracto (Ref {{object.name}})</field>
+            <field name="body_html" type="html">
+                <div>
+                    <h1>Extracto</h1>
+                </div>
+            </field>
+            <field name="report_template" ref="ati_extractos.report_ati_extracto" />
+            <field name="report_name">Extracto_{{object.name}}</field>
+        </record>
+    </data>
+
+</odoo>

@@ -13,8 +13,10 @@ class Extracto(models.Model):
     _inherit = ['portal.mixin', 'mail.thread','mail.activity.mixin']
 
     name = fields.Char('Nombre')
+    company_id = fields.Many2one('res.company', string='Company',  default=lambda self: self.env.company)
 
     cliente = fields.Many2one('res.partner','Cliente',required=1)
+    responsible = fields.Many2one('res.partner','Responsable')
     email_cliente = fields.Char('Email',related='cliente.email')
     month = fields.Char('Mes de Periodo',required=1)
     year = fields.Char('Año de Periodo',required=1)
@@ -313,6 +315,9 @@ class Extracto(models.Model):
         # INVERSIONES
         self._generar_resumen_inversion()
 
+        #Asignamos responsable
+        self.responsible = self.env.user.partner_id
+
     def enviar_extracto(self):
         # Se valida si existe el periodo al cual se decea hacer un extractos, en el caso de existir se verifica que el 
         # estado del mismo se encuentre en estado abierto de cargue
@@ -325,6 +330,28 @@ class Extracto(models.Model):
                 raise ValidationError('No existe un periodo creado para el mes y año seleccionado')
         else:
             raise ValidationError('Debe introducir un mes y año de periodo para este cargue')
+
+        template_id = self.env.ref('ati_extractos.email_template_extracto').id
+        compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
+        ctx = {
+            'default_model': 'ati.extracto',
+            'default_res_id': self.id,
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
 
 
         raise ValidationError('Esta funcionalidad enviara el extracto')

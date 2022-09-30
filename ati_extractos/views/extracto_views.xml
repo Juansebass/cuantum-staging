@@ -20,12 +20,13 @@
                     </div>
                     <group name="cliente">
                         <group name="izquierda">
-                            <field name="cliente"></field>
-                            <field name="email_cliente"></field>
+                            <field name="cliente" />
+                            <field name="email_cliente" />
                         </group>
                         <group name="derecha">
-                            <field name="month"></field>
-                            <field name="year"></field>
+                            <field name="month" />
+                            <field name="year" />
+                            <field name="responsible" readonly="1"/>
                         </group>
                     </group>
                     <notebook>
