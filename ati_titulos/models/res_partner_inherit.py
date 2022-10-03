@@ -69,6 +69,6 @@ class ResPartner(models.Model):
                 _leads = self.env['crm.lead'].search([('partner_id','=',rec.id),('stage_id.name','=','Riesgos')])
                 _stage = self.env['crm.stage'].search([('name','=','Calificado')],limit=1)
                 for lead in _leads:
-                    lead.stage_id = _stage
+                    lead.sudo().stage_id = _stage
             else:
                 raise ValidationError("No puede aprobar oportunidades si los siguientes campos no fueron validados: Vinculado, Documentacion enviada, Documentacion completa, Busqueda en listas")

@@ -21,6 +21,8 @@ access_import_recursos_csf_user,import.recursos.csf.user,model_import_recursos_c
 access_cuantum_crm_lead_riesgos,cuantum_crm_lead_riesgo,crm.model_crm_lead,ati_titulos.group_cuatum_riesgos,1,1,0,0
 access_cuantum_crm_tag_riesgos,cuantum_crm_tag_riesgos,sales_team.model_crm_tag,ati_titulos.group_cuatum_riesgos,1,1,0,0
 access_cuantum_sale_riesgos,cuantum_sale_riesgos,sale.model_sale_order,ati_titulos.group_cuatum_riesgos,1,1,0,0
+access_cuantum_res_partner,cuantum_res_partner,base.model_res_partner,ati_titulos.group_cuatum_riesgos,1,1,0,0
+access_cuantum_res_users,cuantum_res_users,base.model_res_users,ati_titulos.group_cuatum_riesgos,1,1,0,0
 
 access_cuantum_crm_lead_com_activo,cuantum_crm_lead_com_activo,crm.model_crm_lead,ati_titulos.group_cuatum_com_activo,1,1,1,0
 access_cuantum_crm_tag_com_activo,cuantum_crm_tag_com_activo,sales_team.model_crm_tag,ati_titulos.group_cuatum_com_activo,1,1,1,0
