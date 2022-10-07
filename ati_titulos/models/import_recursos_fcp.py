@@ -88,7 +88,7 @@ class ImportRecursosFCP(models.Model):
                     if linea_neogcio != '':
                         inves_type = self.env['ati.investment.type'].search([('code', '=', linea_neogcio)])
                         if len(inves_type) < 1:
-                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra una linea de negocio con codigo {1}, contenido de linea: {2}".format(i, mov_tmp, line))
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra una linea de negocio con codigo {1}, contenido de linea: {2}".format(i, linea_neogcio, line))
                         
                         vals['investment_type'] = inves_type.id
                     else:
