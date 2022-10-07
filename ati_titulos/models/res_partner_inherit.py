@@ -8,6 +8,15 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    @api.depends('recursos_recompra_fcp_ids')
+    def _compute_totales_fcp(self):
+        for rec in self:
+            rec.compra_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'COMPRA'))
+            rec.retiro_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
+            rec.adicion_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
+            rec.aplicacion_recaudo_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APLICACION'))
+            rec.total_fcp = sum([rec.adicion_fcp,rec.aplicacion_recaudo_fcp]) - sum([rec.compra_fcl,rec.retiro_fcp])
+
     @api.depends('recursos_recompra_fcl_ids')
     def _compute_totales_fcl(self):
         for rec in self:
@@ -49,14 +58,21 @@ class ResPartner(models.Model):
 
     #Recursos de recompra
     recursos_recompra_fcl_ids = fields.One2many('ati.recurso.recompra.fcl','buyer','Recuros de recompra FCL')
+    recursos_recompra_fcp_ids = fields.One2many('ati.recurso.recompra.fcp','buyer','Recuros de recompra FCP')
     recursos_recompra_csf_ids = fields.One2many('ati.recurso.recompra.csf','buyer','Recuros de recompra CSF')
-    #TOTALE FCL
+    #TOTALES FCP
+    compra_fcp = fields.Float('Total Compra', compute=_compute_totales_fcp)
+    retiro_fcp = fields.Float('Total Retiro', compute=_compute_totales_fcp)
+    adicion_fcp = fields.Float('Total Adicion', compute=_compute_totales_fcp)
+    aplicacion_recaudo_fcp = fields.Float('Total A. de Recuado', compute=_compute_totales_fcp)
+    total_fcp = fields.Float('Total FCL', compute=_compute_totales_fcp)
+    #TOTALES FCL
     compra_fcl = fields.Float('Total Compra', compute=_compute_totales_fcl)
     retiro_fcl = fields.Float('Total Retiro', compute=_compute_totales_fcl)
     adicion_fcl = fields.Float('Total Adicion', compute=_compute_totales_fcl)
     aplicacion_recaudo_fcl = fields.Float('Total A. de Recuado', compute=_compute_totales_fcl)
     total_fcl = fields.Float('Total FCL', compute=_compute_totales_fcl)
-    #TOTALE CSF
+    #TOTALES CSF
     compra_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
     retiro_csf = fields.Float('Total Retiro', compute=_compute_totales_csf)
     adicion_csf = fields.Float('Total Adicion', compute=_compute_totales_csf)

@@ -48,13 +48,14 @@ class ImportRecursosCSF(models.Model):
             if self.skip_first_line and i == 0:
                 continue
             lista = line.split(self.delimiter)
-            if len(lista) > 5:
+            if len(lista) > 6:
                 fecha = lista[0]
                 valores = lista[1]
                 movimiento = lista[2]
                 comprador = lista[3]
                 documento = lista[4]
                 tip_documento = lista[5]
+                linea_neogcio = lista[6]
 
                 vals.clear()
 
@@ -86,6 +87,14 @@ class ImportRecursosCSF(models.Model):
                     else:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))
 
+                    if linea_neogcio != '':
+                        inves_type = self.env['ati.investment.type'].search([('code', '=', linea_neogcio)])
+                        if len(inves_type) < 1:
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra una linea de negocio con codigo {1}, contenido de linea: {2}".format(i, mov_tmp, line))
+                        
+                        vals['investment_type'] = inves_type.id
+                    else:
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))
 
                     #Creamos recurso en proceso de recompra
 

@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class RecursoRecompra(models.Model):
-    _name = 'ati.recurso.recompra.fcl'
+    _name = 'ati.recurso.recompra.fcp'
 
     name = fields.Char('Nombre')
     date = fields.Date('Fecha')

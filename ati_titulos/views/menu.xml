@@ -49,6 +49,11 @@
         <field name="res_model">import.recursos.fcl</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_open_carga_recursos_fcp" model="ir.actions.act_window">
+        <field name="name">Carga Recursos FCP</field>
+        <field name="res_model">import.recursos.fcp</field>
+        <field name="view_mode">tree,form</field>
+    </record>
     <record id="action_open_carga_recursos_csf" model="ir.actions.act_window">
         <field name="name">Carga Recursos CSF</field>
         <field name="res_model">import.recursos.csf</field>
@@ -122,6 +127,7 @@
     <menuitem id="menu_carga_sentencias" name="Cargar Sentencias" parent="menu_carga_extractos" action="action_open_carga_sentencias"/>
     <menuitem id="menu_carga_mutuos" name="Cargar Mutuos" parent="menu_carga_extractos" action="action_open_carga_mutuos"/>
     <menuitem id="menu_carga_recursos_fcl" name="Fideicomiso Cuantum Libranzas (FCL)" parent="menu_recursos_recompra" action="action_open_carga_recursos_fcl"/>
+    <menuitem id="menu_carga_recursos_fcp" name="Fideicomiso Cuantum P (FCP)" parent="menu_recursos_recompra" action="action_open_carga_recursos_fcp"/>
     <menuitem id="menu_carga_recursos_csf" name="Gestores Cuantum (CSF)" parent="menu_recursos_recompra" action="action_open_carga_recursos_csf"/>
     <menuitem id="menu_state_titulo" name="Estado Titulos" parent="menu_conf" action="action_open_state_titulo"/>
     <menuitem id="menu_state_periodos" name="Estado Periodos" parent="menu_conf" action="action_open_state_periodo"/>

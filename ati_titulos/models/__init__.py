@@ -18,7 +18,9 @@ from . import import_factoring
 from . import import_mutuos
 from . import recurso_recompra_fcl
 from . import recurso_recompra_csf
+from . import recurso_recompra_fcp
 from . import import_recursos_fcl
 from . import import_recursos_csf
+from . import import_recursos_fcp
 from . import import_titulo_oferta
 from . import titulo_oferta

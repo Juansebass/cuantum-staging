@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from datetime import datetime
@@ -11,10 +9,10 @@ _logger = logging.getLogger(__name__)
 
 
 
-class ImportRecursosFCL(models.Model):
-    _name = 'import.recursos.fcl'
+class ImportRecursosFCP(models.Model):
+    _name = 'import.recursos.fcp'
     _order = "fch_procesado desc"
-    _description = 'Modelo para importacion de recursos de recompra FCL'
+    _description = 'Modelo para importacion de recursos de recompra FCP'
 
     def btn_process(self):
         _procesados = ""
@@ -98,7 +96,7 @@ class ImportRecursosFCL(models.Model):
 
                     #Creamos recurso en proceso de recompra
 
-                    self.env['ati.recurso.recompra.fcl'].sudo().create(vals)
+                    self.env['ati.recurso.recompra.fcp'].sudo().create(vals)
 
 
                     _procesados += "{} \n".format(documento)

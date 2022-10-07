@@ -11,5 +11,6 @@ class RecursoRecompraCSF(models.Model):
     name = fields.Char('Nombre')
     date = fields.Date('Fecha')
     value = fields.Float('Valores')
+    investment_type = fields.Many2one('ati.investment.type','Producto')
     movement_type = fields.Many2one('ati.movement.type','Movimiento')
     buyer = fields.Many2one('res.partner','Comprador',required=1)
