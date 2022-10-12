@@ -72,10 +72,10 @@ class ImportOfertaTitulos(models.Model):
                     else:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no contiene pagador, contenido de linea: {1}".format(i, line))
                     if fch_negociacion != '':
-                        fecha_negociacion = datetime.strptime(fch_negociacion, '%d/%m/%y')
+                        fecha_negociacion = datetime.strptime(fch_negociacion, '%d/%m/%Y')
                         vals['bonding_date'] = fecha_negociacion
                     if fch_vencimiento != '':
-                        fecha_vencimiento = datetime.strptime(fch_vencimiento, '%d/%m/%y')
+                        fecha_vencimiento = datetime.strptime(fch_vencimiento, '%d/%m/%Y')
                         vals['redemption_date'] = fecha_vencimiento
                     if tasa_desc != '':
                         vals['fee'] = float(tasa_desc.replace(',','.').replace('%',''))
