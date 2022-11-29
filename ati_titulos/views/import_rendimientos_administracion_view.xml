@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record model="ir.ui.view" id="import_rendimientos_administracion_view_form">
+		<field name="name">import.rendimientos.administracion.view.form</field>
+		<field name="model">import.rendimientos.administracion</field>
+		<field name="arch" type="xml">
+			<form string="Importar Administracion y Rendimientos">
+				<header>
+					<button name="btn_process" type="object" string="Procesar" states="draft" />
+					<field name="state" widget="statusbar" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="client_file" widget="binary"/>
+							<field name="month" />
+							<field name="year" />
+						</group>
+						<group>
+							<field name="delimiter" />
+							<field name="skip_first_line" />
+							<field name="client_match" />
+							<field name="responsable" readonly='1'/>
+                			<field name="fch_procesado" readonly='1'/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Contenido" >
+							<field name="file_content" readonly="1"/>
+						</page>
+						<page string="No procesados">
+							<field name="not_processed_content" readonly="1"/>
+						</page>
+                        <page string="Rendimientos y Administracion Cargados">
+                                <field name="ren_adm_cargados" readonly="1"/>
+                        </page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="import_rendimientos_administracion_tree">
+		<field name="name">import.rendimientos.administracion.view.tree</field>
+		<field name="model">import.rendimientos.administracion</field>
+		<field name="arch" type="xml">
+		<tree string="Import Rendimientos y Administracion">
+			<field name="name" />
+			<field name="client_file" />
+			<field name="state" />
+		</tree>
+		</field>
+	</record>
+
+</odoo>

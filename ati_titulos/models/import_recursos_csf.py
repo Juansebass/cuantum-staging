@@ -60,6 +60,8 @@ class ImportRecursosCSF(models.Model):
                 vals.clear()
 
                 client = self.env['res.partner'].search([(self.client_match,'=',documento)])
+                if len(client) > 1:
+                    raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, tienes mas de un cliente con el mismo documento, contenido de linea: {1}".format(i, line))
                 if len(client) > 0:
                     
                     # Carga vals
@@ -67,7 +69,7 @@ class ImportRecursosCSF(models.Model):
                     vals['buyer'] = client.id
                     
                     if fecha != '':
-                        fecha_recurso = datetime.strptime(fecha, '%d/%m/%y')
+                        fecha_recurso = datetime.strptime(fecha, '%d/%m/%Y')
                         vals['date'] = fecha_recurso
                     else:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la primera columna que refiere al la fecha esta vacia, contenido de linea: {1}".format(i, line))
@@ -85,7 +87,7 @@ class ImportRecursosCSF(models.Model):
                         
                         vals['movement_type'] = mov_tmp.id
                     else:
-                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la tercera columna que refiere al movimiento esta vacia, contenido de linea: {1}".format(i, line))
 
                     if linea_neogcio != '':
                         inves_type = self.env['ati.investment.type'].search([('code', '=', linea_neogcio)])
@@ -93,8 +95,8 @@ class ImportRecursosCSF(models.Model):
                             raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra una linea de negocio con codigo {1}, contenido de linea: {2}".format(i, linea_neogcio, line))
                         
                         vals['investment_type'] = inves_type.id
-                    else:
-                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))
+                    elif movimiento == 'COMPRA' or movimiento == 'APLICACION':
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la séptima columna que refiere a la linea de negocio esta vacia, contenido de linea: {1}".format(i, line))
 
                     #Creamos recurso en proceso de recompra
 

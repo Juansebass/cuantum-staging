@@ -101,19 +101,45 @@
                     </field>
                     <group name="totales_csf" string="Totales CSF">
                         <group>
-                            <field name="compra_csf" />
-                            <field name="retiro_csf" />
+                            <separator string="Factoring" colspan="1"/>
+                            <field name="compra_fac_csf" />
+                            <field name="aplicacion_fac_recaudo_csf" />                     
+                            <field name="total_fac_csf"/>
+                            <separator string="Libranzas" colspan="1"/>
+                            <field name="compra_lib_csf" />
+                            <field name="aplicacion_lib_recaudo_csf" />                     
+                            <field name="total_lib_csf"/>
                         </group>
                         <group>
-                            <field name="adicion_csf" />
-                            <field name="aplicacion_recaudo_csf" />
+                            <separator string="Sentencias" colspan="1"/>
+                            <field name="compra_sen_csf" />
+                            <field name="aplicacion_sen_recaudo_csf" />                     
+                            <field name="total_sen_csf"/>
+                            <separator string="Mutuos" colspan="1"/>
+                            <field name="compra_mut_csf" />
+                            <field name="aplicacion_mut_recaudo_csf" />                     
+                            <field name="total_mut_csf"/>
                         </group>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                <label for="total_csf" string="TOTAL RETIRO CSF"/>
+                                <div class="o_row">                  
+                                    <label for="retiro_total_csf" string="$"/>                     
+                                    <field name="retiro_total_csf"/>      
+                                </div>  
+                            </div>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                <label for="total_csf" string="TOTAL ADICION CSF"/>
+                                <div class="o_row">                  
+                                    <label for="adicion_total_csf" string="$"/>                     
+                                    <field name="adicion_total_csf"/>      
+                                </div>
+                            </div>
                             <div class="o_group_col_12" style="text-align: right;">
                                 <label for="total_csf" string="TOTAL CSF"/>
                                 <div class="o_row">                  
                                     <label for="total_csf" string="$"/>                     
                                     <field name="total_csf"/>      
-                                </div>  
+                                </div>
                             </div>
                     </group>
                 </page>

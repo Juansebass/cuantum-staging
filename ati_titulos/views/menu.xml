@@ -43,6 +43,18 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <!-- Actions Cargas Rendimientos y Administracion -->
+    <record id="action_open_carga_rendimientos_administracion" model="ir.actions.act_window">
+        <field name="name">Carga Rendimientos y Administracion</field>
+        <field name="res_model">import.rendimientos.administracion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_open_rendimientos_administracion" model="ir.actions.act_window">
+        <field name="name">Rendimientos y Administracion</field>
+        <field name="res_model">ati.rendimientos.administracion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <!-- Actions Cargas Recursos de Recompra-->
     <record id="action_open_carga_recursos_fcl" model="ir.actions.act_window">
         <field name="name">Carga Recursos FCL</field>
@@ -117,6 +129,7 @@
     <menuitem id="menu_titulos_ofer" sequence="2" name="Titulos en Oferta" parent="menu_tit" />
     <menuitem id="menu_carga_extractos" sequence="3" name="Carga de extractos" parent="menu_tit"/>
     <menuitem id="menu_recursos_recompra" sequence="4" name="Carga recursos en p.recompra" parent="menu_tit"/>
+    <menuitem id="menu_rendimiento_administracion" sequence="5" name="Rendimientos y administracion" parent="menu_tit"/>
     <menuitem id="menu_conf" sequence="10" name="Configuraciones" parent="menu_tit"/>
 
     <!-- Menus de tercer nivel-->
@@ -136,6 +149,8 @@
     <menuitem id="menu_emisor" name="Emisores" parent="menu_conf" action="action_open_emisor"/>
     <menuitem id="menu_pagador" name="Pagadores" parent="menu_conf" action="action_open_pagador"/>
     <menuitem id="menu_investment_type" name="Tipo de Inversiones" parent="menu_conf" action="action_open_investment_type"/>
+    <menuitem id="menu_rendimientos_administracions" name="Rendimientos y Administracion" parent="menu_rendimiento_administracion" action="action_open_rendimientos_administracion"/>
+    <menuitem id="menu_carga_rendimientos_administracions" name="Cargar Rendimientos y Administracion" parent="menu_rendimiento_administracion" action="action_open_carga_rendimientos_administracion"/>
     
 
 </odoo>

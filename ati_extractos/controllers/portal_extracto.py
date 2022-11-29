@@ -75,6 +75,6 @@ class ExtractoCustomperPortal(CustomerPortal):
             return request.redirect('/my')
 
         if report_type in ('html', 'pdf', 'text'):
-            return self._show_report(model=order_sudo, report_type=report_type, report_ref='ati_extractos.action_report_extracto', download=download)
+            return self._show_report(model=order_sudo, report_type=report_type, report_ref='ati_extractos.report_ati_extracto', download=download)
 
         

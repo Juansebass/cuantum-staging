@@ -65,6 +65,8 @@ class ImportMutuo(models.Model):
                 vals.clear()
 
                 client = self.env['res.partner'].search([(self.client_match,'=',ident_comprador)])
+                if len(client) > 1:
+                    raise ValidationError("El CSV no se procesara por cliente con nit repetido en sistema. El nit {0} lo tienen dos o mas clientes".format(ident_comprador))
                 if client:
 
                     # Carga vals
@@ -80,7 +82,7 @@ class ImportMutuo(models.Model):
                         if len(partner_emisor) > 0:
                             vals['issuing'] = partner_emisor.id
                         else:
-                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el emisor {1}, contenido de linea: {2}".format(i, emisor, line))
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el emisor {1} no existe, contenido de linea: {2}".format(i, emisor, line))
                     else:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no contiene emisor, contenido de linea: {1}".format(i, line))
                     if pagador != '':
@@ -104,9 +106,13 @@ class ImportMutuo(models.Model):
                     vals['investment_type'] = inves_type.id
                     vals['client'] = client.id
                     vals['manager'] = self.manager.id
-                    vpn_des = vpn_des.replace('$','').replace(' ', '').replace('.', '').replace(',', '.')
+                    vpn_des = vpn_des.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
                     vals['value'] = vpn_des
-                    recaudo = recaudo.replace('$','').replace(' ', '').replace('.', '').replace(',', '.')
+                    recaudo = recaudo.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
+                    try:
+                        float(recaudo)
+                    except:
+                        recaudo = '0.00'
 
                     # Concepto o estado de titulo
                     if concepto != '':

@@ -10,7 +10,10 @@
             <field name="subject">{{object.company_id.name}} Extracto (Ref {{object.name}})</field>
             <field name="body_html" type="html">
                 <div>
-                    <h1>Extracto</h1>
+                    <h1>Buenos días, <span><t t-out="object.cliente.name or ''" data-oe-t-inline="true" oe-keep-contenteditable="" contenteditable="false">Cliente</t></span></h1>
+<p>Hemos generado el extracto correspondiente al periodo <t t-out="object.month" data-oe-t-inline="true" contenteditable="false"></t> / <t t-out="object.year" data-oe-t-inline="true" contenteditable="false"></t>. 
+
+Adjunto encontrará el documento.</p>
                 </div>
             </field>
             <field name="report_template" ref="ati_extractos.report_ati_extracto" />

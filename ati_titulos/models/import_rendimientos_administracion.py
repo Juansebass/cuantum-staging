@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from datetime import datetime
@@ -11,10 +9,10 @@ _logger = logging.getLogger(__name__)
 
 
 
-class ImportRecursosFCL(models.Model):
-    _name = 'import.recursos.fcl'
+class ImportRendimientosAdministracion(models.Model):
+    _name = 'import.rendimientos.administracion'
     _order = "fch_procesado desc"
-    _description = 'Modelo para importacion de recursos de recompra FCL'
+    _description = 'Rendimientos y Administracion'
 
     def btn_process(self):
         _procesados = ""
@@ -48,7 +46,7 @@ class ImportRecursosFCL(models.Model):
             if self.skip_first_line and i == 0:
                 continue
             lista = line.split(self.delimiter)
-            if len(lista) > 6:
+            if len(lista) > 7:
                 fecha = lista[0]
                 valores = lista[1]
                 movimiento = lista[2]
@@ -56,12 +54,11 @@ class ImportRecursosFCL(models.Model):
                 documento = lista[4]
                 tip_documento = lista[5]
                 linea_neogcio = lista[6]
+                gestor = lista[7]
 
                 vals.clear()
 
                 client = self.env['res.partner'].search([(self.client_match,'=',documento)])
-                if len(client) > 1:
-                    raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, tienes mas de un cliente con el mismo documento, contenido de linea: {1}".format(i, line))
                 if len(client) > 0:
                     
                     # Carga vals
@@ -81,13 +78,12 @@ class ImportRecursosFCL(models.Model):
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))
                     
                     if movimiento != '':
-                        mov_tmp = self.env['ati.movement.type'].search([('code','=',movimiento)])
-                        if len(mov_tmp) < 1:
-                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra movimiento con codigo {1}, contenido de linea: {2}".format(i, mov_tmp, line))
+                        if movimiento not in ['RENDIMIENTO','ADMINISTRACION']:
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra movimiento con codigo {1}, contenido de linea: {2}".format(i, movimiento, line))
                         
-                        vals['movement_type'] = mov_tmp.id
+                        vals['movement_type'] = movimiento
                     else:
-                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la tercera columna que refiere al movimiento esta vacia, contenido de linea: {1}".format(i, line))
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))
 
                     if linea_neogcio != '':
                         inves_type = self.env['ati.investment.type'].search([('code', '=', linea_neogcio)])
@@ -96,11 +92,20 @@ class ImportRecursosFCL(models.Model):
                         
                         vals['investment_type'] = inves_type.id
                     else:
-                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la séptima columna que refiere a la linea de negocio esta vacia, contenido de linea: {1}".format(i, line))
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la septima columna que refiere a la linea de negocio esta vacia, contenido de linea: {1}".format(i, line))
+
+                    if gestor != '':
+                        manager = self.env['ati.gestor'].search([('code', '=', gestor)])
+                        if len(inves_type) < 1:
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra un Gestor con codigo {1}, contenido de linea: {2}".format(i, gestor, line))
+                        
+                        vals['manager'] = manager.id
+                    else:
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la octava columna que refiere al gestor esta vacia, contenido de linea: {1}".format(i, line))
 
                     #Creamos recurso en proceso de recompra
 
-                    self.env['ati.recurso.recompra.fcl'].sudo().create(vals)
+                    self.env['ati.rendimientos.administracion'].sudo().create(vals)
 
 
                     _procesados += "{} \n".format(documento)
@@ -111,8 +116,8 @@ class ImportRecursosFCL(models.Model):
                 continue
             else:
                 _logger.warning("***** lista: {0}".format(len(lista)))
-                raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 6 columnas".format(i, line))
-        self.recursos_cargados = _procesados
+                raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 8 columnas".format(i, line))
+        self.ren_adm_cargados = _procesados
         self.not_processed_content = _noprocesados
         self.responsable = self.env.user.partner_id
         self.fch_procesado = datetime.today()
@@ -128,6 +133,6 @@ class ImportRecursosFCL(models.Model):
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado')],string='Estado',default='draft')
     file_content = fields.Text('Texto archivo')
     not_processed_content = fields.Text('Texto no procesado')
-    recursos_cargados = fields.Text('Recursos Cargados')
+    ren_adm_cargados = fields.Text('Recursos Cargados')
     skip_first_line = fields.Boolean('Saltear primera linea',default=True)
     client_match = fields.Selection(selection=[('vat','Vat')],string='Buscar clientes por...',default='vat')

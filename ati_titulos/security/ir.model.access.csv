@@ -19,6 +19,8 @@ access_import_recursos_fcl_user,import.recursos.fcl.user,model_import_recursos_f
 access_import_recursos_fcp_user,import.recursos.fcp.user,model_import_recursos_fcp,base.group_user,1,1,1,1
 access_ati_recurso_recompra_csf_user,ati.recurso.recompra.csf.user,model_ati_recurso_recompra_csf,base.group_user,1,1,1,1
 access_import_recursos_csf_user,import.recursos.csf.user,model_import_recursos_csf,base.group_user,1,1,1,1
+access_ati_rendimientos_administracion_user,ati.rendimientos.administracion.user,model_ati_rendimientos_administracion,base.group_user,1,1,1,1
+access_import_rendimientos_administracion_user,import.rendimientos.administracion.user,model_import_rendimientos_administracion,base.group_user,1,1,1,1
 
 access_cuantum_crm_lead_riesgos,cuantum_crm_lead_riesgo,crm.model_crm_lead,ati_titulos.group_cuatum_riesgos,1,1,0,0
 access_cuantum_crm_tag_riesgos,cuantum_crm_tag_riesgos,sales_team.model_crm_tag,ati_titulos.group_cuatum_riesgos,1,1,0,0

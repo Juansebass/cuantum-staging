@@ -34,6 +34,8 @@
         'views/import_recursos_csf.xml',
         'views/import_recursos_fcp.xml',
         'views/import_titulo_oferta_view.xml',
+        'views/import_rendimientos_administracion_view.xml',
+        'views/rendimientos_administracion_view.xml',
         'views/menu.xml',
         'data/state_titulo_data.xml',
         'data/movement_type_data.xml',

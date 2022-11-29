@@ -15,7 +15,7 @@ class ResPartner(models.Model):
             rec.retiro_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
             rec.adicion_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
             rec.aplicacion_recaudo_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APLICACION'))
-            rec.total_fcp = sum([rec.adicion_fcp,rec.aplicacion_recaudo_fcp]) - sum([rec.compra_fcl,rec.retiro_fcp])
+            rec.total_fcp = sum([rec.adicion_fcp,rec.aplicacion_recaudo_fcp]) - sum([rec.compra_fcp,rec.retiro_fcp])
 
     @api.depends('recursos_recompra_fcl_ids')
     def _compute_totales_fcl(self):
@@ -29,11 +29,27 @@ class ResPartner(models.Model):
     @api.depends('recursos_recompra_csf_ids')
     def _compute_totales_csf(self):
         for rec in self:
-            rec.compra_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'COMPRA'))
-            rec.retiro_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
-            rec.adicion_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
-            rec.aplicacion_recaudo_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APLICACION'))
-            rec.total_csf = sum([rec.adicion_csf,rec.aplicacion_recaudo_csf]) - sum([rec.compra_csf,rec.retiro_csf])
+            #Factoring
+            rec.compra_fac_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'COMPRA' and x.investment_type.code == 'FAC'))
+            rec.aplicacion_fac_recaudo_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APLICACION' and x.investment_type.code == 'FAC'))
+            rec.total_fac_csf = sum([rec.aplicacion_fac_recaudo_csf]) - sum([rec.compra_fac_csf])
+            #Libraznas
+            rec.compra_lib_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'COMPRA' and x.investment_type.code == 'LIB'))
+            rec.aplicacion_lib_recaudo_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APLICACION' and x.investment_type.code == 'LIB'))
+            rec.total_lib_csf = sum([rec.aplicacion_lib_recaudo_csf]) - sum([rec.compra_lib_csf])
+            #Sentencias
+            rec.compra_sen_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'COMPRA' and x.investment_type.code == 'SEN'))
+            rec.aplicacion_sen_recaudo_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APLICACION' and x.investment_type.code == 'SEN'))
+            rec.total_sen_csf = sum([rec.aplicacion_sen_recaudo_csf]) - sum([rec.compra_sen_csf])
+            #Mutuos
+            rec.compra_mut_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'COMPRA' and x.investment_type.code == 'MUT'))
+            rec.aplicacion_mut_recaudo_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APLICACION' and x.investment_type.code == 'MUT'))
+            rec.total_mut_csf = sum([rec.aplicacion_mut_recaudo_csf]) - sum([rec.compra_mut_csf])
+
+            #TOTALES
+            rec.retiro_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
+            rec.adicion_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
+            rec.total_csf = sum([rec.total_mut_csf,rec.total_sen_csf,rec.total_lib_csf,rec.total_fac_csf, rec.retiro_total_csf, rec.adicion_total_csf])
 
     #Campos informativos
     rep_legal = fields.Many2one('res.partner','Representante Legal')
@@ -73,11 +89,25 @@ class ResPartner(models.Model):
     aplicacion_recaudo_fcl = fields.Float('Total A. de Recuado', compute=_compute_totales_fcl)
     total_fcl = fields.Float('Total FCL', compute=_compute_totales_fcl)
     #TOTALES CSF
-    compra_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
-    retiro_csf = fields.Float('Total Retiro', compute=_compute_totales_csf)
-    adicion_csf = fields.Float('Total Adicion', compute=_compute_totales_csf)
-    aplicacion_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
     total_csf = fields.Float('Total CSF', compute=_compute_totales_csf)
+    adicion_total_csf = fields.Float('Total Adicion CSF', compute=_compute_totales_csf)
+    retiro_total_csf = fields.Float('Total Retiro CSF', compute=_compute_totales_csf)
+    #-Factoring CSF
+    compra_fac_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
+    aplicacion_fac_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
+    total_fac_csf = fields.Float('Total Factoring CSF', compute=_compute_totales_csf)
+    #-Libranzas CSF
+    compra_lib_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
+    aplicacion_lib_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
+    total_lib_csf = fields.Float('Total Libranzas CSF', compute=_compute_totales_csf)
+    #-Sentencias CSF
+    compra_sen_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
+    aplicacion_sen_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
+    total_sen_csf = fields.Float('Total Sentencias CSF', compute=_compute_totales_csf)
+    #-Mutuos CSF
+    compra_mut_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
+    aplicacion_mut_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
+    total_mut_csf = fields.Float('Total Mutuos CSF', compute=_compute_totales_csf)
 
     def enviar_calificado_crm(self):
         for rec in self:

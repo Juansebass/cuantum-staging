@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-     <record id="action_report_extracto" model="ir.actions.report">
+     <!--<record id="action_report_extracto" model="ir.actions.report">
             <field name="name">Extracto</field>
             <field name="model">ati.extracto</field>
             <field name="report_type">qweb-pdf</field>
@@ -10,7 +10,7 @@
     	    <field name="print_report_name">'Extracto - %s' % (object.name)</field>
             <field name="binding_model_id" ref="model_ati_extracto"/>
             <field name="binding_type">report</field>
-    </record>
+    </record>-->
 
     <report id="report_ati_extracto"
             string="Extracto"
@@ -31,13 +31,23 @@
                               color: black;
                               }
                         </style>
-                        <h2>Extracto <span t-field="o.name"/></h2>
+                        <div style="font-size:14px; margin-top: -30px; margin-right: -10px; margin-left: 600px; border-radius: 4px; border: 2px solid black">
+                          <p style="text-align:center; color: white; background-color: #619f11; padding: 0px !important; margin-top: 0px !important;">ESTADO DEL PORTAFOLIO DE ACTIVOS</p>
+                          <p style="font-size:14px; text-align:center"><strong><span t-field="o.cliente.name"/></strong></p>
+                          <p style="text-align:center">PERIODO: <span t-field="o.month"/>/<span t-field="o.year"/></p>
+                        </div>
                         <br/>
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                        <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
+                        <p style="font-size:12px; margin-right: -10px; margin-bottom:10px border-radius: 4px; !important ; border-spacing: 0px; padding: 10px; border: 2px solid black">Este documento es para uso exclusivo de su destinatario y está sometido a reserva a favor este. La información financiera aquí contenida es de carácter confidencial y, por lo tanto, el destinatario deberá tomar todas las medidas necesarias para asegurar, bajo su responsabilidad, el secreto y la confidencialidad de los documentos e informaciones aquí contenidos. En este sentido, Cuantum Soluciones Financieras S.A, sus colaboradores y subordinados no se hacen responsables por las consecuencias y/o perjuicios generados directa y/o indirectamente por el uso de la información contenida en este mensaje y/o sus anexos por parte del destinatario. Si usted no es el destinatario final e intencional del mensaje, por favor infórmenos de inmediato y elimine el mensaje y sus anexos de su computador y sistema de comunicaciones.
+Estos datos son objeto de protección bajo las políticas políticas de uso de información establecidas por nuestra organización, a menos que exista instrucción en contrario, la cual deberá ser enviada al correo electrónico servicioalcliente@cuantum.co
+<br/>FCP = Fondo de Capital Privado Statum
+<br/>FCL = Fideicomiso Cuantum Libranzas
+<br/>CSF = Cuantum Soluciones Financieras
+</p>
+
+                        <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
                             <thead>
                                 <tr class="text-center" style="background-color: #619f11; font-size: 14px;">
-                                    <th COLSPAN="7" style="color: white;width:100%;"><strong>Resumen de las inversiones</strong></th>          
+                                    <th COLSPAN="8" style="color: white;width:100%;"><strong>Resumen de las inversiones</strong></th>          
                                 </tr>
                                 <tr style="background-color: #eae8e9; font-size: 12px; text-align: center; border-bottom: 2px solid black; border-top: 2px solid black;">
                                     <th style="width:34%">Descripcion</th>
@@ -46,73 +56,46 @@
                                     <th style="width:20%">Diferencia</th>
                                     <th style="width:2%">Participacion</th>
                                     <th style="width:2%">Rendimiento Causado</th>
-                                    <th style="width:2%">Tasa rendimiento</th>
+                                    <th style="width:2%">Administracion</th>
+                                    <th style="width:2%">Retorno Proyectado</th>
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody" style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
                                 <tr class="ultima" style="color: black;" t-foreach="o.resumen_inversion_ids" t-as="i">
-                                  <td><t t-if="i.display_type != 'line_section'"><span t-if="i.name" t-field="i.name"/></t>
+                                  <td><t t-if="i.display_type != 'line_section'"><span t-if="i.name" t-field="i.name" style="margin-left: 20px;"/></t>
                                               <t t-if="i.display_type == 'line_section'"><strong><span t-if="i.name != 'TOTAL'" t-field="i.name" style="font-weight: bold;"/></strong></t>
                                               <span t-if="not i.name" style="font-weight: bold;"><strong>TOTAL</strong></span>
                                               </td>
-                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-field="i.valor_actual"/></td>
-                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-field="i.valor_anterior"/></td>
-                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-field="i.diferencia"/></td>
-                                  <td><span t-if="i.display_type != 'line_section'" t-field="i.participacion"/><t t-if="i.display_type != 'line_section'">%</t></td>
-                                  <td><span t-if="i.display_type != 'line_section'" t-field="i.rendimiento_causado"/><t t-if="i.display_type != 'line_section'">%</t></td>
-                                  <td><span t-if="i.display_type != 'line_section'" t-field="i.tasa_rendimiento"/><t t-if="i.display_type != 'line_section'">%</t></td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.valor_actual).replace(',', '.')"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.valor_anterior).replace(',', '.')"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.diferencia).replace(',', '.')"/></td>
+                                  <td><span t-if="i.display_type != 'line_section'"  t-esc="str('%.2f'%i.participacion).replace('.', ',')"/><t t-if="i.display_type != 'line_section'">%</t></td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.rendimiento_causado).replace(',', '.')"/></td>
+                                  <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.administracion).replace(',', '.')"/></td>
+                                  <td><span t-if="i.display_type != 'line_section'" t-esc="str('%.2f'%i.tasa_rendimiento).replace('.', ',')"/><t t-if="i.display_type != 'line_section'">%</t></td>
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
                         
-                        <br/>
-                          <!-- #TODO desde aca se puede ocultar, hasta tener lo de los graficos resueltos>
-                          <div class="row">
-                          <div class="col-5 text-center" style="border-top-left-radius: 25px;                                                                 border-top-right-radius: 25px;                                                                 background-color: #619f11;                                                                 font-size: 14px;                                                                  color: white;                                                                  width:100%;                                                                 padding: 5px;                                                                 margin-right: 5px;                                                                 font-weight: bold;">INVERSIONES POR FONDO</div>
-                          <div class="col-1"/>
-                          <div class="col-5 text-center" style="border-top-left-radius: 25px;                                                                 border-top-right-radius: 25px;                                                                 background-color: #619f11;                                                                 font-size: 14px;                                                                 color: white;                                                                  width:100%;                                                                 padding: 5px;                                                                  margin-left: 5px;                                                                 font-weight: bold;">COMPOSICION DEL PORTAFOLIO</div>
-                          </div>                                      
-                          <div class="row">
-                                <div class="col-5 text-center" style="border: 1px solid black;">
-                                  CONTENIDO<br/>1 
-                                </div>
-                              <div class="col-1"/>
-                              <div class="col-5 text-center" style="border: 1px solid black;">
-                                CONTENIDO<br/>2
-                              </div>
-                          </div>
-                         <#TODO hasta aca se puede ocultar, hasta tener lo de los graficos resueltos -->
-                         <p style="page-break-before:always;"> </p>
-                       <br/>
-                       <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                        <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
-                            <thead> 
-                                <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
-                                    <th COLSPAN="7" style="color: white;width:100%;">Estado del Portafolio</th>          
-                                </tr>
-                                <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
-                                    <th style="width:20%">Titulo</th>
-                                    <th style="width:10%">Tipo</th>
-                                    <th style="width:20%">Emisor</th>
-                                    <th style="width:20%">Pagador</th>
-                                    <th style="width:20%">Valor de portafolio</th>
-                                    <th style="width:10%">Tasa</th>
-                                </tr>
-                            </thead>
-                            <tbody class="invoice_tbody" style="color: black;">
-                                <tr t-foreach="o.detalle_titulos_ids" t-as="i">
-                                  <td><span t-field="i.titulo"/></td>
-                                  <td><span t-field="i.investment_type"/></td>
-                                  <td><span t-field="i.issuing"/></td>
-                                  <td><span t-field="i.payer"/></td>
-                                  <td>$<span t-field="i.value"/></td>
-                                  <td>%<span t-field="i.fee"/></td>
-                                </tr>
-                            </tbody>
+                        <p style="page-break-before:always;"> </p>
+                        
+                        <table class="table" style="border-collapse: collapse; width: 100%;" border="1">
+                          <tbody>
+                            <tr>
+                              <td class="text-center" style="width: 50%; text-align: center; background-color: #619f11; font-size: 14px; color: white;"><strong>COMPOSICION DEL PORTAFOLIO</strong></td>
+                              <td class="text-center" style="width: 50%; text-align: center; background-color: #619f11; font-size: 14px; color: white;"><strong>INVERSIONES POR FONDO</strong></td>
+                            </tr>
+                            <tr>
+                              <td style="width: 50%;  background-color: white;"><img style="display: block; margin-left: auto; margin-right: auto;" t-attf-src="data:image/png;base64,{{o.pie_composicion_portafolio}}" alt="" width="300" /></td>
+                              <td style="width: 50%;  background-color: white;"><img style="display: block; margin-left: auto; margin-right: auto;" t-attf-src="data:image/png;base64,{{o.pie_inversiones_fondo}}" alt="" width="300" /></td>
+                            </tr>
+                          </tbody>
                         </table>
-                        </div>
-                        <br/>
+
+                        <p style="page-break-before:always;"> </p>
+
+
+                         <!-- MOVIMIENTOS -->
                         <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
                         <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
                             <thead>
@@ -131,133 +114,17 @@
                                     <td style="background-color: #e9e9e9; font-weight: bold;"/>
                                   </t>
                                   <t t-if="i.display_type != 'line_section'">
-                                    <td><span t-field="i.name"/></td>
-                                    <td>$<span t-field="i.valor"/></td>
+                                    <td><span t-field="i.name" style="margin-left: 20px;"/></td>
+                                    <td>$<span t-esc="'{0:,.0f}'.format(i.valor).replace(',', '.')"/></td>
                                   </t>
                                 </tr>
                             </tbody>
                         </table>
                         </div>
                         
-                       <br/>
+                       <p style="page-break-before:always;"> </p>
                         
-                        <!-- MOVIMIENTOS -->
-                        
-                          <!--MOV FACTORING -->
-                          
-                        <!--t t-if="o.detalle_titulos_ids.investment_type == 'Factoring'"-->
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                          <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
-                              <thead> 
-                                  <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
-                                      <th COLSPAN="7" style="color: white;width:100%;">Movimientos Factoring</th>          
-                                  </tr>
-                                  <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
-                                      <th style="width:20%">Descripcion</th>
-                                      <th style="width:20%">Emisor</th>
-                                      <th style="width:20%">Pagador</th>
-                                      <th style="width:20%">Valor Recaudado</th>
-                                  </tr>
-                              </thead>
-                              <tbody class="invoice_tbody" style="color: black;">
-                                  <tr t-foreach="o.detalle_titulos_ids" t-as="i">
-                                    <td><span t-if="i.investment_type == 'Factoring'" t-field="i.titulo"/></td>
-                                    <td><span t-if="i.investment_type == 'Factoring'" t-field="i.issuing"/></td>
-                                    <td><span t-if="i.investment_type == 'Factoring'" t-field="i.payer"/></td>
-                                    <td><t t-if="i.investment_type == 'Factoring'">$</t><span t-if="i.investment_type == 'Factoring'" t-field="i.value"/></td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                        </div>  
-                       <!--/t-->  
-                       
-                       <br/>
-                       
-                       <!--MOV LIBRANZAS -->
-                       
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                          <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
-                              <thead> 
-                                  <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
-                                      <th COLSPAN="7" style="color: white;width:100%;">Movimientos Libranzas</th>          
-                                  </tr>
-                                  <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
-                                      <th style="width:20%">Descripcion</th>
-                                      <th style="width:20%">Emisor</th>
-                                      <th style="width:20%">Pagador</th>
-                                      <th style="width:20%">Valor Recaudado</th>
-                                  </tr>
-                              </thead>
-                              <tbody class="invoice_tbody" style="color: black;">
-                                  <tr t-foreach="o.detalle_titulos_ids" t-as="i">
-                                    <td><span t-if="i.investment_type == 'Libranzas'" t-field="i.titulo"/></td>
-                                    <td><span t-if="i.investment_type == 'Libranzas'" t-field="i.issuing"/></td>
-                                    <td><span t-if="i.investment_type == 'Libranzas'" t-field="i.payer"/></td>
-                                    <td><t t-if="i.investment_type == 'Libranzas'">$</t><span t-if="i.investment_type == 'Libranzas'" t-field="i.value"/></td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                        </div>  
-                        
-                        <br/>
-                        
-                       <!--MOV FCL -->
-                       
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                          <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
-                              <thead> 
-                                  <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
-                                      <th COLSPAN="7" style="color: white;width:100%;">Movimientos FCL</th>          
-                                  </tr>
-                                  <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
-                                      <th style="width:20%">Descripcion</th>
-                                      <th style="width:20%">Emisor</th>
-                                      <th style="width:20%">Pagador</th>
-                                      <th style="width:20%">Valor Recaudado</th>
-                                  </tr>
-                              </thead>
-                              <tbody class="invoice_tbody" style="color: black;">
-                                  <tr t-foreach="o.detalle_titulos_ids" t-as="i">
-                                    <td><span t-if="i.investment_type == 'Fcl'" t-field="i.titulo"/></td>
-                                    <td><span t-if="i.investment_type == 'Fcl'" t-field="i.issuing"/></td>
-                                    <td><span t-if="i.investment_type == 'Fcl'" t-field="i.payer"/></td>
-                                    <td><t t-if="i.investment_type == 'Fcl'">$</t><span t-if="i.investment_type == 'Fcl'" t-field="i.value"/></td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                        </div>  
-                        
-                         <br/>
-                         
-                        <!--MOV FCP -->
-                       
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                          <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
-                              <thead> 
-                                  <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
-                                      <th COLSPAN="7" style="color: white;width:100%;">Movimientos FCP</th>          
-                                  </tr>
-                                  <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
-                                      <th style="width:20%">Descripcion</th>
-                                      <th style="width:20%">Emisor</th>
-                                      <th style="width:20%">Pagador</th>
-                                      <th style="width:20%">Valor Recaudado</th>
-                                  </tr>
-                              </thead>
-                              <tbody class="invoice_tbody" style="color: black;">
-                                  <tr t-foreach="o.detalle_titulos_ids" t-as="i">
-                                    <td><span t-if="i.investment_type == 'Fcp'" t-field="i.titulo"/></td>
-                                    <td><span t-if="i.investment_type == 'Fcp'" t-field="i.issuing"/></td>
-                                    <td><span t-if="i.investment_type == 'Fcp'" t-field="i.payer"/></td>
-                                    <td><t t-if="i.investment_type == 'Fcp'">$</t><span t-if="i.investment_type == 'Fcp'" t-field="i.value"/></td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                        </div> 
-                        
-                         <br/>
-                         
-                         <!--MOV MUTUOS -->
+                        <!-- Estado del Portafolio -->
                        
                         <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
                           <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
@@ -265,56 +132,60 @@
                                   <tr style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
                                       <th COLSPAN="7">
                                         
-                                          <div class="text-left" style="color: white; width:100%;">Estado del Portafolio</div>
-                                          <div class="text-right" style="color: white; width:100%;">Gestor: Cuantum</div>
+                                          <div class="text-center" style="color: white; width:100%;">Estado del Portafolio</div>
                                         
                                       </th>
                                   </tr>
                                   <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
                                       <th style="width:20%">Descripcion</th>
-                                      <th style="width:20%">Emisor</th>
-                                      <th style="width:20%">Pagador</th>
-                                      <th style="width:20%">Valor Recaudado</th>
-                                  </tr>
-                              </thead>
-                              <tbody class="invoice_tbody" style="color: black;">
-                                  <tr t-foreach="o.detalle_titulos_ids" t-as="i">
-                                    <td><span t-if="i.investment_type == 'Mutuos'" t-field="i.titulo"/></td>
-                                    <td><span t-if="i.investment_type == 'Mutuos'" t-field="i.issuing"/></td>
-                                    <td><span t-if="i.investment_type == 'Mutuos'" t-field="i.payer"/></td>
-                                    <td><t t-if="i.investment_type == 'Mutuos'">$</t><span t-if="i.investment_type == 'Mutuos'" t-field="i.value"/></td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                        </div> 
-                        
-                          <br/>
-                          
-                         <!--ESTADO DEL PORTAFOLIO x GESTOR -->
-                       
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                          <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
-                              <thead> 
-                                  <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
-                                      <th COLSPAN="7" style="color: white;width:100%;">Movimientos FCP</th>          
-                                  </tr>
-                                  <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
-                                      <th style="width:20%">Descripcion</th>
-                                      <th style="width:20%">Emisor</th>
                                       <th style="width:20%">Valor</th>
-                                      <th style="width:20%">Tasa</th>
+                                      <th style="width:20%">Porcentaje</th>
                                   </tr>
                               </thead>
                               <tbody class="invoice_tbody" style="color: black;">
-                                  <tr t-foreach="o.detalle_titulos_ids" t-as="i">
-                                    <td><span t-if="i.investment_type == 'Mutuos'" t-field="i.titulo"/></td>
-                                    <td><span t-if="i.investment_type == 'Mutuos'" t-field="i.issuing"/></td>
-                                    <td><span t-if="i.investment_type == 'Mutuos'" t-field="i.payer"/></td>
-                                    <td><t t-if="i.investment_type == 'Mutuos'">$</t><span t-if="i.investment_type == 'Mutuos'" t-field="i.value"/></td>
-                                  </tr>
+                                  <tr t-foreach="o.estado_portafolios_ids" t-as="i">
+                                  <t t-if="i.display_type == 'line_section'">
+                                    <td style="background-color: #e9e9e9; font-weight: bold;"><span t-field="i.name"/></td>
+                                    <td style="background-color: #e9e9e9; font-weight: bold;"/>
+                                    <td style="background-color: #e9e9e9; font-weight: bold;"/>
+                                  </t>
+                                  <t t-if="i.display_type != 'line_section'">
+                                    <td><span t-field="i.name" style="margin-left: 20px;"/></td>
+                                    <td>$<span t-esc="'{0:,.0f}'.format(i.valor).replace(',', '.')"/></td>
+                                    <td><span t-esc="str('%.2f'%i.porcentaje).replace('.', ',')"/>%</td>
+                                  </t>
+                                </tr>
                               </tbody>
                           </table>
-                        </div> 
+                        </div>
+
+                        <p style="page-break-before:always;"> </p>
+
+                        <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
+                            <thead> 
+                                <tr class="text-center" style="background-color: #619f11; font-size: 14px; border-bottom: 2px solid black;">
+                                    <th COLSPAN="7" style="font-size: 14px; color: white;width:100%;">Estado del Portafolio</th>          
+                                </tr>
+                                <tr style="background-color: #eae8e9; font-size: 12px; color: black; border-bottom: 2px solid black;">
+                                    <th style="width:20%">Titulo</th>
+                                    <th style="width:10%">Tipo</th>
+                                    <th style="width:20%">Emisor</th>
+                                    <th style="width:20%">Pagador</th>
+                                    <th style="width:20%">Valor de portafolio</th>
+                                    <th style="width:10%">Retorno Proyectado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody" style="color: black;">
+                                <tr t-foreach="o.detalle_titulos_ids" t-as="i">
+                                  <td><span t-field="i.titulo"/></td>
+                                  <td><span t-field="i.investment_type"/></td>
+                                  <td><span t-field="i.issuing"/></td>
+                                  <td><span t-field="i.payer"/></td>
+                                  <td>$<span t-field="i.value"/></td>
+                                  <td><span t-field="i.fee"/>%</td>
+                                </tr>
+                            </tbody>
+                        </table>
                         
                     </div>
                 </t>
