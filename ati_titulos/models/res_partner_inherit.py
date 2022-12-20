@@ -8,6 +8,17 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    # Sobreescribimos esta funcion para que no se envie el vat a los contactos hijos de una empresa, esta funcion es del core de odoo en /odoo/addons/base/models/res_partner.py
+    def _commercial_sync_from_company(self):
+        """ Handle sync of commercial fields when a new parent commercial entity is set,
+        as if they were related fields """
+        commercial_partner = self.commercial_partner_id
+        if commercial_partner != self:
+            sync_vals = commercial_partner._update_fields_values(self._commercial_fields())
+            _logger.warning('*********** Eliminamos vat de los parametros a enviar al contacto hijo ')
+            sync_vals.pop('vat')
+            self.write(sync_vals)
+
     @api.depends('recursos_recompra_fcp_ids')
     def _compute_totales_fcp(self):
         for rec in self:
