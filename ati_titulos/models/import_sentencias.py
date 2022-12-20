@@ -64,7 +64,7 @@ class ImportSentencias(models.Model):
 
                 vals.clear()
 
-                client = self.env['res.partner'].search([(self.client_match,'=',ident_comprador),('cuantum_contact','=',False)])
+                client = self.env['res.partner'].search([(self.client_match,'=',ident_comprador),('vinculado','=',True)])
                 if len(client) > 1:
                     raise ValidationError("El CSV no se procesara por cliente con nit repetido en sistema. El nit {0} lo tienen dos o mas clientes".format(ident_comprador))
                 if client:
