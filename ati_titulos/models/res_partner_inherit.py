@@ -60,7 +60,7 @@ class ResPartner(models.Model):
             #TOTALES
             rec.retiro_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
             rec.adicion_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
-            rec.total_csf = sum([rec.total_mut_csf,rec.total_sen_csf,rec.total_lib_csf,rec.total_fac_csf, rec.retiro_total_csf, rec.adicion_total_csf])
+            rec.total_csf = sum([rec.total_mut_csf,rec.total_sen_csf,rec.total_lib_csf,rec.total_fac_csf, rec.adicion_total_csf]) - rec.retiro_total_csf
 
     #Campos informativos
     rep_legal = fields.Many2one('res.partner','Representante Legal')
