@@ -60,7 +60,8 @@ class ImportRendimientosAdministracion(models.Model):
 
                 client = self.env['res.partner'].search([(self.client_match,'=',documento)])
                 if len(client) > 0:
-                    
+                    if len(client) > 1:
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, se encuentran dos o mas clientes con el mismo documento: {1}, contenido de linea: {2}".format(i,documento, line))
                     # Carga vals
 
                     vals['buyer'] = client.id
