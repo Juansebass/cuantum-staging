@@ -96,7 +96,7 @@ class ImportRendimientosAdministracion(models.Model):
 
                     if gestor != '':
                         manager = self.env['ati.gestor'].search([('code', '=', gestor)])
-                        if len(inves_type) < 1:
+                        if len(manager) < 1:
                             raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no se encuentra un Gestor con codigo {1}, contenido de linea: {2}".format(i, gestor, line))
                         
                         vals['manager'] = manager.id
