@@ -270,6 +270,7 @@ class Extracto(models.Model):
         total_rendimiento_causado = 0
         total_administracion = 0
         total_tasa_rendimiento = 0
+        cant_tasas = 0
         total_diferencia = 0
 
         logger.warning('***** resumen_inversion_ids: {0}'.format(self.resumen_inversion_ids))
@@ -280,6 +281,8 @@ class Extracto(models.Model):
             total_rendimiento_causado += ri.rendimiento_causado
             total_administracion += ri.administracion
             total_tasa_rendimiento += ri.tasa_rendimiento
+            if ri.tasa_rendimiento > 0:
+                cant_tasas += 1
             total_diferencia += ri.diferencia
 
 
@@ -294,7 +297,7 @@ class Extracto(models.Model):
             'valor_anterior' : total_valor_anterior,
             'rendimiento_causado' : total_rendimiento_causado,
             'administracion' : total_administracion,
-            'tasa_rendimiento' : total_tasa_rendimiento,
+            'tasa_rendimiento' : total_tasa_rendimiento / cant_tasas,
             'diferencia' : total_diferencia,
         })]
 
