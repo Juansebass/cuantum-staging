@@ -324,76 +324,100 @@ class Extracto(models.Model):
         for dm in self.detalle_movimiento_ids:
             dm.unlink()
         
+        #Variable utilizada para comprar meses segun periodo de extracto
+        date_tmp = (datetime.strptime('01/' + self.month + '/' + self.year , '%d/%m/%Y')).date()
+        if self.month == '12':
+            date_next_tmp = (datetime.strptime('01/' + '01/' + str(int(self.year) + 1) , '%d/%m/%Y')).date()
+        else:
+            date_next_tmp = (datetime.strptime('01/' + str(int(self.month) + 1) + '/' + self.year , '%d/%m/%Y')).date()
+
 
         #  FCP
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'FCP', 'display_type' : 'line_section'})]
-        if self.cliente.compra_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : self.cliente.compra_fcp })]
-        if self.cliente.retiro_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : self.cliente.retiro_fcp })]
-        if self.cliente.adicion_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : self.cliente.adicion_fcp })]
-        if self.cliente.aplicacion_recaudo_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : self.cliente.aplicacion_recaudo_fcp })]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total FCP', 'valor' : self.cliente.total_fcp }),]
+        compra_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
+        if compra_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcp })]
+        retiro_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
+        if retiro_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcp })]
+        adicion_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        if adicion_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcp })]
+        aplicacion_recaudo_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        if aplicacion_recaudo_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_recaudo_fcp })]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total FCP', 'valor' : sum([adicion_fcp,aplicacion_recaudo_fcp]) - sum([compra_fcp,retiro_fcp]) }),]
 
 
         #  FCL
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'FCL', 'display_type' : 'line_section', })]
-        if self.cliente.compra_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : self.cliente.compra_fcl })]
-        if self.cliente.retiro_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : self.cliente.retiro_fcl })]
-        if self.cliente.adicion_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : self.cliente.adicion_fcl })]
-        if self.cliente.aplicacion_recaudo_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : self.cliente.aplicacion_recaudo_fcl }),]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total FCL', 'valor' : self.cliente.total_fcl }),]
+        compra_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
+        if compra_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcl })]
+        retiro_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
+        if retiro_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcl })]
+        adicion_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        if adicion_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcl })]
+        aplicacion_recaudo_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION'))
+        if aplicacion_recaudo_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_recaudo_fcl }),]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total FCL', 'valor' : sum([adicion_fcl,aplicacion_recaudo_fcl]) - sum([compra_fcl,retiro_fcl]) }),]
 
 
         #  CSF
         # -- TOTALES
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'CSF', 'display_type' : 'line_section', }), (0,0,{ 'name' : '-- TOTALES CSF', 'display_type' : 'line_section', })]
-        if self.cliente.adicion_total_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Adicion', 'valor' : self.cliente.adicion_total_csf })]
-        if self.cliente.retiro_total_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Retiro', 'valor' : self.cliente.retiro_total_csf })]
-        if self.cliente.total_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total', 'valor' : self.cliente.total_csf })]
+        adicion_total_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        if adicion_total_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Adicion', 'valor' : adicion_total_csf })]
+        retiro_total_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
+        if retiro_total_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Retiro', 'valor' : retiro_total_csf })]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total', 'valor' : adicion_total_csf - retiro_total_csf })]
         # --FACTORING
         self.detalle_movimiento_ids = [(0,0,{ 'name' : '-- Factoring', 'display_type' : 'line_section', })]
-        if self.cliente.compra_fac_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : self.cliente.compra_fac_csf })]
-        if self.cliente.aplicacion_fac_recaudo_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : self.cliente.aplicacion_fac_recaudo_csf })]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Factoring CSF', 'valor' : self.cliente.total_fac_csf }),]
+        compra_fac_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA' and x.investment_type.code == 'FAC'))
+        if compra_fac_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fac_csf })]
+        aplicacion_fac_recaudo_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION' and x.investment_type.code == 'FAC'))
+        if aplicacion_fac_recaudo_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_fac_recaudo_csf })]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Factoring CSF', 'valor' :  aplicacion_fac_recaudo_csf - compra_fac_csf}),]
 
         # --LIBRANZAS
         self.detalle_movimiento_ids = [(0,0,{ 'name' : '-- Libranzas', 'display_type' : 'line_section', })]
-        if self.cliente.compra_lib_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : self.cliente.compra_lib_csf })]
-        if self.cliente.aplicacion_lib_recaudo_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : self.cliente.aplicacion_lib_recaudo_csf })]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Libranzas CSF', 'valor' : self.cliente.total_lib_csf }),]
+        compra_lib_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA' and x.investment_type.code == 'LIB'))
+        if compra_lib_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_lib_csf })]
+        aplicacion_lib_recaudo_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION' and x.investment_type.code == 'LIB'))
+        if aplicacion_lib_recaudo_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_lib_recaudo_csf })]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Libranzas CSF', 'valor' : aplicacion_lib_recaudo_csf - compra_lib_csf }),]
 
         # --SENTENCIAS
         self.detalle_movimiento_ids = [(0,0,{ 'name' : '-- Sentencias', 'display_type' : 'line_section', })]
-        if self.cliente.compra_sen_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : self.cliente.compra_sen_csf })]
-        if self.cliente.aplicacion_sen_recaudo_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : self.cliente.aplicacion_sen_recaudo_csf })]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Sentencias CSF', 'valor' : self.cliente.total_sen_csf }),]
+        compra_sen_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA' and x.investment_type.code == 'SEN'))
+        if compra_sen_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_sen_csf })]
+        aplicacion_sen_recaudo_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION' and x.investment_type.code == 'SEN'))
+        if aplicacion_sen_recaudo_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_sen_recaudo_csf })]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Sentencias CSF', 'valor' : aplicacion_sen_recaudo_csf - compra_sen_csf }),]
 
         # --MUTUOS
         self.detalle_movimiento_ids = [(0,0,{ 'name' : '-- Mutuos', 'display_type' : 'line_section', })]
-        if self.cliente.compra_mut_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : self.cliente.compra_mut_csf })]
-        if self.cliente.aplicacion_mut_recaudo_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : self.cliente.aplicacion_mut_recaudo_csf})]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Mutuos CSF', 'valor' : self.cliente.total_mut_csf }),]
+        compra_mut_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA' and x.investment_type.code == 'MUT'))
+        if compra_mut_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_mut_csf })]
+        aplicacion_mut_recaudo_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION' and x.investment_type.code == 'MUT'))
+        if aplicacion_mut_recaudo_csf > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_mut_recaudo_csf})]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Mutuos CSF', 'valor' : aplicacion_sen_recaudo_csf - compra_sen_csf }),]
     
     def _generar_estados_portafolios(self):
-        #Borramos los datos que puede haber en detalle_movimiento_ids
+        #Borramos los datos que puede haber en estado_portafolios_ids
         for dm in self.estado_portafolios_ids:
             dm.unlink()
 
