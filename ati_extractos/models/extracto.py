@@ -51,7 +51,7 @@ class Extracto(models.Model):
         self.ensure_one()
         return 'Extracto %s' % (self.name)
 
-    def _get_value_before(self,producto,gestor,month,year):
+    def _get_value_before(self,producto,gestor,month,year,recurso_recompra=False):
         #Verificamos que el mes no se Enero, de lo contrario pasamos a diciembre del año anterior
         if month == '1':
             month = '12'
@@ -61,7 +61,14 @@ class Extracto(models.Model):
                 month = str(int(month) - 1)
             else:
                 month = '0' + str(int(month) - 1)
-        value = self.env['ati.extracto.resumen_inversion'].search([('extracto_id.cliente.id','=',self.cliente.id),
+        if recurso_recompra:
+            value = self.env['ati.extracto.resumen_inversion'].search([('extracto_id.cliente.id','=',self.cliente.id),
+                                                                    ('detalle','=',producto),
+                                                                    ('extracto_id.month','=',month),
+                                                                    ('extracto_id.year','=',year)
+                                                                    ])
+        else:
+            value = self.env['ati.extracto.resumen_inversion'].search([('extracto_id.cliente.id','=',self.cliente.id),
                                                                     ('producto.id','=',producto),
                                                                     ('gestor.id','=',gestor),
                                                                     ('extracto_id.month','=',month),
@@ -96,9 +103,9 @@ class Extracto(models.Model):
                 prod_cargado = False
                 index = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
 
                 # Recorremos las inversiones en FCL para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -131,15 +138,16 @@ class Extracto(models.Model):
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+        #Agregamos total de Recursos en proceso de recompra
+        _inversiones.append((0,0,{
+                        'detalle': 'Recursos proc. de recompra FCL',
+                        'valor_actual' : self.cliente.total_fcl,
+                        'valor_anterior' : self._get_value_before('Recursos proc. de recompra FCL',False,self.month,self.year,True),
+                        'is_other' : True
+                    }))
         #Calculamos Participacion
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
-        #Agregamos total de Recursos en proceso de recompra
-        _inversiones.append((0,0,{
-                        'detalle': 'Recursos proc. de recompra',
-                        'valor_actual' : self.cliente.total_fcl,
-                        'is_other' : True
-                    }))
 
         self.resumen_inversion_ids = _inversiones
 
@@ -156,9 +164,9 @@ class Extracto(models.Model):
                 prod_cargado = False
                 index = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.idcliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.idcliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
 
                 # Recorremos las inversiones en FCP para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -191,16 +199,17 @@ class Extracto(models.Model):
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+        #Agregamos total de Recursos en proceso de recompra
+        _inversiones.append((0,0,{
+                        'detalle': 'Recursos proc. de recompra FCP',
+                        'valor_actual' : self.cliente.total_fcp,
+                        'valor_anterior' : self._get_value_before('Recursos proc. de recompra FCP',False,self.month,self.year,True),
+                        'is_other' : True
+                    }))
         #Calculamos Participacion
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
-
-        #Agregamos total de Recursos en proceso de recompra
-        _inversiones.append((0,0,{
-                        'detalle': 'Recursos proc. de recompra',
-                        'valor_actual' : self.cliente.total_fcp,
-                        'is_other' : True
-                    }))
+            
         self.resumen_inversion_ids = _inversiones
         
 
@@ -216,9 +225,9 @@ class Extracto(models.Model):
                 prod_cargado = False
                 ind = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
 
                 # Recorremos las inversiones en CUANTUM para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -251,15 +260,16 @@ class Extracto(models.Model):
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+        #Agregamos total de Recursos en proceso de recompra
+        _inversiones.append((0,0,{
+                        'detalle': 'Recursos proc. de recompra CSF',
+                        'valor_actual' : self.cliente.total_csf,
+                        'valor_anterior' : self._get_value_before('Recursos proc. de recompra CSF',False,self.month,self.year,True),
+                        'is_other' : True
+                    }))
         #Calculamos diferencia 
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
-        #Agregamos total de Recursos en proceso de recompra
-        _inversiones.append((0,0,{
-                        'detalle': 'Recursos proc. de recompra',
-                        'valor_actual' : self.cliente.total_csf,
-                        'is_other' : True
-                    }))
 
         
         self.resumen_inversion_ids = _inversiones
@@ -304,7 +314,7 @@ class Extracto(models.Model):
         #Luego de calcular los totales ya podemos calcular la participacion que lo hacemos en base a la ultima linea del resumen ya que es la que tiene los totales
         #self.resumen_inversion_ids[-1]
         for ri in self.resumen_inversion_ids:
-            if ri.id != self.resumen_inversion_ids[-1].id and ri.display_type != 'line_section' and not ri.is_other:
+            if ri.id != self.resumen_inversion_ids[-1].id and ri.display_type != 'line_section':# and not ri.is_other:
                 ri.participacion = (ri.valor_actual * 100 ) / self.resumen_inversion_ids[-1].valor_actual
                 #Sumamos la participacion total
                 self.resumen_inversion_ids[-1].participacion += ri.participacion
