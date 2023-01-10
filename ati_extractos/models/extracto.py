@@ -140,9 +140,9 @@ class Extracto(models.Model):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
         #Agregamos total de Recursos en proceso de recompra
         _inversiones.append((0,0,{
-                        'detalle': 'Recursos proc. de recompra FCL',
+                        'detalle': 'RPR FCL',
                         'valor_actual' : self.cliente.total_fcl,
-                        'valor_anterior' : self._get_value_before('Recursos proc. de recompra FCL',False,self.month,self.year,True),
+                        'valor_anterior' : self._get_value_before('RPR FCL',False,self.month,self.year,True),
                         'is_other' : True
                     }))
         #Calculamos Participacion
@@ -164,9 +164,9 @@ class Extracto(models.Model):
                 prod_cargado = False
                 index = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.idcliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.idcliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
 
                 # Recorremos las inversiones en FCP para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -201,9 +201,9 @@ class Extracto(models.Model):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
         #Agregamos total de Recursos en proceso de recompra
         _inversiones.append((0,0,{
-                        'detalle': 'Recursos proc. de recompra FCP',
+                        'detalle': 'RPR FCP',
                         'valor_actual' : self.cliente.total_fcp,
-                        'valor_anterior' : self._get_value_before('Recursos proc. de recompra FCP',False,self.month,self.year,True),
+                        'valor_anterior' : self._get_value_before('RPR FCP',False,self.month,self.year,True),
                         'is_other' : True
                     }))
         #Calculamos Participacion
@@ -262,9 +262,9 @@ class Extracto(models.Model):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
         #Agregamos total de Recursos en proceso de recompra
         _inversiones.append((0,0,{
-                        'detalle': 'Recursos proc. de recompra CSF',
+                        'detalle': 'RPR CSF',
                         'valor_actual' : self.cliente.total_csf,
-                        'valor_anterior' : self._get_value_before('Recursos proc. de recompra CSF',False,self.month,self.year,True),
+                        'valor_anterior' : self._get_value_before('RPR CSF',False,self.month,self.year,True),
                         'is_other' : True
                     }))
         #Calculamos diferencia 
@@ -307,7 +307,7 @@ class Extracto(models.Model):
             'valor_anterior' : total_valor_anterior,
             'rendimiento_causado' : total_rendimiento_causado,
             'administracion' : total_administracion,
-            'tasa_rendimiento' : total_tasa_rendimiento / cant_tasas,
+            'tasa_rendimiento' : total_tasa_rendimiento / cant_tasas if cant_tasas != 0 else 0,
             'diferencia' : total_diferencia,
         })]
 
@@ -371,7 +371,7 @@ class Extracto(models.Model):
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'CSF', 'display_type' : 'line_section', }), (0,0,{ 'name' : '-- TOTALES CSF', 'display_type' : 'line_section', })]
         adicion_total_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
         if adicion_total_csf > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Adicion', 'valor' : adicion_total_csf })]
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Adición', 'valor' : adicion_total_csf })]
         retiro_total_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
         if retiro_total_csf > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Retiro', 'valor' : retiro_total_csf })]
