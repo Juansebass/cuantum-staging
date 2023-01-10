@@ -202,9 +202,9 @@ class Extracto(models.Model):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
         #Agregamos total de Recursos en proceso de recompra
         _inversiones.append((0,0,{
-                        'detalle': 'RPR FCP',
+                        'detalle': 'RPR STATUM',
                         'valor_actual' : self.cliente.total_fcp,
-                        'valor_anterior' : self._get_value_before('RPR FCP',False,self.month,self.year,True),
+                        'valor_anterior' : self._get_value_before('RPR STATUM',False,self.month,self.year,True),
                         'is_other' : True
                     }))
         #Calculamos Participacion
@@ -334,7 +334,7 @@ class Extracto(models.Model):
 
 
         #  FCP
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'FCP', 'display_type' : 'line_section'})]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section'})]
         compra_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
         if compra_fcp > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcp })]
@@ -347,7 +347,7 @@ class Extracto(models.Model):
         aplicacion_recaudo_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
         if aplicacion_recaudo_fcp > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_recaudo_fcp })]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total FCP', 'valor' : sum([adicion_fcp,aplicacion_recaudo_fcp]) - sum([compra_fcp,retiro_fcp]) }),]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Statum', 'valor' : sum([adicion_fcp,aplicacion_recaudo_fcp]) - sum([compra_fcp,retiro_fcp]) }),]
 
 
         #  FCL
@@ -455,7 +455,7 @@ class Extracto(models.Model):
         
 
         #  FCP
-        self.estado_portafolios_ids = [(0,0,{ 'name' : 'FCP', 'display_type' : 'line_section', })]
+        self.estado_portafolios_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section', })]
         total_valor_fcp = sum(ladicion['value'] for ladicion in self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP'))
         for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI']:
             titulos = self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP' and x.titulo.state_titulo.code == state_titulo)
