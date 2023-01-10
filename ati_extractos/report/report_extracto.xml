@@ -31,10 +31,21 @@
                               color: black;
                               }
                         </style>
-                        <div style="font-size:14px; margin-top: -30px; margin-right: -10px; margin-left: 600px; border-radius: 4px; border: 2px solid black">
-                          <p style="text-align:center; color: white; background-color: #619f11; padding: 0px !important; margin-top: 0px !important;">ESTADO DEL PORTAFOLIO DE ACTIVOS</p>
-                          <p style="font-size:14px; text-align:center"><strong><span t-field="o.cliente.name"/></strong></p>
-                          <p style="text-align:center">PERIODO: <span t-field="o.month"/>/<span t-field="o.year"/></p>
+                        <div style="width: 100%;">
+                          <div style="margin-right: 150px; display: inline-block;">
+                            
+                            <img style="margin-top: -30px;" t-att-src="image_data_uri(o.company_id.logo)" width="290"/>
+                            <p style="line-height: 50%;">Cuantum Soluciones Financieras SA.</p>
+                            <p style="line-height: 50%;">Carrera 25 No. 4-165 Of. 9838 Ámsterdam Plaza. Medellín, </p>
+                            <p style="line-height: 50%;">Colombia.</p>
+                          </div>
+                          <div style="display: inline-block">
+                            <div style="font-size:14px; margin-top: -30px; border-radius: 4px; border: 2px solid black">
+                              <p style="text-align:center; color: white; background-color: #619f11; padding: 0px !important; margin-top: 0px !important;">ESTADO DEL PORTAFOLIO DE ACTIVOS</p>
+                              <p style="font-size:14px; text-align:center"><strong><span t-field="o.cliente.name"/></strong></p>
+                              <p style="text-align:center">PERIODO: <span t-field="o.month"/>/<span t-field="o.year"/></p>
+                            </div>
+                          </div>
                         </div>
                         <br/>
                         <p style="font-size:12px; margin-right: -10px; margin-bottom:10px border-radius: 4px; !important ; border-spacing: 0px; padding: 10px; border: 2px solid black; text-align: justify;">Este documento es para uso exclusivo de su destinatario y está sometido a reserva a favor este. La información financiera aquí contenida es de carácter confidencial y, por lo tanto, el destinatario deberá tomar todas las medidas necesarias para asegurar, bajo su responsabilidad, el secreto y la confidencialidad de los documentos e informaciones aquí contenidos. En este sentido, Cuantum Soluciones Financieras S.A, sus colaboradores y subordinados no se hacen responsables por las consecuencias y/o perjuicios generados directa y/o indirectamente por el uso de la información contenida en este mensaje y/o sus anexos por parte del destinatario. Si usted no es el destinatario final e intencional del mensaje, por favor infórmenos de inmediato y elimine el mensaje y sus anexos de su computador y sistema de comunicaciones.
