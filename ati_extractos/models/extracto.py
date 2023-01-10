@@ -28,6 +28,7 @@ class Extracto(models.Model):
     year = fields.Char('Año de Periodo',required=1)
     pie_composicion_portafolio = fields.Binary('Composicion Portafolio')
     pie_inversiones_fondo = fields.Binary('Inversiones por fondo')
+    pie_rpr_fondo = fields.Binary('RPR por fondo')
 
     #Campos para resumen de inversiones
     resumen_inversion_ids = fields.One2many('ati.extracto.resumen_inversion','extracto_id','Resumen Inversiones Fideicomiso Cuantum Libranzas')
@@ -351,6 +352,8 @@ class Extracto(models.Model):
 
         #  FCL
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'FCL', 'display_type' : 'line_section', })]
+        for r in self.cliente.recursos_recompra_fcl_ids:
+            logger.warning('******** test date: {0} - {1}'.format(r.date, r))
         compra_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
         if compra_fcl > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcl })]
@@ -490,7 +493,15 @@ class Extracto(models.Model):
         total_cuantum = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'CUANTUM'))
         total_FCL = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCL'))
         total_FCP = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCP'))
-        logger.warning('***** {0} - {1} - {2}'.format(total_cuantum, total_FCL, total_FCP))
+        
+        #Validaciones mayores a 0
+        if total_cuantum < 0:
+            total_cuantum = 0.0
+        if total_FCL < 0:
+            total_FCL = 0.0
+        if total_FCP < 0:
+            total_FCP = 0.0
+
         if total_cuantum != 0.0 or total_FCL != 0.0 or total_FCP != 0.0:
             plt.pie([total_cuantum, total_FCL, total_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
@@ -500,16 +511,51 @@ class Extracto(models.Model):
             self.write({'pie_inversiones_fondo': base64.encodestring(pic_data.getvalue())})
             plt.close()
 
+        #Recursos en proceso de recompra por fondo
+
+        rpr_cuantum = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR CSF').valor_actual
+        rpr_FCL = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR FCL').valor_actual
+        rpr_FCP = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR FCP').valor_actual
+        
+        #Validaciones mayores a 0
+        if rpr_cuantum < 0:
+            rpr_cuantum = 0.0
+        if rpr_FCL < 0:
+            rpr_FCL = 0.0
+        if rpr_FCP < 0:
+            rpr_FCP = 0.0
+
+        if rpr_cuantum != 0.0 or rpr_FCL != 0.0 or rpr_FCP != 0.0:
+            plt.pie([rpr_cuantum, rpr_FCL, rpr_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
+            plt.axis('equal')
+            plt.legend(labels=['Cuantum', 'FCL', 'FCP'])
+            pic_data = BytesIO()
+            plt.savefig(pic_data, bbox_inches='tight')
+            self.write({'pie_rpr_fondo': base64.encodestring(pic_data.getvalue())})
+            plt.close()
+
         #Composicion del Portafolio
         total_factoring = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.producto.code == 'FAC'))
         total_libranzas = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.producto.code == 'LIB'))
         total_mutuos = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.producto.code == 'MUT'))
         total_sentencias = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.producto.code == 'SEN'))
+        total_rpr = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x:  x.is_other))
+        #Validaciones mayores a 0
+        if total_rpr < 0:
+            total_rpr = 0.0
+        if total_factoring < 0:
+            total_factoring = 0.0
+        if total_libranzas < 0:
+            total_libranzas = 0.0
+        if total_mutuos < 0:
+            total_mutuos = 0.0
+        if total_sentencias < 0:
+            total_sentencias = 0.0
 
-        if total_factoring != 0.0 or total_libranzas != 0.0 or total_mutuos != 0.0 or total_sentencias != 0.0:
-            plt.pie([total_factoring, total_libranzas, total_mutuos, total_sentencias], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
+        if total_factoring != 0.0 or total_libranzas != 0.0 or total_mutuos != 0.0 or total_sentencias != 0.0 or total_rpr != 0.0:
+            plt.pie([total_factoring, total_libranzas, total_mutuos, total_sentencias, total_rpr], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['Factoring', 'Libranzas', 'Mutuos', 'Sentencias'])
+            plt.legend(labels=['Factoring', 'Libranzas', 'Mutuos', 'Sentencias', 'RPR'])
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_composicion_portafolio': base64.encodestring(pic_data.getvalue())})

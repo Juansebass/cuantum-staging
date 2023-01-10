@@ -58,6 +58,9 @@
                                 <group>
                                     <field name="pie_inversiones_fondo" widget="image" readonly="1"/>
                                 </group>
+                                <group>
+                                    <field name="pie_rpr_fondo" widget="image" readonly="1"/>
+                                </group>
                             </group>
                         </page>
                         <page name="det_mov" string="Detalle de Movimiento">
