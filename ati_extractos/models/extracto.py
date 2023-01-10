@@ -505,7 +505,7 @@ class Extracto(models.Model):
         if total_cuantum != 0.0 or total_FCL != 0.0 or total_FCP != 0.0:
             plt.pie([total_cuantum, total_FCL, total_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['Cuantum', 'FCL', 'FCP'])
+            plt.legend(labels=['Cuantum', 'FCL', 'STATUM'])
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_inversiones_fondo': base64.encodestring(pic_data.getvalue())})
@@ -515,7 +515,7 @@ class Extracto(models.Model):
 
         rpr_cuantum = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR CSF').valor_actual
         rpr_FCL = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR FCL').valor_actual
-        rpr_FCP = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR FCP').valor_actual
+        rpr_FCP = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR STATUM').valor_actual
         
         #Validaciones mayores a 0
         if rpr_cuantum < 0:
@@ -528,7 +528,7 @@ class Extracto(models.Model):
         if rpr_cuantum != 0.0 or rpr_FCL != 0.0 or rpr_FCP != 0.0:
             plt.pie([rpr_cuantum, rpr_FCL, rpr_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['Cuantum', 'FCL', 'FCP'])
+            plt.legend(labels=['Cuantum', 'FCL', 'STATUM'])
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_rpr_fondo': base64.encodestring(pic_data.getvalue())})
