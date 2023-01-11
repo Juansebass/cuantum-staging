@@ -440,7 +440,7 @@ class Extracto(models.Model):
             elif investment_type == 'MUT':
                 self.estado_portafolios_ids = [(0,0,{ 'name' : '-- Mutuos', 'display_type' : 'line_section', })]
                 total_valor_csf = sum(ladicion['value'] for ladicion in self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'CUANTUM' and x.titulo.investment_type.code == 'MUT'))
-            for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI']:
+            for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI','PAG','OV']:
                 titulos = self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'CUANTUM' and x.titulo.investment_type.code== investment_type and x.titulo.state_titulo.code == state_titulo)
                 valor = 0
                 porcentaje = 0
@@ -456,7 +456,7 @@ class Extracto(models.Model):
         #  FCL
         self.estado_portafolios_ids = [(0,0,{ 'name' : 'FCL', 'display_type' : 'line_section', })]
         total_valor_fcl = sum(ladicion['value'] for ladicion in self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCL'))
-        for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI']:
+        for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI','PAG','OV']:
             titulos = self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCL' and x.titulo.state_titulo.code == state_titulo)
             valor = 0
             porcentaje = 0
@@ -471,7 +471,7 @@ class Extracto(models.Model):
         #  FCP
         self.estado_portafolios_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section', })]
         total_valor_fcp = sum(ladicion['value'] for ladicion in self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP'))
-        for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI']:
+        for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI','PAG','OV']:
             titulos = self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP' and x.titulo.state_titulo.code == state_titulo)
             valor = 0
             porcentaje = 0
