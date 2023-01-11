@@ -503,7 +503,7 @@ class Extracto(models.Model):
         if total_cuantum != 0.0 or total_FCL != 0.0 or total_FCP != 0.0:
             plt.pie([total_cuantum, total_FCL, total_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['Cuantum', 'FCL', 'STATUM'])
+            plt.legend(labels=['CUANTUM', 'FCL', 'STATUM'])
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_inversiones_fondo': base64.encodestring(pic_data.getvalue())})
@@ -526,7 +526,7 @@ class Extracto(models.Model):
         if rpr_cuantum != 0.0 or rpr_FCL != 0.0 or rpr_FCP != 0.0:
             plt.pie([rpr_cuantum, rpr_FCL, rpr_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['Cuantum', 'FCL', 'STATUM'])
+            plt.legend(labels=['CUANTUM', 'FCL', 'STATUM'])
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_rpr_fondo': base64.encodestring(pic_data.getvalue())})
@@ -553,7 +553,7 @@ class Extracto(models.Model):
         if total_factoring != 0.0 or total_libranzas != 0.0 or total_mutuos != 0.0 or total_sentencias != 0.0 or total_rpr != 0.0:
             plt.pie([total_factoring, total_libranzas, total_mutuos, total_sentencias, total_rpr], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['Factoring', 'Libranzas', 'Mutuos', 'Sentencias', 'RPR'])
+            plt.legend(labels=['FACTORING', 'LIBRANZAS', 'MUTUOS', 'SENTENCIAS', 'RPR'])
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_composicion_portafolio': base64.encodestring(pic_data.getvalue())})

@@ -32,7 +32,7 @@
                               }
                         </style>
                         <div style="width: 100%;">
-                          <div style="margin-right: 150px; display: inline-block;">
+                          <div style="margin-right: 156px; display: inline-block;">
                             
                             <img style="margin-top: -30px;" t-att-src="image_data_uri(o.company_id.logo)" width="290"/>
                             <p style="line-height: 50%;">Cuantum Soluciones Financieras SA.</p>
@@ -48,7 +48,7 @@
                           </div>
                         </div>
                         <br/>
-                        <p style="font-size:12px; margin-right: -10px; margin-bottom:10px border-radius: 4px; !important ; border-spacing: 0px; padding: 10px; border: 2px solid black; text-align: justify;">Este documento es para uso exclusivo de su destinatario y está sometido a reserva a favor este. La información financiera aquí contenida es de carácter confidencial y, por lo tanto, el destinatario deberá tomar todas las medidas necesarias para asegurar, bajo su responsabilidad, el secreto y la confidencialidad de los documentos e informaciones aquí contenidos. En este sentido, Cuantum Soluciones Financieras S.A, sus colaboradores y subordinados no se hacen responsables por las consecuencias y/o perjuicios generados directa y/o indirectamente por el uso de la información contenida en este mensaje y/o sus anexos por parte del destinatario. Si usted no es el destinatario final e intencional del mensaje, por favor infórmenos de inmediato y elimine el mensaje y sus anexos de su computador y sistema de comunicaciones.
+                        <p style="font-size:12px; margin-bottom:10px border-radius: 4px; !important ; border-spacing: 0px; padding: 10px; border: 2px solid black; text-align: justify;">Este documento es para uso exclusivo de su destinatario y está sometido a reserva a favor este. La información financiera aquí contenida es de carácter confidencial y, por lo tanto, el destinatario deberá tomar todas las medidas necesarias para asegurar, bajo su responsabilidad, el secreto y la confidencialidad de los documentos e informaciones aquí contenidos. En este sentido, Cuantum Soluciones Financieras S.A, sus colaboradores y subordinados no se hacen responsables por las consecuencias y/o perjuicios generados directa y/o indirectamente por el uso de la información contenida en este mensaje y/o sus anexos por parte del destinatario. Si usted no es el destinatario final e intencional del mensaje, por favor infórmenos de inmediato y elimine el mensaje y sus anexos de su computador y sistema de comunicaciones.
 Estos datos son objeto de protección bajo las políticas políticas de uso de información establecidas por nuestra organización, a menos que exista instrucción en contrario, la cual deberá ser enviada al correo electrónico servicioalcliente@cuantum.co
 <br/>FCL = Fideicomiso Cuantum Libranzas
 <br/>CSF = Cuantum Soluciones Financieras
@@ -61,14 +61,14 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                     <th COLSPAN="8" style="color: white;width:100%;"><strong>Resumen de las inversiones</strong></th>          
                                 </tr>
                                 <tr style="background-color: #eae8e9; font-size: 10px; text-align: center; border-bottom: 2px solid black; border-top: 2px solid black;">
-                                    <th style="width:34%">Descripción</th>
-                                    <th style="width:20%">Valor Actual</th>
-                                    <th style="width:20%">Valor Anterior</th>
-                                    <th style="width:20%">Diferencia</th>
-                                    <th style="width:2%">Participación</th>
-                                    <th style="width:2%">Rendimiento Causado</th>
-                                    <th style="width:2%">Administración</th>
-                                    <th style="width:2%">Retorno Proyectado</th>
+                                    <th style="width:34%; vertical-align: middle">Descripción</th>
+                                    <th style="width:20%; vertical-align: middle">Valor Actual</th>
+                                    <th style="width:20%; vertical-align: middle">Valor Anterior</th>
+                                    <th style="width:20%; vertical-align: middle">Diferencia</th>
+                                    <th style="width:2%; vertical-align: middle">Participación</th>
+                                    <th style="width:2%; vertical-align: middle">Rendimiento Causado</th>
+                                    <th style="width:2%; vertical-align: middle">Administración</th>
+                                    <th style="width:2%; vertical-align: middle">Retorno Proyectado</th>
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody" style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
@@ -90,10 +90,10 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                         
                         <p style="page-break-before:always;"> </p>
                         
-                        <table class="table" style="border: 2px solid black; border-collapse: collapse; width: 80%;margin: auto;" border="1">
+                        <table class="table" style="border-bottom: 2px solid black; border: 2px solid black; border-collapse: collapse; width: 80%;margin: auto;" border="1">
                           <tbody>
                             <tr>
-                              <td class="text-center" style=" border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;"><strong>Composicion del Portafolio</strong></td>
+                              <td class="text-center" style=" border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;"><strong>Composición del Portafolio</strong></td>
                             </tr>
                             <tr>
                               <td style="width: 33%;  background-color: white;"><img style="display: block; margin-left: auto; margin-right: auto;" t-attf-src="data:image/png;base64,{{o.pie_composicion_portafolio}}" alt="" width="290"/></td>
@@ -127,8 +127,7 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
 
 
                          <!-- MOVIMIENTOS -->
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                        <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
+                        <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
                             <thead>
                                 <tr class="text-center" style="background-color: #619f11; font-size: 12px; border-bottom: 2px solid black;">
                                     <th COLSPAN="7" style="color: white;width:100%;">Movimiento de Caja</th>          
@@ -151,14 +150,12 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
                         
                        <p style="page-break-before:always;"> </p>
                         
                         <!-- Estado del Portafolio -->
                        
-                        <div style="border-radius: 26px !important; border: 2px solid black; padding-bottom: 0px !important;">
-                          <table class="table" style="border-radius: 25px !important ; overflow: hidden !important; padding: 5px; margin-right: 5px; margin-bottom: 0px">
+                          <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
                               <thead> 
                                   <tr style="background-color: #619f11; font-size: 12px; border-bottom: 2px solid black;">
                                       <th COLSPAN="7">
@@ -188,7 +185,6 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                 </tr>
                               </tbody>
                           </table>
-                        </div>
 
                         <p style="page-break-before:always;"> </p>
 
@@ -198,12 +194,12 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                     <th COLSPAN="7" style="font-size: 12px; color: white;width:100%;">Estado del Portafolio</th>          
                                 </tr>
                                 <tr style="background-color: #eae8e9; font-size: 10px; color: black; border-bottom: 2px solid black;">
-                                    <th style="width:20%">Título</th>
-                                    <th style="width:10%">Tipo</th>
-                                    <th style="width:20%">Emisor</th>
-                                    <th style="width:20%">Pagador</th>
-                                    <th style="width:20%">Valor de portafolio</th>
-                                    <th style="width:10%">Retorno Proyectado</th>
+                                    <th style="width:20%; vertical-align: middle">Título</th>
+                                    <th style="width:10%; vertical-align: middle">Tipo</th>
+                                    <th style="width:20%; vertical-align: middle">Emisor</th>
+                                    <th style="width:20%; vertical-align: middle">Pagador</th>
+                                    <th style="width:20%; vertical-align: middle">Valor de portafolio</th>
+                                    <th style="width:10%; vertical-align: middle">Retorno Proyectado</th>
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody" style="color: black; font-size: 10px;">
