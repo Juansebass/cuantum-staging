@@ -93,127 +93,6 @@ class Extracto(models.Model):
         for inv in self.resumen_inversion_ids:
             inv.unlink()
 
-        #FCL
-        self.resumen_inversion_ids = [(0,0,{
-                'gestor' : self.env['ati.gestor'].search([('code','=','FCL')]).id,
-                'display_type' : 'line_section'
-            })]
-        _inversiones = []
-        for moviemiento in movimientos:
-            if moviemiento.manager.code == 'FCL':
-                prod_cargado = False
-                index = 0
-                # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
-                # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
-
-                # Recorremos las inversiones en FCL para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
-                for i in _inversiones:
-                    if i[2]['producto'] == moviemiento.investment_type.id:
-                        _inversiones[index] = (0,0,{
-                            'producto' : moviemiento.investment_type.id,
-                            'valor_actual' : moviemiento.value + i[2]['valor_actual'],
-                            'valor_anterior' : i[2]['valor_anterior'],
-                            'rendimiento_causado' : rendimiento.value,
-                            'administracion' : administracion.value,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'],
-                            'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos']
-                        })
-                        prod_cargado = True
-                    index += 1
-
-                # Cargamos el producto a la lista de inversion si todavia no se cargo
-                if not prod_cargado:
-                    _inversiones.append((0,0,{
-                        'producto' : moviemiento.investment_type.id,
-                        'valor_actual' : moviemiento.value,
-                        'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
-                        'rendimiento_causado' : rendimiento.value,
-                        'administracion' : administracion.value,
-                        'tasa_rendimiento' : moviemiento.fee,
-                        'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1
-                    }))
-        #Promediamos las tasas de inversiones
-        for n in range(len(_inversiones)):
-            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
-        #Agregamos total de Recursos en proceso de recompra
-        _inversiones.append((0,0,{
-                        'detalle': 'RPR FCL',
-                        'valor_actual' : self.cliente.total_fcl,
-                        'valor_anterior' : self._get_value_before('RPR FCL',False,self.month,self.year,True),
-                        'is_other' : True
-                    }))
-        #Calculamos Participacion
-        for n in range(len(_inversiones)):
-            _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
-
-        self.resumen_inversion_ids = _inversiones
-
-
-        #######################
-        #FCP
-        self.resumen_inversion_ids = [(0,0,{
-                'gestor' : self.env['ati.gestor'].search([('code','=','FCP')]).id,
-                'display_type' : 'line_section'
-            })]
-        _inversiones = []
-        for moviemiento in movimientos:
-            if moviemiento.manager.code == 'FCP':
-                prod_cargado = False
-                index = 0
-                # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
-                # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
-
-                # Recorremos las inversiones en FCP para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
-                for i in _inversiones:
-                    if i[2]['producto'] == moviemiento.investment_type.id:
-                        _inversiones[index] = (0,0,{
-                            'producto' : moviemiento.investment_type.id,
-                            'valor_actual' : moviemiento.value + i[2]['valor_actual'],
-                            'valor_anterior' : i[2]['valor_anterior'],
-                            'rendimiento_causado' : rendimiento.value,
-                            'administracion' : administracion.value,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'],
-                            'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos']
-                        })
-                        prod_cargado = True
-                    index += 1
-
-                # Cargamos el producto a la lista de inversion si todavia no se cargo
-                if not prod_cargado:
-                    _inversiones.append((0,0,{
-                        'producto' : moviemiento.investment_type.id,
-                        'valor_actual' : moviemiento.value,
-                        'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
-                        'rendimiento_causado' : rendimiento.value,
-                        'administracion' : administracion.value,
-                        'tasa_rendimiento' : moviemiento.fee,
-                        'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1
-                    }))
-        #Promediamos las tasas de inversiones
-        for n in range(len(_inversiones)):
-            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
-        #Agregamos total de Recursos en proceso de recompra
-        _inversiones.append((0,0,{
-                        'detalle': 'RPR STATUM',
-                        'valor_actual' : self.cliente.total_fcp,
-                        'valor_anterior' : self._get_value_before('RPR STATUM',False,self.month,self.year,True),
-                        'is_other' : True
-                    }))
-        #Calculamos Participacion
-        for n in range(len(_inversiones)):
-            _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
-            
-        self.resumen_inversion_ids = _inversiones
-        
-
         #######################
         #CUANTUM
         self.resumen_inversion_ids = [(0,0,{
@@ -274,6 +153,127 @@ class Extracto(models.Model):
 
         
         self.resumen_inversion_ids = _inversiones
+
+        #FCL
+        self.resumen_inversion_ids = [(0,0,{
+                'gestor' : self.env['ati.gestor'].search([('code','=','FCL')]).id,
+                'display_type' : 'line_section'
+            })]
+        _inversiones = []
+        for moviemiento in movimientos:
+            if moviemiento.manager.code == 'FCL':
+                prod_cargado = False
+                index = 0
+                # Buscamos el rendimiento para el tipo de producto en el movimiento
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                # Buscamos el valor de administracion para el tipo de producto en el movimiento
+                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+
+                # Recorremos las inversiones en FCL para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
+                for i in _inversiones:
+                    if i[2]['producto'] == moviemiento.investment_type.id:
+                        _inversiones[index] = (0,0,{
+                            'producto' : moviemiento.investment_type.id,
+                            'valor_actual' : moviemiento.value + i[2]['valor_actual'],
+                            'valor_anterior' : i[2]['valor_anterior'],
+                            'rendimiento_causado' : rendimiento.value,
+                            'administracion' : administracion.value,
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'],
+                            'gestor' : moviemiento.manager.id,
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos']
+                        })
+                        prod_cargado = True
+                    index += 1
+
+                # Cargamos el producto a la lista de inversion si todavia no se cargo
+                if not prod_cargado:
+                    _inversiones.append((0,0,{
+                        'producto' : moviemiento.investment_type.id,
+                        'valor_actual' : moviemiento.value,
+                        'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
+                        'rendimiento_causado' : rendimiento.value,
+                        'administracion' : administracion.value,
+                        'tasa_rendimiento' : moviemiento.fee,
+                        'gestor' : moviemiento.manager.id,
+                        'cant_movimientos' : 1
+                    }))
+        #Promediamos las tasas de inversiones
+        for n in range(len(_inversiones)):
+            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+        #Agregamos total de Recursos en proceso de recompra
+        _inversiones.append((0,0,{
+                        'detalle': 'RPR FCL',
+                        'valor_actual' : self.cliente.total_fcl,
+                        'valor_anterior' : self._get_value_before('RPR FCL',False,self.month,self.year,True),
+                        'is_other' : True
+                    }))
+        #Calculamos diferencia
+        for n in range(len(_inversiones)):
+            _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
+
+        self.resumen_inversion_ids = _inversiones
+
+
+        #######################
+        #Statum
+        self.resumen_inversion_ids = [(0,0,{
+                'gestor' : self.env['ati.gestor'].search([('code','=','FCP')]).id,
+                'display_type' : 'line_section'
+            })]
+        _inversiones = []
+        for moviemiento in movimientos:
+            if moviemiento.manager.code == 'FCP':
+                prod_cargado = False
+                index = 0
+                # Buscamos el rendimiento para el tipo de producto en el movimiento
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                # Buscamos el valor de administracion para el tipo de producto en el movimiento
+                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+
+                # Recorremos las inversiones en FCP para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
+                for i in _inversiones:
+                    if i[2]['producto'] == moviemiento.investment_type.id:
+                        _inversiones[index] = (0,0,{
+                            'producto' : moviemiento.investment_type.id,
+                            'valor_actual' : moviemiento.value + i[2]['valor_actual'],
+                            'valor_anterior' : i[2]['valor_anterior'],
+                            'rendimiento_causado' : rendimiento.value,
+                            'administracion' : administracion.value,
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'],
+                            'gestor' : moviemiento.manager.id,
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos']
+                        })
+                        prod_cargado = True
+                    index += 1
+
+                # Cargamos el producto a la lista de inversion si todavia no se cargo
+                if not prod_cargado:
+                    _inversiones.append((0,0,{
+                        'producto' : moviemiento.investment_type.id,
+                        'valor_actual' : moviemiento.value,
+                        'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
+                        'rendimiento_causado' : rendimiento.value,
+                        'administracion' : administracion.value,
+                        'tasa_rendimiento' : moviemiento.fee,
+                        'gestor' : moviemiento.manager.id,
+                        'cant_movimientos' : 1
+                    }))
+        #Promediamos las tasas de inversiones
+        for n in range(len(_inversiones)):
+            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+        #Agregamos total de Recursos en proceso de recompra
+        _inversiones.append((0,0,{
+                        'detalle': 'RPR STATUM',
+                        'valor_actual' : self.cliente.total_fcp,
+                        'valor_anterior' : self._get_value_before('RPR STATUM',False,self.month,self.year,True),
+                        'is_other' : True
+                    }))
+        #Calculamos diferencia
+        for n in range(len(_inversiones)):
+            _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
+            
+        self.resumen_inversion_ids = _inversiones
+        
         
         #Calculamos totales
         total_valor_actual = 0
@@ -333,42 +333,6 @@ class Extracto(models.Model):
             date_next_tmp = (datetime.strptime('01/' + str(int(self.month) + 1) + '/' + self.year , '%d/%m/%Y')).date()
 
 
-        #  FCP
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section'})]
-        compra_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
-        if compra_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcp })]
-        retiro_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
-        if retiro_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcp })]
-        adicion_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
-        if adicion_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcp })]
-        aplicacion_recaudo_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
-        if aplicacion_recaudo_fcp > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_recaudo_fcp })]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Statum', 'valor' : sum([adicion_fcp,aplicacion_recaudo_fcp]) - sum([compra_fcp,retiro_fcp]) }),]
-
-
-        #  FCL
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'FCL', 'display_type' : 'line_section', })]
-        for r in self.cliente.recursos_recompra_fcl_ids:
-            logger.warning('******** test date: {0} - {1}'.format(r.date, r))
-        compra_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
-        if compra_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcl })]
-        retiro_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
-        if retiro_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcl })]
-        adicion_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
-        if adicion_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcl })]
-        aplicacion_recaudo_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION'))
-        if aplicacion_recaudo_fcl > 0: 
-            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_recaudo_fcl }),]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total FCL', 'valor' : sum([adicion_fcl,aplicacion_recaudo_fcl]) - sum([compra_fcl,retiro_fcl]) }),]
-
-
         #  CSF
         # -- TOTALES
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'CSF', 'display_type' : 'line_section', }), (0,0,{ 'name' : '-- TOTALES CSF', 'display_type' : 'line_section', })]
@@ -418,6 +382,41 @@ class Extracto(models.Model):
         if aplicacion_mut_recaudo_csf > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_mut_recaudo_csf})]
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Mutuos CSF', 'valor' : aplicacion_sen_recaudo_csf - compra_sen_csf }),]
+
+        #  FCL
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'FCL', 'display_type' : 'line_section', })]
+        for r in self.cliente.recursos_recompra_fcl_ids:
+            logger.warning('******** test date: {0} - {1}'.format(r.date, r))
+        compra_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
+        if compra_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcl })]
+        retiro_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
+        if retiro_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcl })]
+        adicion_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        if adicion_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcl })]
+        aplicacion_recaudo_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION'))
+        if aplicacion_recaudo_fcl > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_recaudo_fcl }),]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total FCL', 'valor' : sum([adicion_fcl,aplicacion_recaudo_fcl]) - sum([compra_fcl,retiro_fcl]) }),]
+
+        #  FCP
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section'})]
+        compra_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'COMPRA'))
+        if compra_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Compra', 'valor' : compra_fcp })]
+        retiro_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
+        if retiro_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcp })]
+        adicion_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        if adicion_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcp })]
+        aplicacion_recaudo_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        if aplicacion_recaudo_fcp > 0: 
+            self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recuado', 'valor' : aplicacion_recaudo_fcp })]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Statum', 'valor' : sum([adicion_fcp,aplicacion_recaudo_fcp]) - sum([compra_fcp,retiro_fcp]) }),]
+
     
     def _generar_estados_portafolios(self):
         #Borramos los datos que puede haber en estado_portafolios_ids
@@ -454,22 +453,6 @@ class Extracto(models.Model):
                     self.estado_portafolios_ids = [(0,0,{ 'name' : estado, 'valor' : valor, 'porcentaje' : porcentaje })]
         
 
-        #  FCP
-        self.estado_portafolios_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section', })]
-        total_valor_fcp = sum(ladicion['value'] for ladicion in self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP'))
-        for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI']:
-            titulos = self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP' and x.titulo.state_titulo.code == state_titulo)
-            valor = 0
-            porcentaje = 0
-            estado = ''
-            for cf in titulos:
-                estado = cf.titulo.state_titulo.name
-                valor += cf.titulo.value
-            if valor > 0:
-                porcentaje = (valor * 100) / total_valor_fcp
-                self.estado_portafolios_ids = [(0,0,{ 'name' : estado, 'valor' : valor, 'porcentaje' : porcentaje })]
-        
-
         #  FCL
         self.estado_portafolios_ids = [(0,0,{ 'name' : 'FCL', 'display_type' : 'line_section', })]
         total_valor_fcl = sum(ladicion['value'] for ladicion in self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCL'))
@@ -483,6 +466,21 @@ class Extracto(models.Model):
                 valor += cf.titulo.value
             if valor > 0:
                 porcentaje = (valor * 100) / total_valor_fcl
+                self.estado_portafolios_ids = [(0,0,{ 'name' : estado, 'valor' : valor, 'porcentaje' : porcentaje })]
+
+        #  FCP
+        self.estado_portafolios_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section', })]
+        total_valor_fcp = sum(ladicion['value'] for ladicion in self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP'))
+        for state_titulo in ['FALLE','MORA','NP','O','M1,M2,M2+,APP,T','VI']:
+            titulos = self.detalle_titulos_ids.filtered(lambda x: x.titulo.manager.code == 'FCP' and x.titulo.state_titulo.code == state_titulo)
+            valor = 0
+            porcentaje = 0
+            estado = ''
+            for cf in titulos:
+                estado = cf.titulo.state_titulo.name
+                valor += cf.titulo.value
+            if valor > 0:
+                porcentaje = (valor * 100) / total_valor_fcp
                 self.estado_portafolios_ids = [(0,0,{ 'name' : estado, 'valor' : valor, 'porcentaje' : porcentaje })]
 
     def _generar_pie(self):
