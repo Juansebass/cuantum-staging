@@ -105,9 +105,9 @@ class Extracto(models.Model):
                 prod_cargado = False
                 ind = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
 
                 # Recorremos las inversiones en CUANTUM para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -165,9 +165,9 @@ class Extracto(models.Model):
                 prod_cargado = False
                 index = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
 
                 # Recorremos las inversiones en FCL para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -226,9 +226,9 @@ class Extracto(models.Model):
                 prod_cargado = False
                 index = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
 
                 # Recorremos las inversiones en FCP para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
