@@ -603,6 +603,13 @@ class Extracto(models.Model):
         #Cambiamos estado
         self.state = 'processed'
 
+    def set_borrador_extracto(self):
+        for rec in self:
+            if self.env.user.id == 8:
+                rec.state = 'draft'
+            else:
+                raise ValidationError('Usted no tiene permisos para realizar esta acción')
+
 
     def validar_extracto(self):
         for rec in self:

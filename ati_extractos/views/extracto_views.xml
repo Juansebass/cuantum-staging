@@ -11,6 +11,7 @@
                     <button name="generar_extracto" type="object" string="Generar Extracto" attrs="{'invisible': [('state', 'in', ['validated','send'])]}"/>
                     <button name="validar_extracto" type="object" string="Validar" attrs="{'invisible': [('state', '!=', 'processed')]}"/>
                     <button name="enviar_extracto" type="object" string="Enviar Extracto" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="set_borrador_extracto" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
