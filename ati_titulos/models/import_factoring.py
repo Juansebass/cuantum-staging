@@ -129,7 +129,7 @@ class ImportFactoring(models.Model):
                     _parent = self.env['ati.titulo']
                     _is_parent = titulo.find('-')
                     if _is_parent != -1:
-                        _parent = self.env['ati.titulo'].search([('title','=',titulo[:_is_parent])],limit=1)
+                        _parent = self.env['ati.titulo'].search([('title','=',titulo[:_is_parent]),('issuing','=',partner_emisor.id)],limit=1)
                         if len(_parent) != 1:
                             raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el titulo padre indicado no existe, contenido de linea: {1}".format(i, line))
                         
@@ -137,7 +137,7 @@ class ImportFactoring(models.Model):
                     _logger.warning('***** En el titulo {0}, el padre es {1}'.format(titulo, _parent))
                     
                     # Buscamos si el titulo ya existe
-                    titulo_existente = self.env['ati.titulo'].search([('title','=',titulo)],limit=1)
+                    titulo_existente = self.env['ati.titulo'].search([('title','=',titulo),('issuing','=',partner_emisor.id)],limit=1)
                     
                     titulo_creado = self.env['ati.titulo']
                     # Si el titulo ya existe lo modificamos y agregamos en su historico, de lo contrario lo creamos y 
@@ -200,7 +200,8 @@ class ImportFactoring(models.Model):
                             _logger.warning('**** confirma como padre al titulo: {0}'.format(titulo))
                             _parent.write({'is_parent':True})
                         if not _existe:
-                            _parent.write({'son_ids': [(0,0,{'name':self.env['ati.titulo'].search([('title','=',titulo)],limit=1).id})]})
+                            #_parent.write({'son_ids': [(0,0,{'name':self.env['ati.titulo'].search([('title','=',titulo),('issuing','=',partner_emisor.id)],limit=1).id})]})
+                            _parent.write({'son_ids': [(0,0,{'name':titulo_creado.id})]})
 
 
                     _procesados += "{} \n".format(ident_comprador)
