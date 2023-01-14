@@ -45,7 +45,7 @@ class Titulo(models.Model):
     def create(self, var):
 
         res = super(Titulo, self).create(var)
-        res.name = res.title + ' - ' + res.client.name
+        res.name = res.title
 
         return res
     
