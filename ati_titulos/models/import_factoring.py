@@ -200,7 +200,6 @@ class ImportFactoring(models.Model):
                             _logger.warning('**** confirma como padre al titulo: {0}'.format(titulo))
                             _parent.write({'is_parent':True})
                         if not _existe:
-                            #_parent.write({'son_ids': [(0,0,{'name':self.env['ati.titulo'].search([('title','=',titulo),('issuing','=',partner_emisor.id)],limit=1).id})]})
                             _parent.write({'son_ids': [(0,0,{'name':titulo_creado.id})]})
 
 
