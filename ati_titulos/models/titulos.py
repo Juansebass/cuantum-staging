@@ -1,6 +1,7 @@
  # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 import logging
 
 logger = logging.getLogger(__name__)
@@ -56,11 +57,18 @@ class Titulo(models.Model):
 
         return res
 
+    def unlink(self):
+        for rec in self:
+            if rec.env.user.id == 8:
+                raise ValidationError('No tienes permisos para borrar titulos')
+            else:
+                return super(Titulo, rec).unlink()
+
 class TitulosHistorico(models.Model):
     _name = 'ati.titulo.historico'
 
     name = fields.Char('Nombre')
-    titulo_id = fields.Many2one('ati.titulo','Titulo')
+    titulo_id = fields.Many2one('ati.titulo','Titulo', ondelete='cascade')
     investment_type = fields.Many2one('ati.investment.type','Tipo de inversion', required=1)
     client = fields.Many2one('res.partner','Cliente',required=1)
     manager = fields.Many2one('ati.gestor','Gestor',required=1)
