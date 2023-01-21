@@ -8,6 +8,7 @@
             <field name="vat" position="after">
                 <field name="act_in" />
                 <field name="vinculado" />
+                <field name="num_encargo" />
                 <field name="emisor" />
                 <field name="pagador" />
                 <field name="rep_legal" />

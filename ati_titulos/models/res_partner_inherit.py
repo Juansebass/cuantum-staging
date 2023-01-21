@@ -66,6 +66,7 @@ class ResPartner(models.Model):
     rep_legal = fields.Many2one('res.partner','Representante Legal')
     cuantum_contact = fields.Many2one('res.partner','Contacto')
     freelance = fields.Many2one('res.partner','Freelance')
+    num_encargo = fields.Char('Nº de encargo')
 
     #Emisor / Pagador
     emisor = fields.Boolean('Emisor',default=False)
