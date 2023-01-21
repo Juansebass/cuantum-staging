@@ -424,7 +424,7 @@ class Extracto(models.Model):
             dm.unlink()
 
         #  CSF
-        self.estado_portafolios_ids = [(0,0,{ 'name' : 'Cuantum', 'display_type' : 'line_section', })]
+        self.estado_portafolios_ids = [(0,0,{ 'name' : 'CSF', 'display_type' : 'line_section', })]
         
         for investment_type in ['FAC','SEN','LIB','MUT']:
             total_valor_csf = 1
@@ -491,19 +491,25 @@ class Extracto(models.Model):
         total_cuantum = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'CUANTUM'))
         total_FCL = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCL'))
         total_FCP = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCP'))
+
+        valores = []
+        labels_valores = []
         
         #Validaciones mayores a 0
-        if total_cuantum < 0:
-            total_cuantum = 0.0
-        if total_FCL < 0:
-            total_FCL = 0.0
-        if total_FCP < 0:
-            total_FCP = 0.0
+        if total_cuantum > 0:
+            valores.append(total_cuantum)
+            labels_valores.append('CUANTUM')
+        if total_FCL > 0:
+            valores.append(total_FCL)
+            labels_valores.append('FCL')
+        if total_FCP > 0:
+            valores.append(total_FCP)
+            labels_valores.append('STATUM')
 
-        if total_cuantum != 0.0 or total_FCL != 0.0 or total_FCP != 0.0:
-            plt.pie([total_cuantum, total_FCL, total_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
+        if len(valores):
+            plt.pie(valores, colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['CUANTUM', 'FCL', 'STATUM'])
+            plt.legend(labels=labels_valores)
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_inversiones_fondo': base64.encodestring(pic_data.getvalue())})
@@ -514,19 +520,25 @@ class Extracto(models.Model):
         rpr_cuantum = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR CSF').valor_actual
         rpr_FCL = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR FCL').valor_actual
         rpr_FCP = self.resumen_inversion_ids.filtered(lambda x:  x.detalle == 'RPR STATUM').valor_actual
+
+        valores = []
+        labels_valores = []
         
         #Validaciones mayores a 0
-        if rpr_cuantum < 0:
-            rpr_cuantum = 0.0
-        if rpr_FCL < 0:
-            rpr_FCL = 0.0
-        if rpr_FCP < 0:
-            rpr_FCP = 0.0
+        if rpr_cuantum > 0:
+            valores.append(rpr_cuantum)
+            labels_valores.append('CUANTUM')
+        if rpr_FCL > 0:
+            valores.append(rpr_FCL)
+            labels_valores.append('FCL')
+        if rpr_FCP > 0:
+            valores.append(rpr_FCP)
+            labels_valores.append('STATUM')
 
-        if rpr_cuantum != 0.0 or rpr_FCL != 0.0 or rpr_FCP != 0.0:
-            plt.pie([rpr_cuantum, rpr_FCL, rpr_FCP], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
+        if len(valores):
+            plt.pie(valores, colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['CUANTUM', 'FCL', 'STATUM'])
+            plt.legend(labels=labels_valores)
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_rpr_fondo': base64.encodestring(pic_data.getvalue())})
@@ -538,22 +550,32 @@ class Extracto(models.Model):
         total_mutuos = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.producto.code == 'MUT'))
         total_sentencias = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.producto.code == 'SEN'))
         total_rpr = sum(value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x:  x.is_other))
-        #Validaciones mayores a 0
-        if total_rpr < 0:
-            total_rpr = 0.0
-        if total_factoring < 0:
-            total_factoring = 0.0
-        if total_libranzas < 0:
-            total_libranzas = 0.0
-        if total_mutuos < 0:
-            total_mutuos = 0.0
-        if total_sentencias < 0:
-            total_sentencias = 0.0
 
-        if total_factoring != 0.0 or total_libranzas != 0.0 or total_mutuos != 0.0 or total_sentencias != 0.0 or total_rpr != 0.0:
-            plt.pie([total_factoring, total_libranzas, total_mutuos, total_sentencias, total_rpr], colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
+        valores = []
+        labels_valores = []
+
+        #Validaciones mayores a 0
+        if total_factoring > 0:
+            valores.append(total_factoring)
+            labels_valores.append('FACTORING')
+        if total_libranzas > 0:
+            valores.append(total_libranzas)
+            labels_valores.append('LIBRANZAS')
+        if total_mutuos > 0:
+            valores.append(total_mutuos)
+            labels_valores.append('MUTUOS')
+        if total_sentencias > 0:
+            valores.append(total_sentencias)
+            labels_valores.append('SENTENCIAS')
+            total_sentencias = 0.0
+        if total_rpr > 0:
+            valores.append(total_rpr)
+            labels_valores.append('RPR')
+
+        if len(valores):
+            plt.pie(valores, colors=colors, autopct='%1.1f%%', shadow=False, startangle=90, labeldistance=0.1)
             plt.axis('equal')
-            plt.legend(labels=['FACTORING', 'LIBRANZAS', 'MUTUOS', 'SENTENCIAS', 'RPR'])
+            plt.legend(labels=labels_valores)
             pic_data = BytesIO()
             plt.savefig(pic_data, bbox_inches='tight')
             self.write({'pie_composicion_portafolio': base64.encodestring(pic_data.getvalue())})
@@ -742,3 +764,6 @@ class DetalleTitulos(models.Model):
     payer = fields.Many2one('res.partner','Pagador',related="titulo.payer")
     value = fields.Float('Valor de portafolio',related="titulo.value")
     fee = fields.Float('Tasa',related="titulo.fee")
+    bonding_date = fields.Date('Fecha de negociación',related="titulo.bonding_date")
+    redemption_date = fields.Date('Fecha de vencimiento',related="titulo.redemption_date")
+    state_titulo = fields.Many2one('ati.state.titulo','Estado',related="titulo.state_titulo")

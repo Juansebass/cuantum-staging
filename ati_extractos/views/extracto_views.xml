@@ -85,6 +85,9 @@
                                     <field name="investment_type"/>
                                     <field name="issuing"/>
                                     <field name="payer"/>
+                                    <field name="bonding_date"/>
+                                    <field name="redemption_date"/>
+                                    <field name="state_titulo"/>
                                     <field name="value"/>
                                     <field name="fee"/>
                                 </tree>
