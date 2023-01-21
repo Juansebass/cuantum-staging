@@ -448,9 +448,11 @@ class Extracto(models.Model):
                 for cf in titulos:
                     estado = cf.titulo.state_titulo.name
                     valor += cf.titulo.value
+                    if cf.titulo.value > 0:
+                        self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
                 if valor > 0:
                     porcentaje = (valor * 100) / total_valor_csf
-                    self.estado_portafolios_ids = [(0,0,{ 'name' : estado, 'valor' : valor, 'porcentaje' : porcentaje })]
+                    self.estado_portafolios_ids = [(0,0,{ 'name' : estado.upper(), 'valor' : valor, 'porcentaje' : porcentaje })]
         
 
         #  FCL
@@ -464,9 +466,11 @@ class Extracto(models.Model):
             for cf in titulos:
                 estado = cf.titulo.state_titulo.name
                 valor += cf.titulo.value
+                if cf.titulo.value > 0:
+                    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
             if valor > 0:
                 porcentaje = (valor * 100) / total_valor_fcl
-                self.estado_portafolios_ids = [(0,0,{ 'name' : estado, 'valor' : valor, 'porcentaje' : porcentaje })]
+                self.estado_portafolios_ids = [(0,0,{ 'name' : estado.upper(), 'valor' : valor, 'porcentaje' : porcentaje })]
 
         #  FCP
         self.estado_portafolios_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section', })]
@@ -479,9 +483,11 @@ class Extracto(models.Model):
             for cf in titulos:
                 estado = cf.titulo.state_titulo.name
                 valor += cf.titulo.value
+                if cf.titulo.value > 0:
+                    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
             if valor > 0:
                 porcentaje = (valor * 100) / total_valor_fcp
-                self.estado_portafolios_ids = [(0,0,{ 'name' : estado, 'valor' : valor, 'porcentaje' : porcentaje })]
+                self.estado_portafolios_ids = [(0,0,{ 'name' : estado.upper(), 'valor' : valor, 'porcentaje' : porcentaje })]
 
     def _generar_pie(self):
         colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'purple']

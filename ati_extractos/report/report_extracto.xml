@@ -166,7 +166,7 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                       </th>
                                   </tr>
                                   <tr style="background-color: #eae8e9; font-size: 10px; color: black; border-bottom: 2px solid black;">
-                                      <th style="width:20%">Descripción</th>
+                                      <th style="width:60%">Descripción</th>
                                       <th style="width:20%">Valor</th>
                                       <th style="width:20%">Porcentaje</th>
                                   </tr>
@@ -181,7 +181,7 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                   <t t-if="i.display_type != 'line_section'">
                                     <td><span t-field="i.name" style="margin-left: 20px;"/></td>
                                     <td>$<span t-esc="'{0:,.0f}'.format(i.valor).replace(',', '.')"/></td>
-                                    <td><span t-esc="str('%.2f'%i.porcentaje).replace('.', ',')"/>%</td>
+                                    <td><span t-if="i.porcentaje > 0" t-esc="str('%.2f'%i.porcentaje).replace('.', ',')"/><span t-if="i.porcentaje > 0">%</span></td>
                                   </t>
                                 </tr>
                               </tbody>
