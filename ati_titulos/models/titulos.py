@@ -58,11 +58,10 @@ class Titulo(models.Model):
         return res
 
     def unlink(self):
-        for rec in self:
-            if rec.env.user.id == 8:
-                raise ValidationError('No tienes permisos para borrar titulos')
-            else:
-                return super(Titulo, rec).unlink()
+        if self.env.user.id != 8:
+            raise ValidationError('No tienes permisos para borrar titulos')
+        else:
+            return super(Titulo, self).unlink()
 
 class TitulosHistorico(models.Model):
     _name = 'ati.titulo.historico'
