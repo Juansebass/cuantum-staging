@@ -122,7 +122,10 @@ class ImportFactoring(models.Model):
                         else:  
                             raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el concepto ingresado no corresponde a ninguno que este en el sistema, contenido de linea: {1}".format(i, line))
                     else:
-                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no contiene concepto, contenido de linea: {1}".format(i, line))
+                        #En el caso de sentencias y factoring todos los titulos tienen padre y por este motivo el padre no lleva concepto pero si los hijos
+                        _is_parent = titulo.find('-')
+                        if _is_parent != -1:
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, no contiene concepto, contenido de linea: {1}".format(i, line))
                     
 
                     #Comprobamos si un titulo es hijo
