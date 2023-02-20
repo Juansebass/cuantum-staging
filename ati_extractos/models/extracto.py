@@ -316,7 +316,10 @@ class Extracto(models.Model):
         #self.resumen_inversion_ids[-1]
         for ri in self.resumen_inversion_ids:
             if ri.id != self.resumen_inversion_ids[-1].id and ri.display_type != 'line_section':# and not ri.is_other:
-                ri.participacion = (ri.valor_actual * 100 ) / self.resumen_inversion_ids[-1].valor_actual
+                if self.resumen_inversion_ids[-1].valor_actual != 0:
+                    ri.participacion = (ri.valor_actual * 100 ) / self.resumen_inversion_ids[-1].valor_actual
+                else:
+                    ri.participacion = 0
                 #Sumamos la participacion total
                 self.resumen_inversion_ids[-1].participacion += ri.participacion
 
@@ -448,11 +451,12 @@ class Extracto(models.Model):
                 for cf in titulos:
                     estado = cf.titulo.state_titulo.name
                     valor += cf.titulo.value
-                    if cf.titulo.value > 0:
-                        self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
+                    #Desglose de titulos por estado
+                    #if cf.titulo.value > 0:
+                    #    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
                 if valor > 0:
                     porcentaje = (valor * 100) / total_valor_csf
-                    self.estado_portafolios_ids = [(0,0,{ 'name' : estado.upper(), 'valor' : valor, 'porcentaje' : porcentaje })]
+                    self.estado_portafolios_ids = [(0,0,{ 'name' : estado.capitalize(), 'valor' : valor, 'porcentaje' : porcentaje })]
         
 
         #  FCL
@@ -466,11 +470,12 @@ class Extracto(models.Model):
             for cf in titulos:
                 estado = cf.titulo.state_titulo.name
                 valor += cf.titulo.value
-                if cf.titulo.value > 0:
-                    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
+                #Desglose de titulos por estado
+                #if cf.titulo.value > 0:
+                #    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
             if valor > 0:
                 porcentaje = (valor * 100) / total_valor_fcl
-                self.estado_portafolios_ids = [(0,0,{ 'name' : estado.upper(), 'valor' : valor, 'porcentaje' : porcentaje })]
+                self.estado_portafolios_ids = [(0,0,{ 'name' : estado.capitalize(), 'valor' : valor, 'porcentaje' : porcentaje })]
 
         #  FCP
         self.estado_portafolios_ids = [(0,0,{ 'name' : 'STATUM', 'display_type' : 'line_section', })]
@@ -483,11 +488,12 @@ class Extracto(models.Model):
             for cf in titulos:
                 estado = cf.titulo.state_titulo.name
                 valor += cf.titulo.value
-                if cf.titulo.value > 0:
-                    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
+                #Desglose de titulos por estado
+                #if cf.titulo.value > 0:
+                #    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
             if valor > 0:
                 porcentaje = (valor * 100) / total_valor_fcp
-                self.estado_portafolios_ids = [(0,0,{ 'name' : estado.upper(), 'valor' : valor, 'porcentaje' : porcentaje })]
+                self.estado_portafolios_ids = [(0,0,{ 'name' : estado.capitalize(), 'valor' : valor, 'porcentaje' : porcentaje })]
 
     def _generar_pie(self):
         colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'purple']
@@ -633,7 +639,7 @@ class Extracto(models.Model):
 
     def set_borrador_extracto(self):
         for rec in self:
-            if self.env.user.id == 8:
+            if self.env.user.id in [8,2]:
                 rec.state = 'draft'
             else:
                 raise ValidationError('Usted no tiene permisos para realizar esta acción')
@@ -763,6 +769,19 @@ class DetalleMovimiento(models.Model):
 class DetalleTitulos(models.Model):
     _name = 'ati.extracto.detalle_titulos'
 
+    @api.depends("titulo")
+    def _compute_paid_value(self):
+        for rec in self:
+            if len(rec.titulo) > 0:
+                if len(rec.titulo.tit_historico_ids) > 0:
+                    for line in rec.titulo.tit_historico_ids:
+                        if line.periodo[:2] == rec.extracto_id.month and line.periodo[3:7] == rec.extracto_id.year:
+                            rec.paid_value += line.recaudo
+                else:
+                    rec.paid_value = 0
+            else:
+                rec.paid_value = 0
+
     extracto_id = fields.Many2one('ati.extracto','Extracto')
     titulo = fields.Many2one('ati.titulo','Titulo')
     investment_type = fields.Char('Tipo',related="titulo.investment_type.name")
@@ -772,4 +791,5 @@ class DetalleTitulos(models.Model):
     fee = fields.Float('Tasa',related="titulo.fee")
     bonding_date = fields.Date('Fecha de negociación',related="titulo.bonding_date")
     redemption_date = fields.Date('Fecha de vencimiento',related="titulo.redemption_date")
+    paid_value = fields.Float('Valor pagado', compute='_compute_paid_value', store=True)
     state_titulo = fields.Many2one('ati.state.titulo','Estado',related="titulo.state_titulo")
