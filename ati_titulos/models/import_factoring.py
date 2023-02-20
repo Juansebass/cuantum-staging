@@ -116,7 +116,9 @@ class ImportFactoring(models.Model):
 
                     # Concepto o estado de titulo
                     if concepto != '':
-                        _concepto_tmp = self.env['ati.state.titulo'].search([('code','ilike',concepto)], limit=1)
+                        _concepto_tmp = self.env['ati.state.titulo'].search([('code','=',concepto)], limit=1)
+                        if len(_concepto_tmp) == 0:
+                            _concepto_tmp = self.env['ati.state.titulo'].search([('code','ilike',concepto)], limit=1)
                         if len(_concepto_tmp) > 0:
                             vals['state_titulo'] = _concepto_tmp.id
                         else:  

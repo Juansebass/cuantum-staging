@@ -15,6 +15,26 @@ class ImportRendimientosAdministracion(models.Model):
     _description = 'Rendimientos y Administracion'
 
     def btn_process(self):
+
+        #date_string = '2022-12-01'
+        #date_string_stop = '2022-12-31'
+        #datetime_star = datetime.strptime(date_string, '%Y-%m-%d')
+        #datetime_stop = datetime.strptime(date_string_stop, '%Y-%m-%d')
+        #fcl = self.env['ati.recurso.recompra.fcl'].search([('date','>=',datetime_star),('date','<=',datetime_stop)])
+        #fcp = self.env['ati.recurso.recompra.fcp'].search([('date','>=',datetime_star),('date','<=',datetime_stop)])
+        #csf = self.env['ati.recurso.recompra.csf'].search([('date','>=',datetime_star),('date','<=',datetime_stop)])
+#
+        #for f in fcl:
+        #    f.unlink()
+        #for c in fcp:
+        #    c.unlink()
+        #for s in csf:
+        #    s.unlink()
+#
+        #return
+
+
+
         _procesados = ""
         _noprocesados = ""
         vals={}    
