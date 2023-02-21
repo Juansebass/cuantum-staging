@@ -118,9 +118,9 @@ class Extracto(models.Model):
                             'valor_anterior' : i[2]['valor_anterior'],
                             'rendimiento_causado' : rendimiento.value,
                             'administracion' : administracion.value,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if rendimiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if rendimiento.value > 0 else i[2]['cant_movimientos']
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
                         })
                         prod_cargado = True
                     ind += 1
@@ -133,13 +133,13 @@ class Extracto(models.Model):
                         'valor_anterior' :self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
                         'rendimiento_causado' : rendimiento.value,
                         'administracion' : administracion.value,
-                        'tasa_rendimiento' : moviemiento.fee if rendimiento.value > 0 else 0, #Solamente promediamos los mayores a cero
+                        'tasa_rendimiento' : moviemiento.fee if moviemiento.value > 0 else 0, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1 if rendimiento.value > 0 else 0
+                        'cant_movimientos' : 1 if moviemiento.value > 0 else 0
                     }))
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
-            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2) if _inversiones[n][2]['cant_movimientos'] != 0 else 0})
         #Agregamos total de Recursos en proceso de recompra
         _rendimient_rpr_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
         _inversiones.append((0,0,{
@@ -180,9 +180,9 @@ class Extracto(models.Model):
                             'valor_anterior' : i[2]['valor_anterior'],
                             'rendimiento_causado' : rendimiento.value,
                             'administracion' : administracion.value,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if rendimiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if rendimiento.value > 0 else i[2]['cant_movimientos']
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
                         })
                         prod_cargado = True
                     index += 1
@@ -195,13 +195,13 @@ class Extracto(models.Model):
                         'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
                         'rendimiento_causado' : rendimiento.value,
                         'administracion' : administracion.value,
-                        'tasa_rendimiento' : moviemiento.fee if rendimiento.value > 0 else 0, #Solamente promediamos los mayores a cero
+                        'tasa_rendimiento' : moviemiento.fee if moviemiento.value > 0 else 0, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1 if rendimiento.value > 0 else 0
+                        'cant_movimientos' : 1 if moviemiento.value > 0 else 0
                     }))
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
-            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2) if _inversiones[n][2]['cant_movimientos'] != 0 else 0})
         #Agregamos total de Recursos en proceso de recompra
         _rendimient_rpr_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
         _inversiones.append((0,0,{
@@ -243,9 +243,9 @@ class Extracto(models.Model):
                             'valor_anterior' : i[2]['valor_anterior'],
                             'rendimiento_causado' : rendimiento.value,
                             'administracion' : administracion.value,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if rendimiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if rendimiento.value > 0 else i[2]['cant_movimientos']
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
                         })
                         prod_cargado = True
                     index += 1
@@ -264,7 +264,7 @@ class Extracto(models.Model):
                     }))
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
-            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2)})
+            _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2) if _inversiones[n][2]['cant_movimientos'] != 0 else 0})
         #Agregamos total de Recursos en proceso de recompra
         _rendimient_rpr_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
         _inversiones.append((0,0,{
@@ -390,7 +390,7 @@ class Extracto(models.Model):
         aplicacion_mut_recaudo_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION' and x.investment_type.code == 'MUT'))
         if aplicacion_mut_recaudo_csf > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recaudo', 'valor' : aplicacion_mut_recaudo_csf})]
-        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Mutuos CSF', 'valor' : aplicacion_sen_recaudo_csf - compra_sen_csf }),]
+        self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Mutuos CSF', 'valor' : aplicacion_mut_recaudo_csf - compra_mut_csf }),]
 
         #  FCL
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'FCL', 'display_type' : 'line_section', })]
@@ -502,7 +502,7 @@ class Extracto(models.Model):
                 self.estado_portafolios_ids = [(0,0,{ 'name' : estado.capitalize(), 'valor' : valor, 'porcentaje' : porcentaje })]
 
     def _generar_pie(self):
-        colors = ['green', 'grey', 'darkgreen', 'lightcoral']
+        colors = ['green', 'grey', 'darkgreen', 'olive']
 
         #Inversion por fondo
 
