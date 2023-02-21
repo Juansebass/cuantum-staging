@@ -94,7 +94,8 @@ class ImportRecursosFCP(models.Model):
                         
                         vals['investment_type'] = inves_type.id
                     else:
-                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la séptima columna que refiere a la linea de negocio esta vacia, contenido de linea: {1}".format(i, line))
+                        if movimiento != 'RENDIMIENTO':
+                            raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la séptima columna que refiere a la linea de negocio esta vacia, contenido de linea: {1}".format(i, line))
 
                     #Creamos recurso en proceso de recompra
 

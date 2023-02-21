@@ -52,6 +52,7 @@
                         <group>
                             <field name="adicion_fcp" />
                             <field name="aplicacion_recaudo_fcp" />
+                            <field name="rendimiento_fcp" />
                         </group>
                             <div class="o_group_col_12" style="text-align: right;">
                                 <label for="total_fcp" string="TOTAL FCP"/>
@@ -80,6 +81,7 @@
                         <group>
                             <field name="adicion_fcl" />
                             <field name="aplicacion_recaudo_fcl" />
+                            <field name="rendimiento_fcl" />
                         </group>
                             <div class="o_group_col_12" style="text-align: right;">
                                 <label for="total_fcl" string="TOTAL FCL"/>
@@ -133,6 +135,13 @@
                                 <div class="o_row">                  
                                     <label for="adicion_total_csf" string="$"/>                     
                                     <field name="adicion_total_csf"/>      
+                                </div>
+                            </div>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                <label for="total_csf" string="TOTAL RENDIMIENTO CSF"/>
+                                <div class="o_row">                  
+                                    <label for="rendimiento_total_csf" string="$"/>                     
+                                    <field name="rendimiento_total_csf"/>      
                                 </div>
                             </div>
                             <div class="o_group_col_12" style="text-align: right;">
