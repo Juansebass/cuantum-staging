@@ -89,6 +89,7 @@
                                     <field name="redemption_date"/>
                                     <field name="state_titulo"/>
                                     <field name="paid_value"/>
+                                    <field name="sale_value"/>
                                     <field name="value"/>
                                     <field name="fee"/>
                                 </tree>

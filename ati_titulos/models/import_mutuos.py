@@ -48,7 +48,7 @@ class ImportMutuo(models.Model):
             if self.skip_first_line and i == 0:
                 continue
             lista = line.split(self.delimiter)
-            if len(lista) > 11:
+            if len(lista) > 12:
                 titulo = lista[0]
                 emisor = lista[1]
                 pagador = lista[2]
@@ -58,9 +58,10 @@ class ImportMutuo(models.Model):
                 fch_negociacion = lista[6]
                 fch_vencimiento = lista[7]
                 tasa_desc = lista[8]
-                vpn_des = lista[9]
-                concepto = lista[10].replace(' ','')
-                recaudo = lista[11]
+                valor_compra = lista[9]
+                vpn_des = lista[10]
+                concepto = lista[11].replace(' ','')
+                recaudo = lista[12]
 
                 vals.clear()
 
@@ -106,6 +107,8 @@ class ImportMutuo(models.Model):
                     vals['investment_type'] = inves_type.id
                     vals['client'] = client.id
                     vals['manager'] = self.manager.id
+                    valor_compra = valor_compra.replace('$', '').replace(' ', '').replace('.', '').replace(',','.').replace('-', '')
+                    vals['sale_value'] = valor_compra
                     vpn_des = vpn_des.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
                     vals['value'] = vpn_des
                     recaudo = recaudo.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')

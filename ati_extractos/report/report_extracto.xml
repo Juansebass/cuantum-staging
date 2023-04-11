@@ -192,7 +192,7 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                         <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
                             <thead> 
                                 <tr class="text-center" style="background-color: #619f11; font-size: 12px; border-bottom: 2px solid black;">
-                                    <th COLSPAN="10" style="font-size: 12px; color: white;width:100%;">Estado del Portafolio</th>          
+                                    <th COLSPAN="11" style="font-size: 12px; color: white;width:100%;">Estado del Portafolio</th>
                                 </tr>
                                 <tr style="background-color: #eae8e9; font-size: 10px; color: black; border-bottom: 2px solid black;">
                                     <th style="width:20%; vertical-align: middle">Título</th>
@@ -203,6 +203,7 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                     <th style="width:20%; vertical-align: middle">Fecha de Vencimiento</th>
                                     <th style="width:20%; vertical-align: middle">Estado</th>
                                     <th style="width:20%; vertical-align: middle">Valor pagado</th>
+                                    <th style="width:20%; vertical-align: middle">Valor de Compra</th>
                                     <th style="width:20%; vertical-align: middle">Valor de Portafolio</th>
                                     <th style="width:10%; vertical-align: middle">Retorno Proyectado</th>
                                 </tr>
@@ -217,6 +218,7 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                   <td><span t-field="i.redemption_date"/></td>
                                   <td><span t-field="i.state_titulo"/></td>
                                   <td><span t-field="i.paid_value"/></td>
+                                    <td>$<span t-field="i.sale_value"/></td>
                                   <td>$<span t-field="i.value"/></td>
                                   <td><span t-field="i.fee"/>%</td>
                                 </tr>

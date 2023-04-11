@@ -793,6 +793,7 @@ class DetalleTitulos(models.Model):
     investment_type = fields.Char('Tipo',related="titulo.investment_type.name")
     issuing = fields.Many2one('res.partner','Emisor',related="titulo.issuing")
     payer = fields.Many2one('res.partner','Pagador',related="titulo.payer")
+    sale_value = fields.Float('Valor de Compra', related="titulo.sale_value")
     value = fields.Float('Valor de portafolio',related="titulo.value")
     fee = fields.Float('Tasa',related="titulo.fee")
     bonding_date = fields.Date('Fecha de negociación',related="titulo.bonding_date")
