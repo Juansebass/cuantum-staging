@@ -31,7 +31,7 @@
 
                     <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                         <t t-if="not line.display_type">
-                            <td name="td_name" class="text-left"><span t-field="line.name"/></td>
+                            <td name="td_name" class="text-left"><span t-field="line.product_id.name"/></td>
                             <td t-if="doc.offer_type == 'comprador'" name="td_titulo" class="text-left"><span t-field="line.n_titulo"/></td>
                             <td t-if="doc.offer_type == 'comprador'" name="td_emisor" class="text-left"><span t-field="line.emisor_line.name"/></td>
                             <td name="td_pagador" class="text-left"><span t-field="line.pagador_line.name"/></td>
