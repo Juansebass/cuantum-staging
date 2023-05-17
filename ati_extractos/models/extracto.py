@@ -105,9 +105,15 @@ class Extracto(models.Model):
                 prod_cargado = False
                 ind = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)])
+                valor_rendimiento_tmp = 0
+                for r in rendimiento:
+                    valor_rendimiento_tmp += r.value
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)])
+                valor_administracion_tmp = 0
+                for a in administracion:
+                    valor_administracion_tmp += a.value
 
                 # Recorremos las inversiones en CUANTUM para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -116,8 +122,8 @@ class Extracto(models.Model):
                             'producto' : moviemiento.investment_type.id,
                             'valor_actual' : moviemiento.value + i[2]['valor_actual'],
                             'valor_anterior' : i[2]['valor_anterior'],
-                            'rendimiento_causado' : rendimiento.value,
-                            'administracion' : administracion.value,
+                            'rendimiento_causado' : valor_rendimiento_tmp,
+                            'administracion' : valor_administracion_tmp,
                             'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
                             'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
@@ -131,8 +137,8 @@ class Extracto(models.Model):
                         'producto' : moviemiento.investment_type.id,
                         'valor_actual' : moviemiento.value,
                         'valor_anterior' :self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
-                        'rendimiento_causado' : rendimiento.value,
-                        'administracion' : administracion.value,
+                        'rendimiento_causado' : valor_rendimiento_tmp,
+                        'administracion' : valor_administracion_tmp,
                         'tasa_rendimiento' : moviemiento.fee if moviemiento.value > 0 else 0, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
                         'cant_movimientos' : 1 if moviemiento.value > 0 else 0
@@ -167,9 +173,15 @@ class Extracto(models.Model):
                 prod_cargado = False
                 index = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)])
+                valor_rendimiento_tmp = 0
+                for r in rendimiento:
+                    valor_rendimiento_tmp += r.value
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)])
+                valor_administracion_tmp = 0
+                for a in administracion:
+                    valor_administracion_tmp += a.value
 
                 # Recorremos las inversiones en FCL para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -178,8 +190,8 @@ class Extracto(models.Model):
                             'producto' : moviemiento.investment_type.id,
                             'valor_actual' : moviemiento.value + i[2]['valor_actual'],
                             'valor_anterior' : i[2]['valor_anterior'],
-                            'rendimiento_causado' : rendimiento.value,
-                            'administracion' : administracion.value,
+                            'rendimiento_causado' : valor_rendimiento_tmp,
+                            'administracion' : valor_administracion_tmp,
                             'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
                             'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
@@ -193,8 +205,8 @@ class Extracto(models.Model):
                         'producto' : moviemiento.investment_type.id,
                         'valor_actual' : moviemiento.value,
                         'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
-                        'rendimiento_causado' : rendimiento.value,
-                        'administracion' : administracion.value,
+                        'rendimiento_causado' : valor_rendimiento_tmp,
+                        'administracion' : valor_administracion_tmp,
                         'tasa_rendimiento' : moviemiento.fee if moviemiento.value > 0 else 0, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
                         'cant_movimientos' : 1 if moviemiento.value > 0 else 0
@@ -230,9 +242,15 @@ class Extracto(models.Model):
                 prod_cargado = False
                 index = 0
                 # Buscamos el rendimiento para el tipo de producto en el movimiento
-                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                rendimiento = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','RENDIMIENTO'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)])
+                valor_rendimiento_tmp = 0
+                for r in rendimiento:
+                    valor_rendimiento_tmp += r.value
                 # Buscamos el valor de administracion para el tipo de producto en el movimiento
-                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)],limit=1)
+                administracion = self.env['ati.rendimientos.administracion'].search([('manager.code','=',moviemiento.manager.code),('buyer.id','=',self.cliente.id),('movement_type','=','ADMINISTRACION'),('investment_type','=',moviemiento.investment_type.id),('date','>=',fecha_inicio),('date','<=',fecha_fin)])
+                valor_administracion_tmp = 0
+                for a in administracion:
+                    valor_administracion_tmp += a.value
 
                 # Recorremos las inversiones en FCP para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -241,8 +259,8 @@ class Extracto(models.Model):
                             'producto' : moviemiento.investment_type.id,
                             'valor_actual' : moviemiento.value + i[2]['valor_actual'],
                             'valor_anterior' : i[2]['valor_anterior'],
-                            'rendimiento_causado' : rendimiento.value,
-                            'administracion' : administracion.value,
+                            'rendimiento_causado' : valor_rendimiento_tmp,
+                            'administracion' : valor_administracion_tmp,
                             'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
                             'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
@@ -256,8 +274,8 @@ class Extracto(models.Model):
                         'producto' : moviemiento.investment_type.id,
                         'valor_actual' : moviemiento.value,
                         'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
-                        'rendimiento_causado' : rendimiento.value,
-                        'administracion' : administracion.value,
+                        'rendimiento_causado' : valor_rendimiento_tmp,
+                        'administracion' : valor_administracion_tmp,
                         'tasa_rendimiento' : moviemiento.fee if rendimiento.value > 0 else 0, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
                         'cant_movimientos' : 1 if rendimiento.value > 0 else 0
@@ -629,6 +647,12 @@ class Extracto(models.Model):
                 'extracto_id' : self.id,
                 'titulo' : titulos.id
             })
+        
+        #si el titulo esta en esado pagado con valor pagado cero no lo incluimos
+        for titulo in self.detalle_titulos_ids:
+            if titulo.state_titulo.code == 'PAG' and titulo.paid_value == 0:
+                titulo.unlink()
+
         self._generar_estados_portafolios()
 
         # INVERSIONES
@@ -645,7 +669,7 @@ class Extracto(models.Model):
 
     def set_borrador_extracto(self):
         for rec in self:
-            if self.env.user.id in [8,2]:
+            if self.env.user.id in [8,2,10]:
                 rec.state = 'draft'
             else:
                 raise ValidationError('Usted no tiene permisos para realizar esta acción')

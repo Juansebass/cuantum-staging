@@ -75,7 +75,7 @@ class ImportRecursosFCL(models.Model):
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la primera columna que refiere al la fecha esta vacia, contenido de linea: {1}".format(i, line))
                     
                     if valores != '':
-                        valores = valores.replace('$','').replace(' ', '').replace('.', '').replace(',', '.')
+                        valores = valores.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
                         vals['value'] = valores
                     else:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))

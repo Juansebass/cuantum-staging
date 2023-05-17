@@ -60,7 +60,7 @@ class ImportSentencias(models.Model):
                 tasa_desc = lista[8]
                 valor_compra = lista[9]
                 vpn_des = lista[10]
-                concepto = lista[11].replace(' ','')
+                concepto = lista[11].replace(' ', '')
                 recaudo = lista[12]
 
                 vals.clear()
@@ -107,7 +107,7 @@ class ImportSentencias(models.Model):
                     vals['investment_type'] = inves_type.id
                     vals['client'] = client.id
                     vals['manager'] = self.manager.id
-                    valor_compra = valor_compra.replace('$', '').replace(' ', '').replace('.', '').replace(',','.').replace('-', '')
+                    valor_compra = valor_compra.replace('$', '').replace(' ', '').replace('.', '').replace(',', '.').replace('-', '')
                     vals['sale_value'] = valor_compra
                     vpn_des = vpn_des.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
                     vals['value'] = vpn_des

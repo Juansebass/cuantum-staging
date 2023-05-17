@@ -32,7 +32,7 @@
                               }
                         </style>
                         <div style="width: 100%;">
-                          <div style="margin-right: 150px; display: inline-block;">
+                          <div style="margin-right: 40px; display: inline-block;">
                             
                             <img style="margin-top: -30px;" t-att-src="image_data_uri(o.company_id.logo)" width="290"/>
                             <p style="line-height: 50%;">Cuantum Soluciones Financieras SA.</p>
@@ -218,13 +218,33 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                   <td><span t-field="i.redemption_date"/></td>
                                   <td><span t-field="i.state_titulo"/></td>
                                   <td><span t-field="i.paid_value"/></td>
-                                    <td>$<span t-field="i.sale_value"/></td>
+                                  <td>$<span t-field="i.sale_value"/></td>
                                   <td>$<span t-field="i.value"/></td>
                                   <td><span t-field="i.fee"/>%</td>
                                 </tr>
                             </tbody>
                         </table>
-                        
+                        <br/>
+                        <p style="font-size:12px; margin-bottom:10px border-radius: 4px; !important ; border-spacing: 0px; padding: 10px; border: 2px solid black; text-align: justify;">
+                            Desde la gerencia y la dirección estratégica de la Cuantum, queremos informarles que luego
+                            de analizar con detalle y habiendo tomado nota de los análisis de nuestro equipo de
+                            asesoría jurídico y contable, en línea con las sugerencias de nuestra revisoría fiscal,
+                            hemos definido, como política permanente de la compañía, que en la información exógena que
+                            se reportará a la DIAN, en adelante, se incluirá únicamente los saldos de recursos que se
+                            encuentren en el  rubro de Recursos en Proceso de Recompra (RPR), así como los valores
+                            adeudados por contratos de Mutuo que se encuentren vigentes al cierre de año y a favor de
+                            cualquiera de nuestros clientes que tenga la calidad de acreedor en este tipo de contrato,
+                            en atención a que estos rubros configuran un pasivo de Cuantum a favor de terceros que
+                            requiere ser reportado e incluido en la información exógena que se remite a la DIAN.<br/><br/>
+
+                            Aprovechamos igualmente para recordarles que, durante el transcurso del año, al momento de
+                            celebrar cada operación, ustedes cuentan con toda la trazabilidad documental que soporta
+                            cada una de las transacciones y, además, mensualmente les compartimos los extractos con los
+                            movimientos, las operaciones y el comportamiento de cada uno de los activos vendidos por
+                            nuestra compañía.<br/><br/>
+
+                            Quedamos atentos a resolver cualquier inquietud que surja sobre lo notificado.
+                        </p>
                     </div>
                 </t>
             </t>

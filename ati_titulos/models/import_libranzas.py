@@ -60,7 +60,7 @@ class ImportLibranzas(models.Model):
                 tasa_desc = lista[8]
                 valor_compra = lista[9]
                 vpn_des = lista[10]
-                concepto = lista[11].replace(' ','')
+                concepto = lista[11].replace(' ', '')
                 recaudo = lista[12]
 
                 vals.clear()

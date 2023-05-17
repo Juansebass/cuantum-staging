@@ -20,10 +20,11 @@ class SaleOrder(models.Model):
     #Variable utilizadas para cargar ofertas de titulos segun gestor y tipo de inversion
     gestor_ofertar = fields.Many2one('ati.gestor','Gestor de titulos')
     tipo_producto_ofertar = fields.Many2one('ati.investment.type','Tipo de producto')
-    fecha_celebracion = fields.Datetime(string='Fecha de Celebración', index=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, copy=False, default=fields.Datetime.now)
+    fecha_celebracion = fields.Datetime(string='Fecha de Celebración', index=True,
+                                        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+                                        copy=False, default=fields.Datetime.now)
     emisor_ofertar = fields.Many2one('res.partner', 'Emisor')
     pagador_ofertar = fields.Many2one('res.partner', 'Pagador')
-
 
     def action_cargar_titulos_oferta(self):
         for rec in self:
@@ -31,26 +32,27 @@ class SaleOrder(models.Model):
                 raise ValidationError('Debe seleccionar un Gestor para poder cargar ofertas')
             elif len(rec.tipo_producto_ofertar) < 1:
                 raise ValidationError('Debe seleccionar un Tipo de producto para poder cargar ofertas')
+
             ofertas = []
             if not rec.emisor_ofertar and not rec.pagador_ofertar:
                 ofertas = self.env['ati.titulo.oferta'].search([
-                    ('investment_type','=',rec.tipo_producto_ofertar.id),
-                    ('manager','=',rec.gestor_ofertar.id),
-                    ('odquirido','=',False)
+                    ('investment_type', '=', rec.tipo_producto_ofertar.id),
+                    ('manager', '=', rec.gestor_ofertar.id),
+                    ('odquirido', '=', False)
                 ])
-            elif not rec.emisor_ofertar and  rec.pagador_ofertar:
+            elif not rec.emisor_ofertar and rec.pagador_ofertar:
                 ofertas = self.env['ati.titulo.oferta'].search([
-                    ('investment_type','=',rec.tipo_producto_ofertar.id),
-                    ('manager','=',rec.gestor_ofertar.id),
+                    ('investment_type', '=', rec.tipo_producto_ofertar.id),
+                    ('manager', '=', rec.gestor_ofertar.id),
                     ('payer', '=', rec.pagador_ofertar.id),
-                    ('odquirido','=',False)
+                    ('odquirido', '=', False)
                 ])
-            elif  rec.emisor_ofertar and  not rec.pagador_ofertar:
+            elif rec.emisor_ofertar and not rec.pagador_ofertar:
                 ofertas = self.env['ati.titulo.oferta'].search([
-                    ('investment_type','=',rec.tipo_producto_ofertar.id),
-                    ('manager','=',rec.gestor_ofertar.id),
+                    ('investment_type', '=', rec.tipo_producto_ofertar.id),
+                    ('manager', '=', rec.gestor_ofertar.id),
                     ('issuing', '=', rec.emisor_ofertar.id),
-                    ('odquirido','=',False)
+                    ('odquirido', '=', False)
                 ])
             else:
                 ofertas = self.env['ati.titulo.oferta'].search([
@@ -60,7 +62,6 @@ class SaleOrder(models.Model):
                     ('payer', '=', rec.pagador_ofertar.id),
                     ('odquirido', '=', False)
                 ])
-
             # Verificamos que existan ofertas, en el caso de existir las agregamos a las lineas
             if len(ofertas) == 0:
                 raise ValidationError('El gestor {0} no tiene disponible Titulos de tipo {1}'.format(rec.gestor_ofertar.name, rec.tipo_producto_ofertar.name))
@@ -101,8 +102,8 @@ class SaleOrder(models.Model):
                     else:
                         ol.titulo_oferta.odquirido = True
                         ol.titulo_oferta.cliente = rec.partner_id.id
-            #Agregando fecha de celebración a la orden
-            self.date_order = self.fecha_celebracion
+                # Agregando fecha de celebración a la orden
+                self.date_order = self.fecha_celebracion
         return res
 
     # Se verifica si los productos de la oferta son distintos, de ser asi se avisa que solo se puede tener un solo tipo y se cancela la accion
