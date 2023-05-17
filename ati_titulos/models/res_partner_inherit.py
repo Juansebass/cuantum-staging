@@ -7,6 +7,8 @@ _logger = logging.getLogger(__name__)
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
+    tasa_rendimiento_fcl = fields.Float('Tasa Rendimiento')
+    tasa_rendimiento_csf = fields.Float('Tasa Rendimiento')
 
     # Sobreescribimos esta funcion para que no se envie el vat a los contactos hijos de una empresa, esta funcion es del core de odoo en /odoo/addons/base/models/res_partner.py
     def _commercial_sync_from_company(self):

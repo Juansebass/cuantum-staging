@@ -73,6 +73,11 @@
                             <field name="value" />
                         </tree>
                     </field>
+                    <group name="general_fcl" string="GENERAL FCL">
+                        <group>
+                            <field name="tasa_rendimiento_fcl" readonly="0"/>
+                        </group>
+                    </group>
                     <group name="totales_fcl" string="Totales FCL">
                         <group>
                             <field name="compra_fcl" />
@@ -102,6 +107,11 @@
                             <field name="value" />
                         </tree>
                     </field>
+                    <group name="general_csf" string="GENERAL CSF">
+                        <group>
+                            <field name="tasa_rendimiento_csf" readonly="0"/>
+                        </group>
+                    </group>
                     <group name="totales_csf" string="Totales CSF">
                         <group>
                             <separator string="Factoring" colspan="1"/>

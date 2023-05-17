@@ -153,13 +153,14 @@ class Extracto(models.Model):
                         'valor_actual' : self.cliente.total_csf,
                         'valor_anterior' : self._get_value_before('RPR CSF',False,self.month,self.year,True),
                         'rendimiento_causado' : _rendimient_rpr_csf,
+                        'tasa_rendimiento': self.cliente.tasa_rendimiento_csf,
                         'is_other' : True
                     }))
         #Calculamos diferencia 
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'diferencia' : round((_inversiones[n][2]['valor_actual'] - _inversiones[n][2]['valor_anterior']), 2)})
 
-        
+
         self.resumen_inversion_ids = _inversiones
 
         #FCL
@@ -221,6 +222,7 @@ class Extracto(models.Model):
                         'valor_actual' : self.cliente.total_fcl,
                         'valor_anterior' : self._get_value_before('RPR FCL',False,self.month,self.year,True),
                         'rendimiento_causado' : _rendimient_rpr_fcl,
+                        'tasa_rendimiento': self.cliente.tasa_rendimiento_fcl,
                         'is_other' : True
                     }))
         #Calculamos diferencia
