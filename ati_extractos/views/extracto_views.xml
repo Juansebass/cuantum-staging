@@ -65,6 +65,34 @@
                             </group>
                         </page>
                         <page name="det_mov" string="Detalle de Movimiento">
+                            <h3 style="text-align: center;">Fideicomiso Cuantum P (FCP)</h3>
+                            <field name="recursos_fcp">
+                                <tree string="Recursos de Recompra" editable="bottom">
+                                    <field name="date" />
+                                    <field name="investment_type" />
+                                    <field name="movement_type" />
+                                    <field name="value" />
+                                </tree>
+                            </field>
+                            <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
+                            <field name="recursos_fcl">
+                                <tree string="Recursos de Recompra" editable="bottom">
+                                    <field name="date" />
+                                    <field name="investment_type" />
+                                    <field name="movement_type" />
+                                    <field name="value" />
+                                </tree>
+                            </field>
+                            <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
+                            <field name="recursos_csf">
+                                <tree string="Recursos de Recompra" editable="bottom">
+                                    <field name="date" />
+                                    <field name="investment_type" />
+                                    <field name="movement_type" />
+                                    <field name="value" />
+                                </tree>
+                            </field>
+
                             <field name="detalle_movimiento_ids" widget="section_and_note_one2many" readonly="1">
                                 <tree editable="bottom">
                                     <control>

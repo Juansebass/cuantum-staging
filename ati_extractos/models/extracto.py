@@ -21,6 +21,11 @@ class Extracto(models.Model):
     name = fields.Char('Nombre')
     company_id = fields.Many2one('res.company', string='Company',  default=lambda self: self.env.company)
 
+    #para recursos
+    recursos_csf = fields.One2many('ati.recurso.recompra.csf','extracto_id', 'Recuros de recompra CSF')
+    recursos_fcl = fields.One2many('ati.recurso.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL')
+    recursos_fcp = fields.One2many('ati.recurso.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP')
+
     cliente = fields.Many2one('res.partner','Cliente',required=1)
     responsible = fields.Many2one('res.partner','Responsable')
     email_cliente = fields.Char('Email',related='cliente.email')

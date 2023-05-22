@@ -14,3 +14,4 @@ class RecursoRecompra(models.Model):
     investment_type = fields.Many2one('ati.investment.type','Producto')
     movement_type = fields.Many2one('ati.movement.type','Movimiento')
     buyer = fields.Many2one('res.partner','Comprador',required=1)
+    extracto_id = fields.Many2one('ati.extracto', 'Extracto')
