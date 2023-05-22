@@ -355,6 +355,17 @@ class Extracto(models.Model):
                 self.resumen_inversion_ids[-1].participacion += ri.participacion
 
     def _generar_resumen_movimientos(self):
+        ###Asignando recursos recompra
+        self.recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
+            lambda x: x.date.month == int(self.month) and x.date.year == int(
+                self.year))
+        self.recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
+            lambda x: x.date.month == int(self.month) and x.date.year == int(
+                self.year))
+        self.recursos_fcp = self.cliente.recursos_recompra_fcp_ids.filtered(
+            lambda x: x.date.month == int(self.month) and x.date.year == int(
+                self.year))
+
         #Borramos los datos que puede haber en detalle_movimiento_ids
         for dm in self.detalle_movimiento_ids:
             dm.unlink()
