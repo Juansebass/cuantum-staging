@@ -358,14 +358,14 @@ class Extracto(models.Model):
         ###Asignando recursos recompra
         self.recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
-                self.year)).sorted(key=lambda r: r.date)
+                self.year)).sorted(key=lambda x: x.date.day)
 
         self.recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
-                self.year)).sorted(key=lambda r: r.date)
+                self.year)).sorted(key=lambda x: x.date.day)
         self.recursos_fcp = self.cliente.recursos_recompra_fcp_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
-                self.year)).sorted(key=lambda r: r.date)
+                self.year)).sorted(key=lambda x: x.date.day)
 
         #Borramos los datos que puede haber en detalle_movimiento_ids
         for dm in self.detalle_movimiento_ids:
