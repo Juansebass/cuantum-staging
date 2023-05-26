@@ -109,7 +109,7 @@
                                 </tree>
                             </field>
 
-                            <field name="detalle_movimiento_ids" widget="section_and_note_one2many" readonly="1">
+                            <field name="detalle_movimiento_ids" widget="section_and_note_one2many" readonly="1" invisible="1">
                                 <tree editable="bottom">
                                     <control>
                                         <create name="add_line_control" string="Add a record"/>
