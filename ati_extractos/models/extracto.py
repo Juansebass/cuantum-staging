@@ -377,24 +377,24 @@ class Extracto(models.Model):
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
 
-        self.valor_actual_recursos_csf = 0
         self.valor_anterior_recursos_csf = self._get_value_before('RPR CSF', False, self.month, self.year, True)
+        self.valor_actual_recursos_csf = self.valor_anterior_recursos_csf
         for recurso in self.recursos_csf:
             if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                 self.valor_actual_recursos_csf += recurso.value
             else:
                 self.valor_actual_recursos_csf -= recurso.value
 
-        self.valor_actual_recursos_fcl = 0
         self.valor_anterior_recursos_fcl = self._get_value_before('RPR FCL', False, self.month, self.year, True)
+        self.valor_actual_recursos_fcl = self.valor_anterior_recursos_fcl
         for recurso in self.recursos_fcl:
             if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                 self.valor_actual_recursos_fcl += recurso.value
             else:
                 self.valor_actual_recursos_fcl -= recurso.value
 
-        self.valor_actual_recursos_fcp = 0
         self.valor_anterior_recursos_fcp = self._get_value_before('RPR STATUM', False, self.month, self.year, True)
+        self.valor_actual_recursos_fcp =  self.valor_anterior_recursos_fcp
         for recurso in self.recursos_fcp:
             if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                 self.valor_actual_recursos_fcp += recurso.value
