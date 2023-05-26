@@ -14,6 +14,10 @@
                     <button name="set_borrador_extracto" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                     attrs="{'invisible': [('valor_actual_recursos_csf', '==', 'total_cuantum'), ('valor_actual_recursos_fcl', '==', 'total_FCL'), ('valor_actual_recursos_fcp', '==', 'total_FCP')]}">
+                    Los valores actuales del Detalle y Resumen de movimientos no coinciden
+                </div>
                 <sheet>
                     <div class="oe_title">
                         <div class="o_row">

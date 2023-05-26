@@ -32,6 +32,10 @@ class Extracto(models.Model):
     valor_anterior_recursos_fcp = fields.Float('Valor Anterior')
     valor_actual_recursos_fcp = fields.Float('Valor Actual')
 
+    total_cuantum = fields.Float('Valor Total')
+    total_FCL = fields.Float('Valor Total')
+    total_FCP = fields.Float('Valor Total')
+
     cliente = fields.Many2one('res.partner','Cliente',required=1)
     responsible = fields.Many2one('res.partner','Responsable')
     email_cliente = fields.Char('Email',related='cliente.email')
@@ -374,6 +378,7 @@ class Extracto(models.Model):
                 self.year)).sorted(key=lambda x: int(x.date.day))
 
         self.valor_actual_recursos_csf = 0
+        self.valor_anterior_recursos_csf = self._get_value_before('RPR CSF', False, self.month, self.year, True),
         for recurso in self.recursos_csf:
             if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                 self.valor_actual_recursos_csf += recurso.value
@@ -381,6 +386,7 @@ class Extracto(models.Model):
                 self.valor_actual_recursos_csf -= recurso.value
 
         self.valor_actual_recursos_fcl = 0
+        self.valor_anterior_recursos_fcl = self._get_value_before('RPR FCL', False, self.month, self.year, True),
         for recurso in self.recursos_fcl:
             if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                 self.valor_actual_recursos_fcl += recurso.value
@@ -388,11 +394,19 @@ class Extracto(models.Model):
                 self.valor_actual_recursos_fcl -= recurso.value
 
         self.valor_actual_recursos_fcp = 0
+        self.valor_anterior_recursos_fcp = self._get_value_before('RPR STATUM', False, self.month, self.year, True),
         for recurso in self.recursos_fcp:
             if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                 self.valor_actual_recursos_fcp += recurso.value
             else:
                 self.valor_actual_recursos_fcp -= recurso.value
+
+        self.total_cuantum = sum(value['valor_actual'] for value in
+                            self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'CUANTUM'))
+        self.total_FCL = sum(
+            value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCL'))
+        self.total_FCP = sum(
+            value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCP'))
 
 
         #Borramos los datos que puede haber en detalle_movimiento_ids
