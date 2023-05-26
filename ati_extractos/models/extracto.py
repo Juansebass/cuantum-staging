@@ -688,7 +688,7 @@ class Extracto(models.Model):
 
     def set_borrador_extracto(self):
         for rec in self:
-            if self.env.user.id in [8,2,10]:
+            if self.env.user.id in [8,2,10, 108]:
                 rec.state = 'draft'
             else:
                 raise ValidationError('Usted no tiene permisos para realizar esta acción')
