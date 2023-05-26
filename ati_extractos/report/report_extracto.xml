@@ -142,10 +142,10 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                             </thead>
                             <tbody style="color: black; font-size: 10px;">
                                 <tr>
-                                    <th style="background-color: #e9e9e9;" COLSPAN="4">Fideicomiso Cuantum P (FCP)</th>
+                                    <th style="background-color: #e9e9e9;"> COLSPAN="4">Fideicomiso Cuantum P (FCP)</th>
                                 </tr>
                                 <tr>
-                                    < style="background-color: #e9e9e9;">Valor Anterior</th>
+                                    <th style="background-color: #e9e9e9;">Valor Anterior</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_anterior_recursos_fcp).replace(',', '.')"/></td>
                                     <th style="background-color: #e9e9e9;">Valor Actual</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_actual_recursos_fcp).replace(',', '.')"/></td>
