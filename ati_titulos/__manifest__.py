@@ -14,7 +14,7 @@
     'website': 'http://www.autodidactati.com/',
     'license': '',
     'depends': [
-        'base','contacts','crm', 'ati_extractos'
+        'base','contacts','crm',
         ],
     'data': [
         'security/security.xml',
