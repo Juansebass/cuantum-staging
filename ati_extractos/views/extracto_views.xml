@@ -14,6 +14,7 @@
                     <button name="set_borrador_extracto" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
+                <field name="show_alert" invisible="1" />
                 <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
                      attrs="{'invisible': [('show_alert', '=', True)]}">
                     Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden
