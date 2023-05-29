@@ -151,9 +151,9 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                     <td>$<span t-esc="'{0:,.0f}'.format(i.value).replace(',', '.')"/></td>
                                 </tr>
                                 <tr>
-                                    <th style="background-color: #e9e9e9;">Valor Anterior</th>
+                                    <th style="background-color: #e9e9e9;">Valor Anterior RPR</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_anterior_recursos_csf).replace(',', '.')"/></td>
-                                    <th style="background-color: #e9e9e9;">Valor Actual</th>
+                                    <th style="background-color: #e9e9e9;">Valor Actual RPR</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_actual_recursos_csf).replace(',', '.')"/></td>
                                 </tr>
                             </tbody>
@@ -182,9 +182,9 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                     <td>$<span t-esc="'{0:,.0f}'.format(i.value).replace(',', '.')"/></td>
                                 </tr>
                                 <tr>
-                                    <th style="background-color: #e9e9e9;" >Valor Anterior</th>
+                                    <th style="background-color: #e9e9e9;" >Valor Anterior RPR</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_anterior_recursos_fcl).replace(',', '.')"/></td>
-                                    <th style="background-color: #e9e9e9;">Valor Actual</th>
+                                    <th style="background-color: #e9e9e9;">Valor Actual RPR</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_actual_recursos_fcl).replace(',', '.')"/></td>
                                 </tr>
                             </tbody>
@@ -213,9 +213,9 @@ Estos datos son objeto de protección bajo las políticas políticas de uso de i
                                     <td>$<span t-esc="'{0:,.0f}'.format(i.value).replace(',', '.')"/></td>
                                 </tr>
                                 <tr>
-                                    <th style="background-color: #e9e9e9;">Valor Anterior</th>
+                                    <th style="background-color: #e9e9e9;">Valor Anterior RPR</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_anterior_recursos_fcp).replace(',', '.')"/></td>
-                                    <th style="background-color: #e9e9e9;">Valor Actual</th>
+                                    <th style="background-color: #e9e9e9;">Valor Actual RPR</th>
                                     <td>$<span t-esc="'{0:,.0f}'.format(o.valor_actual_recursos_fcp).replace(',', '.')"/></td>
                                 </tr>
                             </tbody>
