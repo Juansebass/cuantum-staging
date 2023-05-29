@@ -16,7 +16,7 @@
                 </header>
                 <field name="show_alert" invisible="1" />
                 <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
-                     attrs="{'invisible': [('show_alert', '=', True)]}">
+                     attrs="{'invisible': [('show_alert', '=', False)]}">
                     Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden
                 </div>
                 <sheet>
