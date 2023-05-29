@@ -36,6 +36,7 @@ class Extracto(models.Model):
     total_cuantum = fields.Float('Valor Total')
     total_FCL = fields.Float('Valor Total')
     total_FCP = fields.Float('Valor Total')
+    show_alert = fields.Boolean('Alerta')
 
     cliente = fields.Many2one('res.partner','Cliente',required=1)
     responsible = fields.Many2one('res.partner','Responsable')
@@ -405,6 +406,15 @@ class Extracto(models.Model):
         self.total_cuantum = self.cliente.total_csf
         self.total_FCL = self.cliente.total_fcl
         self.total_FCP = self.cliente.total_fcp
+
+
+        self.show_alert = True
+        if (
+                self.valor_actual_recursos_csf == self.total_cuantum and
+                self.valor_actual_recursos_fcl == self.total_fcl and
+                self.valor_actual_recursos_fcp == self.total_fcp
+        ):
+            self.show_alert = False
 
 
         #Borramos los datos que puede haber en detalle_movimiento_ids

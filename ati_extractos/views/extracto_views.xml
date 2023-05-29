@@ -15,16 +15,8 @@
                     <field name="state" widget="statusbar" />
                 </header>
                 <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
-                     attrs="{'invisible': '1'}">
-                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden para Cuantum Soluciones Financieras
-                </div>
-                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
-                     attrs="{'invisible': [('valor_actual_recursos_fcl', '=', 'total_FCL')]}">
-                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden para Fideicomiso Cuantum Libranzas
-                </div>
-                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
-                     attrs="{'invisible': [('valor_actual_recursos_fcp', '=', 'total_FCP')]}">
-                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden para Fondo de Capital Privado Statum
+                     attrs="{'invisible': [('show_alert', '=', True)]}">
+                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden
                 </div>
                 <sheet>
                     <div class="oe_title">
