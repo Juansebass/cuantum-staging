@@ -24,9 +24,10 @@ class Extracto(models.Model):
     #para recursos
     valor_anterior_recursos_csf = fields.Float('Valor Anterior')
     valor_actual_recursos_csf = fields.Float('Valor Actual')
-    recursos_csf = fields.One2many('ati.recurso.recompra.csf','extracto_id', 'Recuros de recompra CSF')
+
     valor_anterior_recursos_fcl = fields.Float('Valor Anterior')
     valor_actual_recursos_fcl = fields.Float('Valor Actual')
+    recursos_csf = fields.One2many('ati.recurso.recompra.csf', 'extracto_id', 'Recuros de recompra CSF')
     recursos_fcl = fields.One2many('ati.recurso.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL')
     recursos_fcp = fields.One2many('ati.recurso.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP')
     valor_anterior_recursos_fcp = fields.Float('Valor Anterior')
