@@ -14,7 +14,7 @@
     'website': 'http://www.autodidactati.com/',
     'license': '',
     'depends': [
-        'base','contacts','ati_titulos','portal',
+        'base','contacts','portal',
         ],
     'data': [
         'views/menu.xml',
