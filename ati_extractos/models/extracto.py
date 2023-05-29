@@ -402,12 +402,9 @@ class Extracto(models.Model):
             else:
                 self.valor_actual_recursos_fcp -= recurso.value
 
-        self.total_cuantum = sum(value['valor_actual'] for value in
-                            self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'CUANTUM'))
-        self.total_FCL = sum(
-            value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCL'))
-        self.total_FCP = sum(
-            value['valor_actual'] for value in self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'FCP'))
+        self.total_cuantum = self.cliente.total_csf
+        self.total_FCL = self.cliente.total_fcl
+        self.total_FCP = self.cliente.total_fcp
 
 
         #Borramos los datos que puede haber en detalle_movimiento_ids
