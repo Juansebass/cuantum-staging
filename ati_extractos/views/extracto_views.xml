@@ -16,7 +16,7 @@
                 </header>
                 <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
                      attrs="{'invisible': [('valor_actual_recursos_csf', '==', 'total_cuantum'), ('valor_actual_recursos_fcl', '==', 'total_FCL'), ('valor_actual_recursos_fcp', '==', 'total_FCP')]}">
-                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden
+                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden <field name="valor_actual_recursos_fcl" /> -o- <field name="total_FCL" />
                 </div>
                 <sheet>
                     <div class="oe_title">
