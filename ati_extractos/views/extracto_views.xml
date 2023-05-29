@@ -15,10 +15,17 @@
                     <field name="state" widget="statusbar" />
                 </header>
                 <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
-                     attrs="{'invisible': ['&',('valor_actual_recursos_csf', '=', 'total_cuantum'), ('valor_actual_recursos_fcl', '=', 'total_FCL'), ('valor_actual_recursos_fcp', '=', 'total_FCP')]}">
-                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden
+                     attrs="{'invisible': [('valor_actual_recursos_csf', '=', 'total_cuantum')]}">
+                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden para Cuantum Soluciones Financieras
                 </div>
-                <sheet>
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                     attrs="{'invisible': [('valor_actual_recursos_fcl', '=', 'total_FCL')]}">
+                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden para Fideicomiso Cuantum Libranzas
+                </div>
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                     attrs="{'invisible': [('valor_actual_recursos_fcp', '=', 'total_FCP')]}">
+                    Los valores actuales de Resumen de Inversión y Detalle de Movimiento no coinciden para Fondo de Capital Privado Statum
+                </div>
                     <div class="oe_title">
                         <div class="o_row">
                             <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
