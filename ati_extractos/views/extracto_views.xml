@@ -69,12 +69,12 @@
                             </group>
                         </page>
                         <page name="det_mov" string="Detalle de Movimiento">
-                            <h3 style="text-align: center;">Fideicomiso Cuantum P (FCP)</h3>
+                            <h3 style="text-align: center;">Cuantum Soluciones Financieras</h3>
                             <group>
-                                <field name="valor_anterior_recursos_fcp" readonly="1"/>
-                                <field name="valor_actual_recursos_fcp" readonly="1"/>
+                                <field name="valor_anterior_recursos_csf" readonly="1"/>
+                                <field name="valor_actual_recursos_csf" readonly="1"/>
                             </group>
-                            <field name="recursos_fcp">
+                            <field name="recursos_csf">
                                 <tree string="Recursos de Recompra" editable="bottom" default_order='date asc'>
                                     <field name="date" />
                                     <field name="investment_type" />
@@ -82,7 +82,7 @@
                                     <field name="value" />
                                 </tree>
                             </field>
-                            <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
+                            <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas</h3>
                             <group>
                                 <field name="valor_anterior_recursos_fcl" readonly="1"/>
                                 <field name="valor_actual_recursos_fcl" readonly="1"/>
@@ -95,12 +95,12 @@
                                     <field name="value" />
                                 </tree>
                             </field>
-                            <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
+                            <h3 style="text-align: center;">Fondo de Capital Privado Statum</h3>
                             <group>
-                                <field name="valor_anterior_recursos_csf" readonly="1"/>
-                                <field name="valor_actual_recursos_csf" readonly="1"/>
+                                <field name="valor_anterior_recursos_fcp" readonly="1"/>
+                                <field name="valor_actual_recursos_fcp" readonly="1"/>
                             </group>
-                            <field name="recursos_csf">
+                            <field name="recursos_fcp">
                                 <tree string="Recursos de Recompra" editable="bottom" default_order='date asc'>
                                     <field name="date" />
                                     <field name="investment_type" />
