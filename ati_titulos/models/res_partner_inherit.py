@@ -29,7 +29,9 @@ class ResPartner(models.Model):
             rec.adicion_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
             rec.rendimiento_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'RENDIMIENTO'))
             rec.aplicacion_recaudo_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APLICACION'))
-            rec.total_fcp = sum([rec.adicion_fcp,rec.aplicacion_recaudo_fcp,rec.rendimiento_fcp]) - sum([rec.compra_fcp,rec.retiro_fcp])
+            rec.administracion_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(
+                lambda x: x.movement_type.code == 'ADMINISTRACION'))
+            rec.total_fcp = sum([rec.adicion_fcp,rec.aplicacion_recaudo_fcp,rec.rendimiento_fcp]) - sum([rec.compra_fcp,rec.retiro_fcp, rec.administracion_fcp])
 
     @api.depends('recursos_recompra_fcl_ids')
     def _compute_totales_fcl(self):
@@ -39,7 +41,9 @@ class ResPartner(models.Model):
             rec.adicion_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
             rec.aplicacion_recaudo_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'APLICACION'))
             rec.rendimiento_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'RENDIMIENTO'))
-            rec.total_fcl = sum([rec.adicion_fcl,rec.aplicacion_recaudo_fcl,rec.rendimiento_fcl]) - sum([rec.compra_fcl,rec.retiro_fcl])
+            rec.administracion_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(
+                lambda x: x.movement_type.code == 'ADMINISTRACION'))
+            rec.total_fcl = sum([rec.adicion_fcl,rec.aplicacion_recaudo_fcl,rec.rendimiento_fcl]) - sum([rec.compra_fcl,rec.retiro_fcl, rec.administracion_fcl])
     
     @api.depends('recursos_recompra_csf_ids')
     def _compute_totales_csf(self):
@@ -65,7 +69,9 @@ class ResPartner(models.Model):
             rec.retiro_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
             rec.adicion_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
             rec.rendimiento_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'RENDIMIENTO'))
-            rec.total_csf = sum([rec.total_mut_csf,rec.total_sen_csf,rec.total_lib_csf,rec.total_fac_csf, rec.adicion_total_csf, rec.rendimiento_total_csf]) - rec.retiro_total_csf
+            rec.administracion_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(
+                lambda x: x.movement_type.code == 'ADMINISTRACION'))
+            rec.total_csf = sum([rec.total_mut_csf,rec.total_sen_csf,rec.total_lib_csf,rec.total_fac_csf, rec.adicion_total_csf, rec.rendimiento_total_csf]) - rec.retiro_total_csf - sum([rec.administracion_csf])
 
     #Campos informativos
     rep_legal = fields.Many2one('res.partner','Representante Legal')
@@ -99,6 +105,7 @@ class ResPartner(models.Model):
     adicion_fcp = fields.Float('Total Adicion', compute=_compute_totales_fcp)
     aplicacion_recaudo_fcp = fields.Float('Total A. de Recuado', compute=_compute_totales_fcp)
     rendimiento_fcp = fields.Float('Total Rendimiento', compute=_compute_totales_fcp)
+    administracion_fcp = fields.Float('Total Administración', compute=_compute_totales_fcp)
     total_fcp = fields.Float('Total FCL', compute=_compute_totales_fcp)
     #TOTALES FCL
     compra_fcl = fields.Float('Total Compra', compute=_compute_totales_fcl)
@@ -106,10 +113,12 @@ class ResPartner(models.Model):
     adicion_fcl = fields.Float('Total Adicion', compute=_compute_totales_fcl)
     aplicacion_recaudo_fcl = fields.Float('Total A. de Recuado', compute=_compute_totales_fcl)
     rendimiento_fcl = fields.Float('Total Rendimiento', compute=_compute_totales_fcl)
+    administracion_fcl = fields.Float('Total Administración', compute=_compute_totales_fcl)
     total_fcl = fields.Float('Total FCL', compute=_compute_totales_fcl)
     #TOTALES CSF
     total_csf = fields.Float('Total CSF', compute=_compute_totales_csf)
     adicion_total_csf = fields.Float('Total Adicion CSF', compute=_compute_totales_csf)
+    administracion_csf = fields.Float('Total Administración', compute=_compute_totales_csf)
     retiro_total_csf = fields.Float('Total Retiro CSF', compute=_compute_totales_csf)
     rendimiento_total_csf = fields.Float('Total Rendimiento CSF', compute=_compute_totales_csf)
     #-Factoring CSF

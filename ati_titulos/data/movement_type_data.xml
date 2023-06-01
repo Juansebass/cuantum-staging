@@ -13,4 +13,8 @@
     <record id="ext_movemnt_type_adicion" model="ati.movement.type">
         <field name="name">Adición</field>
     </record>
+    <record id="ext_movemnt_type_adicion" model="ati.movement.type">
+        <field name="name">Administración</field>
+        <field name="code">ADMINISTRACION</field>
+    </record>
 </odoo>
