@@ -48,6 +48,7 @@
                         <group>
                             <field name="compra_fcp" />
                             <field name="retiro_fcp" />
+                            <field name="administracion_fcp" />
                         </group>
                         <group>
                             <field name="adicion_fcp" />
@@ -82,6 +83,7 @@
                         <group>
                             <field name="compra_fcl" />
                             <field name="retiro_fcl" />
+                            <field name="administracion_fcl" />
                         </group>
                         <group>
                             <field name="adicion_fcl" />
@@ -139,6 +141,13 @@
                                     <label for="retiro_total_csf" string="$"/>                     
                                     <field name="retiro_total_csf"/>      
                                 </div>  
+                            </div>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                    <label for="total_csf" string="TOTAL ADMINISTRACIÓN CSF"/>
+                                    <div class="o_row">
+                                        <label for="administracion_csf" string="$"/>
+                                        <field name="administracion_csf"/>
+                                    </div>  
                             </div>
                             <div class="o_group_col_12" style="text-align: right;">
                                 <label for="total_csf" string="TOTAL ADICION CSF"/>
