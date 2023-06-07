@@ -27,9 +27,9 @@ class Extracto(models.Model):
 
     valor_anterior_recursos_fcl = fields.Float('Valor Anterior')
     valor_actual_recursos_fcl = fields.Float('Valor Actual')
-    recursos_csf = fields.One2many('ati.recurso.recompra.csf', 'extracto_id', 'Recuros de recompra CSF')
-    recursos_fcl = fields.One2many('ati.recurso.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL')
-    recursos_fcp = fields.One2many('ati.recurso.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP')
+    recursos_csf = fields.One2many('ati.extracto.recompra.csf', 'extracto_id', 'Recuros de recompra CSF')
+    recursos_fcl = fields.One2many('ati.extracto.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL')
+    recursos_fcp = fields.One2many('ati.extracto.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP')
     valor_anterior_recursos_fcp = fields.Float('Valor Anterior')
     valor_actual_recursos_fcp = fields.Float('Valor Actual')
 
@@ -375,17 +375,56 @@ class Extracto(models.Model):
         _temp_recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
-        self.recursos_csf = [(6, 0, [x.id for x in _temp_recursos_csf])]
+        self.recursos_csf = [
+            (0, 0,
+             {
+                'name': x.name,
+                'date': x.date,
+                'value': x.value,
+                'investment_type': x.investment_type,
+                'movement_type': x.movement_type,
+                'buyer': x.buyer,
+                'extracto_id': x.extracto_id,
+             }
+             )
+            for x in _temp_recursos_csf
+        ]
 
         _temp_recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
-        self.recursos_fcl = [(6, 0, [x.id for x in _temp_recursos_fcl])]
+        self.recursos_fcl = [
+            (0, 0,
+             {
+                'name': x.name,
+                'date': x.date,
+                'value': x.value,
+                'investment_type': x.investment_type,
+                'movement_type': x.movement_type,
+                'buyer': x.buyer,
+                'extracto_id': x.extracto_id,
+             }
+             )
+            for x in _temp_recursos_fcl
+        ]
 
         _temp_recursos_fcp = self.cliente.recursos_recompra_fcp_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
-        self.recursos_fcp = [(6, 0, [x.id for x in _temp_recursos_fcp])]
+        self.recursos_fcp = [
+            (0, 0,
+             {
+                'name': x.name,
+                'date': x.date,
+                'value': x.value,
+                'investment_type': x.investment_type,
+                'movement_type': x.movement_type,
+                'buyer': x.buyer,
+                'extracto_id': x.extracto_id,
+             }
+             )
+            for x in _temp_recursos_fcp
+        ]
 
         self.valor_anterior_recursos_csf = self._get_value_before('RPR CSF', False, self.month, self.year, True)
         self.valor_actual_recursos_csf = self.valor_anterior_recursos_csf
@@ -901,3 +940,37 @@ class DetalleTitulos(models.Model):
     redemption_date = fields.Date('Fecha de vencimiento',related="titulo.redemption_date")
     paid_value = fields.Float('Valor pagado', compute='_compute_paid_value', store=True)
     state_titulo = fields.Many2one('ati.state.titulo','Estado',related="titulo.state_titulo")
+
+
+class RecursoRecompraCSF(models.Model):
+    _name = 'ati.extracto.recompra.csf'
+
+    name = fields.Char('Nombre')
+    date = fields.Date('Fecha')
+    value = fields.Float('Valores')
+    investment_type = fields.Many2one('ati.investment.type','Producto')
+    movement_type = fields.Many2one('ati.movement.type','Movimiento')
+    buyer = fields.Many2one('res.partner','Comprador',required=1)
+    extracto_id = fields.Many2one('ati.extracto', 'Extracto')
+
+class RecursoRecompraFCL(models.Model):
+    _name = 'ati.extracto.recompra.fcl'
+
+    name = fields.Char('Nombre')
+    date = fields.Date('Fecha')
+    value = fields.Float('Valores')
+    investment_type = fields.Many2one('ati.investment.type','Producto')
+    movement_type = fields.Many2one('ati.movement.type','Movimiento')
+    buyer = fields.Many2one('res.partner','Comprador',required=1)
+    extracto_id = fields.Many2one('ati.extracto', 'Extracto')
+
+class RecursoRecompraFCP(models.Model):
+    _name = 'ati.extracto.recompra.fcp'
+
+    name = fields.Char('Nombre')
+    date = fields.Date('Fecha')
+    value = fields.Float('Valores')
+    investment_type = fields.Many2one('ati.investment.type','Producto')
+    movement_type = fields.Many2one('ati.movement.type','Movimiento')
+    buyer = fields.Many2one('res.partner','Comprador',required=1)
+    extracto_id = fields.Many2one('ati.extracto', 'Extracto')
