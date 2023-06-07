@@ -375,7 +375,7 @@ class Extracto(models.Model):
         _temp_recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
-        self.recursos_csf = (6, 0, [x.id for x in _temp_recursos_csf])
+        self.recursos_csf = [(6, 0, [x.id for x in _temp_recursos_csf])]
 
         self.recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
