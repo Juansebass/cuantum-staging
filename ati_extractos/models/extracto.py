@@ -375,8 +375,9 @@ class Extracto(models.Model):
         _temp_recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
+        self.recursos_csf = [(2, x.id) for x in self.recursos_csf]
         self.recursos_csf = [
-            (1, x.id,
+            (0, 0,
              {
                 'name': x.name,
                 'date': x.date,
@@ -393,8 +394,9 @@ class Extracto(models.Model):
         _temp_recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
+        self.recursos_fcl = [(2, x.id) for x in self.recursos_fcl]
         self.recursos_fcl = [
-            (1, x.id,
+            (0, 0,
              {
                 'name': x.name,
                 'date': x.date,
@@ -411,8 +413,9 @@ class Extracto(models.Model):
         _temp_recursos_fcp = self.cliente.recursos_recompra_fcp_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
+        self.recursos_fcp = [(2, x.id) for x in self.recursos_fcp]
         self.recursos_fcp = [
-            (1, x.id,
+            (0, 0,
              {
                 'name': x.name,
                 'date': x.date,
