@@ -381,8 +381,8 @@ class Extracto(models.Model):
                 'name': x.name,
                 'date': x.date,
                 'value': x.value,
-                'investment_type': x.investment_type,
-                'movement_type': x.movement_type,
+                'investment_type': x.investment_type.id,
+                'movement_type': x.movement_type.id,
                 'buyer': x.buyer.id,
                 'extracto_id': self.id,
              }
@@ -399,8 +399,8 @@ class Extracto(models.Model):
                 'name': x.name,
                 'date': x.date,
                 'value': x.value,
-                'investment_type': x.investment_type,
-                'movement_type': x.movement_type,
+                'investment_type': x.investment_type.id,
+                'movement_type': x.movement_type.id,
                 'buyer': x.buyer.id,
                 'extracto_id': self.id,
              }
@@ -417,8 +417,8 @@ class Extracto(models.Model):
                 'name': x.name,
                 'date': x.date,
                 'value': x.value,
-                'investment_type': x.investment_type,
-                'movement_type': x.movement_type,
+                'investment_type': x.investment_type.id,
+                'movement_type': x.movement_type.id,
                 'buyer': x.buyer.id,
                 'extracto_id': self.id,
              }
