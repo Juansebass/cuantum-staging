@@ -376,7 +376,7 @@ class Extracto(models.Model):
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
         self.recursos_csf = [
-            (0, 0,
+            (1, x.id,
              {
                 'name': x.name,
                 'date': x.date,
@@ -394,7 +394,7 @@ class Extracto(models.Model):
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
         self.recursos_fcl = [
-            (0, 0,
+            (1, x.id,
              {
                 'name': x.name,
                 'date': x.date,
@@ -412,7 +412,7 @@ class Extracto(models.Model):
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
         self.recursos_fcp = [
-            (0, 0,
+            (1, x.id,
              {
                 'name': x.name,
                 'date': x.date,
