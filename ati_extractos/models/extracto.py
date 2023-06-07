@@ -383,8 +383,8 @@ class Extracto(models.Model):
                 'value': x.value,
                 'investment_type': x.investment_type,
                 'movement_type': x.movement_type,
-                'buyer': x.buyer,
-                'extracto_id': x.extracto_id,
+                'buyer': x.buyer.id,
+                'extracto_id': self.id,
              }
              )
             for x in _temp_recursos_csf
@@ -401,8 +401,8 @@ class Extracto(models.Model):
                 'value': x.value,
                 'investment_type': x.investment_type,
                 'movement_type': x.movement_type,
-                'buyer': x.buyer,
-                'extracto_id': x.extracto_id,
+                'buyer': x.buyer.id,
+                'extracto_id': self.id,
              }
              )
             for x in _temp_recursos_fcl
@@ -419,8 +419,8 @@ class Extracto(models.Model):
                 'value': x.value,
                 'investment_type': x.investment_type,
                 'movement_type': x.movement_type,
-                'buyer': x.buyer,
-                'extracto_id': x.extracto_id,
+                'buyer': x.buyer.id,
+                'extracto_id': self.id,
              }
              )
             for x in _temp_recursos_fcp
