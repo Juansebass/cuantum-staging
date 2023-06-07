@@ -377,12 +377,15 @@ class Extracto(models.Model):
                 self.year)).sorted(key=lambda x: int(x.date.day))
         self.recursos_csf = [(6, 0, [x.id for x in _temp_recursos_csf])]
 
-        self.recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
+        _temp_recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
-        self.recursos_fcp = self.cliente.recursos_recompra_fcp_ids.filtered(
+        self.recursos_fcl = [(6, 0, [x.id for x in _temp_recursos_fcl])]
+
+        _temp_recursos_fcp = self.cliente.recursos_recompra_fcp_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
+        self.recursos_fcp = [(6, 0, [x.id for x in _temp_recursos_fcp])]
 
         self.valor_anterior_recursos_csf = self._get_value_before('RPR CSF', False, self.month, self.year, True)
         self.valor_actual_recursos_csf = self.valor_anterior_recursos_csf
