@@ -234,11 +234,15 @@ class Extracto(models.Model):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2) if _inversiones[n][2]['cant_movimientos'] != 0 else 0})
         #Agregamos total de Recursos en proceso de recompra
         _rendimient_rpr_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
+        _administracion_rpr_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(
+            lambda x: x.date.month == int(self.month) and x.date.year == int(
+                self.year) and x.movement_type.code == 'ADMINISTRACION'))
         _inversiones.append((0,0,{
                         'detalle': 'RPR FCL',
                         'valor_actual' : self.cliente.total_fcl,
                         'valor_anterior' : self._get_value_before('RPR FCL',False,self.month,self.year,True),
                         'rendimiento_causado' : _rendimient_rpr_fcl,
+                        'administracion': _administracion_rpr_fcl,
                         'tasa_rendimiento': self.cliente.tasa_rendimiento_fcl,
                         'is_other' : True
                     }))
@@ -368,9 +372,10 @@ class Extracto(models.Model):
 
     def _generar_resumen_movimientos(self):
         ###Asignando recursos recompra
-        self.recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
+        _temp_recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year)).sorted(key=lambda x: int(x.date.day))
+        self.recursos_csf = (6, 0, [x.id for x in _temp_recursos_csf])
 
         self.recursos_fcl = self.cliente.recursos_recompra_fcl_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
@@ -432,7 +437,7 @@ class Extracto(models.Model):
         #  CSF
         # -- TOTALES
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'CSF', 'display_type' : 'line_section', }), (0,0,{ 'name' : '-- TOTALES CSF', 'display_type' : 'line_section', })]
-        adicion_total_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        adicion_total_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'ADICION'))
         if adicion_total_csf > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Adición', 'valor' : adicion_total_csf })]
         retiro_total_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
@@ -489,7 +494,7 @@ class Extracto(models.Model):
         retiro_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
         if retiro_fcl > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcl })]
-        adicion_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        adicion_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'ADICION'))
         if adicion_fcl > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcl })]
         aplicacion_recaudo_fcl = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APLICACION'))
@@ -505,10 +510,10 @@ class Extracto(models.Model):
         retiro_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'RETIRO'))
         if retiro_fcp > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Retiro', 'valor' : retiro_fcp })]
-        adicion_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        adicion_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'ADICION'))
         if adicion_fcp > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Adicion', 'valor' : adicion_fcp })]
-        aplicacion_recaudo_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'APORTE'))
+        aplicacion_recaudo_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date >= date_tmp and x.date < date_next_tmp and x.movement_type.code == 'ADICION'))
         if aplicacion_recaudo_fcp > 0: 
             self.detalle_movimiento_ids = [(0,0,{ 'name' : 'A. de Recaudo', 'valor' : aplicacion_recaudo_fcp })]
         self.detalle_movimiento_ids = [(0,0,{ 'name' : 'Total Statum', 'valor' : sum([adicion_fcp,aplicacion_recaudo_fcp]) - sum([compra_fcp,retiro_fcp]) }),]

@@ -26,7 +26,7 @@ class ResPartner(models.Model):
         for rec in self:
             rec.compra_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'COMPRA'))
             rec.retiro_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
-            rec.adicion_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
+            rec.adicion_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'ADICION'))
             rec.rendimiento_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'RENDIMIENTO'))
             rec.aplicacion_recaudo_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(lambda x: x.movement_type.code == 'APLICACION'))
             rec.administracion_fcp = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcp_ids.filtered(
@@ -38,7 +38,7 @@ class ResPartner(models.Model):
         for rec in self:
             rec.compra_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'COMPRA'))
             rec.retiro_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
-            rec.adicion_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
+            rec.adicion_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'ADICION'))
             rec.aplicacion_recaudo_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'APLICACION'))
             rec.rendimiento_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.movement_type.code == 'RENDIMIENTO'))
             rec.administracion_fcl = sum(ladicion['value'] for ladicion in rec.recursos_recompra_fcl_ids.filtered(
@@ -67,7 +67,7 @@ class ResPartner(models.Model):
 
             #TOTALES
             rec.retiro_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'RETIRO'))
-            rec.adicion_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'APORTE'))
+            rec.adicion_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'ADICION'))
             rec.rendimiento_total_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(lambda x: x.movement_type.code == 'RENDIMIENTO'))
             rec.administracion_csf = sum(ladicion['value'] for ladicion in rec.recursos_recompra_csf_ids.filtered(
                 lambda x: x.movement_type.code == 'ADMINISTRACION'))
@@ -118,6 +118,7 @@ class ResPartner(models.Model):
     #TOTALES CSF
     total_csf = fields.Float('Total CSF', compute=_compute_totales_csf)
     adicion_total_csf = fields.Float('Total Adicion CSF', compute=_compute_totales_csf)
+    compra_total_csf = fields.Float('Total Adicion CSF', compute=_compute_totales_csf)
     administracion_csf = fields.Float('Total Administración', compute=_compute_totales_csf)
     retiro_total_csf = fields.Float('Total Retiro CSF', compute=_compute_totales_csf)
     rendimiento_total_csf = fields.Float('Total Rendimiento CSF', compute=_compute_totales_csf)
