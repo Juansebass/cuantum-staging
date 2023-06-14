@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="action_open_validacion" model="ir.actions.act_window">
+        <field name="name">Validaciones</field>
+        <field name="res_model">ctm.validacion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu y Menus principales -->
+    <menuitem id="menu_validaciones" sequence="6" name="Validaciones" parent="ati_titulos.menu_tit" action="action_open_validacion"/>
+</odoo>

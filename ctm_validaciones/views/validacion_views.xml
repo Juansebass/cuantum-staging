@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="model_ctm_validacion_view_form" model="ir.ui.view">
+        <field name="name">ctm.validacion.view.form</field>
+        <field name="model">ctm.validacion</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="generar_validacion" type="object" string="Generar Validación" attrs="{'invisible': [('state', 'in', ['processed'])]}"/>
+                    <button name="set_borrador_validacion" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="cliente">
+                        <group name="izquierda">
+                            <field name="month" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                            <field name="year" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                        </group>
+                        <group name="derecha">
+                            <field name="responsible" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <field name="detalle_validacion_ids">
+                    <tree string="Detalle Validaciones" editable="bottom" default_order='cliente asc'>
+                        <field name="cliente" />
+                        <field name="factoring_csf" />
+                        <field name="libranzas_csf" />
+                        <field name="sentencias_csf" />
+                        <field name="rpr_csf" />
+                        <field name="libranzas_fcl" />
+                        <field name="rpr_fcl" />
+                        <field name="sentencias_fcp" />
+                        <field name="rpr_fcp" />
+                        <field name="total" />
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+    <record id="model_ctm_validacion_view_tree" model="ir.ui.view">
+        <field name="name">ctm.validacion.view.tree</field>
+        <field name="model">ctm.validacion</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="month" />
+                <field name="year" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+</odoo>
