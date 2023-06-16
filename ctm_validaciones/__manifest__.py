@@ -14,7 +14,7 @@
         'views/menu.xml',
         'views/validacion_views.xml',
         'security/ir.model.access.csv',
-        # 'report/report_extracto.xml',
+        # 'report/xls_informe_clientes.xml',
         # 'data/mail_template_extracto.xml'
         ],
     'installable': True,

@@ -9,6 +9,7 @@
                 <header>
                     <button name="generar_validacion" type="object" string="Generar Validación" attrs="{'invisible': [('state', 'in', ['processed'])]}"/>
                     <button name="set_borrador_validacion" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="action_exportar_xls" type="object" string="Exportar Excel" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -24,6 +25,11 @@
                         </group>
                         <group name="derecha">
                             <field name="responsible" readonly="1"/>
+                        </group>
+                        <group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                            <group>
+                                <field name="xls_output"/>
+                            </group>
                         </group>
                     </group>
                 </sheet>
@@ -56,4 +62,5 @@
             </tree>
         </field>
     </record>
+
 </odoo>
