@@ -82,7 +82,7 @@ class Validacion(models.Model):
     @api.model
     def create(self, var):
         res = super(Validacion, self).create(var)
-        res.name = 'Informe Clientes' + ' - ' + res.month + "/" + res.year + "/" + str(res.day)
+        res.name = 'Informe Clientes' + ' - ' + str(res.day) + "/"  + res.month + "/" + res.year
 
         return res
 
@@ -104,7 +104,7 @@ class Validacion(models.Model):
         worksheet.write(row, 8, 'RPR STATUM')
         worksheet.write(row, 9, 'TOTAL')
 
-        worksheet.set_column(0, 0, 30)
+        worksheet.set_column(0, 0, 40)
         worksheet.set_column(1, 9, 15)
 
         row += 1

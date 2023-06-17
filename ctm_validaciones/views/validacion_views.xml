@@ -20,9 +20,9 @@
                     </div>
                     <group name="cliente">
                         <group name="izquierda">
+                            <field name="day" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
                             <field name="month" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
                             <field name="year" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
-                            <field name="day" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
                         </group>
                         <group name="derecha">
                             <field name="responsible" readonly="1"/>
