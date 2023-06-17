@@ -15,6 +15,7 @@ class Validacion(models.Model):
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
     month = fields.Char('Mes de Periodo', required=1)
     year = fields.Char('Año de Periodo', required=1)
+    day = fields.Char('Día de Periodo', required=1)
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado')],string='Estado',default='draft')
     responsible = fields.Many2one('res.partner', 'Responsable')
 
@@ -27,11 +28,11 @@ class Validacion(models.Model):
     def generar_validacion(self):
         # Se valida si existe el periodo al cual se decea hacer un extractos, en el caso de existir se verifica que el
         # estado del mismo se encuentre en estado abierto de cargue
-        if self.month and self.year:
+        if self.month and self.year and self.day:
             #Validación para que existan extractos
             pass
         else:
-            raise ValidationError('Debe introducir un mes y año de periodo para este cargue')
+            raise ValidationError('Debe introducir un mes un año y un día de periodo para este cargue')
 
         for detalle  in self.detalle_validacion_ids:
             detalle.unlink()
@@ -81,7 +82,7 @@ class Validacion(models.Model):
     @api.model
     def create(self, var):
         res = super(Validacion, self).create(var)
-        res.name = 'Informe Clientes' + ' - ' + res.month + "/" + res.year
+        res.name = 'Informe Clientes' + ' - ' + res.month + "/" + res.year + "/" + res.day
 
         return res
 
@@ -103,7 +104,7 @@ class Validacion(models.Model):
         worksheet.write(row, 8, 'RPR STATUM')
         worksheet.write(row, 9, 'TOTAL')
 
-        worksheet.set_column(0, 0, 25)
+        worksheet.set_column(0, 0, 30)
         worksheet.set_column(1, 9, 15)
 
         row += 1
