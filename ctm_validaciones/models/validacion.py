@@ -15,7 +15,7 @@ class Validacion(models.Model):
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
     month = fields.Char('Mes de Periodo', required=1)
     year = fields.Char('Año de Periodo', required=1)
-    day = fields.Char('Día de Periodo')
+    day = fields.Char('Día de Periodo', required=1)
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado')],string='Estado',default='draft')
     responsible = fields.Many2one('res.partner', 'Responsable')
 
@@ -82,7 +82,7 @@ class Validacion(models.Model):
     @api.model
     def create(self, var):
         res = super(Validacion, self).create(var)
-        res.name = 'Informe Clientes' + ' - ' + res.month + "/" + res.year + "/" + res.day
+        res.name = 'Informe Clientes' + ' - ' + res.month + "/" + res.year + "/" + str(res.day)
 
         return res
 
