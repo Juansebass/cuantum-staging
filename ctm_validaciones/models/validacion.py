@@ -3,11 +3,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
-import matplotlib.pyplot as plt
-from datetime import datetime
-import calendar
-import logging
-from io import BytesIO ## for Python 3
 import io
 import xlsxwriter
 
@@ -50,13 +45,13 @@ class Validacion(models.Model):
                 lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB'))
             sentencias_csf =  sum(titulo['value'] for titulo in titulo.filtered(
                 lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN'))
-            rpr_csf = 0
+            rpr_csf = cliente.total_csf
             libranzas_fcl = sum(titulo['value'] for titulo in titulo.filtered(
                 lambda x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB'))
-            rpr_fcl = 0
+            rpr_fcl = cliente.total_fcl
             sentencias_fcp = sum(titulo['value'] for titulo in titulo.filtered(
                 lambda x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN'))
-            rpr_fcp = 0
+            rpr_fcp = cliente.total_fcp
             total = sum([factoring_csf, libranzas_csf, sentencias_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
 
             self.env['ctm.validacion.detalle_validacion'].create({
@@ -95,7 +90,7 @@ class Validacion(models.Model):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet('Informe Clientes')
         money = workbook.add_format({'num_format': '$#,##0'})
-        row = 1
+        row = 0
 
         worksheet.write(row, 0, 'CLIENTE')
         worksheet.write(row, 1, 'FACTORING - CSF')
@@ -108,19 +103,22 @@ class Validacion(models.Model):
         worksheet.write(row, 8, 'RPR STATUM')
         worksheet.write(row, 9, 'TOTAL')
 
+        worksheet.set_column(0, 0, 25)
+        worksheet.set_column(1, 9, 15)
+
         row += 1
 
         for detalle in self.detalle_validacion_ids:
             worksheet.write(row, 0, detalle.cliente.name)
-            worksheet.write(row, 1, detalle.factoring_csf)
-            worksheet.write(row, 2, detalle.libranzas_csf)
-            worksheet.write(row, 3, detalle.sentencias_csf)
-            worksheet.write(row, 4, detalle.rpr_csf)
-            worksheet.write(row, 5, detalle.libranzas_fcl)
-            worksheet.write(row, 6, detalle.rpr_fcl)
-            worksheet.write(row, 7, detalle.sentencias_fcp)
-            worksheet.write(row, 8, detalle.rpr_fcp)
-            worksheet.write(row, 9, detalle.total)
+            worksheet.write(row, 1, detalle.factoring_csf, money)
+            worksheet.write(row, 2, detalle.libranzas_csf, money)
+            worksheet.write(row, 3, detalle.sentencias_csf, money)
+            worksheet.write(row, 4, detalle.rpr_csf, money)
+            worksheet.write(row, 5, detalle.libranzas_fcl, money)
+            worksheet.write(row, 6, detalle.rpr_fcl, money)
+            worksheet.write(row, 7, detalle.sentencias_fcp, money)
+            worksheet.write(row, 8, detalle.rpr_fcp, money)
+            worksheet.write(row, 9, detalle.total, money)
 
             row += 1
 
