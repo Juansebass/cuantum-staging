@@ -137,7 +137,6 @@ class Validacion(models.Model):
             'res_model': 'ctm.validacion',
             'res_id': self.id,
             'type': 'ir.actions.act_window',
-            'target': 'new'
         }
 
 
