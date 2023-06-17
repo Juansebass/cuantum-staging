@@ -104,8 +104,8 @@ class Validacion(models.Model):
         worksheet.write(row, 8, 'RPR STATUM')
         worksheet.write(row, 9, 'TOTAL')
 
-        worksheet.set_column(0, 0, 40)
-        worksheet.set_column(1, 9, 15)
+        worksheet.set_column(0, 0, 50)
+        worksheet.set_column(1, 9, 20)
 
         row += 1
 
