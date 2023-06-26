@@ -802,18 +802,18 @@ class Extracto(models.Model):
                 lambda x: x.cliente == self.cliente
         )
         #VALORES DE INFORME CLIENTES
-        informe_factoring_csf = round(informe_clientes_detalle.factoring_csf)
-        informe_libranzas_csf = round(informe_clientes_detalle.libranzas_csf)
-        informe_sentencias_csf = round(informe_clientes_detalle.sentencias_csf)
-        informe_rpr_csf = round(informe_clientes_detalle.rpr_csf)
+        informe_factoring_csf = int(informe_clientes_detalle.factoring_csf)
+        informe_libranzas_csf = int(informe_clientes_detalle.libranzas_csf)
+        informe_sentencias_csf = int(informe_clientes_detalle.sentencias_csf)
+        informe_rpr_csf = int(informe_clientes_detalle.rpr_csf)
         # FCL
-        informe_libranzas_fcl = round(informe_clientes_detalle.libranzas_fcl)
-        informe_rpr_fcl = round(informe_clientes_detalle.rpr_fcl)
+        informe_libranzas_fcl = int(informe_clientes_detalle.libranzas_fcl)
+        informe_rpr_fcl = int(informe_clientes_detalle.rpr_fcl)
         # FCP
-        informe_sentencias_fcp = round(informe_clientes_detalle.sentencias_fcp)
-        informe_rpr_fcp = round(informe_clientes_detalle.rpr_fcp)
+        informe_sentencias_fcp = int(informe_clientes_detalle.sentencias_fcp)
+        informe_rpr_fcp = int(informe_clientes_detalle.rpr_fcp)
 
-        informe_total = round(informe_clientes_detalle.total)
+        informe_total = int(informe_clientes_detalle.total)
 
         resultados_informe = [
             informe_factoring_csf, informe_libranzas_csf, informe_sentencias_csf,informe_rpr_csf,
@@ -837,27 +837,27 @@ class Extracto(models.Model):
         actual_type = 'CSF'
         for line in self.resumen_inversion_ids:
             if line.name == 'Factoring':
-                resumen_factoring_csf = round(line.valor_actual)
+                resumen_factoring_csf = int(line.valor_actual)
             if line.name == 'Libranzas' and actual_type == 'CSF':
-                resumen_libranzas_csf = round(line.valor_actual)
+                resumen_libranzas_csf = int(line.valor_actual)
             if line.name == 'Sentencias' and actual_type == 'CSF':
-                resumen_sentencias_csf = round(line.valor_actual)
+                resumen_sentencias_csf = int(line.valor_actual)
             if line.name == 'RPR CSF':
-                resumen_rpr_csf = round(line.valor_actual)
+                resumen_rpr_csf = int(line.valor_actual)
                 actual_type = 'FCL'
 
             if line.name == 'Libranzas' and actual_type == 'FCL':
-                resumen_libranzas_fcl = round(line.valor_actual)
+                resumen_libranzas_fcl = int(line.valor_actual)
             if line.name == 'RPR FCL':
-                resumen_rpr_fcl = round(line.valor_actual)
+                resumen_rpr_fcl = int(line.valor_actual)
                 actual_type = 'FCP'
 
             if line.name == 'Sentencias' and actual_type == 'FCP':
-                resumen_sentencias_fcp = round(line.valor_actual)
+                resumen_sentencias_fcp = int(line.valor_actual)
             if line.name == 'RPR STATUM':
-                resumen_rpr_fcp = round(line.valor_actual)
+                resumen_rpr_fcp = int(line.valor_actual)
 
-        resumen_total = round(self.resumen_inversion_ids[-1].valor_actual)
+        resumen_total = int(self.resumen_inversion_ids[-1].valor_actual)
 
         resultados_extracto = [
             resumen_factoring_csf, resumen_libranzas_csf, resumen_sentencias_csf, resumen_rpr_csf,
