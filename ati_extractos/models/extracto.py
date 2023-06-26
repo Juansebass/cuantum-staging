@@ -863,6 +863,8 @@ class Extracto(models.Model):
             resumen_factoring_csf, resumen_libranzas_csf, resumen_sentencias_csf, resumen_rpr_csf,
             resumen_libranzas_fcl, resumen_rpr_fcl, resumen_sentencias_fcp, resumen_rpr_fcp, resumen_total
         ]
+        logger.error(resultados_extracto)
+        logger.error(resultados_informe)
 
         self.show_alert_validation = resultados_extracto != resultados_informe
 
