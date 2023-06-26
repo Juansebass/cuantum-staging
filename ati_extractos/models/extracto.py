@@ -47,6 +47,8 @@ class Extracto(models.Model):
     pie_inversiones_fondo = fields.Binary('Inversiones por fondo')
     pie_rpr_fondo = fields.Binary('RPR por fondo')
 
+    show_alert_validation = fields.Boolean('Alerta')
+
     #Campos para resumen de inversiones
     resumen_inversion_ids = fields.One2many('ati.extracto.resumen_inversion','extracto_id','Resumen Inversiones Fideicomiso Cuantum Libranzas')
 
@@ -751,6 +753,9 @@ class Extracto(models.Model):
                     raise ValidationError('El estado de extracto para este periodo se encuentra cerrado')
             else:
                 raise ValidationError('No existe un periodo creado para el mes y año seleccionado')
+            #Validación de que se encuntre un informe  clientes creado para el periodo
+            if not self.env['ctm.validacion'].search([('year','=',self.year),('month','=',self.month)]):
+                raise ValidationError('No existe un Informe Clientes para el periodo seleccionado')
         else:
             raise ValidationError('Debe introducir un mes y año de periodo para este cargue')
 
@@ -783,8 +788,84 @@ class Extracto(models.Model):
         #Creamos Pie
         self._generar_pie()
 
+        #Validacioón contra informes cllientes
+        self.validacion_informes_clientes()
+
         #Cambiamos estado
         self.state = 'processed'
+
+    def validacion_informes_clientes(self):
+        #Tomando último informe clientes creado
+        informe_clientes = self.env['ctm.validacion'].search([('year','=',self.year),('month','=',self.month)], order='day desc', limit=1)
+        #Tomando linea de detalle del informe clientes
+        informe_clientes_detalle = informe_clientes.detalle_validacion_ids.filtered(
+                lambda x: x.cliente == self.cliente
+        )
+        #VALORES DE INFORME CLIENTES
+        informe_factoring_csf = round(informe_clientes_detalle.factoring_csf)
+        informe_libranzas_csf = round(informe_clientes_detalle.libranzas_csf)
+        informe_sentencias_csf = round(informe_clientes_detalle.sentencias_csf)
+        informe_rpr_csf = round(informe_clientes_detalle.rpr_csf)
+        # FCL
+        informe_libranzas_fcl = round(informe_clientes_detalle.libranzas_fcl)
+        informe_rpr_fcl = round(informe_clientes_detalle.rpr_fcl)
+        # FCP
+        informe_sentencias_fcp = round(informe_clientes_detalle.sentencias_fcp)
+        informe_rpr_fcp = round(informe_clientes_detalle.rpr_fcp)
+
+        informe_total = round(informe_clientes_detalle.total)
+
+        resultados_informe = [
+            informe_factoring_csf, informe_libranzas_csf, informe_sentencias_csf,informe_rpr_csf,
+            informe_libranzas_fcl, informe_rpr_fcl, informe_sentencias_fcp, informe_rpr_fcp, informe_total
+
+        ]
+
+        #VALORES DE RESUMEN DE MOVIMIENTOS
+        resumen_factoring_csf = 0
+        resumen_libranzas_csf = 0
+        resumen_sentencias_csf = 0
+        resumen_rpr_csf = 0
+        # FCL
+        resumen_libranzas_fcl = 0
+        resumen_rpr_fcl = 0
+        # FCP
+        resumen_sentencias_fcp = 0
+        resumen_rpr_fcp = 0
+
+        resumen_total = 0
+        actual_type = 'CSF'
+        for line in self.resumen_inversion_ids:
+            if line.name == 'Factoring':
+                resumen_factoring_csf = round(line.valor_actual)
+            if line.name == 'Libranzas' and actual_type == 'CSF':
+                resumen_libranzas_csf = round(line.valor_actual)
+            if line.name == 'Sentencias' and actual_type == 'CSF':
+                resumen_sentencias_csf = round(line.valor_actual)
+            if line.name == 'RPR CSF':
+                resumen_rpr_csf = round(line.valor_actual)
+                actual_type = 'FCL'
+
+            if line.name == 'Libranzas' and actual_type == 'FCL':
+                resumen_libranzas_fcl = round(line.valor_actual)
+            if line.name == 'RPR FCL':
+                resumen_rpr_fcl = round(line.valor_actual)
+                actual_type = 'FCP'
+
+            if line.name == 'Sentencias' and actual_type == 'FCP':
+                resumen_sentencias_fcp = round(line.valor_actual)
+            if line.name == 'RPR STATUM':
+                resumen_rpr_fcp = round(line.valor_actual)
+
+        resumen_total = round(self.resumen_inversion_ids[-1].valor_actual)
+
+        resultados_extracto = [
+            resumen_factoring_csf, resumen_libranzas_csf, resumen_sentencias_csf, resumen_rpr_csf,
+            resumen_libranzas_fcl, resumen_rpr_fcl, resumen_sentencias_fcp, resumen_rpr_fcp, resumen_total
+        ]
+
+        self.show_alert_validation = resultados_extracto != resultados_informe
+
 
     def set_borrador_extracto(self):
         for rec in self:
