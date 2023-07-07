@@ -49,12 +49,23 @@
                           </div>
                         </div>
                         <br/>
-                        <p style="font-size:12px; margin-bottom:10px border-radius: 4px; !important ; border-spacing: 0px; padding: 10px; border: 2px solid black; text-align: justify;">Este documento es para uso exclusivo de su destinatario y está sometido a reserva a favor este. La información financiera aquí contenida es de carácter confidencial y, por lo tanto, el destinatario deberá tomar todas las medidas necesarias para asegurar, bajo su responsabilidad, el secreto y la confidencialidad de los documentos e informaciones aquí contenidos. En este sentido, Cuantum Soluciones Financieras S.A, sus colaboradores y subordinados no se hacen responsables por las consecuencias y/o perjuicios generados directa y/o indirectamente por el uso de la información contenida en este mensaje y/o sus anexos por parte del destinatario. Si usted no es el destinatario final e intencional del mensaje, por favor infórmenos de inmediato y elimine el mensaje y sus anexos de su computador y sistema de comunicaciones.
-Estos datos son objeto de protección bajo las políticas políticas de uso de información establecidas por nuestra organización, a menos que exista instrucción en contrario, la cual deberá ser enviada al correo electrónico servicioalcliente@cuantum.co
-<br/>FCL = Fideicomiso Cuantum Libranzas
-<br/>CSF = Cuantum Soluciones Financieras
-<br/>RPR = Recursos en proceso de recompra
-</p>
+                        <p style="font-size:12px; margin-bottom:10px border-radius: 4px; !important ; border-spacing: 0px; padding: 10px; border: 2px solid black; text-align: justify;">
+                            Este documento es para uso exclusivo de su destinatario y se encuentra sometido a reserva a
+                            favor de este. La información financiera aquí contenida es de carácter confidencial y, por
+                            lo tanto, el destinatario deberá tomar todas las medidas necesarias para asegurar, bajo su responsabilidad,
+                            el secreto y la confidencialidad de los documentos e informaciones aquí contenidos. En este sentido, CSF., sus colaboradores
+                            y subordinados, no se hacen responsables por las consecuencias y/o perjuicios generados directa o indirectamente, por el uso de la
+                            información contenida en este mensaje y/o sus anexos por parte del destinatario. Si usted no es el destinatario final e intencional del mensaje,
+                            por favor infórmenos de inmediato y elimine el mensaje y sus anexos del computador y sistema de comunicaciones. Estos datos son objeto de protección
+                            bajo las políticas de uso de información establecidas por nuestra organización, a menos que exista instrucción en contrario, cual deberá ser enviada al correo electrónico servicioalcliente@cuantum.co.<br/><br/>
+
+                            Tenga en cuenta que, en el FCL, se encuentran en Proceso de Recompra (RPR) los recursos líquidos de su titularidad, los cuales están a cargo y gestión de la
+                            Fiduciaria Fiducentral S.A., quienes informan a CSF la rentabilidad proyectada y los retornos causados; sin embargo, estos no corresponden a un resultado directo de la gestión de CSF.<br/><br/>
+
+                            FCL = Fideicomiso Cuantum Libranzas
+                            <br/>CSF = Cuantum Soluciones Financieras
+                            <br/>RPR = Recursos en proceso de recompra
+                        </p>
 
                         <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
                             <thead>

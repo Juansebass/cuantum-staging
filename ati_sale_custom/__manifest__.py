@@ -20,6 +20,7 @@
         'views/sale_order_line_inherit_view.xml',
         'views/oferta_sale_order_portal_inherit.xml',
         'report/report_sale_order_inherit.xml',
+        'report/report_acta_adicion.xml',
         ],
     'installable': True,
     'application': False,

@@ -462,9 +462,9 @@ class Extracto(models.Model):
 
         self.show_alert = True
         if (
-                self.valor_actual_recursos_csf == self.total_cuantum and
-                self.valor_actual_recursos_fcl == self.total_FCL and
-                self.valor_actual_recursos_fcp == self.total_FCP
+                int(self.valor_actual_recursos_csf) == int(self.total_cuantum) and
+                int(self.valor_actual_recursos_fcl) == int(self.total_FCL) and
+                int(self.valor_actual_recursos_fcp) == int(self.total_FCP)
         ):
             self.show_alert = False
 

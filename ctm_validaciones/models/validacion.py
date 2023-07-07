@@ -46,6 +46,8 @@ class Validacion(models.Model):
                 lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB'))
             sentencias_csf =  sum(titulo['value'] for titulo in titulo.filtered(
                 lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN'))
+            mutuos_csf = sum(titulo['value'] for titulo in titulo.filtered(
+                lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT'))
             rpr_csf = cliente.total_csf
             libranzas_fcl = sum(titulo['value'] for titulo in titulo.filtered(
                 lambda x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB'))
@@ -53,7 +55,7 @@ class Validacion(models.Model):
             sentencias_fcp = sum(titulo['value'] for titulo in titulo.filtered(
                 lambda x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN'))
             rpr_fcp = cliente.total_fcp
-            total = sum([factoring_csf, libranzas_csf, sentencias_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
+            total = sum([factoring_csf, libranzas_csf, sentencias_csf,mutuos_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
 
             self.env['ctm.validacion.detalle_validacion'].create({
                 'validacion_id': self.id,
@@ -61,6 +63,7 @@ class Validacion(models.Model):
                 'factoring_csf': factoring_csf,
                 'libranzas_csf': libranzas_csf,
                 'sentencias_csf': sentencias_csf,
+                'mutuos_csf': mutuos_csf,
                 'rpr_csf': rpr_csf,
                 'libranzas_fcl': libranzas_fcl,
                 'rpr_fcl': rpr_fcl,
@@ -97,15 +100,16 @@ class Validacion(models.Model):
         worksheet.write(row, 1, 'FACTORING - CSF')
         worksheet.write(row, 2, 'LIBRANZAS - CSF')
         worksheet.write(row, 3, 'SENTENCIAS - CSF')
-        worksheet.write(row, 4, 'RPR CSF')
-        worksheet.write(row, 5, 'LIBRANZAS - FCL')
-        worksheet.write(row, 6, 'RPR FCL')
-        worksheet.write(row, 7, 'SENTENCIAS - STATUM')
-        worksheet.write(row, 8, 'RPR STATUM')
-        worksheet.write(row, 9, 'TOTAL')
+        worksheet.write(row, 4, 'MUTUOS - CSF')
+        worksheet.write(row, 5, 'RPR CSF')
+        worksheet.write(row, 6, 'LIBRANZAS - FCL')
+        worksheet.write(row, 7, 'RPR FCL')
+        worksheet.write(row, 8, 'SENTENCIAS - STATUM')
+        worksheet.write(row, 9, 'RPR STATUM')
+        worksheet.write(row, 10, 'TOTAL')
 
         worksheet.set_column(0, 0, 50)
-        worksheet.set_column(1, 9, 20)
+        worksheet.set_column(1, 10, 20)
 
         row += 1
 
@@ -114,12 +118,13 @@ class Validacion(models.Model):
             worksheet.write(row, 1, detalle.factoring_csf, money)
             worksheet.write(row, 2, detalle.libranzas_csf, money)
             worksheet.write(row, 3, detalle.sentencias_csf, money)
-            worksheet.write(row, 4, detalle.rpr_csf, money)
-            worksheet.write(row, 5, detalle.libranzas_fcl, money)
-            worksheet.write(row, 6, detalle.rpr_fcl, money)
-            worksheet.write(row, 7, detalle.sentencias_fcp, money)
-            worksheet.write(row, 8, detalle.rpr_fcp, money)
-            worksheet.write(row, 9, detalle.total, money)
+            worksheet.write(row, 4, detalle.mutuos_csf, money)
+            worksheet.write(row, 5, detalle.rpr_csf, money)
+            worksheet.write(row, 6, detalle.libranzas_fcl, money)
+            worksheet.write(row, 7, detalle.rpr_fcl, money)
+            worksheet.write(row, 8, detalle.sentencias_fcp, money)
+            worksheet.write(row, 9, detalle.rpr_fcp, money)
+            worksheet.write(row, 10, detalle.total, money)
 
             row += 1
 
@@ -150,6 +155,7 @@ class DetalleMovimiento(models.Model):
     factoring_csf = fields.Float('FACTORING - CSF')
     libranzas_csf = fields.Float('LIBRANZAS - CSF')
     sentencias_csf = fields.Float('SENTENCIAS - CSF')
+    mutuos_csf = fields.Float('MUTUOS - CSF')
     rpr_csf = fields.Float('RPR CSF')
     #FCL
     libranzas_fcl = fields.Float('LIBRANZAS - FCL')

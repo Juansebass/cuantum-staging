@@ -32,6 +32,8 @@ class SaleOrder(models.Model):
                 raise ValidationError('Debe seleccionar un Gestor para poder cargar ofertas')
             elif len(rec.tipo_producto_ofertar) < 1:
                 raise ValidationError('Debe seleccionar un Tipo de producto para poder cargar ofertas')
+            elif rec.gestor_ofertar.code != 'FCL' and rec.tipo_producto_ofertar.code == 'LIB':
+                raise ValidationError('Solo se puede ofrecer Libranzas con gestor FCL')
 
             ofertas = []
             if not rec.emisor_ofertar and not rec.pagador_ofertar:
@@ -114,6 +116,24 @@ class SaleOrder(models.Model):
                 for ol in rec.order_line:
                     if ol.product_id.id != rec.order_line[0].product_id.id:
                         raise ValidationError('Solo puedes ofrecer productos del mismo tipo en una Oferta')
+
+
+    def get_group_results_fcl(self):
+        for rec in self:
+            results = []
+            ofertas = rec.order_line.filtered(
+            lambda x: x.gestor_line.code == 'FCL').sorted(key=lambda x: int(x.emisor_line))
+
+            dic_actual = {
+                'originador': 'origi',
+                'nit': 'nit',
+                'cuenta': 'cuenta',
+                'tipo': 'tipo',
+                'banco': 'banco',
+                'valor': 1000.13
+            }
+            results.append(dic_actual)
+        return results
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"

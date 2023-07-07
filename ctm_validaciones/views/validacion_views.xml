@@ -40,6 +40,7 @@
                         <field name="factoring_csf" />
                         <field name="libranzas_csf" />
                         <field name="sentencias_csf" />
+                        <field name="mutuos_csf" />
                         <field name="rpr_csf" />
                         <field name="libranzas_fcl" />
                         <field name="rpr_fcl" />

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_account_report_acta_adicion"
+        model="report.paperformat">
+        <field name="name">European A4 Landscape</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">7</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_acta_adicion" model="ir.actions.report">
+        <field name="name">Acta de Adición</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ati_sale_custom.report_acta_adicion</field>
+        <field name="paperformat_id" ref="paperformat_account_report_acta_adicion" />
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_acta_adicion">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <p class="text-center"><b>ACTA DE ADICIÓN</b></p><br/>
+                        <p class="text-justify"><b><span t-field="o.partner_id.name"/></b> Beneficiario tipo A vinculado al
+                            <b>Fideicomiso Cuantum Libranzas</b> y titular del encargo fiduciario No.
+                            <b><span t-field="o.partner_id.num_encargo"/></b> Cuantum Soluciones Financieras S.A.
+                            en calidad de Fideicomitente Gestor y Fiduciaria Central S.A. en calidad de Vocera y
+                            Sociedad Administradora¸ han decidido suscribir la presente Acta de Adición mediante la cual
+                            el Beneficiario Tipo A adquiere los derechos de crédito de cada uno de los Pagarés-Libranzas
+                            identificados en la <b>OFERTA DE VENTA NO. <span t-field="o.name"/></b><br/><br/>
+
+                            El Beneficiario Tipo A instruye a LA FIDUCIARIA para que transfiera del Encargo Fiduciario No.
+                            <b><span t-field="o.partner_id.num_encargo"/></b> a la Subcuenta del Beneficiario tipo B
+                            (Fideicomitente Originador), el valor de <b>############ ($ #####)</b> por concepto de
+                            contraprestación de la adquisición de los derechos económicos derivados de los
+                            Pagarés-Libranza adquiridos por el Beneficiario Tipo A, correspondiente a los siguientes
+                            <b>FIDEICOMITENTES ORGINADORES</b>, así:
+                        </p>
+                        <br/>
+                        <t t-set="results" t-value="o.get_group_results_fcl()"/>
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th>FIDEICOMITENTE ORIGINADOR</th>
+                                    <th>NIT</th>
+                                    <th>CUENTA</th>
+                                    <th>TIPO</th>
+                                    <th>BANCO</th>
+                                    <th>VALOR PAGARÉ LIBRANZAS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="results" t-as="result">
+                                    <tr>
+                                        <td><span t-esc="result['originador']"/></td>
+                                        <td><span t-esc="result['nit']"/></td>
+                                        <td><span t-esc="result['cuenta']"/></td>
+                                        <td><span t-esc="result['tipo']"/></td>
+                                        <td><span t-esc="result['banco']"/></td>
+                                        <td><span t-esc="'$ {:,.2f}'.format(result['valor'])"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <br/>
+
+                        <p class="text-justify">
+                            La adquisición de los Pagarés-Libranza se entenderá materializada con la suscripción de la
+                            presente <b>Acta de Adición</b> y la transferencia de los recursos a la Subcuenta del
+                            Beneficiario Tipo B como se indica en la anterior relación. <br/><br/> Para constancia de lo
+                            anterior, se suscribe la presente Acta de Adición, en tres (3) ejemplares del mismo tenor y
+                            valor legal, a los ____________________ (__) días del mes de <b>########</b> de dos mil
+                            veintitrés
+                            <b>(2023)</b>.
+
+                        </p>
+                        <br/>
+
+                        <table style="width:100%; border:none;">
+                            <tr>
+                                <td>
+                                    <p class="text-justify">
+                                        <b>EL FIDEICOMISO</b><br/><br/><br/>
+
+
+                                        <b>CARLOS MARIO GÓMEZ CORREA</b><br/>
+                                        C.C. 71.616.951<br/>
+                                        Representante legal<br/>
+                                        <b>FIDUCIARIA CENTRAL S.A., </b><br/>
+                                        Como vocera del <b>FIDEICOMISO <br/>
+                                        CUANTUM LIBRANZAS </b>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="text-justify pl-6">
+                                        <b>EL FIDEICOMITENTE GESTOR</b><br/><br/><br/>
+                                        <b>CARLOS ALEJANDRO RUIZ<br/>
+                                            RODRIGUEZ </b><br/>
+                                        C.C 98.563.315 <br/>
+                                        Representante legal<br/>
+                                        <b>CUANTUM SOLUCIONES<br/>
+                                            FINANCIERAS S.A. </b><br/>
+                                        <b>FIDEICOMITENTE GESTOR</b>
+                                    </p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br/>
+                                    <br/>
+                                    <p class="text-justify">
+                                    <b>EL BENEFICIARIOS TIPO A,</b><br/><br/><br/>
+                                    _____________________________,<br/>
+                                    C.C __________________________<br/>
+                                    Encargo fiduciario No. <b><span t-field="o.partner_id.num_encargo"/></b>
+                                </p>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
