@@ -9,7 +9,7 @@
         <field name="page_width">0</field>
         <field name="orientation">Portrait</field>
         <field name="margin_top">10</field>
-        <field name="margin_bottom">30</field>
+        <field name="margin_bottom">10</field>
         <field name="margin_left">9</field>
         <field name="margin_right">9</field>
         <field name="header_line" eval="False"/>
@@ -54,10 +54,10 @@
                             <thead>
                                 <tr>
                                     <th style="border: 1px solid;">FIDEICOMITENTE ORIGINADOR</th>
-                                    <th style="border: 1px solid;">NIT</th>
-                                    <th style="border: 1px solid;">CUENTA</th>
-                                    <th style="border: 1px solid;">TIPO</th>
-                                    <th style="border: 1px solid;">BANCO</th>
+                                    <th style="border: 1px solid; width:10%;">NIT</th>
+                                    <th style="border: 1px solid; width:10%;">CUENTA</th>
+                                    <th style="border: 1px solid; width:10%;">TIPO</th>
+                                    <th style="border: 1px solid; width:10%;">BANCO</th>
                                     <th style="border: 1px solid;">VALOR PAGARÉ LIBRANZAS</th>
                                 </tr>
                             </thead>
