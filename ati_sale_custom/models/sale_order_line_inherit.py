@@ -167,7 +167,9 @@ class SaleOrder(models.Model):
             'default_use_template': bool(template.id),
             'default_template_id': template.id,
             'default_composition_mode': 'comment',
-            'custom_layout': "mail.mail_notification_paynow",
+            'default_email_layout_xmlid': 'mail.mail_notification_layout_with_responsible_signature',
+            'proforma': self.env.context.get('proforma', False),
+            #'custom_layout': "mail.mail_notification_paynow",
             'force_email': True,
         }
 
