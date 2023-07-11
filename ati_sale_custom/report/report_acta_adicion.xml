@@ -9,7 +9,7 @@
         <field name="page_width">0</field>
         <field name="orientation">Portrait</field>
         <field name="margin_top">10</field>
-        <field name="margin_bottom">10</field>
+        <field name="margin_bottom">8</field>
         <field name="margin_left">9</field>
         <field name="margin_right">9</field>
         <field name="header_line" eval="False"/>
@@ -44,7 +44,7 @@
 
                             El Beneficiario Tipo A instruye a LA FIDUCIARIA para que transfiera del Encargo Fiduciario No.
                             <b><span t-field="o.partner_id.num_encargo"/></b> a la Subcuenta del Beneficiario tipo B
-                            (Fideicomitente Originador), el valor de <b><span t-esc="result['total_letra']"/> (<span t-esc="'$ {:,.2f}'.format(result['total_valor'])"/>)</b> por concepto de
+                            (Fideicomitente Originador), el valor de <b><span t-esc="result['total_letra']"/>S (<span t-esc="'$ {:,.2f}'.format(result['total_valor'])"/>)</b> por concepto de
                             contraprestación de la adquisición de los derechos económicos derivados de los
                             Pagarés-Libranza adquiridos por el Beneficiario Tipo A, correspondiente a los siguientes
                             <b>FIDEICOMITENTES ORGINADORES</b>, así:
