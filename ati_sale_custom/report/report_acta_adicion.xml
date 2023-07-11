@@ -54,10 +54,10 @@
                             <thead>
                                 <tr>
                                     <th style="border: 1px solid;">FIDEICOMITENTE ORIGINADOR</th>
-                                    <th style="border: 1px solid; width:12%;">NIT</th>
-                                    <th style="border: 1px solid; width:12%;">CUENTA</th>
-                                    <th style="border: 1px solid; width:12%;">TIPO</th>
-                                    <th style="border: 1px solid; width:12%;">BANCO</th>
+                                    <th style="border: 1px solid; width:15%;">NIT</th>
+                                    <th style="border: 1px solid; width:15%;">CUENTA</th>
+                                    <th style="border: 1px solid; width:15%;">TIPO</th>
+                                    <th style="border: 1px solid; width:15%;">BANCO</th>
                                     <th style="border: 1px solid;">VALOR PAGARÉ LIBRANZAS</th>
                                 </tr>
                             </thead>
