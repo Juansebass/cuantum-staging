@@ -21,6 +21,7 @@
         'views/oferta_sale_order_portal_inherit.xml',
         'report/report_sale_order_inherit.xml',
         'report/report_acta_adicion.xml',
+        'data/mail_template_data.xml'
         ],
     'installable': True,
     'application': False,

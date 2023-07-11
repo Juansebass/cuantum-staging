@@ -2,6 +2,10 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 import logging
+import datetime
+import locale
+import base64
+
 _logger = logging.getLogger(__name__)
 
 class SaleOrder(models.Model):
@@ -120,20 +124,65 @@ class SaleOrder(models.Model):
 
     def get_group_results_fcl(self):
         for rec in self:
-            results = []
+            locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+            mes_actual = datetime.datetime.now().strftime("%B")
             ofertas = rec.order_line.filtered(
-            lambda x: x.gestor_line.code == 'FCL').sorted(key=lambda x: int(x.emisor_line))
-
-            dic_actual = {
-                'originador': 'origi',
-                'nit': 'nit',
-                'cuenta': 'cuenta',
-                'tipo': 'tipo',
-                'banco': 'banco',
-                'valor': 1000.13
+                lambda x: x.gestor_line.code == 'FCL')
+            coinvercop_valor = sum(oferta.price_unit for oferta in ofertas.filtered(lambda x: x.emisor_line.vat == '900524697'))
+            soinpro_valor = sum(oferta.price_unit for oferta in ofertas.filtered(lambda x: x.emisor_line.vat == '900659306'))
+            avista_valor = sum(oferta.price_unit for oferta in ofertas.filtered(lambda x: x.emisor_line.vat == '900871479'))
+            results = {
+                'coinvercop_valor': coinvercop_valor if coinvercop_valor else 0,
+                'soinpro_valor': soinpro_valor if soinpro_valor else 0,
+                'avista_valor': avista_valor if avista_valor else 0,
+                'mes_letra': mes_actual.upper(),
             }
-            results.append(dic_actual)
+            #Agregando totales
+            total_valor = sum([results['coinvercop_valor'], results['soinpro_valor'], results['avista_valor']])
+            results['total_valor'] = total_valor
+            results['total_letra'] = self.currency_id.amount_to_text(total_valor).upper()
+
         return results
+
+    def action_fcl_send(self):
+        template = self.env.ref('ati_sale_custom.email_template_fcl')
+        compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
+        report_id = self.env.ref('ati_sale_custom.action_report_acta_adicion')
+        generated_report = report_id._render_qweb_pdf(self.id)
+        data_record = base64.b64encode(generated_report[0])
+        ir_values = {
+            'name': 'Acta de Adición',
+            'type': 'binary',
+            'datas': data_record,
+            'store_fname': data_record,
+            'mimetype': 'application/pdf',
+            'res_model': 'sale.order',
+        }
+        report_attachment = self.env['ir.attachment'].sudo().create(ir_values)
+        attach_ids = [report_attachment.id]
+        template.attachment_ids = [(6, 0, attach_ids)]
+        ctx = {
+            'default_model': 'sale.order',
+            'default_res_id': self.id,
+            'default_use_template': bool(template.id),
+            'default_template_id': template.id,
+            'default_composition_mode': 'comment',
+            'default_email_layout_xmlid': 'mail.mail_notification_layout_with_responsible_signature',
+            #'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+        }
+
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"

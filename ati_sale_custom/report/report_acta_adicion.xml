@@ -8,10 +8,10 @@
         <field name="page_height">0</field>
         <field name="page_width">0</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">7</field>
+        <field name="margin_top">12</field>
         <field name="margin_bottom">30</field>
-        <field name="margin_left">7</field>
-        <field name="margin_right">7</field>
+        <field name="margin_left">9</field>
+        <field name="margin_right">9</field>
         <field name="header_line" eval="False"/>
         <field name="header_spacing">30</field>
         <field name="dpi">90</field>
@@ -32,6 +32,7 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.internal_layout">
                     <div class="page">
+                        <t t-set="result" t-value="o.get_group_results_fcl()"/>
                         <p class="text-center"><b>ACTA DE ADICIÓN</b></p><br/>
                         <p class="text-justify"><b><span t-field="o.partner_id.name"/></b> Beneficiario tipo A vinculado al
                             <b>Fideicomiso Cuantum Libranzas</b> y titular del encargo fiduciario No.
@@ -43,49 +44,64 @@
 
                             El Beneficiario Tipo A instruye a LA FIDUCIARIA para que transfiera del Encargo Fiduciario No.
                             <b><span t-field="o.partner_id.num_encargo"/></b> a la Subcuenta del Beneficiario tipo B
-                            (Fideicomitente Originador), el valor de <b>############ ($ #####)</b> por concepto de
+                            (Fideicomitente Originador), el valor de <b><span t-esc="result['total_letra']"/> (<span t-esc="'$ {:,.2f}'.format(result['total_valor'])"/>)</b> por concepto de
                             contraprestación de la adquisición de los derechos económicos derivados de los
                             Pagarés-Libranza adquiridos por el Beneficiario Tipo A, correspondiente a los siguientes
                             <b>FIDEICOMITENTES ORGINADORES</b>, así:
                         </p>
                         <br/>
-                        <t t-set="results" t-value="o.get_group_results_fcl()"/>
-                        <table class="table table-bordered text-center">
+                        <table class="text-center" style="border-collapse: collapse; border: 1px solid;width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>FIDEICOMITENTE ORIGINADOR</th>
-                                    <th>NIT</th>
-                                    <th>CUENTA</th>
-                                    <th>TIPO</th>
-                                    <th>BANCO</th>
-                                    <th>VALOR PAGARÉ LIBRANZAS</th>
+                                    <th style="border: 1px solid;">FIDEICOMITENTE ORIGINADOR</th>
+                                    <th style="border: 1px solid;">NIT</th>
+                                    <th style="border: 1px solid;">CUENTA</th>
+                                    <th style="border: 1px solid;">TIPO</th>
+                                    <th style="border: 1px solid;">BANCO</th>
+                                    <th style="border: 1px solid;">VALOR PAGARÉ LIBRANZAS</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="results" t-as="result">
-                                    <tr>
-                                        <td><span t-esc="result['originador']"/></td>
-                                        <td><span t-esc="result['nit']"/></td>
-                                        <td><span t-esc="result['cuenta']"/></td>
-                                        <td><span t-esc="result['tipo']"/></td>
-                                        <td><span t-esc="result['banco']"/></td>
-                                        <td><span t-esc="'$ {:,.2f}'.format(result['valor'])"/></td>
-                                    </tr>
-                                </t>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>COINVERCOP S.A.S</b></td>
+                                    <td style="border: 1px solid;">900524697</td>
+                                    <td style="border: 1px solid;">137032066</td>
+                                    <td style="border: 1px solid;">Corriente</td>
+                                    <td style="border: 1px solid;">BBVA</td>
+                                    <td style="border: 1px solid;"><span t-esc="'$ {:,.2f}'.format(result['coinvercop_valor'])"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>SOINPRO S.A.S</b></td>
+                                    <td style="border: 1px solid;">900659306</td>
+                                    <td style="border: 1px solid;">241003359</td>
+                                    <td style="border: 1px solid;">Corriente</td>
+                                    <td style="border: 1px solid;">BBVA</td>
+                                    <td style="border: 1px solid;"><span t-esc="'$ {:,.2f}'.format(result['soinpro_valor'])"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>AVISTA COLOMBIA S.A.S</b></td>
+                                    <td style="border: 1px solid;">900871479</td>
+                                    <td style="border: 1px solid;">01346075918</td>
+                                    <td style="border: 1px solid;">Corriente</td>
+                                    <td style="border: 1px solid;">Bancolombia</td>
+                                    <td style="border: 1px solid;"><span t-esc="'$ {:,.2f}'.format(result['avista_valor'])"/></td>
+                                </tr>
                             </tbody>
                         </table>
-                        <br/>
+                        <br/><br/>
 
                         <p class="text-justify">
                             La adquisición de los Pagarés-Libranza se entenderá materializada con la suscripción de la
                             presente <b>Acta de Adición</b> y la transferencia de los recursos a la Subcuenta del
                             Beneficiario Tipo B como se indica en la anterior relación. <br/><br/> Para constancia de lo
                             anterior, se suscribe la presente Acta de Adición, en tres (3) ejemplares del mismo tenor y
-                            valor legal, a los ____________________ (__) días del mes de <b>########</b> de dos mil
+                            valor legal, a los ____________________ (__) días del mes de <b><span t-esc="result['mes_letra']"/></b> de dos mil
                             veintitrés
                             <b>(2023)</b>.
 
                         </p>
+                        <br/>
+                        <br/>
                         <br/>
 
                         <table style="width:100%; border:none;">

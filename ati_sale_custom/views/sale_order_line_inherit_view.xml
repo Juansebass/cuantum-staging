@@ -6,6 +6,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <button name="action_quotation_send" position="after">
+                <button name="action_fcl_send" type="object" string="Enviar Oferta FCL"/>
+            </button>
             <field name="validity_date" position="before">
                 <field name="fecha_celebracion" attrs="{'invisible': [('state', '!=',  'draft'), ('state', '!=',  'sent')]}"/>
             </field>

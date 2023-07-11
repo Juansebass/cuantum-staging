@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_fcl" model="mail.template">
+            <field name="name">FCL: Acta de adición</field>
+            <field name="model_id" ref="ati_sale_custom.model_sale_order" />
+            <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{object.partner_id.id}}</field>
+            <field name="subject">OFERTA DE VENTA {{object.name}}-2023-FCL</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;" class="text-justify">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Cordial Saludo, <br/><br/>
+
+                        A continuación encontrarás la oferta para el FIDEICOMITENTE TIPO A del FIDEICOMISO CUANTUM
+                        LIBRANZAS. De igual manera encontrarás el ACTA DE ADICIÓN que, una vez firmada, materializa la
+                        aceptación de la oferta y toma de la misma. Por lo anterior te agradezco enviarle la oferta a
+                        nuestro fideicomitente teniendo en cuenta las siguientes bases:<br/><br/>
+
+
+                        1. El adjunto en excel contiene el detalle de la oferta y un resumen global de las libranzas que
+                        harán parte del portafolio del FIDEICOMITENTE TIPO A, una vez la aceptación.<br/><br/>
+
+
+                        2. El adjunto en pdf consta del ACTA DE ADICIÓN, que materializa y legaliza toda compra en este
+                        vehículo de inversión, esto una vez firmada dicha acta. El fideicomitente debe
+                        llenar 3 campos: a) el día en que toma la oferta, en número y letra (4 párrafo);  b) Su firma
+                        (al final del documento); c) Su cédula (al final del documento).<br/><br/>
+
+
+                        3. Para dar por aceptada la oferta y cargarla a su portafolio, el FIDEICOMITENTE TIPO A debe
+                        regresar el correo con la aceptación del adjunto y el ACTA DE ADICIÓN diligenciada en estos 3
+                        campos. Ésta será la constancia final de toma del activo. Si tiene adjunta dos actas, por favor
+                        firmar las dos. La suma total de estas actas da el valor ofrecido y soportado en el Excel<br/><br/>
+
+
+                        4. A partir del envío del correo, el FIDEICOMITENTE TIPO A cuenta con 2-3 días hábiles para
+                        subsanar inquietudes, realizar la aceptación o la negación de La Oferta. Los tiempos acá
+                        descritos debido al proceso operativo del traslado de los recursos de encargo a encargo que toma
+                        materializar la venta.<br/><br/>
+
+
+                        5. La oferta tiene un item importante llamado "FECHA DE CELEBRACIÓN DEL CONTRATO", esta fecha
+                        indica el día en que los recursos ya deben estar en el encargo del FIDEICOMITENTE ORIGINADOR, es
+                        decir que, si esto no se da por un tema propio de demora en la aceptación por parte del
+                        FIDEICOMITENTE, la oferta enviada pierde validez y deber ser actualizada para envío nuevamente.<br/><br/>
+
+
+                        Cualquier inquietud, quedaré muy atenta,<br/>
+                        Saludos
+                    </p>
+                </div>
+            </field>
+<!--            <field name="report_template" ref="ati_sale_custom.action_report_acta_adicion"/>-->
+<!--            <field name="report_name">Acta de Adición</field>-->
+            <field name="report_template" ref="sale.action_report_saleorder"/>
+            <field name="report_name">{{ (object.name or '').replace('/','_') }}</field>
+        </record>
+    </data>
+</odoo>
