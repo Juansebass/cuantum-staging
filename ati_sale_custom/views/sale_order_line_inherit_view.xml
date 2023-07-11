@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <button name="action_quotation_send" position="after">
-                <button name="action_fcl_send" type="object" string="Enviar Oferta FCL" invisibe="1"/>
+                <button name="action_fcl_send" type="object" string="Enviar Oferta FCL" invisible="1"/>
             </button>
             <field name="validity_date" position="before">
                 <field name="fecha_celebracion" attrs="{'invisible': [('state', '!=',  'draft'), ('state', '!=',  'sent')]}"/>
