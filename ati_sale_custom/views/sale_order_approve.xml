@@ -4,19 +4,15 @@
             <t t-call="web.html_container">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <div clas="row d-flex justify-content-center">
-                            <div class="col-4 mx-auto" style="border:1px solid">
-                                <h1 class="text-center">Oferta</h1><br/><br/>
+                        <div clas="row justify-content-center">
+                            <div class="col-5 mx-auto rounded border border-primary" >
+                                <h1 class="text-center">Oferta <span t-esc="sale.name"/></h1><br/><br/>
 
-                                <h4 class="text-center" style="margin-bottom: 32px;">¡La calificación de la
-                                    Oferta se ha realizado con éxito!</h4><br/>
-                                <h4 class="text-center" style="margin-bottom: 32px;">¡Recuerde por favor enviar
-                                    el acta de adición firmada para materializar la venta de forma correcta!</h4><br/><br/>
+                                <h4 class="text-center" style="margin-bottom: 32px;"> Ha <b t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
+                                    la oferta  "<b t-esc="sale.name"/>"<br/></h4><br/>
+                                <h4 class="text-center" style="margin-bottom: 32px;">Recuerde por favor enviar
+                                    el acta de adición firmada para materializar la venta de forma correcta</h4><br/><br/>
 
-                                <p>
-                                    Ha <b t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
-                                    la oferta  "<b t-esc="sale.name"/>"<br/>
-                                </p><br/><br/>
 
                                 <t t-if="sale.estado_oferta_fcl == 'rechazada'">
                                     <p style="margin-top:32px;">
