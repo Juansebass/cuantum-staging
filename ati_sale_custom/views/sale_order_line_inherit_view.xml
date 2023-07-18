@@ -14,6 +14,7 @@
             </field>
             <field name="payment_term_id" position="after">
                 <field name="offer_type" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
+                <field name="estado_oferta_fcl"/>
                 <separator string="Cargar Ofertas" colspan="1"/>
                 <field name="gestor_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
                 <field name="tipo_producto_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
