@@ -3,22 +3,24 @@
         <template id="approve_offer_messages" name="Calificacion Oferta FCL">
             <t t-call="web.external_layout">
                 <div class="container">
-                    <div clas="row">
-                        <h1 class="text-center">Oferta</h1>
-                        <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificaciónn de la Oferta se ha realizado con éxito!</h4>
+                    <div clas="row justify-content-center" >
+                        <div class="col-4">
+                            <h1 class="text-center">Oferta</h1>
+                            <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificaciónn de la Oferta se ha realizado con éxito!</h4>
 
-                        <div style="margin-left: 80px;">
-                            Ha <b t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
-                            la oferta  "<b t-esc="sale.name"/>"<br/>
-                        </div>
+                            <div style="margin-left: 80px;">
+                                Ha <b t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
+                                la oferta  "<b t-esc="sale.name"/>"<br/>
+                            </div>
 
-                        <div class="clearfix"/>
-                        <t t-if="sale.estado_oferta_fcl == 'rechazada'">
-                            <p style="margin-top:32px;">
-                                Porfavor Notificanos el motivo por el cual se rechazo la oferta.
-                                Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
-                            </p>
-                        </t>
+                            <div class="clearfix"/>
+                            <t t-if="sale.estado_oferta_fcl == 'rechazada'">
+                                <p style="margin-top:32px;">
+                                    Porfavor Notificanos el motivo por el cual se rechazo la oferta.
+                                    Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
+                                </p>
+                            </t>
+                    </div>
                     </div>
                 </div>
             </t>
