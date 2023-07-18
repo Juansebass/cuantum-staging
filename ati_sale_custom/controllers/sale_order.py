@@ -19,8 +19,7 @@ class SaleOrderFunctions(http.Controller):
         else:
             return request.render('ati_sale_custom.offer_rating_refuse', {
                 'rating': 'Valide el valor de aprobacion enviado',
-                'sale': _id,
-                'id': _id,
+                'sale': sale_id,
             })
 
         return request.render('ati_sale_custom.approve_offer_messages', {
