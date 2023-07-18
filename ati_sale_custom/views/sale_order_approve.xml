@@ -7,7 +7,7 @@
                         <br/><br/><br/><br/><br/><br/>
                         <div clas="row justify-content-center">
                             <div class="col-5 mx-auto rounded border border-light-subtle" >
-                                <img src='ati_sale_custom/static/images/logo.jpeg'/>
+                                <img src='ati_sale_custom/static/images/logo.png'/>
                                 <h1 class="text-center">Oferta <span class="text-success" t-esc="sale.name"/></h1><br/><br/>
 
                                 <h4 class="text-center" style="margin-bottom: 32px;"> Ha <b class="text-success" t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
