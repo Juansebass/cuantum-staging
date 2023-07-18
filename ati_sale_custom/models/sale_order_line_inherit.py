@@ -158,7 +158,7 @@ class SaleOrder(models.Model):
         generated_report = report_id._render_qweb_pdf(self.id)
         data_record = base64.b64encode(generated_report[0])
         ir_values = {
-            'name': 'Acta de Adición',
+            'name': 'Acta de Adición.pdf',
             'type': 'binary',
             'datas': data_record,
             'store_fname': data_record,
