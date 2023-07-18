@@ -1,32 +1,30 @@
 <odoo>
     <data>
         <template id="approve_offer_messages" name="Calificacion Oferta FCL">
-            <t t-call="web.layout">
+            <t t-call="web.external_layout">
                 <div class="page">
-                    <div clas="row d-flex justify-content-center" >
-                        <table class="col-md-6">
-                            <tr>
-                                <h1 class="text-center">Oferta</h1>
+                    <div clas="row d-flex justify-content-center">
+                        <div class="col-md-6">
+                            <h1 class="text-center">Oferta</h1><br/><br/>
 
-                            </tr>
-                            <tr>
-                                <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificación de la Oferta se ha realizado con éxito!</h4>
-                                <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡Recuerde por favor enviar el acta de adición firmada para materializar la venta de forma correcta!</h4>
-                            </tr>
-                            <tr>
+                            <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificación de la
+                                Oferta se ha realizado con éxito!</h4><br/>
+                            <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡Recuerde por favor enviar
+                                el acta de adición firmada para materializar la venta de forma correcta!</h4><br/><br/>
+
+                            <p>
                                 Ha <b t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
                                 la oferta  "<b t-esc="sale.name"/>"<br/>
-                            </tr>
-                            <div class="clearfix"/>
-                        </table>
+                            </p><br/><br/>
+
                             <t t-if="sale.estado_oferta_fcl == 'rechazada'">
                                 <p style="margin-top:32px;">
                                     Porfavor Notificanos el motivo por el cual se rechazo la oferta.
                                     Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
                                 </p>
                             </t>
+                        </div>
                     </div>
-
                 </div>
             </t>
         </template>
