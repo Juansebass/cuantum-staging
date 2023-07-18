@@ -9,7 +9,7 @@
 
                         <div style="margin-left: 80px;">
                             Ha <b t-esc="'Aceptado' if estado_oferta_fcl == 'aceptado' else 'Rechazado'"/>
-                            la oferta  "<b t-esc="sale_id.name"/>"<br/>
+                            la oferta  "<b t-esc="name"/>"<br/>
                         </div>
 
                         <div class="clearfix"/>
