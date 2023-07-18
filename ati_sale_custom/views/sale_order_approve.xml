@@ -2,9 +2,9 @@
     <data>
         <template id="approve_offer_messages" name="Calificacion Oferta FCL">
             <t t-call="web.external_layout">
-                <div class="container">
+                <div class="container text-center">
                     <div clas="row justify-content-center" >
-                        <div class="col-4">
+                        <div class="col-md-6 offset-md-3">
                             <h1 class="text-center">Oferta</h1>
                             <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificaciónn de la Oferta se ha realizado con éxito!</h4>
 
@@ -20,7 +20,7 @@
                                     Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
                                 </p>
                             </t>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </t>
