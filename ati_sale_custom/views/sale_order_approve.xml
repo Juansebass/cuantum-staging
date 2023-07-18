@@ -8,9 +8,10 @@
 
                         <div class="row justify-content-center">
                             <div class="col-5 mx-auto text-center" >
-                                <img src='/ati_sale_custom/static/images/logo.jpeg' style="width: 50%;"/><br/>
+                                <img src='/ati_sale_custom/static/images/logo.jpeg' style="width: 100%;"/><br/>
                             </div>
                         </div>
+                        <br/><br/>
 
                         <div clas="row justify-content-center">
                             <div class="col-5 mx-auto rounded border border-light-subtle" >
