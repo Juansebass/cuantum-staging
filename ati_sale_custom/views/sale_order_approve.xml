@@ -5,10 +5,10 @@
                 <div class="container">
                     <div clas="row">
                         <h1 class="text-center">Oferta</h1>
-                        <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificacion de Oferta se ha realizaco con éxito!</h4>
+                        <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificaciónn de la Oferta se ha realizado con éxito!</h4>
 
                         <div style="margin-left: 80px;">
-                            Ha <b t-esc="'Aceptado' if estado_oferta_fcl == 'aceptado' else 'Rechazado'"/>
+                            Ha <b t-esc="'Aceptado' if estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
                             la oferta  "<b t-esc="name"/>"<br/>
                         </div>
 
