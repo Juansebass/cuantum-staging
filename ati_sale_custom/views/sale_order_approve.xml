@@ -8,7 +8,9 @@
 
                         <div clas="row justify-content-center">
                             <div class="col-5 mx-auto rounded border border-light-subtle" >
-                                <img src='/ati_sale_custom/static/images/logo.png' style="width: 20%;"/><br/>
+                                <div class="text-center">
+                                    <img src='/ati_sale_custom/static/images/logo.png' style="width: 50%;"/><br/>
+                                </div>
                                 <h1 class="text-center">Oferta <span class="text-success" t-esc="sale.name"/></h1><br/><br/>
 
                                 <h4 class="text-center" style="margin-bottom: 32px;">
@@ -27,7 +29,7 @@
 
 
                                 <t t-if="sale.estado_oferta_fcl == 'rechazada'">
-                                    <h5 class="text-center" style="margin-top:32px;">
+                                    <h5 class="text-center" >
                                         Por favor, notifícanos el motivo por el cual se rechazó la oferta. Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
                                     </h5>
                                 </t>
