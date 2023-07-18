@@ -5,12 +5,19 @@
 
                     <div class="page">
                         <br/><br/><br/><br/><br/><br/>
+                        <img src='ati_sale_custom/static/images/logo.png'/>
                         <div clas="row justify-content-center">
                             <div class="col-5 mx-auto rounded border border-light-subtle" >
-                                <img src='ati_sale_custom/static/images/logo.png'/>
                                 <h1 class="text-center">Oferta <span class="text-success" t-esc="sale.name"/></h1><br/><br/>
 
-                                <h4 class="text-center" style="margin-bottom: 32px;"> Ha <b class="text-success" t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
+                                <h4 class="text-center" style="margin-bottom: 32px;">
+                                    Ha
+                                    <t t-if="sale.estado_oferta_fcl == 'aceptada'">
+                                        <b class="text-success">Aceptado </b>
+                                    </t>
+                                    <t t-if="sale.estado_oferta_fcl == 'rechazada'">
+                                        <b class="text-danger">Rechazado </b>
+                                    </t>
                                     la oferta<br/></h4><br/>
                                 <t t-if="sale.estado_oferta_fcl == 'aceptada'">
                                     <h4 class="text-center" style="margin-bottom: 32px;">Recuerde por favor enviar
@@ -19,10 +26,10 @@
 
 
                                 <t t-if="sale.estado_oferta_fcl == 'rechazada'">
-                                    <p style="margin-top:32px;">
+                                    <h4 class="text-center" style="margin-top:32px;">
                                         Porfavor Notificanos el motivo por el cual se rechazo la oferta.
                                         Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
-                                    </p>
+                                    </h4>
                                 </t>
                             </div>
                         </div>
