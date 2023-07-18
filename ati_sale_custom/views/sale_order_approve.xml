@@ -1,16 +1,16 @@
 <odoo>
     <data>
         <template id="approve_offer_messages" name="Calificacion Oferta FCL">
-
+            <t t-call="web.layout">
                 <div class="page">
-                    <div clas="row" >
-                        <table class="col-md-6  mx-auto">
+                    <div clas="row d-flex justify-content-center" >
+                        <table class="col-md-6">
                             <tr>
                                 <h1 class="text-center">Oferta</h1>
 
                             </tr>
                             <tr>
-                                <h4 class="text-center text-muted text-decoration-underline" style="margin-bottom: 32px;">¡La calificación de la Oferta se ha realizado con éxito!</h4>
+                                <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificación de la Oferta se ha realizado con éxito!</h4>
                                 <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡Recuerde por favor enviar el acta de adición firmada para materializar la venta de forma correcta!</h4>
                             </tr>
                             <tr>
@@ -28,7 +28,7 @@
                     </div>
 
                 </div>
-
+            </t>
         </template>
 
         <template id="oferta_refuse" name="Notificacion de Rechazo de Oferta">
