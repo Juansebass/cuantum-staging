@@ -26,10 +26,9 @@
 
 
                                 <t t-if="sale.estado_oferta_fcl == 'rechazada'">
-                                    <h4 class="text-center" style="margin-top:32px;">
-                                        Porfavor Notificanos el motivo por el cual se rechazo la oferta.
-                                        Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
-                                    </h4>
+                                    <h3 class="text-center" style="margin-top:32px;">
+                                        Por favor, notifícanos el motivo por el cual se rechazó la oferta. Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
+                                    </h3>
                                 </t>
                             </div>
                         </div>
