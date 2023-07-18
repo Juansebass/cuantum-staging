@@ -23,7 +23,7 @@ class SaleOrderFunctions(http.Controller):
                 'id': _id,
             })
 
-        return request.render('ati_sale_custom.approve_sale_order_messages', {
+        return request.render('ati_sale_custom.approve_offer_messages', {
             'rating': rating_system,
             'sale': sale_id,
         })

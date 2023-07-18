@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <template id="approve_sale_order_messages" name="Calificacion Oferta FCL">
+        <template id="approve_offer_messages" name="Calificacion Oferta FCL">
             <t t-call="web.external_layout">
                 <div class="container">
                     <div clas="row">
