@@ -6,8 +6,10 @@
                     <div class="page">
                         <br/><br/><br/><br/><br/><br/>
 
-                        <div class="row text-center">
-                            <img src='/ati_sale_custom/static/images/logo.png' style="width: 50%;"/><br/>
+                        <div class="row justify-content-center">
+                            <div class="col-5 mx-auto text-center" >
+                                <img src='/ati_sale_custom/static/images/logo.jpeg' style="width: 50%;"/><br/>
+                            </div>
                         </div>
 
                         <div clas="row justify-content-center">
