@@ -5,8 +5,9 @@
 
                     <div class="page">
                         <br/><br/><br/><br/><br/><br/>
-                        <img src='/ati_sale_custom/static/images/logo.png'/>
+
                         <div clas="row justify-content-center">
+                            <img src='/ati_sale_custom/static/images/logo.png' style="width: 10%;"/>
                             <div class="col-5 mx-auto rounded border border-light-subtle" >
                                 <h1 class="text-center">Oferta <span class="text-success" t-esc="sale.name"/></h1><br/><br/>
 
