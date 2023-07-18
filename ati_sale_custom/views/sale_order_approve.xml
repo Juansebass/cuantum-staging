@@ -4,7 +4,7 @@
             <t t-call="web.external_layout">
                 <div class="page">
                     <div clas="row d-flex justify-content-center">
-                        <div class="col-md-6">
+                        <div class="col-md-6 border border-primary">
                             <h1 class="text-center">Oferta</h1><br/><br/>
 
                             <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificación de la
