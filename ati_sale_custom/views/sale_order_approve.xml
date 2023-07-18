@@ -6,18 +6,18 @@
                     <div clas="row justify-content-center" >
                         <table class="col-md-6 offset-md-3">
                             <tr>
-                                <h1
+                                <h1 class="text-center">Oferta</h1>
+
                             </tr>
                             <tr>
-                                <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificaciónn de la Oferta se ha realizado con éxito!</h4
+                                <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificaciónn de la Oferta se ha realizado con éxito!</h4>
                             </tr>
                             <tr>
                                 Ha <b t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
                                 la oferta  "<b t-esc="sale.name"/>"<br/>
                             </tr>
-                        </table>
-
                             <div class="clearfix"/>
+                        </table>
                             <t t-if="sale.estado_oferta_fcl == 'rechazada'">
                                 <p style="margin-top:32px;">
                                     Porfavor Notificanos el motivo por el cual se rechazo la oferta.
