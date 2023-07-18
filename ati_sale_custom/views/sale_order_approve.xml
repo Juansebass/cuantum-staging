@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <template id="approve_offer_messages" name="Calificacion Oferta FCL">
-            <t t-call="web.external_layout">
+            <t t-call="web.internal_layout">
                 <div class="container text-center">
                     <div clas="row justify-content-center" >
                         <table class="col-md-6  mx-auto">
