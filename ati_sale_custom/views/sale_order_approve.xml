@@ -1,9 +1,9 @@
 <odoo>
     <data>
         <template id="approve_offer_messages" name="Calificacion Oferta FCL">
-            <t t-call="web.internal_layout">
-                <div class="container text-center">
-                    <div clas="row justify-content-center" >
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div clas="row" >
                         <table class="col-md-6  mx-auto">
                             <tr>
                                 <h1 class="text-center">Oferta</h1>
@@ -26,6 +26,7 @@
                                 </p>
                             </t>
                     </div>
+
                 </div>
             </t>
         </template>
