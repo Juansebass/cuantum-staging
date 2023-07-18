@@ -169,7 +169,8 @@ class SaleOrder(models.Model):
             'default_composition_mode': 'comment',
             #'default_email_layout_xmlid': 'mail.mail_notification_layout_with_responsible_signature',
             #'proforma': self.env.context.get('proforma', False),
-            'custom_layout': "mail.message_notification_email",
+            'custom_layout': "mail.mail_notification_borders",
+            'mark_so_as_sent': True,
             'force_email': True,
         }
 
