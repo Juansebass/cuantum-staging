@@ -4,13 +4,14 @@
             <t t-call="web.html_container">
 
                     <div class="page">
+                        <br/><br/><br/><br/><br/><br/>
                         <div clas="row justify-content-center">
                             <div class="col-5 mx-auto rounded border border-light-subtle" >
-                                <img src='ati_sale_custom/static/images/logo.jpeg' style="width:15%"/>
+                                <img src='ati_sale_custom/static/images/logo.jpeg'/>
                                 <h1 class="text-center">Oferta <span class="text-success" t-esc="sale.name"/></h1><br/><br/>
 
                                 <h4 class="text-center" style="margin-bottom: 32px;"> Ha <b class="text-success" t-esc="'Aceptado' if sale.estado_oferta_fcl == 'aceptada' else 'Rechazado'"/>
-                                    la oferta"<br/></h4><br/>
+                                    la oferta<br/></h4><br/>
                                 <t t-if="sale.estado_oferta_fcl == 'aceptada'">
                                     <h4 class="text-center" style="margin-bottom: 32px;">Recuerde por favor enviar
                                         el acta de adición firmada para materializar la venta de forma correcta</h4><br/><br/>
