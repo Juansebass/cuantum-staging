@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+        <template id="approve_sale_order_messages" name="Calificacion Oferta FCL">
+            <t t-call="web.external_layout">
+                <div class="container">
+                    <div clas="row">
+                        <h1 class="text-center">Oferta</h1>
+                        <h4 class="text-center text-muted" style="margin-bottom: 32px;">¡La calificacion de Oferta se ha realizaco con éxito!</h4>
+
+                        <div style="margin-left: 80px;">
+                            Ha <b t-esc="'Aceptado' if estado_oferta_fcl == 'aceptado' else 'Rechazado'"/>
+                            la oferta  "<b t-esc="sale_id.name"/>"<br/>
+                        </div>
+
+                        <div class="clearfix"/>
+                        <t t-if="estado_oferta_fcl == 'rechazada'">
+                            <p style="margin-top:32px;">
+                                Porfavor Notificanos el motivo por el cual se rechazo la oferta.
+                                Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.
+                            </p>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="oferta_refuse" name="Notificacion de Rechazo de Oferta">
+            <t t-call="web.layout">
+                <div class="container">
+                    <div class="text-center" style="margin-top:128px">
+                        <i class="fa fa-check-circle fa-5x text-success" />
+                    </div>
+                    <h2 class="text-center">¡Gracias por su Respuesta!</h2>
+                    <div class="text-center">
+                        <p>Estaremos realizando el respectivo seguimiento para resolver sus inquietudes.</p>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="offer_rating_refuse" name="Factura Electronica Calificada con Anterioridad">
+            <t t-call="web.layout">
+                <div class="container">
+                    <div clas="row">
+                        <h1 class="text-center">Oferta</h1>
+                        <h4 class="text-center text-muted" style="margin-bottom: 32px;">Esta oferta ya fue calificada Anteriormente.</h4>
+                        <div style="margin-left: 80px;">
+                            Estado de calificación: <b t-esc="'Aprobada' if estado_oferta_fcl == 'approve' else 'Rechazada'"/><br/>
+                            Factura No.: "<b t-esc="sale_order_id.name"/>"<br/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

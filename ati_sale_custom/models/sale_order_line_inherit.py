@@ -29,6 +29,13 @@ class SaleOrder(models.Model):
                                         copy=False, default=fields.Datetime.now)
     emisor_ofertar = fields.Many2one('res.partner', 'Emisor')
     pagador_ofertar = fields.Many2one('res.partner', 'Pagador')
+    estado_oferta_fcl = fields.Selection([
+        ('no_calificada', 'No Calificada'),
+        ('aceptada', 'Aceptada'),
+        ('rechazada', 'Rechazada'),
+        ],
+        string = 'Estado Oferta FCL', default = 'no_calificada'
+    )
 
     def action_cargar_titulos_oferta(self):
         for rec in self:
@@ -169,7 +176,7 @@ class SaleOrder(models.Model):
             'default_composition_mode': 'comment',
             #'default_email_layout_xmlid': 'mail.mail_notification_layout_with_responsible_signature',
             #'proforma': self.env.context.get('proforma', False),
-            'custom_layout': "mail.mail_notification_borders",
+            'custom_layout': "mail.mail_notification_light",
             'mark_so_as_sent': True,
             'force_email': True,
         }
