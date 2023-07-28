@@ -83,7 +83,7 @@ class SaleOrder(models.Model):
             if rec.tipo_producto_ofertar.code == 'FAC':
                 producto = self.env['product.product'].search([('name','=','Factoring')])
             elif rec.tipo_producto_ofertar.code == 'LIB':
-                producto = self.env['product.product'].search([('name','=','Libranza')])
+                producto = self.env['product.product'].search([('name','=','Libranzas')])
             elif rec.tipo_producto_ofertar.code == 'SEN':
                 producto = self.env['product.product'].search([('name','=','Sentencias')])
             elif rec.tipo_producto_ofertar.code == 'MUT':
