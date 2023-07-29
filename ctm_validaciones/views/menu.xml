@@ -7,6 +7,14 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record id="action_open_informe_administracion" model="ir.actions.act_window">
+        <field name="name">Informe Administración y Rendimientos</field>
+        <field name="res_model">ctm.informe_administracion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <!-- Menu y Menus principales -->
-    <menuitem id="menu_validaciones" sequence="6" name="Informe Clientes" parent="ati_titulos.menu_tit" action="action_open_validacion"/>
+    <menuitem id="parent_validaciones" sequence="6" name="Validaciones" parent="ati_titulos.menu_tit" />
+    <menuitem id="menu_validaciones" sequence="6" name="Informe Clientes" parent="parent_validaciones" action="action_open_validacion"/>
+    <menuitem id="menu_informe_administracion" sequence="6" name="Informe Administración y Rendimientos" parent="parent_validaciones" action="action_open_informe_administracion"/>
 </odoo>

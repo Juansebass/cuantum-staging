@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="model_ctm_informe_administracion_view_form" model="ir.ui.view">
+        <field name="name">ctm.validacion.view.form</field>
+        <field name="model">ctm.informe_administracion</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="generar_informe_administracion" type="object" string="Generar Informe" attrs="{'invisible': [('state', 'in', ['processed'])]}"/>
+                    <button name="set_borrador_informe_administracion" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="action_exportar_xls" type="object" string="Exportar Excel" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="cliente">
+                        <group name="izquierda">
+                            <field name="day" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                            <field name="month" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                            <field name="year" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                        </group>
+                        <group name="derecha">
+                            <field name="responsible" readonly="1"/>
+                        </group>
+                        <group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                            <group>
+                                <field name="xls_output"/>
+                            </group>
+                        </group>
+                    </group>
+                </sheet>
+                <field name="detalle_informe_administracion_ids">
+                    <tree string="Detalle Informe" editable="bottom" default_order='cliente asc'>
+                        <field name="cliente" />
+                        <field name="administracion_factoring_csf" />
+                        <field name="rendimiento_factoring_csf" />
+                        <field name="administracion_libranzas_csf" />
+                        <field name="rendimiento_libranzas_csf" />
+                        <field name="administracion_sentencias_csf" />
+                        <field name="rendimiento_sentencias_csf" />
+                        <field name="administracion_mutuos_csf" />
+                        <field name="rendimiento_mutuos_csf" />
+                        <field name="administracion_rpr_csf" />
+                        <field name="rendimiento_rpr_csf" />
+                        <field name="administracion_libranzas_fcl" />
+                        <field name="rendimiento_libranzas_fcl" />
+                        <field name="administracion_rpr_fcl" />
+                        <field name="rendimiento_rpr_fcl" />
+                        <field name="administracion_sentencias_fcp" />
+                        <field name="rendimiento_sentencias_fcp" />
+                        <field name="administracion_rpr_fcp" />
+                        <field name="rendimiento_rpr_fcp" />
+                        <field name="administracion_total" />
+                        <field name="rendimiento_total" />
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+    <record id="model_ctm_informe_administracion_view_tree" model="ir.ui.view">
+        <field name="name">ctm.informe.administracion.view.tree</field>
+        <field name="model">ctm.informe_administracion</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="month" />
+                <field name="year" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

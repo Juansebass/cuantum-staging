@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_ctm_validacion_user,ctm.validacion.user,model_ctm_validacion,base.group_user,1,1,1,1
 access_ctm_detalle_validacion_user,ctm.detalle_validacion.user,model_ctm_validacion_detalle_validacion,base.group_user,1,1,1,1
+access_ctm_informe_administracion_user,ctm.informe_administracion.user,model_ctm_informe_administracion,base.group_user,1,1,1,1
+access_ctm_detalle_informe_administracion_user,ctm.detalle_informe_administracion.user,model_ctm_validacion_detalle_informe_administracion,base.group_user,1,1,1,1
