@@ -41,137 +41,135 @@ class InformeAdministracion(models.Model):
         clientes = self.env['res.partner'].search([('act_in', '=', 'activo'), ('vinculado', '=', True)])
 
         for cliente in clientes:
-            try:
-                objetos = self.env['ati.rendimientos.administracion'].search(
-                    [('buyer.id', '=', cliente.id)]).filtered(
-                    lambda x: x.date.month == int(self.month) and
-                              x.date.year == int(self.year)
-                )
+            objetos = self.env['ati.rendimientos.administracion'].search(
+                [('buyer.id', '=', cliente.id)]).filtered(
+                lambda x: x.date.month == int(self.month) and
+                          x.date.year == int(self.year)
+            )
 
-                administracion_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'ADMINISTRACION'))
-                rendimiento_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'RENDIMIENTO'))
-                administracion_libranzas_csf= sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
-                rendimiento_libranzas_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
-                administracion_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
-                rendimiento_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
-                administracion_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'ADMINISTRACION'))
-                rendimiento_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'RENDIMIENTO'))
+            administracion_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'ADMINISTRACION'))
+            rendimiento_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'RENDIMIENTO'))
+            administracion_libranzas_csf= sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
+            rendimiento_libranzas_csf = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
+            administracion_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
+            rendimiento_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
+            administracion_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'ADMINISTRACION'))
+            rendimiento_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'RENDIMIENTO'))
 
-                administracion_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
-                rendimiento_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
+            administracion_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
+            rendimiento_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
 
-                administracion_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
-                rendimiento_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
+            administracion_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
+            rendimiento_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
+                lambda
+                    x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
 
-                administracion_rpr_csf = sum(recurso.value for recurso in cliente.recursos_recompra_csf_ids.filtered(
-                    lambda x: x.date.month == int(self.month) and
-                              x.date.year == int(self.year) and
-                              x.movement_type.code == 'ADMINISTRACION'
-                ))
-                rendimiento_rpr_csf = sum(recurso.value for recurso in cliente.recursos_recompra_csf_ids.filtered(
-                    lambda x: x.date.month == int(self.month) and
-                              x.date.year == int(self.year) and
-                              x.movement_type.code == 'RENDIMIENTO'
-                ))
+            administracion_rpr_csf = sum(recurso.value for recurso in cliente.recursos_recompra_csf_ids.filtered(
+                lambda x: x.date.month == int(self.month) and
+                          x.date.year == int(self.year) and
+                          x.movement_type.code == 'ADMINISTRACION'
+            ))
+            rendimiento_rpr_csf = sum(recurso.value for recurso in cliente.recursos_recompra_csf_ids.filtered(
+                lambda x: x.date.month == int(self.month) and
+                          x.date.year == int(self.year) and
+                          x.movement_type.code == 'RENDIMIENTO'
+            ))
 
-                administracion_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
-                    lambda x: x.date.month == int(self.month) and
-                              x.date.year == int(self.year) and
-                              x.movement_type.code == 'ADMINISTRACION'
-                ))
-                rendimiento_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
-                    lambda x: x.date.month == int(self.month) and
-                              x.date.year == int(self.year) and
-                              x.movement_type.code == 'RENDIMIENTO'
-                ))
+            administracion_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
+                lambda x: x.date.month == int(self.month) and
+                          x.date.year == int(self.year) and
+                          x.movement_type.code == 'ADMINISTRACION'
+            ))
+            rendimiento_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
+                lambda x: x.date.month == int(self.month) and
+                          x.date.year == int(self.year) and
+                          x.movement_type.code == 'RENDIMIENTO'
+            ))
 
-                administracion_rpr_fcp = sum(recurso.value for recurso in cliente.recursos_recompra_fcp_ids.filtered(
-                    lambda x: x.date.month == int(self.month) and
-                              x.date.year == int(self.year) and
-                              x.movement_type.code == 'ADMINISTRACION'
-                ))
-                rendimiento_rpr_fcp = sum(recurso.value for recurso in cliente.recursos_recompra_fcp_ids.filtered(
-                    lambda x: x.date.month == int(self.month) and
-                              x.date.year == int(self.year) and
-                              x.movement_type.code == 'RENDIMIENTO'
-                ))
+            administracion_rpr_fcp = sum(recurso.value for recurso in cliente.recursos_recompra_fcp_ids.filtered(
+                lambda x: x.date.month == int(self.month) and
+                          x.date.year == int(self.year) and
+                          x.movement_type.code == 'ADMINISTRACION'
+            ))
+            rendimiento_rpr_fcp = sum(recurso.value for recurso in cliente.recursos_recompra_fcp_ids.filtered(
+                lambda x: x.date.month == int(self.month) and
+                          x.date.year == int(self.year) and
+                          x.movement_type.code == 'RENDIMIENTO'
+            ))
 
-                administracion_total = sum([
-                    administracion_factoring_csf,
-                    administracion_libranzas_csf,
-                    administracion_sentencias_csf,
-                    administracion_mutuos_csf,
-                    administracion_rpr_csf,
-                    administracion_libranzas_fcl,
-                    administracion_rpr_fcl,
-                    administracion_sentencias_fcp,
-                    administracion_rpr_fcp,
-                ])
+            administracion_total = sum([
+                administracion_factoring_csf,
+                administracion_libranzas_csf,
+                administracion_sentencias_csf,
+                administracion_mutuos_csf,
+                administracion_rpr_csf,
+                administracion_libranzas_fcl,
+                administracion_rpr_fcl,
+                administracion_sentencias_fcp,
+                administracion_rpr_fcp,
+            ])
 
-                rendimiento_total = sum([
-                    rendimiento_factoring_csf,
-                    rendimiento_libranzas_csf,
-                    rendimiento_sentencias_csf,
-                    rendimiento_mutuos_csf,
-                    rendimiento_rpr_csf,
-                    rendimiento_libranzas_fcl,
-                    rendimiento_rpr_fcl,
-                    rendimiento_sentencias_fcp,
-                    rendimiento_rpr_fcp,
-                ])
-
+            rendimiento_total = sum([
+                rendimiento_factoring_csf,
+                rendimiento_libranzas_csf,
+                rendimiento_sentencias_csf,
+                rendimiento_mutuos_csf,
+                rendimiento_rpr_csf,
+                rendimiento_libranzas_fcl,
+                rendimiento_rpr_fcl,
+                rendimiento_sentencias_fcp,
+                rendimiento_rpr_fcp,
+            ])
 
 
-                self.env['ctm.validacion.detalle_informe_administracion'].create({
-                    'informe_administracion_id': self.id,
-                    'cliente': cliente.id,
-                    'administracion_factoring_csf': administracion_factoring_csf,
-                    'rendimiento_factoring_csf': rendimiento_factoring_csf,
-                    'administracion_libranzas_csf': administracion_libranzas_csf,
-                    'rendimiento_libranzas_csf': rendimiento_libranzas_csf,
-                    'administracion_sentencias_csf': administracion_sentencias_csf,
-                    'rendimiento_sentencias_csf': rendimiento_sentencias_csf,
-                    'administracion_mutuos_csf': administracion_mutuos_csf,
-                    'rendimiento_mutuos_csf': rendimiento_mutuos_csf,
-                    'administracion_rpr_csf': administracion_rpr_csf,
-                    'rendimiento_rpr_csf': rendimiento_rpr_csf,
-                    'administracion_libranzas_fcl': administracion_libranzas_fcl,
-                    'rendimiento_libranzas_fcl': rendimiento_libranzas_fcl,
-                    'administracion_rpr_fcl': administracion_rpr_fcl,
-                    'rendimiento_rpr_fcl': rendimiento_rpr_fcl,
-                    'administracion_sentencias_fcp': administracion_sentencias_fcp,
-                    'rendimiento_sentencias_fcp': rendimiento_sentencias_fcp,
-                    'administracion_rpr_fcp': administracion_rpr_fcp,
-                    'rendimiento_rpr_fcp': rendimiento_rpr_fcp,
-                    'administracion_total': administracion_total,
-                    'rendimiento_total': rendimiento_total,
 
-                })
-            except Exception as e:
-                raise ValidationError('Los datos para el cliente {0} tienen formato incorrecto. {1}'.format(cliente.name, e))
+            self.env['ctm.validacion.detalle_informe_administracion'].create({
+                'informe_administracion_id': self.id,
+                'cliente': cliente.id,
+                'administracion_factoring_csf': administracion_factoring_csf,
+                'rendimiento_factoring_csf': rendimiento_factoring_csf,
+                'administracion_libranzas_csf': administracion_libranzas_csf,
+                'rendimiento_libranzas_csf': rendimiento_libranzas_csf,
+                'administracion_sentencias_csf': administracion_sentencias_csf,
+                'rendimiento_sentencias_csf': rendimiento_sentencias_csf,
+                'administracion_mutuos_csf': administracion_mutuos_csf,
+                'rendimiento_mutuos_csf': rendimiento_mutuos_csf,
+                'administracion_rpr_csf': administracion_rpr_csf,
+                'rendimiento_rpr_csf': rendimiento_rpr_csf,
+                'administracion_libranzas_fcl': administracion_libranzas_fcl,
+                'rendimiento_libranzas_fcl': rendimiento_libranzas_fcl,
+                'administracion_rpr_fcl': administracion_rpr_fcl,
+                'rendimiento_rpr_fcl': rendimiento_rpr_fcl,
+                'administracion_sentencias_fcp': administracion_sentencias_fcp,
+                'rendimiento_sentencias_fcp': rendimiento_sentencias_fcp,
+                'administracion_rpr_fcp': administracion_rpr_fcp,
+                'rendimiento_rpr_fcp': rendimiento_rpr_fcp,
+                'administracion_total': administracion_total,
+                'rendimiento_total': rendimiento_total,
+
+            })
+
 
 
         self.responsible = self.env.user.partner_id
