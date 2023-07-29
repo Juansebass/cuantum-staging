@@ -47,41 +47,41 @@ class InformeAdministracion(models.Model):
                           x.date.year == int(self.year)
             )
 
-            administracion_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
+            administracion_factoring_csf = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'ADMINISTRACION'))
-            rendimiento_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
+            rendimiento_factoring_csf = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'RENDIMIENTO'))
-            administracion_libranzas_csf= sum(objetos['value'] for objeto in objetos.filtered(
+            administracion_libranzas_csf= sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
-            rendimiento_libranzas_csf = sum(objetos['value'] for objeto in objetos.filtered(
+            rendimiento_libranzas_csf = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
-            administracion_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
+            administracion_sentencias_csf = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
-            rendimiento_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
+            rendimiento_sentencias_csf = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
-            administracion_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
+            administracion_mutuos_csf = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'ADMINISTRACION'))
-            rendimiento_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
+            rendimiento_mutuos_csf = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'RENDIMIENTO'))
 
-            administracion_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
+            administracion_libranzas_fcl = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
-            rendimiento_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
+            rendimiento_libranzas_fcl = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
 
-            administracion_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
+            administracion_sentencias_fcp  = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
-            rendimiento_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
+            rendimiento_sentencias_fcp  = sum(objeto['value'] for objeto in objetos.filtered(
                 lambda
                     x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
 
