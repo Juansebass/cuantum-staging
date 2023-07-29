@@ -49,42 +49,42 @@ class InformeAdministracion(models.Model):
                 )
 
                 administracion_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
-                    lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type.code == 'ADMINISTRACION'))
+                    lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_factoring_csf = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type.code == 'RENDIMIENTO'))
+                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC' and x.movement_type == 'RENDIMIENTO'))
                 administracion_libranzas_csf= sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type.code == 'ADMINISTRACION'))
+                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_libranzas_csf = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type.code == 'RENDIMIENTO'))
+                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
                 administracion_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type.code == 'ADMINISTRACION'))
+                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_sentencias_csf = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type.code == 'RENDIMIENTO'))
+                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
                 administracion_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type.code == 'ADMINISTRACION'))
+                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_mutuos_csf = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type.code == 'RENDIMIENTO'))
+                        x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT' and x.movement_type == 'RENDIMIENTO'))
 
                 administracion_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type.code == 'ADMINISTRACION'))
+                        x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_libranzas_fcl = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type.code == 'RENDIMIENTO'))
+                        x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB' and x.movement_type == 'RENDIMIENTO'))
 
                 administracion_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type.code == 'ADMINISTRACION'))
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_sentencias_fcp  = sum(objetos['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type.code == 'RENDIMIENTO'))
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
 
                 administracion_rpr_csf = sum(recurso.value for recurso in cliente.recursos_recompra_csf_ids.filtered(
                     lambda x: x.date.month == int(self.month) and
