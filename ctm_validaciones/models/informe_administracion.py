@@ -171,7 +171,7 @@ class InformeAdministracion(models.Model):
 
                 })
             except Exception as e:
-                raise ValidationError('Los datos para el cliente {0} tienen formato incorrecto'.format(cliente.name))
+                raise ValidationError('Los datos para el cliente {0} tienen formato incorrecto. {1}'.format(cliente.name, e))
 
 
         self.responsible = self.env.user.partner_id
