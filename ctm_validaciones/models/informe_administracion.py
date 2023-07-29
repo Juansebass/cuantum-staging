@@ -96,16 +96,18 @@ class InformeAdministracion(models.Model):
                           x.movement_type.code == 'RENDIMIENTO'
             ))
 
-            administracion_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
-                lambda x: x.date.month == int(self.month) and
-                          x.date.year == int(self.year) and
-                          x.movement_type.code == 'ADMINISTRACION'
-            ))
-            rendimiento_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
-                lambda x: x.date.month == int(self.month) and
-                          x.date.year == int(self.year) and
-                          x.movement_type.code == 'RENDIMIENTO'
-            ))
+            # administracion_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
+            #     lambda x: x.date.month == int(self.month) and
+            #               x.date.year == int(self.year) and
+            #               x.movement_type.code == 'ADMINISTRACION'
+            # ))
+            # rendimiento_rpr_fcl = sum(recurso.value for recurso in cliente.recursos_recompra_fcl_ids.filtered(
+            #     lambda x: x.date.month == int(self.month) and
+            #               x.date.year == int(self.year) and
+            #               x.movement_type.code == 'RENDIMIENTO'
+            # ))
+            administracion_rpr_fcl = 0
+            rendimiento_rpr_fcl = 0
 
             administracion_rpr_fcp = sum(recurso.value for recurso in cliente.recursos_recompra_fcp_ids.filtered(
                 lambda x: x.date.month == int(self.month) and
