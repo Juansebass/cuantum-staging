@@ -7,3 +7,4 @@
 
 from . import sale_order_inherit
 from . import extracto_inherit
+from . import add_followers

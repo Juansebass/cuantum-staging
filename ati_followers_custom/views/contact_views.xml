@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="model_ati_add_followers_view_tree" model="ir.ui.view">
+        <field name="name">ati.add.followers.view.tree</field>
+        <field name="model">ati.add_followers</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_open_add_followers" model="ir.actions.act_window">
+        <field name="name">Add Followers</field>
+        <field name="res_model">ati.add_followers</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="res_partner_menu_add_followers"
+        name="Add Followers"
+        parent="contacts.res_partner_menu_config"
+        action="action_open_add_followers"
+        groups="base.group_system"
+        sequence="7"
+    />
+
+</odoo>

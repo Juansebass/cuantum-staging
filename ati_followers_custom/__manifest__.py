@@ -16,7 +16,9 @@
     'depends': [
         'base','contacts','sale','ati_extractos'
         ],
-    'data': [],
+    'data': [
+        'views/contact_views.xml'
+    ],
     'installable': True,
     'application': False,
     'auto_install': False
