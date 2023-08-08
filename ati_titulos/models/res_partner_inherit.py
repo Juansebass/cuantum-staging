@@ -118,7 +118,6 @@ class ResPartner(models.Model):
     #TOTALES CSF
     total_csf = fields.Float('Total CSF', compute=_compute_totales_csf)
     adicion_total_csf = fields.Float('Total Adicion CSF', compute=_compute_totales_csf)
-    compra_total_csf = fields.Float('Total Adicion CSF', compute=_compute_totales_csf)
     administracion_csf = fields.Float('Total Administración', compute=_compute_totales_csf)
     retiro_total_csf = fields.Float('Total Retiro CSF', compute=_compute_totales_csf)
     rendimiento_total_csf = fields.Float('Total Rendimiento CSF', compute=_compute_totales_csf)
