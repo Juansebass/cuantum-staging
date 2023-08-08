@@ -17,9 +17,10 @@
         'base','contacts','sale','ati_extractos'
         ],
     'data': [
-        'views/contact_views.xml'
+        'views/contact_views.xml',
+        'security/ir.model.access.csv'
     ],
     'installable': True,
-    'application': False,
+    'application': True,
     'auto_install': False
 }

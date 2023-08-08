@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ati_add_followers,ati.add_followers.user,model_ati_add_followers,base.group_user,1,1,1,1
+access_ati_detalle_add_followers,ati.detalle_add_followers.user,model_ati_detalle_add_followers,base.group_user,1,1,1,1

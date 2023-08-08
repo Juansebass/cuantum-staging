@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="model_add_followers_view_form" model="ir.ui.view">
+        <field name="name">ati.add.followers.view.form</field>
+        <field name="model">ati.add_followers</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="asignar" type="object" string="Asignar Seguidor"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="Usuario">
+                        <group name="izquierda">
+                            <field name="user" />
+                            <field name="status" />
+                        </group>
+                    </group>
+                </sheet>
+                <field name="add_followers_users_ids">
+                    <tree string="Clientes" editable="bottom" >
+                        <field name="cliente" />
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
     <record id="model_ati_add_followers_view_tree" model="ir.ui.view">
         <field name="name">ati.add.followers.view.tree</field>
         <field name="model">ati.add_followers</field>
@@ -21,7 +52,7 @@
         parent="contacts.res_partner_menu_config"
         action="action_open_add_followers"
         groups="base.group_system"
-        sequence="7"
+        sequence="8"
     />
 
 </odoo>
