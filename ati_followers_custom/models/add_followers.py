@@ -1,4 +1,6 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+import base64
 
 
 class AddFollowers(models.Model):
@@ -12,6 +14,40 @@ class AddFollowers(models.Model):
 
     add_followers_users_ids = fields.One2many('ati.detalle_add_followers',
                                                          'add_followers_id', 'Clientes')
+
+    client_file = fields.Binary('Archivo')
+    file_content = fields.Text('Texto archivo')
+    delimiter = fields.Char('Delimitador', default=";")
+    skip_first_line = fields.Boolean('Saltear primera linea', default=True)
+
+    def action_cargar_clientes(self):
+        self.ensure_one()
+        if not self.delimiter:
+            raise ValidationError('Debe ingresar el delimitador')
+        if not self.client_file:
+            raise ValidationError('Debe seleccionar el archivo')
+
+        self.file_content = base64.decodebytes(self.client_file)
+        lines = self.file_content.split('\n')
+
+        for detalle  in self.add_followers_users_ids:
+            detalle.unlink()
+
+        for i,line in enumerate(lines):
+            if self.skip_first_line and i == 0:
+                continue
+            lista = line.split(self.delimiter)
+            if len(lista) > 0:
+                temp_cliente = lista[0]
+                clients = self.env['res.partner'].search(
+                    [('name', '=', temp_cliente)])
+                #Agregando clientes al detalle de seguidores
+                for i in clients:
+                    self.env['ati.detalle_add_followers'].create({
+                        'add_followers_id': self.id,
+                        'cliente': i.id,
+                    })
+
 
     def asignar(self):
         for cliente in self.add_followers_users_ids:

@@ -21,6 +21,15 @@
                             <field name="user" />
                             <field name="status" />
                         </group>
+                        <group name="derecha">
+                            <field name="client_file" widget="binary"/>
+                            <field name="delimiter" />
+							<field name="skip_first_line" />
+                            <button name='action_cargar_clientes' type="object"
+                                                            string="Cargar Clientes"
+                                                            class="oe_stat_button"
+                                                            icon="fa-refresh"/>
+                        </group>
                     </group>
                 </sheet>
                 <field name="add_followers_users_ids">
