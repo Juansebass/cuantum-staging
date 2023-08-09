@@ -31,7 +31,7 @@ class AddFollowers(models.Model):
 
         self.file_content = base64.decodebytes(self.client_file)
         lines = self.file_content.split('\n')
-        _logger.error(self.lines)
+        _logger.error(lines)
 
         for detalle  in self.add_followers_users_ids:
             detalle.unlink()
