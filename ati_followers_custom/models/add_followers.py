@@ -42,10 +42,10 @@ class AddFollowers(models.Model):
                 clients = self.env['res.partner'].search(
                     [('name', '=', temp_cliente)])
                 #Agregando clientes al detalle de seguidores
-                for i in clients:
+                for y in clients:
                     self.env['ati.detalle_add_followers'].create({
                         'add_followers_id': self.id,
-                        'cliente': i.id,
+                        'cliente': y.id,
                     })
 
 
