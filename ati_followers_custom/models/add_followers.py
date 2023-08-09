@@ -1,6 +1,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
+_logger = logging.getLogger(__name__)
 
 
 class AddFollowers(models.Model):
@@ -39,6 +40,7 @@ class AddFollowers(models.Model):
             lista = line.split(self.delimiter)
             if len(lista) > 0:
                 temp_cliente = lista[0]
+                _logger.error(temp_cliente)
                 clients = self.env['res.partner'].search(
                     [('name', '=', temp_cliente)])
                 #Agregando clientes al detalle de seguidores
