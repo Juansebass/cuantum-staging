@@ -38,18 +38,16 @@ class AddFollowers(models.Model):
         for i,line in enumerate(lines):
             if self.skip_first_line and i == 0:
                 continue
-            lista = line.split(self.delimiter)
-            if len(lista) > 0:
-                temp_cliente = lista[0]
-                _logger.error(temp_cliente)
-                clients = self.env['res.partner'].search(
-                    [('name', '=', temp_cliente)])
-                #Agregando clientes al detalle de seguidores
-                for y in clients:
-                    self.env['ati.detalle_add_followers'].create({
-                        'add_followers_id': self.id,
-                        'cliente': y.id,
-                    })
+            temp_cliente = line
+            _logger.error(temp_cliente)
+            clients = self.env['res.partner'].search(
+                [('name', '=', temp_cliente)])
+            #Agregando clientes al detalle de seguidores
+            for y in clients:
+                self.env['ati.detalle_add_followers'].create({
+                    'add_followers_id': self.id,
+                    'cliente': y.id,
+                })
 
 
     def asignar(self):
