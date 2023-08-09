@@ -30,6 +30,7 @@ class AddFollowers(models.Model):
             raise ValidationError('Debe seleccionar el archivo')
 
         self.file_content = base64.decodebytes(self.client_file)
+        _logger.error(self.file_content)
         lines = self.file_content.split('\n')
 
         for detalle  in self.add_followers_users_ids:
