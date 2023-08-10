@@ -41,7 +41,7 @@ class AddFollowers(models.Model):
                 continue
             temp_cliente = line
             _logger.error(temp_cliente)
-            clients = self.env['res.partner'].search(
+            clients = self.env['res.partner'].sudo().search(
                 [('name', '=', temp_cliente)])
             _logger.error(clients)
             #Agregando clientes al detalle de seguidores
