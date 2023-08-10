@@ -31,8 +31,7 @@ class AddFollowers(models.Model):
 
         self.file_content = base64.decodebytes(self.client_file)
         lines_temp = self.file_content.split('\r')
-        lines = lines_temp.split('\n')
-        _logger.error(lines)
+        _logger.error(lines_temp)
 
         for detalle  in self.add_followers_users_ids:
             detalle.unlink()
@@ -40,7 +39,7 @@ class AddFollowers(models.Model):
         for i,line in enumerate(lines):
             if self.skip_first_line and i == 0:
                 continue
-            temp_cliente = line
+            temp_cliente = line.split('\n')
             _logger.error(temp_cliente)
             clients = self.env['res.partner'].sudo().search(
                 [('name', '=', str(temp_cliente))])
