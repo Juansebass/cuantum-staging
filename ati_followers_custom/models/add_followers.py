@@ -39,7 +39,7 @@ class AddFollowers(models.Model):
         for i,line in enumerate(lines):
             if self.skip_first_line and i == 0:
                 continue
-            temp_cliente = line.split('\n')
+            temp_cliente = line.split('\n')[1]
             _logger.error(temp_cliente)
             clients = self.env['res.partner'].sudo().search(
                 [('name', '=', str(temp_cliente))])
