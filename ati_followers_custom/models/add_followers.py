@@ -43,6 +43,7 @@ class AddFollowers(models.Model):
             _logger.error(temp_cliente)
             clients = self.env['res.partner'].search(
                 [('name', '=', temp_cliente)])
+            _logger.error(clients)
             #Agregando clientes al detalle de seguidores
             for y in clients:
                 self.env['ati.detalle_add_followers'].create({
