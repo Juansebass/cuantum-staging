@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
-                    <button name="asignar" type="object" string="Asignar Seguidor"/>
+                    <button name="asignar" type="object" string="Asignar Seguidor" attrs="{'invisible': [('status', 'in', [,'asignado'])]}"/>
 
                 </header>
                 <sheet>

@@ -65,7 +65,7 @@ class AddFollowers(models.Model):
                     'partner_id': self.user.id,
                     'res_model': 'res.partner',
                     'res_id': cliente.cliente.id,
-                    'subtype_ids': [1, 2, 3]
+                    'subtype_ids': [1, 2]
                 })
         self.status = 'asignado'
 
