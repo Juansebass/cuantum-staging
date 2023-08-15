@@ -19,7 +19,7 @@
                     <group name="Usuario">
                         <group name="izquierda">
                             <field name="user" />
-                            <field name="status" />
+                            <field name="status" readonly="1"/>
                         </group>
                         <group name="derecha">
                             <field name="client_file" widget="binary"/>
