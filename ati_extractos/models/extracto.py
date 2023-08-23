@@ -772,9 +772,9 @@ class Extracto(models.Model):
                     self.env['ati.extracto.detalle_titulos'].create({
                         'extracto_id' : self.id,
                         'titulo' : titulos.id,
-                        'investment_type': titulo_mes.investment_type,
-                        'issuing': titulo_mes.issuing,
-                        'payer': titulo_mes.payer,
+                        'investment_type': titulo_mes.investment_type.id,
+                        'issuing': titulo_mes.issuing.id,
+                        'payer': titulo_mes.payer.id,
                         'sale_value': titulo_mes.sale_value,
                         'value': titulo_mes.value,
                         'fee': titulo_mes.fee,
