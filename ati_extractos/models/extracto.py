@@ -169,7 +169,7 @@ class Extracto(models.Model):
         _rendimient_rpr_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
         _inversiones.append((0,0,{
                         'detalle': 'RPR CSF',
-                        'valor_actual' : self.cliente.total_csf,
+                        'valor_actual' : self.valor_actual_recursos_csf,
                         'valor_anterior' : self._get_value_before('RPR CSF',False,self.month,self.year,True),
                         'rendimiento_causado' : _rendimient_rpr_csf,
                         'tasa_rendimiento': self.cliente.tasa_rendimiento_csf,
@@ -241,7 +241,7 @@ class Extracto(models.Model):
                 self.year) and x.movement_type.code == 'ADMINISTRACION'))
         _inversiones.append((0,0,{
                         'detalle': 'RPR FCL',
-                        'valor_actual' : self.cliente.total_fcl,
+                        'valor_actual' : self.valor_actual_recursos_fcl,
                         'valor_anterior' : self._get_value_before('RPR FCL',False,self.month,self.year,True),
                         'rendimiento_causado' : _rendimient_rpr_fcl,
                         'administracion': _administracion_rpr_fcl,
@@ -312,7 +312,7 @@ class Extracto(models.Model):
         _rendimient_rpr_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
         _inversiones.append((0,0,{
                         'detalle': 'RPR STATUM',
-                        'valor_actual' : self.cliente.total_fcp,
+                        'valor_actual' : self.valor_actual_recursos_fcp,
                         'valor_anterior' : self._get_value_before('RPR STATUM',False,self.month,self.year,True),
                         'rendimiento_causado' : _rendimient_rpr_fcp,
                         'is_other' : True
@@ -455,6 +455,8 @@ class Extracto(models.Model):
             else:
                 self.valor_actual_recursos_fcp -= recurso.value
 
+
+        #Poner cuidado en la validación
         self.total_cuantum = self.cliente.total_csf
         self.total_FCL = self.cliente.total_fcl
         self.total_FCP = self.cliente.total_fcp
