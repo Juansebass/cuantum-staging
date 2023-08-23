@@ -767,10 +767,22 @@ class Extracto(models.Model):
         titulos_cliente = self.env['ati.titulo'].search([('client.id','=',self.cliente.id)])
         self.detalle_titulos_ids = False
         for titulos in titulos_cliente:
-            self.env['ati.extracto.detalle_titulos'].create({
-                'extracto_id' : self.id,
-                'titulo' : titulos.id
-            })
+            for titulo_mes in titulos.tit_historico_ids:
+                if titulo_mes.periodo == self.month + '/' + self.year:
+                    self.env['ati.extracto.detalle_titulos'].create({
+                        'extracto_id' : self.id,
+                        'titulo' : titulos.id,
+                        'investment_type': titulo_mes.investment_type,
+                        'issuing': titulo_mes.issuing,
+                        'payer': titulo_mes.payer,
+                        'sale_value': titulo_mes.sale_value,
+                        'value': titulo_mes.value,
+                        'fee': titulo_mes.fee,
+                        'bonding_date': titulo_mes.bonding_date,
+                        'redemption_date': titulo_mes.redemption_date,
+                        'paid_value': titulo_mes.recaudo,
+                        'state_titulo': titulo_mes.state_titulo,
+                    })
         
         #si el titulo esta en esado pagado con valor pagado cero no lo incluimos
         for titulo in self.detalle_titulos_ids:
@@ -1014,16 +1026,18 @@ class DetalleTitulos(models.Model):
 
     extracto_id = fields.Many2one('ati.extracto','Extracto')
     titulo = fields.Many2one('ati.titulo','Titulo')
-    investment_type = fields.Char('Tipo',related="titulo.investment_type.name")
-    issuing = fields.Many2one('res.partner','Emisor',related="titulo.issuing")
-    payer = fields.Many2one('res.partner','Pagador',related="titulo.payer")
-    sale_value = fields.Float('Valor de Compra', related="titulo.sale_value")
-    value = fields.Float('Valor de portafolio',related="titulo.value")
-    fee = fields.Float('Tasa',related="titulo.fee")
-    bonding_date = fields.Date('Fecha de negociación',related="titulo.bonding_date")
-    redemption_date = fields.Date('Fecha de vencimiento',related="titulo.redemption_date")
-    paid_value = fields.Float('Valor pagado', compute='_compute_paid_value', store=True)
-    state_titulo = fields.Many2one('ati.state.titulo','Estado',related="titulo.state_titulo")
+    investment_type = fields.Many2one('ati.investment.type','Tipo')
+    issuing = fields.Many2one('res.partner','Emisor',required=1)
+    payer = fields.Many2one('res.partner','Pagador',required=1)
+    sale_value = fields.Float('Valor de Compra')
+    value = fields.Float('Valor de portafolio')
+    fee = fields.Float('Tasa')
+    bonding_date = fields.Date('Fecha de Negociación')
+    redemption_date = fields.Date('Fecha de vencimiento')
+    #Por ahora el recaudo, cuando se carguen más titulos en el mes se debe hacer cóidog de suma
+    paid_value = fields.Float('Valor pagado')
+    state_titulo = fields.Many2one('ati.state.titulo', 'Estado')
+
 
 
 class RecursoRecompraCSF(models.Model):
