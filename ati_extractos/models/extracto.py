@@ -781,7 +781,7 @@ class Extracto(models.Model):
                         'bonding_date': titulo_mes.bonding_date,
                         'redemption_date': titulo_mes.redemption_date,
                         'paid_value': titulo_mes.recaudo,
-                        'state_titulo': titulo_mes.state_titulo,
+                        'state_titulo': titulo_mes.state_titulo.id,
                     })
         
         #si el titulo esta en esado pagado con valor pagado cero no lo incluimos
