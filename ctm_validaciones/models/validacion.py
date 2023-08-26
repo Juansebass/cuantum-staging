@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 import base64
 import io
 import xlsxwriter
+from datetime import datetime
 
 class Validacion(models.Model):
     _name = 'ctm.validacion'
@@ -24,6 +25,26 @@ class Validacion(models.Model):
         string='Descargar',
         readonly=True,
     )
+    def _get_total_titlles_period(self, titulos, manager_code, investment_code):
+        total = 0
+        titulos_temp = titulos.filtered(
+            lambda x: x.manager.code == manager_code and x.investment_type.code == investment_code)
+
+        for titulo in titulos_temp:
+            for titulo_mes in titulo.tit_historico_ids:
+                if titulo_mes.periodo == self.month + '/' + self.year:
+                    total += titulo_mes.value
+
+        return total
+
+    def _get_rpr_total_period(self, recursos):
+        total = 0
+        for recurso in recursos:
+            if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
+                total += recurso.value
+            else:
+                total -= recurso.value
+        return total
 
     def generar_validacion(self):
         # Se valida si existe el periodo al cual se decea hacer un extractos, en el caso de existir se verifica que el
@@ -37,24 +58,33 @@ class Validacion(models.Model):
         for detalle  in self.detalle_validacion_ids:
             detalle.unlink()
 
+
+
         clientes = self.env['res.partner'].search([('act_in', '=', 'activo'), ('vinculado', '=', True)])
         for cliente in clientes:
-            titulo = self.env['ati.titulo'].search([('client.id', '=', cliente.id)])
-            factoring_csf = sum(titulo['value'] for titulo in titulo.filtered(
-                lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'FAC'))
-            libranzas_csf =  sum(titulo['value'] for titulo in titulo.filtered(
-                lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'LIB'))
-            sentencias_csf =  sum(titulo['value'] for titulo in titulo.filtered(
-                lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'SEN'))
-            mutuos_csf = sum(titulo['value'] for titulo in titulo.filtered(
-                lambda x: x.manager.code == 'CUANTUM' and x.investment_type.code == 'MUT'))
-            rpr_csf = cliente.total_csf
-            libranzas_fcl = sum(titulo['value'] for titulo in titulo.filtered(
-                lambda x: x.manager.code == 'FCL' and x.investment_type.code == 'LIB'))
-            rpr_fcl = cliente.total_fcl
-            sentencias_fcp = sum(titulo['value'] for titulo in titulo.filtered(
-                lambda x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN'))
-            rpr_fcp = cliente.total_fcp
+            titulos = self.env['ati.titulo'].search([('client.id', '=', cliente.id)])
+
+            factoring_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'FAC')
+            libranzas_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'LIB')
+            sentencias_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'SEN')
+            mutuos_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'MUT')
+            libranzas_fcl = self._get_total_titlles_period(titulos, 'FCL', 'LIB')
+            sentencias_fcp = self._get_total_titlles_period(titulos, 'FCP', 'SEN')
+
+            date_tmp = (datetime.strptime('01/' + self.month + '/' + self.year, '%d/%m/%Y')).date()
+            if self.month == '12':
+                date_next_tmp = (datetime.strptime('01/' + '01/' + str(int(self.year) + 1), '%d/%m/%Y')).date()
+            else:
+                date_next_tmp = (
+                    datetime.strptime('01/' + str(int(self.month) + 1) + '/' + self.year, '%d/%m/%Y')).date()
+
+            temp_rpr_fcl = cliente.recursos_recompra_fcl_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
+            rpr_fcl = self._get_rpr_total_period(temp_rpr_fcl)
+            temp_rpr_csf = cliente.recursos_recompra_csf_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
+            rpr_csf = self._get_rpr_total_period(temp_rpr_csf)
+            temp_rpr_fcp = cliente.recursos_recompra_fcp_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
+            rpr_fcp = self._get_rpr_total_period(temp_rpr_fcp)
+
             total = sum([factoring_csf, libranzas_csf, sentencias_csf,mutuos_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
 
             self.env['ctm.validacion.detalle_validacion'].create({
@@ -70,10 +100,12 @@ class Validacion(models.Model):
                 'sentencias_fcp': sentencias_fcp,
                 'rpr_fcp': rpr_fcp,
                 'total': total,
-            })
+                })
 
         self.responsible = self.env.user.partner_id
         self.state = 'processed'
+
+
 
     def set_borrador_validacion(self):
         for rec in self:
