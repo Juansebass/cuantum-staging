@@ -73,7 +73,7 @@ class Extracto(models.Model):
 
     def _get_value_before(self,producto,gestor,month,year,recurso_recompra=False):
         #Verificamos que el mes no se Enero, de lo contrario pasamos a diciembre del año anterior
-        if month == '1':
+        if month == '01':
             month = '12'
             year = str(int(year) - 1)
         else:
