@@ -77,15 +77,17 @@ class Validacion(models.Model):
             else:
                 date_next_tmp = (
                     datetime.strptime('01/' + str(int(self.month) + 1) + '/' + self.year, '%d/%m/%Y')).date()
+            try:
+                temp_rpr_fcl = cliente.recursos_recompra_fcl_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
+                rpr_fcl = self._get_rpr_total_period(temp_rpr_fcl)
+                temp_rpr_csf = cliente.recursos_recompra_csf_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
+                rpr_csf = self._get_rpr_total_period(temp_rpr_csf)
+                temp_rpr_fcp = cliente.recursos_recompra_fcp_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
+                rpr_fcp = self._get_rpr_total_period(temp_rpr_fcp)
 
-            temp_rpr_fcl = cliente.recursos_recompra_fcl_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
-            rpr_fcl = self._get_rpr_total_period(temp_rpr_fcl)
-            temp_rpr_csf = cliente.recursos_recompra_csf_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
-            rpr_csf = self._get_rpr_total_period(temp_rpr_csf)
-            temp_rpr_fcp = cliente.recursos_recompra_fcp_ids.filtered(lambda x: date_tmp <= x.date < date_next_tmp)
-            rpr_fcp = self._get_rpr_total_period(temp_rpr_fcp)
-
-            total = sum([factoring_csf, libranzas_csf, sentencias_csf,mutuos_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
+                total = sum([factoring_csf, libranzas_csf, sentencias_csf,mutuos_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
+            except:
+                raise ValidationError('El cliente {0} no tiene alguna fecha definida'.format(cliente))
 
             self.env['ctm.validacion.detalle_validacion'].create({
                 'validacion_id': self.id,
