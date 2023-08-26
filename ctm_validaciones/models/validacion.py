@@ -87,7 +87,7 @@ class Validacion(models.Model):
 
                 total = sum([factoring_csf, libranzas_csf, sentencias_csf,mutuos_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
             except:
-                raise ValidationError('El cliente {0} no tiene alguna fecha definida'.format(cliente))
+                raise ValidationError('El cliente {0} no tiene alguna fecha definida'.format(cliente.name))
 
             self.env['ctm.validacion.detalle_validacion'].create({
                 'validacion_id': self.id,
