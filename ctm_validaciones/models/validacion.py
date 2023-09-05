@@ -61,7 +61,7 @@ class Validacion(models.Model):
 
         clientes = self.env['res.partner'].search([('act_in', '=', 'activo'), ('vinculado', '=', True)])
         for cliente in clientes:
-            titulos = self.env['ati.ati.titulo.historico'].search([('client.id', '=', cliente.id)])
+            titulos = self.env['ati.titulo.historico'].search([('client.id', '=', cliente.id)])
 
             factoring_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'FAC')
             libranzas_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'LIB')
