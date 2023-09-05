@@ -30,10 +30,9 @@ class Validacion(models.Model):
         titulos_temp = titulos.filtered(
             lambda x: x.manager.code == manager_code and x.investment_type.code == investment_code)
 
-        for titulo in titulos_temp:
-            for titulo_mes in titulo.tit_historico_ids:
-                if titulo_mes.periodo == self.month + '/' + self.year:
-                    total += titulo_mes.value
+        for titulo_mes in titulos_temp:
+            if titulo_mes.periodo == self.month + '/' + self.year:
+                total += titulo_mes.value
 
         return total
 
@@ -62,7 +61,7 @@ class Validacion(models.Model):
 
         clientes = self.env['res.partner'].search([('act_in', '=', 'activo'), ('vinculado', '=', True)])
         for cliente in clientes:
-            titulos = self.env['ati.titulo'].search([('client.id', '=', cliente.id)])
+            titulos = self.env['ati.ati.titulo.historico'].search([('client.id', '=', cliente.id)])
 
             factoring_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'FAC')
             libranzas_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'LIB')
