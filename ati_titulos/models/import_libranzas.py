@@ -148,6 +148,10 @@ class ImportLibranzas(models.Model):
                     # Si el titulo ya existe lo modificamos y agregamos en su historico, de lo contrario lo creamos y 
                     # agregamos en el historico del nuevo titulo
                     if len(titulo_existente) > 0:
+                        for titulo_mes in titulo_existente.tit_historico_ids:
+                            if titulo_mes.periodo == self.month + '/' + self.year:
+                                raise ValidationError("El CSV no se procesara ya que existe un periodo de cargue con los mismos datos en la línea {0}. {1}".format(i, line))
+
                         recaudo_total = float(recaudo) + titulo_existente.recaudo_total
                         vals['recaudo_total'] = recaudo_total
                         vals['date'] = datetime.today()

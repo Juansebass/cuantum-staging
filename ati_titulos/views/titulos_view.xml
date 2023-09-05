@@ -44,6 +44,8 @@
                             <field name="tit_historico_ids">
                                 <tree editable="bottom">    
                                     <field name="title"/>
+                                    <field name="issuing"/>
+                                    <field name="payer"/>
                                     <field name="client"/>
                                     <field name="value"/>
                                     <field name="recaudo"/>
