@@ -929,7 +929,8 @@ class Extracto(models.Model):
             'default_composition_mode': 'comment',
             'custom_layout': "mail.mail_notification_paynow",
             'force_email': True,
-            'partner_ids': self.cliente.id
+            'partner_ids': self.cliente.id,
+            'notify_followers': True,
         }
 
         self.state = 'send'
