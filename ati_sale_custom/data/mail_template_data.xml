@@ -10,7 +10,7 @@
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;" class="text-justify">
                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                        Cordial Saludo {{object.partner_id.name}}, <br/><br/>
+                        Cordial Saludo <t t-esc="object.partner_id.name" ></t>, <br/><br/>
 
                         A continuación encontrarás la oferta para el FIDEICOMITENTE TIPO A del FIDEICOMISO CUANTUM
                         LIBRANZAS. De igual manera encontrarás el ACTA DE ADICIÓN que, una vez firmada, materializa la
