@@ -27,7 +27,7 @@
                 <t t-foreach="orders" t-as="order">
                     <tr>
                         <td><a t-att-href="order.get_portal_url()"><t t-esc="order.name"/></a></td>
-                        <td class="text-right">cliente</td>
+                        <td class="text-right"><span t-field="order.partner_id.name"/></td>
                         <td class="text-right">
                             <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&amp;nbsp;
                             <span class='d-none d-md-inline' t-field="order.date_order" t-options="{'time_only': True}"/>
