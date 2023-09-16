@@ -87,6 +87,7 @@
                                 <tr class="ultima" style="color: black; font-size: 10px;" t-foreach="o.resumen_inversion_ids" t-as="i">
                                   <td><t t-if="i.display_type != 'line_section'"><span t-if="i.name" t-field="i.name" style="margin-left: 20px;"/></t>
                                               
+                                              </td>
                                   <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.valor_actual).replace(',', '.')"/></td>
                                   <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.valor_anterior).replace(',', '.')"/></td>
                                   <td><t t-if="i.display_type != 'line_section'">$</t><span t-if="i.display_type != 'line_section'" t-esc="'{0:,.0f}'.format(i.diferencia).replace(',', '.')"/></td>
