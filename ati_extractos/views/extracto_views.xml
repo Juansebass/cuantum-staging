@@ -44,7 +44,7 @@
                     <notebook>
                         <page name="resum_inver" string="Resumen de Inversion">
                             <field name="resumen_inversion_ids" widget="section_and_note_one2many">
-                                <tree editable="bottom">
+                                <tree>
                                     <field name="name" widget="section_and_note_text" readonly="1"/>
                                     <field name="display_type" force_save="1"  invisible="1" readonly="1"/>
                                     <field name="producto" invisible="1" readonly="1"/>
