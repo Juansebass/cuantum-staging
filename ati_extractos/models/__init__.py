@@ -7,3 +7,4 @@
 
 from . import extracto
 from . import mail_compose_message
+from . import create_extractos
