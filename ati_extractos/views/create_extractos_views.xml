@@ -61,7 +61,7 @@
     </record>
     <menuitem id="create_extractos_menu"
         name="Crear Extractos"
-        parent="ati_extractos.menu_extractos"
+        parent="ati_extractos.menu_extracto"
         action="action_open_create_extractos"
         groups="base.group_system"
         sequence="8"
