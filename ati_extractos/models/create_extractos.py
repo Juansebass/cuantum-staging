@@ -35,11 +35,19 @@ class CreateExtractos(models.Model):
 
         self.file_content = base64.decodebytes(self.client_file)
         lines = self.file_content.split('\r')
-        _logger.error(lines)
-
 
         for detalle  in self.create_extractos_users_ids:
             detalle.unlink()
+
+        for i,line in enumerate(lines):
+            if self.skip_first_line and i == 0:
+                continue
+            lista = line.split(self.delimiter)
+            vat = lista[0].split('\n')[1]
+            _logger.error(vat)
+
+
+
 
 
 
