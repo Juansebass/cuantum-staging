@@ -24,7 +24,27 @@ class CreateExtractos(models.Model):
     skip_first_line = fields.Boolean('Saltear primera linea', default=True)
 
     def crear_extractos(self):
-        pass
+        for cliente in self.create_extractos_users_ids:
+            exists_extracto= self.env['ati.extracto'].sudo().search([
+                ('cliente', '=', cliente.cliente.id),
+                ('month', '=', self.month),
+                ('year', '=', self.year)
+            ])
+
+            if not exists_extracto:
+                created_extracto = self.env['ati.extracto'].sudo().create({
+                    'cliente': cliente.cliente.id,
+                    'month': self.month,
+                    'year': self.year,
+
+                })
+                created_extracto.generar_extracto()
+
+        self.status = 'creados'
+
+
+
+
 
     def action_cargar_clientes(self):
         self.ensure_one()
