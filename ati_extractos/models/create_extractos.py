@@ -2,6 +2,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
 import logging
+_logger = logging.getLogger(__name__)
 
 
 
@@ -26,7 +27,24 @@ class CreateExtractos(models.Model):
         pass
 
     def action_cargar_clientes(self):
-        pass
+        self.ensure_one()
+        if not self.delimiter:
+            raise ValidationError('Debe ingresar el delimitador')
+        if not self.client_file:
+            raise ValidationError('Debe seleccionar el archivo')
+
+        self.file_content = base64.decodebytes(self.client_file)
+        lines = self.file_content.split('\r')
+        _logger.error(lines)
+
+
+        for detalle  in self.create_extractos_users_ids:
+            detalle.unlink()
+
+
+
+
+
 
     @api.model
     def create(self, var):

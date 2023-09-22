@@ -55,7 +55,7 @@
     </record>
 
     <record id="action_open_create_extractos" model="ir.actions.act_window">
-        <field name="name">Create Extractos</field>
+        <field name="name">Crear Extractos</field>
         <field name="res_model">ati.create_extractos</field>
         <field name="view_mode">tree,form</field>
     </record>
