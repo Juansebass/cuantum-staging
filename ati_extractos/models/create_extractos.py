@@ -44,23 +44,24 @@ class CreateExtractos(models.Model):
                 continue
             lista = line.split(self.delimiter)
             vat = lista[0].split('\n')[1]
-            _logger.error(vat)
 
+            clients = self.env['res.partner'].sudo().search(
+                [('vat', '=', str(vat))])
 
-
-
-
-
-
+            # Agregando clientes al detalle de seguidores
+            for y in clients:
+                self.env['ati.detalle_create_extractos'].create({
+                    'create_extractos_id': self.id,
+                    'cliente': y.id,
+                    'vat': y.vat,
+                })
 
 
     @api.model
     def create(self, var):
         res = super(CreateExtractos, self).create(var)
-        res.name = 'Extractos' + res.month + '/' + res.year
+        res.name = 'Extractos ' + res.month + '/' + res.year
         return res
-
-
 
 
 class DetalleCreateExtractos(models.Model):
