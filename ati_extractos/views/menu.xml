@@ -9,6 +9,7 @@
     </record>
 
     <!-- Menu y Menus principales -->
+    <menuitem id="menu_extracto" sequence="5" name="Extractos" parent="ati_titulos.menu_tit"/>
     <menuitem id="menu_extractos" sequence="5" name="Extractos" parent="ati_titulos.menu_tit" action="action_open_extracto"/>
     
 
