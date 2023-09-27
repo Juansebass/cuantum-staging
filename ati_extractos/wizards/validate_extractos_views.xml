@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
         <act_window id="act_validate_extractos"
         name="Validar Extractos"
         src_model="ati.extracto"
@@ -9,6 +8,4 @@
         domain="[('state', '=', 'processed')]"
         target="new"
          />
-
-    </data>
 </odoo>
