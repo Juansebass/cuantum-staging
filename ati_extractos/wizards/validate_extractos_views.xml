@@ -7,7 +7,7 @@
         <field name="res_model">wizard.validate.extractos</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="binding_model_id" ref="ati_extracto" />
+        <field name="binding_model_id" ref="model_ati_extracto" />
         <field name="binding_view_types">list</field>
     </record>
 </odoo>
