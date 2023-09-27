@@ -23,7 +23,8 @@
         'views/create_extractos_views.xml',
         'security/ir.model.access.csv',
         'report/report_extracto.xml',
-        'data/mail_template_extracto.xml'
+        'data/mail_template_extracto.xml',
+        'wizards/validate_extractos_views.xml'
         ],
     'installable': True,
     'application': True,
