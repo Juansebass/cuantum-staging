@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <act_window id="act_validate_extractos"
-        name="Validar Extractos"
-        src_model="ati.extracto"
-        res_model="wizard.validate.extractos"
-        view_mode="tree,form"
-        domain="[('state', '=', 'processed')]"
-        target="new"
-         />
+
+    <record id="act_validate_extractos" model="ir.actions.act_window">
+        <field name="name">Generate supplier quote request</field>
+        <field name="res_model">wizard.validate.extractos</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="domain">[('state', '=', 'processed')]</field>
+    </record>
 </odoo>
