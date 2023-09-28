@@ -3,12 +3,15 @@
 
     <record id="act_validate_extractos" model="ir.actions.act_window">
         <field name="name">Validar Extractos</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">wizard.validate.extractos</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ati_extracto"/>
         <field name="domain">[('state', '=', 'processed')]</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
         <field name="binding_model_id" ref="model_ati_extracto" />
         <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.validar_extracto()
+        </field>
     </record>
 </odoo>
