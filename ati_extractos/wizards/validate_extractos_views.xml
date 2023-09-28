@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="act_validate_extractos" model="ir.actions.act_window">
+    <record id="act_validate_extractos" model="ir.actions.server">
         <field name="name">Validar Extractos</field>
         <field name="state">code</field>
         <field name="type">ir.actions.server</field>
