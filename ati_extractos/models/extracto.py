@@ -48,6 +48,8 @@ class Extracto(models.Model):
     pie_rpr_fondo = fields.Binary('RPR por fondo')
 
     show_alert_validation = fields.Boolean('Alerta')
+    show_alert_product_validation = fields.Boolean('Alerta')
+    message_product_validation = fields.Char()
 
     #Campos para resumen de inversiones
     resumen_inversion_ids = fields.One2many('ati.extracto.resumen_inversion','extracto_id','Resumen Inversiones Fideicomiso Cuantum Libranzas')
@@ -805,8 +807,97 @@ class Extracto(models.Model):
         #Validacioón contra informes cllientes
         self.validacion_informes_clientes()
 
+        #Validación Totales Factoring, libranzas sentencias
+        self.validacion_totales()
+
         #Cambiamos estado
         self.state = 'processed'
+
+    def validacion_totales(self):
+        self.show_alert_product_validation = False
+        self.message_product_validation = ''
+
+        productos = self.resumen_inversion_ids.filtered(
+            lambda x: x.gestor and x.producto
+        )
+
+        for line in productos:
+            #Para CSF
+            if line.gestor.code == 'CUANTUM':
+                #Factoring
+                if line.name == 'Factoring':
+                    compras = sum( [recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda x: x.investment_type.name == 'Factoring' and x.movement_type.name == 'Compra'
+                    )])
+                    recaudos = sum( [recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda x: x.investment_type.name == 'Factoring' and x.movement_type.name == 'Aplicación de recaudo'
+                    )])
+                    validation = line.valor_actual != (
+                        line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
+                    )
+                    if validation:
+                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Factoring no es correcta \n'
+                #Libranzas
+                if line.name == 'Libranzas':
+                    compras = sum( [recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda x: x.investment_type.name == 'Libranzas' and x.movement_type.name == 'Compra'
+                    )])
+                    recaudos = sum( [recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda x: x.investment_type.name == 'Libranzas' and x.movement_type.name == 'Aplicación de recaudo'
+                    )])
+                    validation = line.valor_actual != (
+                        line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
+                    )
+                    if validation:
+                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Libranzas no es correcta \n'
+                #Sentencias
+                if line.name == 'Sentencias':
+                    compras = sum( [recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda x: x.investment_type.name == 'Sentencias' and x.movement_type.name == 'Compra'
+                    )])
+                    recaudos = sum( [recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda x: x.investment_type.name == 'Sentencias' and x.movement_type.name == 'Aplicación de recaudo'
+                    )])
+                    validation = line.valor_actual != (
+                        line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
+                    )
+                    if validation:
+                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Sentencias no es correcta \n'
+            # Para FCL
+            if line.gestor.code == 'FCL':
+                # Libranzas
+                if line.name == 'Libranzas':
+                    compras = sum([recurso.value for recurso in self.recursos_fcl.filtered(
+                        lambda x: x.investment_type.name == 'Libranzas' and x.movement_type.name == 'Compra'
+                    )])
+                    recaudos = sum([recurso.value for recurso in self.recursos_fcl.filtered(
+                        lambda
+                            x: x.investment_type.name == 'Libranzas' and x.movement_type.name == 'Aplicación de recaudo'
+                    )])
+                    validation = line.valor_actual != (
+                            line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
+                    )
+                    if validation:
+                        self.message_product_validation += 'Validación de totales para gestor FCL producto Libranzas no es correcta \n'
+            # Para FCP
+            if line.gestor.code == 'FCP':
+                if line.name == 'Sentencias':
+                    compras = sum( [recurso.value for recurso in self.recursos_fcp.filtered(
+                        lambda x: x.investment_type.name == 'Sentencias' and x.movement_type.name == 'Compra'
+                    )])
+                    recaudos = sum( [recurso.value for recurso in self.recursos_fcp.filtered(
+                        lambda x: x.investment_type.name == 'Sentencias' and x.movement_type.name == 'Aplicación de recaudo'
+                    )])
+                    validation = line.valor_actual != (
+                        line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
+                    )
+                    if validation:
+                        self.message_product_validation += 'Validación de totales para gestor FCP producto Sentencias no es correcta \n'
+
+        if len(self.message_product_validation) > 0:
+            self.show_alert_product_validation = True
+
+
 
     def validacion_informes_clientes(self):
         #Tomando último informe clientes creado

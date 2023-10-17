@@ -24,6 +24,11 @@
                      attrs="{'invisible': [('show_alert_validation', '=', False)]}">
                     Los valores actuales del último Informe Clientes y Resumen de Inversión para el periodo no coinciden
                 </div>
+                <field name="show_alert_product_validation" invisible="1" />
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                     attrs="{'invisible': [('show_alert_product_validation', '=', False)]}">
+                    <field name="message_product_validation"/>
+                </div>
                 <sheet>
                     <div class="oe_title">
                         <div class="o_row">
