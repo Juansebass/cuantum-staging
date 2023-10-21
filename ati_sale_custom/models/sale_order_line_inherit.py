@@ -123,7 +123,7 @@ class SaleOrder(models.Model):
                 self.date_order = self.fecha_celebracion
         return res
 
-    def action_assign(self, vals):
+    def action_assign(self):
         for rec in self:
             for ol in rec.order_line:
                 if len(ol.titulo_oferta) > 0:
