@@ -36,6 +36,7 @@ class SaleOrder(models.Model):
         ],
         string = 'Estado Oferta FCL', default = 'no_calificada'
     )
+    asignado = fields.Boolean('Asignado', default=False)
 
     def action_cargar_titulos_oferta(self):
         for rec in self:
@@ -129,6 +130,7 @@ class SaleOrder(models.Model):
                 if len(ol.titulo_oferta) > 0:
                     if not ol.titulo_oferta.odquirido:
                         ol.titulo_oferta.cliente = rec.partner_id.id
+            self.asignado = True
 
 
     # Se verifica si los productos de la oferta son distintos, de ser asi se avisa que solo se puede tener un solo tipo y se cancela la accion

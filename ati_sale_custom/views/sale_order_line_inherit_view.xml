@@ -6,8 +6,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <button name="action_quotation_send" position="after">
-                <button name="action_fcl_send" type="object" string="Enviar Oferta FCL"/>
+            <button name="action_quotation_send" position="replace">
+                <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="btn-primary" data-hotkey="g" attrs="{'invisible': [('asignado', '=',  False)"/>
+                <button name="action_fcl_send" type="object" string="Enviar Oferta FCL" class="btn-primary" attrs="{'invisible': [('asignado', '=',  False)"/>
                 <button name="action_assign" type="object" string="Asignar"/>
 
             </button>
@@ -22,6 +23,7 @@
                 <field name="tipo_producto_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
                 <field name="emisor_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
                 <field name="pagador_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
+                <field name="asignado" readonly="1"/>
                 <button name='action_cargar_titulos_oferta' type="object"
                                                             string="Cargar Ofertas"
                                                             attrs="{'invisible':[('state','!=','draft')]}"
