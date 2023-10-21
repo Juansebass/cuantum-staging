@@ -51,21 +51,24 @@ class SaleOrder(models.Model):
                 ofertas = self.env['ati.titulo.oferta'].search([
                     ('investment_type', '=', rec.tipo_producto_ofertar.id),
                     ('manager', '=', rec.gestor_ofertar.id),
-                    ('odquirido', '=', False)
+                    ('odquirido', '=', False),
+                    ('cliente', '=', None),
                 ])
             elif not rec.emisor_ofertar and rec.pagador_ofertar:
                 ofertas = self.env['ati.titulo.oferta'].search([
                     ('investment_type', '=', rec.tipo_producto_ofertar.id),
                     ('manager', '=', rec.gestor_ofertar.id),
                     ('payer', '=', rec.pagador_ofertar.id),
-                    ('odquirido', '=', False)
+                    ('odquirido', '=', False),
+                    ('cliente', '=', None),
                 ])
             elif rec.emisor_ofertar and not rec.pagador_ofertar:
                 ofertas = self.env['ati.titulo.oferta'].search([
                     ('investment_type', '=', rec.tipo_producto_ofertar.id),
                     ('manager', '=', rec.gestor_ofertar.id),
                     ('issuing', '=', rec.emisor_ofertar.id),
-                    ('odquirido', '=', False)
+                    ('odquirido', '=', False),
+                    ('cliente', '=', None),
                 ])
             else:
                 ofertas = self.env['ati.titulo.oferta'].search([
@@ -73,7 +76,8 @@ class SaleOrder(models.Model):
                     ('manager', '=', rec.gestor_ofertar.id),
                     ('issuing', '=', rec.emisor_ofertar.id),
                     ('payer', '=', rec.pagador_ofertar.id),
-                    ('odquirido', '=', False)
+                    ('odquirido', '=', False),
+                    ('cliente', '=', None),
                 ])
             # Verificamos que existan ofertas, en el caso de existir las agregamos a las lineas
             if len(ofertas) == 0:
@@ -118,6 +122,16 @@ class SaleOrder(models.Model):
                 # Agregando fecha de celebración a la orden
                 self.date_order = self.fecha_celebracion
         return res
+
+    def write(self, vals):
+        result = super(SaleOrder, self).write(vals)
+        #Agregar Cliente cuando se de guardar
+        for rec in self:
+            for ol in rec.order_line:
+                if len(ol.titulo_oferta) > 0:
+                    if not ol.titulo_oferta.odquirido:
+                        ol.titulo_oferta.cliente = rec.partner_id.id
+        return result
 
     # Se verifica si los productos de la oferta son distintos, de ser asi se avisa que solo se puede tener un solo tipo y se cancela la accion
     @api.onchange('order_line')
