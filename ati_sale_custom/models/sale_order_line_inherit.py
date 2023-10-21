@@ -123,15 +123,13 @@ class SaleOrder(models.Model):
                 self.date_order = self.fecha_celebracion
         return res
 
-    def write(self, vals):
-        result = super(SaleOrder, self).write(vals)
-        #Agregar Cliente cuando se de guardar
+    def action_assign(self, vals):
         for rec in self:
             for ol in rec.order_line:
                 if len(ol.titulo_oferta) > 0:
                     if not ol.titulo_oferta.odquirido:
                         ol.titulo_oferta.cliente = rec.partner_id.id
-        return result
+
 
     # Se verifica si los productos de la oferta son distintos, de ser asi se avisa que solo se puede tener un solo tipo y se cancela la accion
     @api.onchange('order_line')
