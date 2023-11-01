@@ -7,7 +7,7 @@
 		<field name="arch" type="xml">
 			<form string="Eliminar Históricos">
 				<header>
-					<button name="btn_delete" type="object" string="Eliminar" states="draft" />
+					<button name="btn_delete" type="object" string="Eliminar" states="sin_eliminar" />
 					<field name="status" widget="statusbar" />
 				</header>
 				<sheet>
