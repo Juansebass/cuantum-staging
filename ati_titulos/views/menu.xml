@@ -42,6 +42,11 @@
         <field name="res_model">import.mutuo</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_open_eliminar_historicos" model="ir.actions.act_window">
+        <field name="name">Eliminar Históricos</field>
+        <field name="res_model">eliminar.historicos</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Actions Cargas Rendimientos y Administracion -->
     <record id="action_open_carga_rendimientos_administracion" model="ir.actions.act_window">
@@ -139,6 +144,7 @@
     <menuitem id="menu_carga_factoring" name="Cargar Factoring" parent="menu_carga_extractos" action="action_open_carga_factoring"/>
     <menuitem id="menu_carga_sentencias" name="Cargar Sentencias" parent="menu_carga_extractos" action="action_open_carga_sentencias"/>
     <menuitem id="menu_carga_mutuos" name="Cargar Mutuos" parent="menu_carga_extractos" action="action_open_carga_mutuos"/>
+    <menuitem id="menu_carga_mutuos" name="Eliminar Históricos" parent="menu_carga_extractos" action="action_open_eliminar_historicos"/>
     <menuitem id="menu_carga_recursos_fcl" name="Fideicomiso Cuantum Libranzas (FCL)" parent="menu_recursos_recompra" action="action_open_carga_recursos_fcl"/>
     <menuitem id="menu_carga_recursos_fcp" name="Fideicomiso Cuantum P (FCP)" parent="menu_recursos_recompra" action="action_open_carga_recursos_fcp"/>
     <menuitem id="menu_carga_recursos_csf" name="Gestores Cuantum (CSF)" parent="menu_recursos_recompra" action="action_open_carga_recursos_csf"/>

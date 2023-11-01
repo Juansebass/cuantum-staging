@@ -30,6 +30,7 @@
         'views/import_factoring_view.xml',
         'views/import_sentencias_view.xml',
         'views/import_mutuos_view.xml',
+        'views/eliminar_historicos.xml',
         'views/import_recursos_fcl.xml',
         'views/import_recursos_csf.xml',
         'views/import_recursos_fcp.xml',

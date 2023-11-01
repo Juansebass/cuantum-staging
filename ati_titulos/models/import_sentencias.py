@@ -45,6 +45,7 @@ class ImportSentencias(models.Model):
         self.file_content = base64.decodebytes(self.client_file)
         lines = self.file_content.split('\n')
         for i,line in enumerate(lines):
+            new_record = None
             if self.skip_first_line and i == 0:
                 continue
             lista = line.split(self.delimiter)
@@ -175,7 +176,7 @@ class ImportSentencias(models.Model):
                         vals['recaudo'] = recaudo
                         vals['titulo_id'] = titulo_existente.id
                         vals['responsable'] = self.env.user.partner_id.id
-                        self.env['ati.titulo.historico'].sudo().create(vals)
+                        new_record = self.env['ati.titulo.historico'].sudo().create(vals)
                     else:
                         _logger.warning('***** Creando titulo: {0}'.format(vals['title']))
                         vals['recaudo_total'] = recaudo
@@ -198,7 +199,7 @@ class ImportSentencias(models.Model):
                         vals['recaudo'] = recaudo
                         vals['titulo_id'] = titulo_creado.id
                         vals['responsable'] = self.env.user.partner_id.id
-                        self.env['ati.titulo.historico'].sudo().create(vals)
+                        new_record = self.env['ati.titulo.historico'].sudo().create(vals)
 
                     #Si el titulo es hijo comprobamos que exista la relacion con el padre, si no existe la creamos
                     if len(_parent) > 0 and len(titulo_creado) > 0:
@@ -214,7 +215,7 @@ class ImportSentencias(models.Model):
                             _parent.write({'son_ids': [(0,0,{'name':titulo_creado.id})]})
 
 
-                    _procesados += "{} \n".format(ident_comprador)
+                    _procesados += "{0};{1};{2};{3}\n".format(titulo, client.name, ident_comprador, new_record.id)
                 else:
                     _noprocesados += "{} \n".format(ident_comprador)
                     raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. El cliente no existe".format(i, line))

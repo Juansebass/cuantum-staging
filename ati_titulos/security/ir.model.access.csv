@@ -12,6 +12,7 @@ access_ati_state_periodo,ati.state.periodo.user,model_ati_state_periodo,base.gro
 access_import_libranzas_user,import.libranzas.user,model_import_libranzas,base.group_user,1,1,1,1
 access_import_factoring_user,import.factoring.user,model_import_factoring,base.group_user,1,1,1,1
 access_import_mutuo_user,import.mutuo.user,model_import_mutuo,base.group_user,1,1,1,1
+access_eliminar_historicos_user,eliminar.historicos.user,model_eliminar_historicos,base.group_user,1,1,1,1
 access_import_sentencias_user,import.sentencias.user,model_import_sentencias,base.group_user,1,1,1,1
 access_ati_recurso_recompra_fcl_user,ati.recurso.recompra.fcl.user,model_ati_recurso_recompra_fcl,base.group_user,1,1,1,1
 access_ati_recurso_recompra_fcp_user,ati.recurso.recompra.fcp.user,model_ati_recurso_recompra_fcp,base.group_user,1,1,1,1

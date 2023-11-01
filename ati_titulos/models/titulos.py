@@ -101,3 +101,25 @@ class TitulosHijos(models.Model):
 
     name = fields.Many2one('ati.titulo', 'Hijos')
     parent_id = fields.Many2one('ati.titulo', 'Padre')
+
+class EliminarHistoricos(models.Model):
+    _name = 'eliminar.historicos'
+
+    responsible = fields.Many2one('res.partner', 'Responsable')
+    month = fields.Char('Mes de Periodo', required=1)
+    year = fields.Char('Año de Periodo', required=1)
+    status = fields.Selection([('sin_eliminar', 'Sin Eliminar'), ('eliminados', 'Eliminados')], default='sin_eliminar',
+                              string='Estado')
+    name = fields.Char('Nombre')
+    client_file = fields.Binary('Archivo')
+    file_content = fields.Text('Texto archivo')
+    delimiter = fields.Char('Delimitador', default=";")
+    skip_first_line = fields.Boolean('Saltear primera linea', default=True)
+    manager = fields.Many2one('ati.gestor', 'Gestor', required=True)
+    eliminados = fields.Text('Eliminados')
+
+
+
+    def btn_delete(self):
+        pass
+
