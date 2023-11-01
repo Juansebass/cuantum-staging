@@ -108,7 +108,7 @@ class EliminarHistoricos(models.Model):
     responsible = fields.Many2one('res.partner', 'Responsable')
     month = fields.Char('Mes de Periodo', required=1)
     year = fields.Char('Año de Periodo', required=1)
-    status = fields.Selection([('sin_eliminar', 'Sin Eliminar'), ('eliminados', 'Eliminados')], default='sin_eliminar',
+    state = fields.Selection([('sin_eliminar', 'Sin Eliminar'), ('eliminados', 'Eliminados')], default='sin_eliminar',
                               string='Estado')
     name = fields.Char('Nombre')
     client_file = fields.Binary('Archivo')

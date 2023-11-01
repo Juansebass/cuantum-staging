@@ -8,7 +8,7 @@
 			<form string="Eliminar Históricos">
 				<header>
 					<button name="btn_delete" type="object" string="Eliminar" states="sin_eliminar" />
-					<field name="status" widget="statusbar" />
+					<field name="state" widget="statusbar" />
 				</header>
 				<sheet>
 					<group>
