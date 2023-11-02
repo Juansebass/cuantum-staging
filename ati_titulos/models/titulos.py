@@ -118,8 +118,6 @@ class EliminarHistoricos(models.Model):
     manager = fields.Many2one('ati.gestor', 'Gestor', required=True)
     eliminados = fields.Text('Eliminados')
 
-
-
     def btn_delete(self):
         pass
 

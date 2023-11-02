@@ -8,6 +8,7 @@
 			<form string="Importar Libranzas">
 				<header>
 					<button name="btn_process" type="object" string="Procesar" states="draft" />
+					<button name="action_exportar_xls" type="object" string="Exportar Excel" states="processed"/>
 					<field name="state" widget="statusbar" />
 				</header>
 				<sheet>
@@ -26,6 +27,11 @@
 							<field name="responsable" readonly='1'/>
                 			<field name="fch_procesado" readonly='1'/>
 						</group>
+						<group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                            <group>
+                                <field name="xls_output"/>
+                            </group>
+                        </group>
 					</group>
 					<notebook>
 						<page string="Contenido" >
