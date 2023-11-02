@@ -7,6 +7,8 @@ import base64
 import csv
 from datetime import date as dt
 import logging
+import xlsxwriter
+import io
 _logger = logging.getLogger(__name__)
 
 
@@ -230,6 +232,47 @@ class ImportFactoring(models.Model):
         self.fch_procesado = datetime.today()
         self.state = 'processed'
 
+    def action_exportar_xls(self):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet('Histótico Títulos')
+        money = workbook.add_format({'num_format': '$#,##0'})
+        row = 0
+
+        worksheet.write(row, 0, 'TITULO')
+        worksheet.write(row, 1, 'CLIENTE')
+        worksheet.write(row, 2, 'NIT')
+        worksheet.write(row, 3, 'ID')
+        worksheet.set_column(1, 1, 50)
+        row += 1
+
+        lines = self.clientes_creados.splitlines()
+
+        for line in lines:
+            data = line.split(';')
+            worksheet.write(row, 0, data[0])
+            worksheet.write(row, 1, data[1])
+            worksheet.write(row, 2, data[2])
+            worksheet.write(row, 3, data[3])
+
+            row += 1
+
+        workbook.close()
+        output.seek(0)
+        generated_file = output.read()
+        output.close()
+        self.xls_output = base64.encodebytes(generated_file)
+
+        return {
+            'context': self.env.context,
+            'name': 'Histórico Títulos',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'import.factoring',
+            'res_id': self.id,
+            'type': 'ir.actions.act_window',
+        }
+
     name = fields.Char('Nombre')
     month = fields.Char('Mes de Periodo')
     year = fields.Char('Año de Periodo')
@@ -244,3 +287,7 @@ class ImportFactoring(models.Model):
     clientes_creados = fields.Text('Creados')
     skip_first_line = fields.Boolean('Saltear primera linea',default=True)
     client_match = fields.Selection(selection=[('vat','Vat')],string='Buscar clientes por...',default='vat')
+    xls_output = fields.Binary(
+        string='Descargar',
+        readonly=True,
+    )

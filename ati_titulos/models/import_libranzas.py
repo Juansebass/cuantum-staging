@@ -8,7 +8,6 @@ import csv
 from datetime import date as dt
 import logging
 import xlsxwriter
-import base64
 import io
 _logger = logging.getLogger(__name__)
 
@@ -290,4 +289,3 @@ class ImportLibranzas(models.Model):
         string='Descargar',
         readonly=True,
     )
-
