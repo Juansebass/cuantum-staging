@@ -3,6 +3,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import logging
+import base64
 
 logger = logging.getLogger(__name__)
 
@@ -119,5 +120,42 @@ class EliminarHistoricos(models.Model):
     eliminados = fields.Text('Eliminados')
 
     def btn_delete(self):
-        pass
+        _eliminados = ""
+        self.ensure_one()
+        if not self.delimiter:
+            raise ValidationError('Debe ingresar el delimitador')
+        if not self.client_file:
+            raise ValidationError('Debe seleccionar el archivo')
+        if self.state != 'sin_eliminar':
+            raise ValidationError('Archivo procesado!')
+        if not self.month and not self.year:
+            raise ValidationError('Debe introducir un mes y año de periodo para este cargue')
+        if not self.manager:
+            raise ValidationError('Debe introducir un gestor para este cargue')
 
+        self.file_content = base64.decodebytes(self.client_file)
+        lines = self.file_content.split('\n')
+
+        for i,line in enumerate(lines):
+            new_record = None
+            if self.skip_first_line and i == 0:
+                continue
+            lista = line.split(self.delimiter)
+
+            try:
+                titulo_name = lista[0]
+                cliente = lista[1]
+                nit = lista[2]
+                titulo_id = lista[3]
+                titulo_historico = self.env['ati.titulo.historico'].search(
+                    [('id', '=', titulo_id)], limit=1)
+                titulo_historico.unlink()
+                _eliminados += "{0};{1};{2};{3}\n".format(titulo_name, cliente, nit, titulo_id)
+
+
+            except Exception as e:
+                raise ValidationError('Error: {0}'.format(e))
+
+        self.eliminados = _eliminados
+        self.state = 'eliminados'
+        self.responsible = self.env.user.partner_id
