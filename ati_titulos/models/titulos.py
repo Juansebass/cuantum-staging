@@ -141,13 +141,12 @@ class EliminarHistoricos(models.Model):
             if self.skip_first_line and i == 0:
                 continue
             lista = line.split(self.delimiter)
-            raise ValidationError('Error: {0}'.format(lista))
 
             try:
                 titulo_name = lista[0]
                 cliente = lista[1]
                 nit = lista[2]
-                titulo_id = lista[3]
+                titulo_id = lista[3].split('\n')[0]
                 titulo_historico = self.env['ati.titulo.historico'].search(
                     [('id', '=', titulo_id)], limit=1)
                 titulo_historico.unlink()
