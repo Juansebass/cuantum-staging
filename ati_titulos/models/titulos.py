@@ -142,20 +142,22 @@ class EliminarHistoricos(models.Model):
                 continue
             lista = line.split(self.delimiter)
 
-            try:
-                titulo_name = lista[0]
-                cliente = lista[1]
-                nit = lista[2]
-                titulo_id = lista[3].split('\n')[0]
-                titulo_historico = self.env['ati.titulo.historico'].search(
-                    [('id', '=', titulo_id)], limit=1)
-                titulo_historico.unlink()
-                _eliminados += "{0};{1};{2};{3}\n".format(titulo_name, cliente, nit, titulo_id)
+            if len(lista) > 3:
+
+                try:
+                    titulo_name = lista[0]
+                    cliente = lista[1]
+                    nit = lista[2]
+                    titulo_id = lista[3].split('\n')[0]
+                    titulo_historico = self.env['ati.titulo.historico'].search(
+                        [('id', '=', titulo_id)], limit=1)
+                    titulo_historico.unlink()
+                    _eliminados += "{0};{1};{2};{3}\n".format(titulo_name, cliente, nit, titulo_id)
 
 
-            except Exception as e:
+                except Exception as e:
 
-                raise ValidationError('Error: {0}, Línea: {1}'.format(e, lista))
+                    raise ValidationError('Error: {0}, Línea: {1}'.format(e, lista))
 
         self.eliminados = _eliminados
         self.state = 'eliminados'
