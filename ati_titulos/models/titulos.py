@@ -140,6 +140,7 @@ class EliminarHistoricos(models.Model):
             new_record = None
             if self.skip_first_line and i == 0:
                 continue
+            raise ValidationError('Error: {0}'.format(line))
             lista = line.split(self.delimiter)
 
             try:
