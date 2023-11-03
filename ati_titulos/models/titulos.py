@@ -134,7 +134,7 @@ class EliminarHistoricos(models.Model):
             raise ValidationError('Debe introducir un gestor para este cargue')
 
         self.file_content = base64.decodebytes(self.client_file)
-        lines = self.file_content.split('\n')
+        lines = self.file_content.split('\r')
 
         for i,line in enumerate(lines):
             new_record = None
