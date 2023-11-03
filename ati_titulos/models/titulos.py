@@ -136,8 +136,6 @@ class EliminarHistoricos(models.Model):
         self.file_content = base64.decodebytes(self.client_file)
         lines = self.file_content.split('\r')
 
-        raise ValidationError(lines)
-
         for i,line in enumerate(lines):
             new_record = None
             if self.skip_first_line and i == 0:
