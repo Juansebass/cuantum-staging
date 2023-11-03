@@ -154,6 +154,7 @@ class EliminarHistoricos(models.Model):
 
 
             except Exception as e:
+                raise ValidationError(line)
                 raise ValidationError('Error: {0}, Línea: {1}'.format(e, lista))
 
         self.eliminados = _eliminados
