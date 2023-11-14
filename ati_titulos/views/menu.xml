@@ -6,6 +6,7 @@
         <field name="name">Titulos</field>
         <field name="res_model">ati.titulo</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_gestor_inversion': 1}</field>
     </record>
 
     <!-- Actions Titulos Oferta -->
