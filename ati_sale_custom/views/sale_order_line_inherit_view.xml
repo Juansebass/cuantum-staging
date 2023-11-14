@@ -6,6 +6,12 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <button name="action_confirm" position="replace">
+                <button name="action_confirm" id="action_confirm" data-hotkey="v"
+                        string="Confirm" class="btn-primary" type="object"
+                        attrs="{'invisible': [('state', 'not in', ['sent']), ('asignado', '=', 'false')]}"/>
+            </button>
+
             <button name="action_quotation_send" position="replace">
                 <button name="action_quotation_send" string="Send by Email" type="object"  class="btn-primary" data-hotkey="g" attrs="{'invisible': [('asignado', '=',  False)]}"/>
                 <button name="action_fcl_send" type="object" string="Enviar Oferta FCL" class="btn-primary" attrs="{'invisible': [('asignado', '=',  False)]}"/>
