@@ -9,7 +9,7 @@
             <button name="action_confirm" position="replace">
                 <button name="action_confirm" id="action_confirm" data-hotkey="v"
                         string="Confirm" class="btn-primary" type="object"
-                        attrs="{'invisible': [('state', 'not in', ['sent']), ('asignado', '=', 'False')]}"/>
+                        attrs="{'invisible': ['|',('state', 'not in', ['sent']), ('asignado', '=', 'False')]}"/>
             </button>
 
             <button name="action_quotation_send" position="replace">
