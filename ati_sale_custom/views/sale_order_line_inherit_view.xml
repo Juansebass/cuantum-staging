@@ -11,6 +11,7 @@
                         string="Confirm" class="btn-primary" type="object"
                         attrs="{'invisible': ['|',('state', 'not in', ['sent']), ('asignado', '=', 'False')]}"/>
             </button>
+            <button name="action_confirm" position="replace"/>
 
             <button name="action_quotation_send" position="replace">
                 <button name="action_quotation_send" string="Send by Email" type="object"  class="btn-primary" data-hotkey="g" attrs="{'invisible': [('asignado', '=',  False)]}"/>
