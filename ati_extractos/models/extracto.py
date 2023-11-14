@@ -361,7 +361,7 @@ class Extracto(models.Model):
             'valor_anterior' : total_valor_anterior,
             'rendimiento_causado' : total_rendimiento_causado,
             'administracion' : total_administracion,
-            'tasa_rendimiento': total_ponderacion,
+            'tasa_rendimiento': 0,
             #'tasa_rendimiento' : total_tasa_rendimiento / cant_tasas if cant_tasas != 0 else 0,
             'diferencia' : total_diferencia,
         })]
@@ -374,8 +374,10 @@ class Extracto(models.Model):
                     ri.participacion = (ri.valor_actual * 100 ) / self.resumen_inversion_ids[-1].valor_actual
                 else:
                     ri.participacion = 0
+                total_ponderacion += ri.tasa_rendimiento * ri.participacion
                 #Sumamos la participacion total
                 self.resumen_inversion_ids[-1].participacion += ri.participacion
+        self.resumen_inversion_ids[-1].tasa_rendimiento += total_ponderacion
 
     def _generar_resumen_movimientos(self):
         ###Asignando recursos recompra
