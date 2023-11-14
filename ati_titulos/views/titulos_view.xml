@@ -97,8 +97,8 @@
         <field name="arch" type="xml">
             <search string="Search Sales Order">
                 <group expand="0" string="Group By">
-                    <filter string="Gestor" name="gestor_inversion" domain="[]" context="{'group_by': 'manager'}"/>
-                    <filter string="Inversion" name="gestor_inversion" domain="[]" context="{'group_by': 'investment_type'}"/>
+                    <filter string="Gestor" name="gestor_inversion" domain="[]" context="{'group_by': ['manager', 'investment_type']}"/>
+
                 </group>
            </search>
         </field>
