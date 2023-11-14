@@ -9,7 +9,7 @@
             <button name="action_quotation_send" position="replace">
                 <button name="action_quotation_send" string="Send by Email" type="object"  class="btn-primary" data-hotkey="g" attrs="{'invisible': [('asignado', '=',  False)]}"/>
                 <button name="action_fcl_send" type="object" string="Enviar Oferta FCL" class="btn-primary" attrs="{'invisible': [('asignado', '=',  False)]}"/>
-                <button name="action_assign" type="object" string="Asignar"/>
+                <button name="action_assign" type="object" string="Asignar" attrs="{'invisible': [('asignado', '=',  True)]}"/>
 
             </button>
             <field name="validity_date" position="before">
