@@ -344,7 +344,7 @@ class Extracto(models.Model):
             total_rendimiento_causado += ri.rendimiento_causado
             total_administracion += ri.administracion
             total_tasa_rendimiento += ri.tasa_rendimiento
-            total_ponderacion += ri.tasa_rendimiento * (ri.participacion / 100)
+            total_ponderacion += ri.tasa_rendimiento * ri.participacion
             if ri.tasa_rendimiento > 0:
                 cant_tasas += 1
             total_diferencia += ri.diferencia
