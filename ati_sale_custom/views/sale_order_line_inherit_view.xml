@@ -19,6 +19,7 @@
                 <button name="action_assign" type="object" string="Asignar" attrs="{'invisible': [('asignado', '=',  True)]}"/>
 
             </button>
+            <xpath expr="//button[@name='action_quotation_send'][2]" position="replace"/>
             <field name="validity_date" position="before">
                 <field name="fecha_celebracion" attrs="{'invisible': [('state', '!=',  'draft'), ('state', '!=',  'sent')]}"/>
             </field>
