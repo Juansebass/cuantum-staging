@@ -90,4 +90,18 @@
         </field>
     </record>
 
+    <record id="view_ati_titulo_filter" model="ir.ui.view">
+        <field name="name">ati.titulo.list.select</field>
+        <field name="model">ati.titulo</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Search Sales Order">
+                <group expand="0" string="Group By">
+                    <filter string="Gestor" name="gestor_inversion" domain="[]" context="{'group_by': 'manager'}"/>
+                    <filter string="Inversion" name="gestor_inversion" domain="[]" context="{'group_by': 'investment_type'}"/>
+                </group>
+           </search>
+        </field>
+    </record>
+
 </odoo>
