@@ -374,7 +374,7 @@ class Extracto(models.Model):
                     ri.participacion = (ri.valor_actual * 100 ) / self.resumen_inversion_ids[-1].valor_actual
                 else:
                     ri.participacion = 0
-                total_ponderacion += ri.tasa_rendimiento * ri.participacion
+                total_ponderacion += ri.tasa_rendimiento * (ri.participacion / 100)
                 #Sumamos la participacion total
                 self.resumen_inversion_ids[-1].participacion += ri.participacion
         self.resumen_inversion_ids[-1].tasa_rendimiento += total_ponderacion
