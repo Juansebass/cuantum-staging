@@ -22,7 +22,7 @@ class CargarSentencias(models.Model):
     not_processed_content = fields.Text('Texto no procesado')
     clientes_creados = fields.Text('Creados')
     skip_first_line = fields.Boolean('Saltear primera linea', default=True)
-    client_match = fields.Selection(selection=[('name', 'Nombre')], string='Buscar clientes por...', default='nombre')
+    client_match = fields.Selection(selection=[('name', 'Nombre')], string='Buscar clientes por...', default='name')
 
 
     def btn_process(self):
