@@ -99,6 +99,10 @@ class CargarSentencias(models.Model):
                     raise ValidationError(
                         "El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 18 columnas".format(
                             i, line))
+            else:
+                raise ValidationError(
+                    "El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 18 columnas".format(
+                        i, line))
 
 
         self.clientes_creados = _procesados
