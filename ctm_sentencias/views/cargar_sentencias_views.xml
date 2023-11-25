@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="cargar_sentencias_view_form">
+		<field name="name">ctm.cargar_sentencias.view.form</field>
+		<field name="model">ctm.cargar_sentencias</field>
+		<field name="arch" type="xml">
+			<form string="Cargar Setencias">
+				<header>
+					<button name="btn_process" type="object" string="Procesar" states="draft" />
+					<field name="state" widget="statusbar" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="client_file" widget="binary"/>
+						</group>
+						<group>
+							<field name="delimiter" />
+							<field name="skip_first_line" />
+							<field name="client_match" />
+							<field name="responsable" readonly='1'/>
+                			<field name="fch_procesado" readonly='1'/>
+						</group>
+
+					</group>
+					<notebook>
+						<page string="Contenido" >
+							<field name="file_content" readonly="1"/>
+						</page>
+						<page string="No procesados">
+							<field name="not_processed_content" readonly="1"/>
+						</page>
+                        <page string="Sentencias Cargadas">
+                                <field name="clientes_creados" readonly="1"/>
+                        </page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+
+    <record id="model_ctm_cargar_sentencias_view_tree" model="ir.ui.view">
+        <field name="name">ctm.cargar_sentencias.view.tree</field>
+        <field name="model">ctm.cargar_sentencias</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>
