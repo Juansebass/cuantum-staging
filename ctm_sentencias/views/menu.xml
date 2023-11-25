@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="action_open_sentencia" model="ir.actions.act_window">
+        <field name="name">Sentencias</field>
+        <field name="res_model">ctm.sentencias</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu y Menus principales -->
+    <menuitem id="menu_sentencias_main" name="Sentencias" />
+    <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
+
+</odoo>
