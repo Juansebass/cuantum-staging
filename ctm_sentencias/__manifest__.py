@@ -11,10 +11,10 @@
         'base','contacts', 'portal',
         ],
     'data': [
-        # 'views/menu.xml',
+        'security/ir.model.access.csv',
+        'views/menu.xml',
         # 'views/validacion_views.xml',
-        #'views/informe_administracion_views.xml',
-        #'security/ir.model.access.csv',
+        #'views/informe_administracion_views.xml',\
         # 'report/xls_informe_clientes.xml',
         # 'data/mail_template_extracto.xml'
         ],
