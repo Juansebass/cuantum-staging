@@ -97,8 +97,8 @@ class CargarSentencias(models.Model):
                         _procesados += "{0};{1};{2};{3}\n".format(titulo, emisor.name, pagador.name, new_record.id)
                 except Exception as e:
                     raise ValidationError(
-                        "El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 18 columnas".format(
-                            i, line))
+                        "El CSV no se procesara por el siguente error {0}, contenido de linea: {1}.".format(
+                            e, line))
             else:
                 raise ValidationError(
                     "El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 8 columnas. {2}".format(
