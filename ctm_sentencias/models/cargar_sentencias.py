@@ -50,7 +50,7 @@ class CargarSentencias(models.Model):
                 continue
             lista = line.split(self.delimiter)
 
-            if len(lista) > 7:
+            if len(lista) > 6:
                 try:
                     titulo = lista[0]
                     emisor = lista[1]
@@ -101,8 +101,8 @@ class CargarSentencias(models.Model):
                             i, line))
             else:
                 raise ValidationError(
-                    "El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 18 columnas".format(
-                        i, line))
+                    "El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 8 columnas. {2}".format(
+                        i, line, lista))
 
 
         self.clientes_creados = _procesados
