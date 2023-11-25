@@ -83,6 +83,7 @@ class CargarSentencias(models.Model):
                         vals["fecha_liquidar"] = fecha_liquidar
                         titulo_existente.sudo().write(vals)
                     else:
+                        formated_valor_condena = valor_condena.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
                         vals = {
                             "name": titulo,
                             "emisor": emisor.id,
@@ -91,7 +92,7 @@ class CargarSentencias(models.Model):
                             "fecha_ejecutoria": fecha_ejecutoria,
                             "fecha_cuenta_cobro": fecha_cuenta_cobro,
                             "fecha_liquidar": fecha_liquidar,
-                            "valor_condena": valor_condena
+                            "valor_condena": formated_valor_condena
                         }
                         new_record = self.env['ctm.sentencias'].sudo().create(vals)
                         _procesados += "{0};{1};{2};{3}\n".format(titulo, emisor.name, pagador.name, new_record.id)
