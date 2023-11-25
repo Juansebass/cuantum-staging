@@ -64,7 +64,7 @@ class CargarSentencias(models.Model):
                     vals.clear()
 
                     emisor = self.env['res.partner'].search(
-                        [(self.client_match, '=', emisor), ('vinculado', '=', True)])
+                        [(self.client_match, '=', emisor), ('act_in', '=', 'activo')])
                     if len(emisor) > 1:
                         raise ValidationError(
                             "El CSV no se procesara por cliente con nombre repetido en sistema. El nombre {0} lo tienen dos o mas clientes".format(
@@ -74,7 +74,7 @@ class CargarSentencias(models.Model):
                             "El CSV no se procesara porque no se encuentra emisor o no está vinculado".format(
                                 emisor))
                     pagador = self.env['res.partner'].search(
-                        [(self.client_match, '=', pagador), ('vinculado', '=', True)])
+                        [(self.client_match, '=', pagador), ('act_in', '=', 'activo')])
                     if len(emisor) > 1:
                         raise ValidationError(
                             "El CSV no se procesara por pagador con nombre repetido en sistema. El nombre {0} lo tienen dos o mas clientes".format(
