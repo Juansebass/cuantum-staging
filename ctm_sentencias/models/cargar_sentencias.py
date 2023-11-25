@@ -41,7 +41,8 @@ class CargarSentencias(models.Model):
 
 
         self.file_content = base64.decodebytes(self.client_file)
-        lines = self.file_content.split('\n')
+        lines =  self.file_content.replace('\n', '')
+        lines = lines.split('\r')
 
         for i,line in enumerate(lines):
             new_record = None
