@@ -69,11 +69,19 @@ class CargarSentencias(models.Model):
                         raise ValidationError(
                             "El CSV no se procesara por cliente con nombre repetido en sistema. El nombre {0} lo tienen dos o mas clientes".format(
                                 emisor))
+                    elif len(emisor) == 0:
+                        raise ValidationError(
+                            "El CSV no se procesara porque no se encuentra emisor o no está vinculado".format(
+                                emisor))
                     pagador = self.env['res.partner'].search(
                         [(self.client_match, '=', pagador), ('vinculado', '=', True)])
                     if len(emisor) > 1:
                         raise ValidationError(
                             "El CSV no se procesara por pagador con nombre repetido en sistema. El nombre {0} lo tienen dos o mas clientes".format(
+                                pagador))
+                    elif len(pagador) == 0:
+                        raise ValidationError(
+                            "El CSV no se procesara porque no se encuentra pagador o no está vinculado".format(
                                 pagador))
 
                     titulo_existente = self.env['ctm.sentencias'].search(
