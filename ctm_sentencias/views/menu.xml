@@ -6,9 +6,19 @@
         <field name="res_model">ctm.sentencias</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_open_tasas" model="ir.actions.act_window">
+        <field name="name">Tasas</field>
+        <field name="res_model">ctm.tasas</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias" />
     <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
+    <menuitem id="menu_configuraciones" sequence="10" name="Configuraciones" parent="menu_sentencias_main"/>
+
+    <!-- Menus de tercer nivel-->
+    <menuitem id="menu_tasas" name="Tasas" parent="menu_configuraciones" action="action_open_tasas"/>
+
 
 </odoo>
