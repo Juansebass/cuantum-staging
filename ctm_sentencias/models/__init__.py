@@ -2,4 +2,4 @@
 
 from . import sentencias
 from . import tasas
-
+from . import cargar_sentencias
