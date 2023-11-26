@@ -82,7 +82,7 @@ class Liquidaciones(models.Model):
 
     def last_day_of_month(self, date):
         _, last_day = calendar.monthrange(date.year, date.month)
-        return datetime(date.year, date.month, last_day).date
+        return datetime(date.year, date.month, last_day).date()
 
     def generate_last_days(self,start_date, end_date):
         current_date = start_date
@@ -90,7 +90,7 @@ class Liquidaciones(models.Model):
 
         while current_date <= end_date:
             last_days.append(self.last_day_of_month(current_date))
-            current_date = self.last_day_of_month(current_date) + timedelta(days=1)
+            current_date = self.last_day_of_month(current_date) + relativedelta(days=+1)
 
         return last_days
 
