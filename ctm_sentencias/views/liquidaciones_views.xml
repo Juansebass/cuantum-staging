@@ -11,6 +11,7 @@
                 <field name="emisor" />
                 <field name="pagador" />
                 <field name="valor_condena" />
+                <field name="total_intereses" />
                 <field name="resultado" />
             </tree>
         </field>
