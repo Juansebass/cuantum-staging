@@ -120,6 +120,7 @@ class Liquidaciones(models.Model):
                 'interes': interes,
             })
             fecha_anterior = fecha
+            cont += 1
 
     def last_day_of_month(self, date):
         _, last_day = calendar.monthrange(date.year, date.month)
