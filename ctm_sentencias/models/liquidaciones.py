@@ -57,6 +57,7 @@ class Liquidaciones(models.Model):
         self.liquidaciones_resumen_ids.unlink()
         if  self.codigo == "CPACA":
             fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+3)
+
         else:
             fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+6)
 
@@ -66,6 +67,9 @@ class Liquidaciones(models.Model):
             self.fecha_cuenta_cobro,
             self.fecha_liquidar
         ]
+        if self.codigo == "CPACA":
+            fecha_periodo_diez = self.fecha_ejecutoria + relativedelta(months=+10)
+            fechas_base.append(fecha_periodo_diez)
 
         fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
         fechas_periodos += fechas_base
