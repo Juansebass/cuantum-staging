@@ -24,6 +24,7 @@ class Liquidaciones(models.Model):
     fecha_liquidar = fields.Date('Fecha a Liquidar')
     valor_condena = fields.Float('Valor Condena')
     resultado = fields.Float('Resultado')
+    total_intereses = fields.Float('Total Intereses')
     liquidaciones_resumen_ids = fields.One2many('ctm.liquidaciones_resumen','liquidacion_id','Resumen Liquidación Sentencia')
     responsible = fields.Many2one('res.partner', 'Responsable')
     state = fields.Selection(selection=[('draft','Borrador'),('liquidated','Liquidado')],string='Estado',default='draft')
@@ -45,6 +46,7 @@ class Liquidaciones(models.Model):
         self.fecha_liquidar = self.sentencia.fecha_liquidar
         self.valor_condena = self.sentencia.valor_condena
         self.resultado = self.valor_condena
+        self.total_intereses = 0
 
         #Generando resumen
         self._generar_resumen_liquidacion()
@@ -121,6 +123,7 @@ class Liquidaciones(models.Model):
                 'interes': interes,
             })
             self.resultado += interes
+            self.total_intereses += interes
             fecha_anterior = fecha
             cont += 1
 
