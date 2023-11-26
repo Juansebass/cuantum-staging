@@ -15,7 +15,7 @@ class Liquidaciones(models.Model):
     _inherit = []
 
     name = fields.Char('Nombre')
-    sentencia = fields.Many2one('ctm.sentencias', 'Sentencia', required=1)
+    sentencia = fields.Many2one('ctm.sentencias', 'Sentencia', required=1, unique=True)
     emisor = fields.Many2one('res.partner', 'Emisor')
     pagador = fields.Many2one('res.partner', 'Pagador')
     codigo = fields.Char('Código')
@@ -155,12 +155,6 @@ class Liquidaciones(models.Model):
     def create(self, var):
         res = super(Liquidaciones, self).create(var)
         res.name = "Liquidación" ' - ' + res.sentencia.name
-
-        existe_liquidacion = self.env['ctm.liquidaciones'].search(
-            [('sentencia', '=', res.sentencia.id)])
-        if existe_liquidacion:
-            raise ValidationError('Ya existe una liquidación para esta sentencia')
-
         return res
 
 
