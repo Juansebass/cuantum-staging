@@ -29,8 +29,6 @@ class CrearSentencias(models.Model):
             if not exists_liquidacion:
                 created_liquidacion = self.env['ctm.liquidaciones'].sudo().create({
                     'sentencia': sentencia.id,
-
-
                 })
                 created_liquidacion.generar_liquidacion()
 
