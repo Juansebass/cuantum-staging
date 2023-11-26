@@ -78,11 +78,28 @@ class Liquidaciones(models.Model):
 
 
         for fecha in  unique_fechas_periodos:
+            tasa = 0
+            interes = 0
+            #Buscando tasas
+            tasa_conf = self.env['ctm.tasas'].search(
+            [('fecha_inicio', '<=', fecha), ('fecha_fecha_final', '>=', fecha)], limit=1)
+
+            if not tasa_conf:
+                raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
+
+            #Todos los ajustes para CPACA
+            if self.codigo == "CPACA":
+                if fecha <= fecha_periodo_diez:
+                    tasa = tasa_conf.dtf
+                else:
+                    tasa = tasa_conf.usura
+
+
             self.env['ctm.liquidaciones_resumen'].create({
                 'liquidacion_id': self.id,
                 'fecha': fecha,
-                'tasa': 0,
-                'interes': 0,
+                'tasa': tasa,
+                'interes': interes,
             })
 
     def last_day_of_month(self, date):
