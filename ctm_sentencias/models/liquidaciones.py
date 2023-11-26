@@ -6,6 +6,7 @@ import base64
 import io
 import xlsxwriter
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 class Liquidaciones(models.Model):
     _name = 'ctm.liquidaciones'
@@ -54,9 +55,9 @@ class Liquidaciones(models.Model):
     def _generar_resumen_liquidacion(self):
         self.liquidaciones_resumen_ids.unlink()
         if  self.codigo == "CPACA":
-            fecha_periodo_cero = self.fecha_ejecutoria + timedelta(months=3)
+            fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+3)
         else:
-            fecha_periodo_cero = self.fecha_ejecutoria + timedelta(months=6)
+            fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+6)
 
         fechas_base = sorted([
             self.fecha_ejecutoria,
