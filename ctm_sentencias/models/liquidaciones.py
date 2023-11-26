@@ -53,11 +53,11 @@ class Liquidaciones(models.Model):
 
     def _generar_resumen_liquidacion(self):
         self.liquidaciones_resumen_ids.unlink()
-        if  self.code == "CPACA":
+        if  self.codigo == "CPACA":
             fecha_periodo_cero = self.fecha_ejecutoria + timedelta(months=3)
         else:
             fecha_periodo_cero = self.fecha_ejecutoria + timedelta(months=6)
-            
+
         fechas_base = sorted([
             self.fecha_ejecutoria,
             fecha_periodo_cero,
