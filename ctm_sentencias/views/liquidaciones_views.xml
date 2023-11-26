@@ -46,6 +46,7 @@
                             <field name="fecha_cuenta_cobro" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
                             <field name="fecha_liquidar" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
                             <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="total_intereses" readonly="1"/>
                             <field name="resultado" readonly="1"/>
                             <field name="responsible" readonly="1"/>
                         </group>
