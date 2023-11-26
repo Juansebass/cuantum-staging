@@ -68,7 +68,7 @@ class Liquidaciones(models.Model):
         ]
 
         fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
-        fechas_periodos.append(fechas_base)
+        fechas_periodos += fechas_base
 
         sorted_fechas = sorted(fechas_periodos)
 
