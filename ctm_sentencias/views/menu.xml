@@ -28,7 +28,7 @@
     </record>
 
     <!-- Menu y Menus principales -->
-    <menuitem id="menu_sentencias_main" name="Sentencias" />
+    <menuitem id="menu_sentencias_main" name="Sentencias"  web_icon="ctm_sentencias,static/description/icon.png" />
     <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
     <menuitem id="menu_carga_sentencias_main" sequence="1" name="Carga Sentencias" parent="menu_sentencias_main"/>
     <menuitem id="menu_liquidaciones_main" sequence="2" name="Liquidaciones" parent="menu_sentencias_main"/>
