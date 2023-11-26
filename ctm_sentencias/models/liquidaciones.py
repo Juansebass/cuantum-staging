@@ -70,8 +70,7 @@ class Liquidaciones(models.Model):
         fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
         fechas_periodos.append(fechas_base)
 
-        unique_fechas_periodos = list(set(fechas_periodos))
-        sorted_fechas = sorted(unique_fechas_periodos)
+        sorted_fechas = sorted(fechas_periodos)
 
         for fecha in  sorted_fechas:
             self.env['ctm.liquidaciones_resumen'].create({
