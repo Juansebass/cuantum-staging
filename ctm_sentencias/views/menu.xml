@@ -21,6 +21,11 @@
         <field name="res_model">ctm.liquidaciones</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_crear_sentencias" model="ir.actions.act_window">
+        <field name="name">Crear Liquidaciones</field>
+        <field name="res_model">ctm.crear_sentencias</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias" />
@@ -33,6 +38,11 @@
     <menuitem id="menu_tasas" name="Tasas" parent="menu_configuraciones" action="action_open_tasas"/>
     <menuitem id="menu_carga_sentencias" name="Cargar Sentencias" parent="menu_carga_sentencias_main" action="action_cargar_sentencias"/>
     <menuitem id="menu_liquidaciones" name="Liquidaciones" parent="menu_liquidaciones_main" action="action_open_liquidaciones"/>
+    <menuitem id="menu_crear_sentencias" name="Crear Liquidaciones" parent="menu_liquidaciones_main" action="action_crear_sentencias"/>
+
+
+
+
 
 
 </odoo>

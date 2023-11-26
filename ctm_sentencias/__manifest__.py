@@ -16,11 +16,7 @@
         'views/tasas_views.xml',
         'views/cargar_sentencias_views.xml',
         'views/liquidaciones_views.xml',
-
-        # 'views/validacion_views.xml',
-        #'views/informe_administracion_views.xml',\
-        # 'report/xls_informe_clientes.xml',
-        # 'data/mail_template_extracto.xml'
+        'views/create_sentencias_views.xml',
         ],
     'installable': True,
     'application': True,
