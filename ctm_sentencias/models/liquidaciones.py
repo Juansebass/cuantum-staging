@@ -94,6 +94,14 @@ class Liquidaciones(models.Model):
                 else:
                     tasa = tasa_conf.usura
 
+                if (
+                        fecha <= self.fecha_cuenta_cobro and
+                        fecha > fecha_periodo_cero and
+                        self.fecha_cuenta_cobro >=  fecha_periodo_cero
+                ):
+                    tasa = 0
+
+
 
             self.env['ctm.liquidaciones_resumen'].create({
                 'liquidacion_id': self.id,
