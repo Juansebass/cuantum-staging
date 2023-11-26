@@ -30,12 +30,7 @@ class Liquidaciones(models.Model):
     state = fields.Selection(selection=[('draft','Borrador'),('liquidated','Liquidado')],string='Estado',default='draft')
 
     def generar_liquidacion(self):
-        #Revisando si ya existe liquidación
-        existe_liquidacion = self.env['ctm.liquidaciones'].search(
-            [('sentencia', '=', self.sentencia.id)])
 
-        if len(existe_liquidacion) == 2:
-            existe_liquidacion[1].unlink()
 
         #Llenando campos informativos
         self.emisor = self.sentencia.emisor
@@ -160,6 +155,12 @@ class Liquidaciones(models.Model):
     def create(self, var):
         res = super(Liquidaciones, self).create(var)
         res.name = "Liquidación" ' - ' + res.sentencia.name
+
+        existe_liquidacion = self.env['ctm.liquidaciones'].search(
+            [('sentencia', '=', res.sentencia.id)])
+        if existe_liquidacion:
+            raise ValidationError('Ya existe una liquidación para esta sentencia')
+
         return res
 
 
