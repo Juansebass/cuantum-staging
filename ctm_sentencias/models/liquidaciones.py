@@ -7,6 +7,7 @@ import io
 import xlsxwriter
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+import calendar
 
 class Liquidaciones(models.Model):
     _name = 'ctm.liquidaciones'
@@ -59,12 +60,17 @@ class Liquidaciones(models.Model):
         else:
             fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+6)
 
-        fechas_base = sorted([
+        fechas_base =[
             self.fecha_ejecutoria,
             fecha_periodo_cero,
             self.fecha_cuenta_cobro,
             self.fecha_liquidar
-        ])
+        ]
+
+        fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
+        fechas_periodos.append(fechas_base)
+
+        unique_fechas_periodos = sorted(list(set(fechas_periodos)))
 
         for fecha in  fechas_base:
             self.env['ctm.liquidaciones_resumen'].create({
@@ -73,6 +79,20 @@ class Liquidaciones(models.Model):
                 'tasa': 0,
                 'interes': 0,
             })
+
+    def last_day_of_month(date):
+        _, last_day = calendar.monthrange(date.year, date.month)
+        return datetime(date.year, date.month, last_day)
+
+    def generate_last_days(start_date, end_date):
+        current_date = start_date
+        last_days = []
+
+        while current_date <= end_date:
+            last_days.append(last_day_of_month(current_date))
+            current_date = last_day_of_month(current_date) + timedelta(days=1)
+
+        return last_days
 
 
 
