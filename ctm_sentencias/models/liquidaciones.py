@@ -31,8 +31,8 @@ class Liquidaciones(models.Model):
         existe_liquidacion = self.env['ctm.liquidaciones'].search(
             [('sentencia', '=', self.sentencia.id)])
 
-        if existe_liquidacion:
-            existe_liquidacion.unlink()
+        if len(existe_liquidacion) == 2:
+            existe_liquidacion[1].unlink()
 
         #Llenando campos informativos
         self.emisor = self.sentencia.emisor
