@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="model_ctm_liquidaciones_view_tree" model="ir.ui.view">
+        <field name="name">ctm.liquidaciones.view.tree</field>
+        <field name="model">ctm.liquidaciones</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="emisor" />
+                <field name="pagador" />
+                <field name="valor_condena" />
+                <field name="resultado" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="model_ctm_liquidaciones_view_form" model="ir.ui.view">
+        <field name="name">ctm.liquidaciones.view.form</field>
+        <field name="model">ctm.liquidaciones</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="generar_liquidacion" type="object" string="Generar Liquidación" attrs="{'invisible': [('state', 'in', ['liquidated'])]}"/>
+                    <button name="set_borrador_liquidacion" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="cliente">
+                        <group name="izquierda">
+                            <field name="sentencia" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="emisor" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="pagador" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="codigo" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+
+                        </group>
+                        <group name="derecha">
+                            <field name="fecha_ejecutoria" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="fecha_cuenta_cobro" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="fecha_liquidar" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="resultado" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="liquidaciones_resumen" string="Resumen">
+                            <field name="liquidaciones_resumen_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="fecha"/>
+                                    <field name="tasa"/>
+                                    <field name="interes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

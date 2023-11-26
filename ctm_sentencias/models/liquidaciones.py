@@ -22,9 +22,35 @@ class Liquidaciones(models.Model):
     fecha_liquidar = fields.Date('Fecha a Liquidar', required=1)
     valor_condena = fields.Float('Valor Condena', required=1)
     resultado = fields.Float('Resultado', required=1)
-    liquidaciones_resumen_ids = fields.One2many('ctm.liquidaciones_resumen','liquidacion_id','Resumen Liquidacioón Sentencia')
+    liquidaciones_resumen_ids = fields.One2many('ctm.liquidaciones_resumen','liquidacion_id','Resumen Liquidación Sentencia')
     responsible = fields.Many2one('res.partner', 'Responsable')
     state = fields.Selection(selection=[('draft','Borrador'),('liquidated','Liquidado')],string='Estado',default='draft')
+
+    def generar_liquidacion(self):
+        pass
+
+    def set_borrador_liquidacion(self):
+        for rec in self:
+            if self.env.user.id in [8,2,10, 108]:
+                rec.state = 'draft'
+            else:
+                raise ValidationError('Usted no tiene permisos para realizar esta acción')
+
+    def unlink(self):
+        for rec in self:
+            if rec.state != 'draft':
+                raise ValidationError('Los extracto debe estar en borrador para poder ser eliminados')
+        return super(Liquidaciones, self).unlink()
+
+    @api.model
+    def create(self, var):
+        res = super(Liquidaciones, self).create(var)
+        res.name = "Liquidación" ' - ' + res.sentencia.name
+        return res
+
+
+
+
 
 
 
