@@ -89,8 +89,8 @@ class Liquidaciones(models.Model):
         last_days = []
 
         while current_date <= end_date:
-            last_days.append(last_day_of_month(current_date))
-            current_date = last_day_of_month(current_date) + timedelta(days=1)
+            last_days.append(self.last_day_of_month(current_date))
+            current_date = self.last_day_of_month(current_date) + timedelta(days=1)
 
         return last_days
 
