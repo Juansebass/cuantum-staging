@@ -16,16 +16,23 @@
         <field name="res_model">ctm.cargar_sentencias</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_open_liquidaciones" model="ir.actions.act_window">
+        <field name="name">Liquidaciones</field>
+        <field name="res_model">ctm.liquidaciones</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias" />
     <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
     <menuitem id="menu_carga_sentencias_main" sequence="1" name="Carga Sentencias" parent="menu_sentencias_main"/>
+    <menuitem id="menu_liquidaciones_main" sequence="2" name="Liquidaciones" parent="menu_sentencias_main"/>
     <menuitem id="menu_configuraciones" sequence="10" name="Configuraciones" parent="menu_sentencias_main"/>
 
     <!-- Menus de tercer nivel-->
     <menuitem id="menu_tasas" name="Tasas" parent="menu_configuraciones" action="action_open_tasas"/>
     <menuitem id="menu_carga_sentencias" name="Cargar Sentencias" parent="menu_carga_sentencias_main" action="action_cargar_sentencias"/>
+    <menuitem id="menu_liquidaciones" name="Liquidaciones" parent="menu_liquidaciones_main" action="action_open_liquidaciones"/>
 
 
 </odoo>

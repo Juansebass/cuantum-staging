@@ -2,3 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_ctm_sentencias_user,ctm.sentencias.user,model_ctm_sentencias,base.group_user,1,1,1,1
 access_ctm_tasas_user,ctm.tasas.user,model_ctm_tasas,base.group_user,1,1,1,1
 access_ctm_cargar_sentencias_user,ctm.cargar_sentencias.user,model_ctm_cargar_sentencias,base.group_user,1,1,1,1
+access_ctm_liquidaciones_user,ctm.liquidaciones.user,model_ctm_liquidaciones,base.group_user,1,1,1,1
+access_ctm_liquidaciones_resumen_user,ctm.liquidaciones_resumen.user,model_ctm_liquidaciones_resumen,base.group_user,1,1,1,1
