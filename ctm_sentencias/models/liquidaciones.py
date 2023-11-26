@@ -76,7 +76,8 @@ class Liquidaciones(models.Model):
         unique_fechas_periodos = sorted(list(set(fechas_periodos)))
 
 
-
+        cont = 0
+        fecha_anterior = None
         for fecha in  unique_fechas_periodos:
             tasa = 0
             interes = 0
@@ -100,8 +101,17 @@ class Liquidaciones(models.Model):
                         self.fecha_cuenta_cobro >=  fecha_periodo_cero
                 ):
                     tasa = 0
-
-
+            if self.codigo == "CCA":
+                tasa = tasa_conf.usura
+                if (
+                        fecha <= self.fecha_cuenta_cobro and
+                        fecha > fecha_periodo_cero and
+                        self.fecha_cuenta_cobro >= fecha_periodo_cero
+                ):
+                    tasa = 0
+            if cont > 0:
+                dias = (fecha - fecha_anterior).days()
+                interes = ((1 + (tasa/100)) ** (1/365) - 1) * dias * self.valor_condena
 
             self.env['ctm.liquidaciones_resumen'].create({
                 'liquidacion_id': self.id,
@@ -109,6 +119,7 @@ class Liquidaciones(models.Model):
                 'tasa': tasa,
                 'interes': interes,
             })
+            fecha_anterior = fecha
 
     def last_day_of_month(self, date):
         _, last_day = calendar.monthrange(date.year, date.month)
