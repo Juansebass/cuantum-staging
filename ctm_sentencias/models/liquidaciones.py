@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 import base64
 import io
 import xlsxwriter
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Liquidaciones(models.Model):
     _name = 'ctm.liquidaciones'
@@ -43,8 +43,37 @@ class Liquidaciones(models.Model):
         self.fecha_liquidar = self.sentencia.fecha_liquidar
         self.valor_condena = self.sentencia.valor_condena
 
+        #Generando resumen
+        self._generar_resumen_liquidacion()
+
+
         self.state = 'liquidated'
         self.responsible = self.env.user.partner_id
+
+
+    def _generar_resumen_liquidacion(self):
+        self.liquidaciones_resumen_ids.unlink()
+        if  self.code == "CPACA":
+            fecha_periodo_cero = self.fecha_ejecutoria + timedelta(months=3)
+        else:
+            fecha_periodo_cero = self.fecha_ejecutoria + timedelta(months=6)
+            
+        fechas_base = sorted([
+            self.fecha_ejecutoria,
+            fecha_periodo_cero,
+            self.fecha_cuenta_cobro,
+            self.fecha_liquidar
+        ])
+
+        for fecha in  fechas_base:
+            self.env['ctm.liquidaciones_resumen'].create({
+                'liquidacion_id': self.id,
+                'fecha': fecha,
+                'tasa': 0,
+                'interes': 0,
+            })
+
+
 
     def set_borrador_liquidacion(self):
         for rec in self:
@@ -78,7 +107,7 @@ class LiquidacionesResumen(models.Model):
 
     liquidacion_id = fields.Many2one('ctm.liquidaciones', 'Liquidación')
     fecha = fields.Date('Fecha', required=1)
-    tasa = fields.Float('Tasa', digits=(10, 3), required=True)
+    tasa = fields.Float('Tasa', digits=(10, 3))
     interes = fields.Float('Interés')
 
 
