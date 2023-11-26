@@ -27,10 +27,13 @@ class CrearSentencias(models.Model):
             ])
 
             if not exists_liquidacion:
-                created_liquidacion = self.env['ctm.liquidaciones'].sudo().create({
-                    'sentencia': sentencia.id,
-                })
-                created_liquidacion.generar_liquidacion()
+                try:
+                    created_liquidacion = self.env['ctm.liquidaciones'].sudo().create({
+                        'sentencia': sentencia.id,
+                    })
+                    created_liquidacion.generar_liquidacion()
+                except Exception as e:
+                    raise ValidationError('error {0}. para sentencia {1}'.format(e, sentencia.name))
 
         self.status = 'creados'
 
