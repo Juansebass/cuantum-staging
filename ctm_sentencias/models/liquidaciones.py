@@ -44,6 +44,7 @@ class Liquidaciones(models.Model):
         self.fecha_cuenta_cobro = self.sentencia.fecha_cuenta_cobro
         self.fecha_liquidar = self.sentencia.fecha_liquidar
         self.valor_condena = self.sentencia.valor_condena
+        self.resultado = self.valor_condena
 
         #Generando resumen
         self._generar_resumen_liquidacion()
@@ -119,6 +120,7 @@ class Liquidaciones(models.Model):
                 'tasa': tasa,
                 'interes': interes,
             })
+            self.resultado += interes
             fecha_anterior = fecha
             cont += 1
 
