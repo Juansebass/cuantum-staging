@@ -80,11 +80,11 @@ class Liquidaciones(models.Model):
                 'interes': 0,
             })
 
-    def last_day_of_month(date):
+    def last_day_of_month(self, date):
         _, last_day = calendar.monthrange(date.year, date.month)
         return datetime(date.year, date.month, last_day)
 
-    def generate_last_days(start_date, end_date):
+    def generate_last_days(self,start_date, end_date):
         current_date = start_date
         last_days = []
 
