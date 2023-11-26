@@ -82,7 +82,7 @@ class Liquidaciones(models.Model):
             interes = 0
             #Buscando tasas
             tasa_conf = self.env['ctm.tasas'].search(
-            [('fecha_inicio', '<=', fecha), ('fecha_fecha_final', '>=', fecha)], limit=1)
+            [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1)
 
             if not tasa_conf:
                 raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
