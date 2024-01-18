@@ -871,6 +871,23 @@ class Extracto(models.Model):
                     validation = line.valor_actual != valor_validado
                     if validation:
                         self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Sentencias no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+
+                # Sentencias
+                if line.name == 'Mutuos':
+                    compras = sum([recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda x: x.investment_type.name == 'Mutuos' and x.movement_type.name == 'Compra'
+                    )])
+                    recaudos = sum([recurso.value for recurso in self.recursos_csf.filtered(
+                        lambda
+                            x: x.investment_type.name == 'Mutuos' and x.movement_type.name == 'Aplicación de recaudo'
+                    )])
+                    valor_validado = (
+                            line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
+                    )
+                    validation = line.valor_actual != valor_validado
+                    if validation:
+                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Mutuos no es correcta. Actual={0} Validado={1} \n'.format(
+                            line.valor_actual, valor_validado)
             # Para FCL
             if line.gestor.code == 'FCL':
                 # Libranzas

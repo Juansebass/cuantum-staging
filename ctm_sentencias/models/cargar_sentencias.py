@@ -50,7 +50,9 @@ class CargarSentencias(models.Model):
                 continue
             lista = line.split(self.delimiter)
 
-            if len(lista) > 6:
+            if len(lista) < 2:
+                pass
+            elif len(lista) > 6:
                 try:
                     titulo = lista[0]
                     emisor = lista[1]

@@ -77,6 +77,9 @@ class Liquidaciones(models.Model):
         fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
         fechas_periodos += fechas_base
         unique_fechas_periodos = sorted(list(set(fechas_periodos)))
+        if unique_fechas_periodos[-1].month == unique_fechas_periodos[-2].month:
+            unique_fechas_periodos.pop(-1)
+
 
 
         cont = 0
@@ -135,7 +138,7 @@ class Liquidaciones(models.Model):
         current_date = start_date
         last_days = []
 
-        while current_date <= end_date:
+        while current_date < end_date:
             last_days.append(self.last_day_of_month(current_date))
             current_date = self.last_day_of_month(current_date) + relativedelta(days=+1)
 
@@ -152,8 +155,7 @@ class Liquidaciones(models.Model):
 
     def unlink(self):
         for rec in self:
-            if rec.state != 'draft':
-                raise ValidationError('Los extracto debe estar en borrador para poder ser eliminados')
+            pass
         return super(Liquidaciones, self).unlink()
 
     @api.model
