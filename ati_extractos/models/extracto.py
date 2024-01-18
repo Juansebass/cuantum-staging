@@ -7,6 +7,7 @@ import base64
 import matplotlib.pyplot as plt
 from datetime import datetime
 import calendar
+import calendar
 import logging
 from io import BytesIO ## for Python 3
 
@@ -107,9 +108,10 @@ class Extracto(models.Model):
         Retorna el valor actual del rpr sumando y restando el histórico dle modulo contactos
         """
         valor_actual = 0
+        fecha_actual = ultimo_dia = calendar.monthrange(self.year, self.month)[1]
         if gestor == 'CSF':
             _temp_recursos = self.cliente.recursos_recompra_csf_ids.filtered(
-                lambda x: x.date.month <= int(self.month) and x.date.year == int(self.year)
+                lambda x: x.date <= fecha_actual
             )
             for recurso in _temp_recursos:
                 if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
@@ -118,7 +120,7 @@ class Extracto(models.Model):
                     valor_actual -= recurso.value
         elif gestor == 'FCL':
             _temp_recursos = self.cliente.recursos_recompra_fcl_ids.filtered(
-                lambda x: x.date.month <= int(self.month) and x.date.year == int(self.year)
+                lambda x: x.date <= fecha_actual
             )
             for recurso in _temp_recursos:
                 if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
@@ -127,7 +129,7 @@ class Extracto(models.Model):
                     valor_actual -= recurso.value
         elif gestor == 'FCP':
             _temp_recursos = self.cliente.recursos_recompra_fcp_ids.filtered(
-                lambda x: x.date.month <= int(self.month) and x.date.year == int(self.year)
+                lambda x: x.date <= fecha_actual
             )
             for recurso in _temp_recursos:
                 if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
