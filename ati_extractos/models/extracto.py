@@ -108,7 +108,9 @@ class Extracto(models.Model):
         Retorna el valor actual del rpr sumando y restando el histórico dle modulo contactos
         """
         valor_actual = 0
-        fecha_actual = ultimo_dia = calendar.monthrange(int(self.year), int(self.month))[1]
+        ultimo_dia = calendar.monthrange(int(self.year), int(self.month))[1]
+        fecha_actual = datetime(int(self.year), int(self.month), ultimo_dia)
+
         if gestor == 'CSF':
             _temp_recursos = self.cliente.recursos_recompra_csf_ids.filtered(
                 lambda x: x.date <= fecha_actual
