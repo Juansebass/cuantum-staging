@@ -109,7 +109,7 @@ class Extracto(models.Model):
         """
         valor_actual = 0
         ultimo_dia = calendar.monthrange(int(self.year), int(self.month))[1]
-        fecha_actual = datetime(int(self.year), int(self.month), ultimo_dia)
+        fecha_actual = datetime(int(self.year), int(self.month), ultimo_dia).date()
 
         if gestor == 'CSF':
             _temp_recursos = self.cliente.recursos_recompra_csf_ids.filtered(
