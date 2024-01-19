@@ -509,11 +509,11 @@ class Extracto(models.Model):
         self.total_FCP = self.cliente.total_fcp
 
 
-        self.show_alert = False
+        self.show_alert = True
         if (
-                int(self.valor_actual_recursos_csf) == int(self.total_cuantum) and
-                int(self.valor_actual_recursos_fcl) == int(self.total_FCL) and
-                int(self.valor_actual_recursos_fcp) == int(self.total_FCP)
+                int(self.valor_actual_recursos_csf) == int(self._valor_actual_rpr('CSF')) and
+                int(self.valor_actual_recursos_fcl) == int(self._valor_actual_rpr('FCL')) and
+                int(self.valor_actual_recursos_fcp) == int(self._valor_actual_rpr('FCP'))
         ):
             self.show_alert = False
 
