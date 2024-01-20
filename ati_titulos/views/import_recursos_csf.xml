@@ -25,6 +25,11 @@
 							<field name="responsable" readonly='1'/>
                 			<field name="fch_procesado" readonly='1'/>
 						</group>
+						<group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                            <group>
+                                <field name="xls_output"/>
+                            </group>
+                        </group>
 					</group>
 					<notebook>
 						<page string="Contenido" >

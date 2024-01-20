@@ -7,6 +7,8 @@ import base64
 import csv
 from datetime import date as dt
 import logging
+import xlsxwriter
+import io
 _logger = logging.getLogger(__name__)
 
 
@@ -101,10 +103,10 @@ class ImportRecursosFCL(models.Model):
 
                     #Creamos recurso en proceso de recompra
 
-                    self.env['ati.recurso.recompra.fcl'].sudo().create(vals)
+                    rpr_id = self.env['ati.recurso.recompra.fcl'].sudo().create(vals)
 
 
-                    _procesados += "{} \n".format(documento)
+                    _procesados += "{0};{1};{2};{3} \n".format(fecha, comprador, documento, rpr_id.id)
                 else:
                     _noprocesados += "{} \n".format(documento)
                     raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. El cliente no existe".format(i, line))
@@ -119,6 +121,46 @@ class ImportRecursosFCL(models.Model):
         self.fch_procesado = datetime.today()
         self.state = 'processed'
 
+    def action_exportar_xls(self):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet('RPR')
+        money = workbook.add_format({'num_format': '$#,##0'})
+        row = 0
+
+        worksheet.write(row, 0, 'Fecha')
+        worksheet.write(row, 1, 'Comprador')
+        worksheet.write(row, 2, 'Docuemnto')
+        worksheet.write(row, 3, 'ID')
+        row += 1
+
+        lines = self.recursos_cargados.splitlines()
+
+        for line in lines:
+            data = line.split(';')
+            worksheet.write(row, 0, data[0])
+            worksheet.write(row, 1, data[1])
+            worksheet.write(row, 2, data[2])
+            worksheet.write(row, 3, data[3])
+
+            row += 1
+
+        workbook.close()
+        output.seek(0)
+        generated_file = output.read()
+        output.close()
+        self.xls_output = base64.encodebytes(generated_file)
+
+        return {
+            'context': self.env.context,
+            'name': 'RPR',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'import.recursos.fcl',
+            'res_id': self.id,
+            'type': 'ir.actions.act_window',
+        }
+
     name = fields.Char('Nombre')
     month = fields.Char('Mes de Periodo')
     year = fields.Char('Año de Periodo')
@@ -132,3 +174,7 @@ class ImportRecursosFCL(models.Model):
     recursos_cargados = fields.Text('Recursos Cargados')
     skip_first_line = fields.Boolean('Saltear primera linea',default=True)
     client_match = fields.Selection(selection=[('vat','Vat')],string='Buscar clientes por...',default='vat')
+    xls_output = fields.Binary(
+        string='Descargar',
+        readonly=True,
+    )
