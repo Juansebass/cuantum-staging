@@ -8,6 +8,7 @@
 			<form string="Importar Recursos FCL">
 				<header>
 					<button name="btn_process" type="object" string="Procesar Recursos FCL" states="draft" />
+					<button name="action_exportar_xls" type="object" string="Exportar Excel" states="processed"/>
 					<field name="state" widget="statusbar" />
 				</header>
 				<sheet>
