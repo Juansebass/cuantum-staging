@@ -26,3 +26,4 @@ from . import import_titulo_oferta
 from . import titulo_oferta
 from . import rendimientos_administracion
 from . import import_rendimientos_administracion
+from . import eliminar_rpr

@@ -77,6 +77,11 @@
         <field name="res_model">import.recursos.csf</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_eliminar_rpr" model="ir.actions.act_window">
+        <field name="name">Eliminar RPR</field>
+        <field name="res_model">eliminar.rpr</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Actions Configuraciones -->
     <record id="action_open_state_titulo" model="ir.actions.act_window">
@@ -148,6 +153,7 @@
     <menuitem id="menu_eliminar_historicos" name="Eliminar Históricos" parent="menu_carga_extractos" action="action_open_eliminar_historicos"/>
     <menuitem id="menu_carga_recursos_fcl" name="Fideicomiso Cuantum Libranzas (FCL)" parent="menu_recursos_recompra" action="action_open_carga_recursos_fcl"/>
     <menuitem id="menu_carga_recursos_fcp" name="Fideicomiso Cuantum P (FCP)" parent="menu_recursos_recompra" action="action_open_carga_recursos_fcp"/>
+    <menuitem id="menu_eliminar_rpr" name="Eliminar RPR" parent="menu_recursos_recompra" action="action_eliminar_rpr"/>
     <menuitem id="menu_carga_recursos_csf" name="Gestores Cuantum (CSF)" parent="menu_recursos_recompra" action="action_open_carga_recursos_csf"/>
     <menuitem id="menu_state_titulo" name="Estado Titulos" parent="menu_conf" action="action_open_state_titulo"/>
     <menuitem id="menu_state_periodos" name="Estado Periodos" parent="menu_conf" action="action_open_state_periodo"/>
