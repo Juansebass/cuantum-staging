@@ -34,6 +34,7 @@
         'views/import_recursos_fcl.xml',
         'views/import_recursos_csf.xml',
         'views/import_recursos_fcp.xml',
+        'views/eliminar_rpr_view.xml',
         'views/import_titulo_oferta_view.xml',
         'views/import_rendimientos_administracion_view.xml',
         'views/rendimientos_administracion_view.xml',

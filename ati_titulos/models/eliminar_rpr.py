@@ -6,7 +6,6 @@ import logging
 import base64
 
 
-
 class EliminarHistoricos(models.Model):
     _name = 'eliminar.rpr'
 
@@ -20,10 +19,11 @@ class EliminarHistoricos(models.Model):
     file_content = fields.Text('Texto archivo')
     delimiter = fields.Char('Delimitador', default=";")
     skip_first_line = fields.Boolean('Saltear primera linea', default=True)
-    # manager = fields.Many2one('ati.gestor', 'Gestor', required=True)
-    # eliminados = fields.Text('Eliminados')
-    #
-    # def btn_delete(self):
+    manager = fields.Many2one('ati.gestor', 'Gestor', required=True)
+    eliminados = fields.Text('Eliminados')
+
+    def btn_delete(self):
+        pass
     #     _eliminados = ""
     #     self.ensure_one()
     #     if not self.delimiter:
