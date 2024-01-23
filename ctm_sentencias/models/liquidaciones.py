@@ -117,7 +117,7 @@ class Liquidaciones(models.Model):
                     tasa = 0
             if cont > 0:
                 dias = (fecha - fecha_anterior).days
-                interes = ((1 + (tasa/100)) ** (1/365) - 1) * dias * self.valor_condena
+                interes = round(((1 + (tasa/100)) ** (1/365) - 1), 6) * dias * self.valor_condena
 
             self.env['ctm.liquidaciones_resumen'].create({
                 'liquidacion_id': self.id,
@@ -164,12 +164,6 @@ class Liquidaciones(models.Model):
         res.name = "Liquidación" ' - ' + res.sentencia.name
         return res
 
-
-
-
-
-
-
 class LiquidacionesResumen(models.Model):
     _name = 'ctm.liquidaciones_resumen'
     _description = "Liquidaciones Resumen Cuantum"
@@ -177,7 +171,7 @@ class LiquidacionesResumen(models.Model):
 
     liquidacion_id = fields.Many2one('ctm.liquidaciones', 'Liquidación')
     fecha = fields.Date('Fecha', required=1)
-    tasa = fields.Float('Tasa', digits=(10, 3))
+    tasa = fields.Float('Tasa', digits=(10, 6))
     interes = fields.Float('Interés')
 
 
