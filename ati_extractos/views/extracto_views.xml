@@ -37,7 +37,11 @@
                     </div>
                     <group name="cliente">
                         <group name="izquierda">
-                            <field name="cliente" attrs="{'readonly': [('state', 'in', ['validated','send'])]}"/>
+                            <field name="cliente"
+                                   attrs="{'readonly': [('state', 'in', ['validated','send'])]}"
+                                   options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
+                                            "no_create":True, "no_open":True}'
+                            />
                             <field name="email_cliente" />
                         </group>
                         <group name="derecha">
