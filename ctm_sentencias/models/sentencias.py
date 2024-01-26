@@ -20,4 +20,3 @@ class Sentencias(models.Model):
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
     fecha_liquidar = fields.Date('Fecha a Liquidar', required=1)
     valor_condena = fields.Float('Valor Condena', required=1)
-
