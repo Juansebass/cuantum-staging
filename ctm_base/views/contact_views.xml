@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <record id="menu_contacts_inherit" model="ir.ui.menu">
+            <field name="name">Contacts Custom</field>
+            <field name="inherit_id" ref="contacts.res_partner_menu_config"/>
+            <field name="groups_id" eval="[(4, ref('ctm_base.group_cuantum_manager'))]"/>
+        </record>
+    </data>
+</odoo>

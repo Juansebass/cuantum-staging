@@ -8,9 +8,11 @@
     'author': 'Juan Sebastian Correa Acevedo',
     'license': '',
     'depends': [
+        'contacts'
         ],
     'data': [
         'security/cuantum_security.xml',
+        'views/contact_views.xml'
     ],
     'installable': True,
     'auto_install': False
