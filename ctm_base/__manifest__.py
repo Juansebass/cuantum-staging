@@ -10,7 +10,7 @@
     'depends': [
         ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/cuantum_security.xml',
     ],
     'installable': True,
     'auto_install': False
