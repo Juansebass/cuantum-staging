@@ -20,7 +20,10 @@
                     <group>
                         <group>
                             <field name="investment_type" />
-                            <field name="client" domain="[('vinculado', '=', True)]"/>
+                            <field name="client" domain="[('vinculado', '=', True)]"
+                                   options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
+                                            "no_create":True, "no_open":True}'
+                            />
                             <field name="manager" />
                             <field name="issuing" domain="[('emisor', '=', True)]"/>
                             <field name="payer" domain="[('pagador', '=', True)]"/>
