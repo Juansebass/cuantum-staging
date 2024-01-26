@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record id="contacts.res_partner_menu_config" model="ir.ui.menu">
-            <field name="groups_id" eval="[(4, ref('ctm_base.group_cuantum_manager'))]"/>
+            <field name="groups_id" eval="[(6, 0, ref('ctm_base.group_cuantum_manager'))]"/>
         </record>
     </data>
 </odoo>
