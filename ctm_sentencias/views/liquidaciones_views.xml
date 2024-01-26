@@ -36,8 +36,14 @@
                     <group name="cliente">
                         <group name="izquierda">
                             <field name="sentencia" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
-                            <field name="emisor" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
-                            <field name="pagador" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="emisor" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"
+                                   options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
+                                            "no_create":True, "no_open":True}'
+                            />
+                            <field name="pagador" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"
+                                   options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
+                                            "no_create":True, "no_open":True}'
+                            />
                             <field name="codigo" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
 
                         </group>
