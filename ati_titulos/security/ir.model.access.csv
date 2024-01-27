@@ -4,12 +4,15 @@ access_ati_titulo_son_user,ati.titulo.son.user,model_ati_titulo_son,base.group_u
 access_ati_titulo_historico_user,ati.titulo.historico.user,model_ati_titulo_historico,base.group_user,1,1,1,1
 access_ati_titulo_oferta_user,ati.titulo.oferta.user,model_ati_titulo_oferta,base.group_user,1,1,1,1
 access_ati_import_oferta_titulos_user,ati.import.oferta.titulos.user,model_ati_import_oferta_titulos,base.group_user,1,1,1,1
-access_ati_gestor_user,ati.gestor.user,model_ati_gestor,base.group_user,1,1,1,1
-access_ati_investment_type_user,ati.investment.type.user,model_ati_investment_type,base.group_user,1,1,1,1
+
+access_ati_gestor_user,ati.gestor.user,model_ati_gestor,base.group_user,1,0,0,0
+access_ati_gestor_manager,ati.gestor.manager,model_ati_gestor,ctm_base.group_cuantum_manager,1,1,1,1
+
+access_ati_investment_type_user,ati.investment.type.user,model_ati_investment_type,base.group_user,1,0,0,0
+access_ati_investment_type_manager,ati.investment.type.manager,model_ati_investment_type,ctm_base.group_cuantum_manager,1,1,1,1
 
 access_ati_movement_type,ati.movement.type.user,model_ati_movement_type,base.group_user,1,0,0,0
 access_ati_movement_type_manager,ati.movement.type.manager,model_ati_movement_type,ctm_base.group_cuantum_manager,1,1,1,1
-
 
 access_ati_state_titulo,ati.state.titulo.user,model_ati_state_titulo,base.group_user,1,1,1,1
 access_ati_state_periodo,ati.state.periodo.user,model_ati_state_periodo,base.group_user,1,1,1,1
