@@ -14,7 +14,9 @@ access_ati_investment_type_manager,ati.investment.type.manager,model_ati_investm
 access_ati_movement_type,ati.movement.type.user,model_ati_movement_type,base.group_user,1,0,0,0
 access_ati_movement_type_manager,ati.movement.type.manager,model_ati_movement_type,ctm_base.group_cuantum_manager,1,1,1,1
 
-access_ati_state_titulo,ati.state.titulo.user,model_ati_state_titulo,base.group_user,1,1,1,1
+access_ati_state_titulo,ati.state.titulo.user,model_ati_state_titulo,base.group_user,1,0,0,0
+access_ati_state_titulo_manager,ati.state.titulo.manager,model_ati_state_titulo,ctm_base.group_cuantum_manager,1,1,1,1
+
 access_ati_state_periodo,ati.state.periodo.user,model_ati_state_periodo,base.group_user,1,1,1,1
 access_import_libranzas_user,import.libranzas.user,model_import_libranzas,base.group_user,1,1,1,1
 access_import_factoring_user,import.factoring.user,model_import_factoring,base.group_user,1,1,1,1
