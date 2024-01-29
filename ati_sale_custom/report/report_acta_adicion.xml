@@ -97,7 +97,7 @@
                             anterior, se suscribe la presente Acta de Adición, en tres (3) ejemplares del mismo tenor y
                             valor legal, a los ____________________ (__) días del mes de <b><span t-esc="result['mes_letra']"/></b> de dos mil
                             veintitrés
-                            <b>(2023)</b>.
+                            <b>(2024)</b>.
 
                         </p>
                         <br/>
@@ -106,19 +106,6 @@
 
                         <table style="width:100%; border:none;">
                             <tr>
-                                <td>
-                                    <p class="text-justify">
-                                        <b>EL FIDEICOMISO</b><br/><br/><br/>
-
-
-                                        <b>CARLOS MARIO GÓMEZ CORREA</b><br/>
-                                        C.C. 71.616.951<br/>
-                                        Representante legal<br/>
-                                        <b>FIDUCIARIA CENTRAL S.A., </b><br/>
-                                        Como vocera del <b>FIDEICOMISO <br/>
-                                        CUANTUM LIBRANZAS </b>
-                                    </p>
-                                </td>
                                 <td>
                                     <p class="text-justify pl-6">
                                         <b>EL FIDEICOMITENTE GESTOR</b><br/><br/><br/>
@@ -130,10 +117,7 @@
                                             FINANCIERAS S.A. </b><br/>
                                         <b>FIDEICOMITENTE GESTOR</b>
                                     </p>
-
                                 </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <br/>
                                     <br/>
@@ -145,7 +129,6 @@
                                 </p>
                                 </td>
                             </tr>
-
                         </table>
                     </div>
                 </t>
