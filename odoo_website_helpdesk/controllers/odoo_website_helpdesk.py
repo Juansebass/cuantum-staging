@@ -46,7 +46,7 @@ class WebsiteForm(WebsiteForm):
                 'email': kwargs.get('email_from'),
                 'phone': kwargs.get('phone'),
                 'priority': kwargs.get('priority'),
-                'stage_id': request.env['ticket.stage'].search(
+                'stage_id': request.env['ticket.stage'].sudo().search(
                     [('name', '=', 'Inbox')], limit=1).id,
             }
             partner = request.env['res.users'].sudo().browse(
