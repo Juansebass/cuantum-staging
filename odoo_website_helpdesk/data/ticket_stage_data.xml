@@ -7,11 +7,6 @@
             <field name="name">Inbox</field>
         </record>
 
-        <record id="stage_draft" model="ticket.stage">
-            <field name="sequence">15</field>
-            <field name="name">Draft</field>
-        </record>
-
         <record id="ticket_stage_03" model="ticket.stage">
             <field name="sequence">20</field>
             <field name="name">In Progress</field>
