@@ -9,9 +9,9 @@
 <!--            <field name="email_to">{{object.sudo().}}</field>-->
             <field name="body_html" type="html">
                 <div>
-                    <t t-out="object.team_id.name or 'Helpdesk' "></t>,<br /><br />
+                    Equipo de <t t-out="object.team_id.name or 'Helpdesk' "></t>,<br /><br />
 
-                     Se ha asignado el ticket <t t-out="object.name or ''"></t>, <t t-out="object.id or ''"></t>,
+                     Se ha asignado el ticket <t t-out="object.name or ''"></t> en Mesa de ayuda.
 
                 </div>
             </field>

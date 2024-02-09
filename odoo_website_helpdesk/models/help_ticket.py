@@ -237,7 +237,7 @@ class HelpDeskTicket(models.Model):
             odoobot_id = self.env['ir.model.data'].sudo().xmlid_to_res_id("base.partner_root")
 
             email_data = {
-                'email_from': odoobot_id.email,
+                'email_from': "comunicaciones@cuantum.co",
                 'email_to': notification_emails
             }
             template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
