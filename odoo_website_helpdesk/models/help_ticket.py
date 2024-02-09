@@ -230,15 +230,12 @@ class HelpDeskTicket(models.Model):
     def _inverse_team_id(self):
         for rec in self:
             #Enviando notificación
-            notification_ids = []
+            notification_emails = ""
             for user in rec.team_id.member_ids:
-                notification_ids.append((0, 0, {
-                    'res_partner_id': user.partner_id.id,
-                    'notification_type': 'email'}))
-            # template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
-            # mail = template.send_mail(rec.id, force_send=True)
+                notification_emails += "{0};".format(user.partner_id.email)
 
-            body = 'Se creó el ticket {0}, por favor revisar'.format(rec.name)
-            rec.message_post(body=body, message_type='email',
-                                subtype_xmlid='mail.mt_comment',
-                                notification_ids=notification_ids)
+            email_data = {
+                'email_to': notification_emails
+            }
+            template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
+            mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
