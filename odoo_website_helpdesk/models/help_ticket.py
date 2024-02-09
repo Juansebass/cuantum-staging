@@ -234,7 +234,7 @@ class HelpDeskTicket(models.Model):
             for user in rec.team_id.member_ids:
                 notification_ids.append((0, 0, {
                     'res_partner_id': user.partner_id.id,
-                    'notification_type': 'inbox'}))
+                    'notification_type': 'email'}))
             # template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
             # mail = template.send_mail(rec.id, force_send=True)
 
