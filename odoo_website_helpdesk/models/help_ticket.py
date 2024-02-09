@@ -84,7 +84,7 @@ class HelpDeskTicket(models.Model):
                                 help="Set the priority level")
     stage_id = fields.Many2one('ticket.stage', string='Stage',
                                default=lambda self: self.env.ref(
-                                   'odoo_website_helpdesk.stage_draft').id,
+                                   'odoo_website_helpdesk.stage_inbox').id,
                                tracking=True,
                                group_expand='_read_group_stage_ids',
                                help="Stages of the Ticket")
