@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Project Stages -->
+        <record id="team_soporte" model="ticket.stage">
+            <field name="name">Soporte</field>
+        </record>
+
+        <record id="team_cliente_comprador" model="ticket.stage">
+            <field name="name">Cliente Comprador</field>
+        </record>
+
+        <record id="team_cliente_factoring" model="ticket.stage">
+            <field name="name">Cliente Factoring</field>
+        </record>
+
+        <record id="team_cliente_libranzas" model="ticket.stage">
+            <field name="name">Cliente Libranzas</field>
+        </record>
+
+        <record id="team_cliente_sentencias" model="ticket.stage">
+            <field name="name">Cliente Sentencias</field>
+        </record>
+
+        <record id="team_juridico" model="ticket.stage">
+            <field name="name">Jurídico</field>
+        </record>
+
+    </data>
+</odoo>
