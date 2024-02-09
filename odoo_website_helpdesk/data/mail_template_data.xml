@@ -17,5 +17,22 @@
             </field>
             <field name="auto_delete" eval="False"/>
         </record>
+
+        <record id="new_ticket_confirm_email_template" model="mail.template">
+            <field name="name">Ticket: Nuevo Ticket</field>
+            <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
+            <field name="subject">{{object.name}}</field>
+            <field name="body_html" type="html">
+                <div>
+                     <t t-out="object.customer_name or 'Usuario' "></t>,<br /><br />
+
+                     Se ha crado el ticket <t t-out="object.name or ''"></t> en nuestra Mesa de ayuda.<br />
+
+                    Este será atendido lo antes posible por nuestro equipo de soporte.
+
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
     </data>
 </odoo>

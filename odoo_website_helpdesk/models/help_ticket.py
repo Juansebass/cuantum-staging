@@ -131,6 +131,15 @@ class HelpDeskTicket(models.Model):
         #Asigando grupo por defecto
         team_soporte = self.env.ref('odoo_website_helpdesk.team_soporte').id
         res.team_id = team_soporte
+
+        #Enviando Email
+        email_data = {
+            'email_from': "comunicaciones@cuantum.co",
+            'email_to': res.email
+        }
+        template = self.env.ref('odoo_website_helpdesk.new_ticket_confirm_email_template')
+        mail = template.send_mail(res.id, force_send=True, email_values=email_data)
+
         return res
 
     def _compute_show_create_task(self):
@@ -247,4 +256,4 @@ class HelpDeskTicket(models.Model):
                 'email_to': notification_emails
             }
             template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
-            mail = template.send_mail(rec.id, force_send=True, email_values=email_data, author_id=1)
+            mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
