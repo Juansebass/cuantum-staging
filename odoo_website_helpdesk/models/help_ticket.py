@@ -239,5 +239,5 @@ class HelpDeskTicket(models.Model):
             body = 'Se creó el ticket {0}, por favor revisar'.format(rec.name)
             rec.message_post(body=body, message_type='notification',
                                 subtype_xmlid='mail.mt_comment',
+                                author_id=self.env.user.partner_id.id,
                                 notification_ids=notification_ids)
-            
