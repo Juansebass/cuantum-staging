@@ -247,4 +247,4 @@ class HelpDeskTicket(models.Model):
                 'email_to': notification_emails
             }
             template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
-            mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
+            mail = template.send_mail(rec.id, force_send=True, email_values=email_data, author_id=1)
