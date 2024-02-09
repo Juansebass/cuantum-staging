@@ -125,6 +125,14 @@ class HelpDeskTicket(models.Model):
                               help="Indicates whether the ticket is billable "
                                    "or not.")
 
+    @api.model
+    def create(self, var):
+        res = super(HelpDeskTicket, self).create(var)
+        #Asigando grupo por defecto
+        team_soporte = self.env.ref('odoo_website_helpdesk.team_soporte').id
+        res.team_id = team_soporte
+        return res
+
     def _compute_show_create_task(self):
         """Compute the value of the 'show_create_task' field for each record in
         the current recordset."""
