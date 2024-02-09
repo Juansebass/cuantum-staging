@@ -67,7 +67,7 @@ class HelpDeskTicket(models.Model):
     phone = fields.Char(string='Phone', help="Phone Number of the user")
     team_id = fields.Many2one('help.team', string='Helpdesk Team',
                               help="The helpdesk team responsible for handling "
-                                   "requests related to this record.")
+                                   "requests related to this record.", inverse="_inverse_team_id")
     product_id = fields.Many2one('product.product', string='Product',
                                  help='The product associated with this record.'
                                       'This field allows you to select an '
@@ -225,3 +225,19 @@ class HelpDeskTicket(models.Model):
             'view_mode': 'tree,form',
             'type': 'ir.actions.act_window',
         }
+
+
+    def _inverse_team_id(self):
+        for rec in self:
+            #Enviando notificación
+            notification_ids = []
+            for user in rec.team_id.member_ids:
+                notification_ids.append((0, 0, {
+                    'res_partner_id': user.partner_id.id,
+                    'notification_type': 'inbox'}))
+
+            body = 'Se creó el ticket {0}, por favor revisar'.format(rec.name)
+            rec.message_post(body=body, message_type='notification',
+                                subtype_xmlid='mail.mt_comment',
+                                notification_ids=notification_ids)
+            

@@ -37,6 +37,7 @@
         'security/ir.model.access.csv',
         'data/ticket_sequence_data.xml',
         'data/ticket_stage_data.xml',
+        'data/mail_template_data.xml',
         'report/help_ticket_reports.xml',
         'report/help_ticket_templates.xml',
         'views/ticket_stage_views.xml',
