@@ -234,7 +234,10 @@ class HelpDeskTicket(models.Model):
             for user in rec.team_id.member_ids:
                 notification_emails += "{0};".format(user.partner_id.email)
 
+            odoobot_id = self.env['ir.model.data'].sudo().xmlid_to_res_id("base.partner_root")
+
             email_data = {
+                'email_from': odoobot_id.email,
                 'email_to': notification_emails
             }
             template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
