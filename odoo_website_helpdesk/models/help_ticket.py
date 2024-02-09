@@ -235,9 +235,10 @@ class HelpDeskTicket(models.Model):
                 notification_ids.append((0, 0, {
                     'res_partner_id': user.partner_id.id,
                     'notification_type': 'inbox'}))
+            # template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
+            # mail = template.send_mail(rec.id, force_send=True)
 
             body = 'Se creó el ticket {0}, por favor revisar'.format(rec.name)
-            rec.message_post(body=body, message_type='notification',
+            rec.message_post(body=body, message_type='email',
                                 subtype_xmlid='mail.mt_comment',
-                                author_id=self.env.user.partner_id.id,
                                 notification_ids=notification_ids)
