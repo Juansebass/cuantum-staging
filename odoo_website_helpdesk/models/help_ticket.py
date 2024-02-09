@@ -41,7 +41,7 @@ class HelpDeskTicket(models.Model):
 
     _name = 'help.ticket'
     _description = 'Helpdesk Ticket'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin', "portal.mixin"]
 
     def _default_show_create_task(self):
         """Get the value for the 'show_create_task' field in config settings."""
