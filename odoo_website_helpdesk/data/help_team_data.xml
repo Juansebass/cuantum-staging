@@ -2,27 +2,27 @@
 <odoo>
     <data>
         <!-- Project Stages -->
-        <record id="team_soporte" model="ticket.stage">
+        <record id="team_soporte" model="help.team">
             <field name="name">Soporte</field>
         </record>
 
-        <record id="team_cliente_comprador" model="ticket.stage">
+        <record id="team_cliente_comprador" model="help.team">
             <field name="name">Cliente Comprador</field>
         </record>
 
-        <record id="team_cliente_factoring" model="ticket.stage">
+        <record id="team_cliente_factoring" model="help.team">
             <field name="name">Cliente Factoring</field>
         </record>
 
-        <record id="team_cliente_libranzas" model="ticket.stage">
+        <record id="team_cliente_libranzas" model="help.team">
             <field name="name">Cliente Libranzas</field>
         </record>
 
-        <record id="team_cliente_sentencias" model="ticket.stage">
+        <record id="team_cliente_sentencias" model="help.team">
             <field name="name">Cliente Sentencias</field>
         </record>
 
-        <record id="team_juridico" model="ticket.stage">
+        <record id="team_juridico" model="help.team">
             <field name="name">Jurídico</field>
         </record>
 
