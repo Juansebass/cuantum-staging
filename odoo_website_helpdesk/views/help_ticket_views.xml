@@ -44,12 +44,12 @@
                             <field name="customer_name"/>
                             <field name="email"/>
                             <field name="phone"/>
-                            <field name="cost"/>
+                            <field name="cost" invisible="1"/>
                             <field name="start_date"/>
                         </group>
                         <group>
                             <field name="team_id"/>
-                            <field name="project_id"/>
+                            <field name="project_id" invisible="1"/>
                             <field name="service_product_id" attrs="{'invisible':[('create_task','=',False)],
                          'required': [('create_task','=', True)]}"/>
                             <field name="priority" widget="priority"/>
