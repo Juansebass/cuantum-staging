@@ -27,7 +27,7 @@
                                     <div class="col-lg-7 col-xl-6 mr-lg-auto">
                                         <span class="d-block fa fa-4x fa-handshake-o mx-auto rounded-circle bg-primary"/>
                                         <br/>
-                                        <h1 class="text-center">Thank You!</h1>
+                                        <h1 class="text-center">Gracias!</h1>
                                         <div class="pb16 pt16 s_hr"
                                              data-snippet="s_hr"
                                              data-name="Separator">
@@ -35,43 +35,42 @@
                                         </div>
                                         <h5 class="text-center">
                                             <span class="fa fa-check-circle"/>
-                                            <span>Your Ticket
+                                            <span>Tu Ticket
                                                 <a t-attf-href="/my/tickets">
                                                     <strong>
                                                         <t t-esc="request.session.ticket_number"/>
                                                     </strong>
                                                 </a>
-                                                has been registered
-                                                <b>successfully</b>
+                                                Ha sido registrado
+                                                <b>satisfactoriamente</b>
                                             </span>
                                         </h5>
-                                        <p class="text-center">We will get back
-                                            to you shortly.
+                                        <p class="text-center">Pronto nos comunicaremos contigo
                                         </p>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <ul class="list-unstyled mb-0 pl-2">
-                                            <li>My Company</li>
-                                            <li>
-                                                <i class="fa fa-map-marker fa-fw mr-2"/>
-                                                <span class="o_force_ltr">3575
-                                                    Demo Buena Vista Avenue
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-phone fa-fw mr-2"/>
-                                                <span class="o_force_ltr">+1
-                                                    (650) 555-0111
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-1x fa-fw fa-envelope mr-2"/>
-                                                <span>
-                                                    info@yourcompany.example.com
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
+<!--                                    <div class="col-lg-4">-->
+<!--                                        <ul class="list-unstyled mb-0 pl-2">-->
+<!--                                            <li>My Company</li>-->
+<!--                                            <li>-->
+<!--                                                <i class="fa fa-map-marker fa-fw mr-2"/>-->
+<!--                                                <span class="o_force_ltr">3575-->
+<!--                                                    Demo Buena Vista Avenue-->
+<!--                                                </span>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <i class="fa fa-phone fa-fw mr-2"/>-->
+<!--                                                <span class="o_force_ltr">+1-->
+<!--                                                    (650) 555-0111-->
+<!--                                                </span>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <i class="fa fa-1x fa-fw fa-envelope mr-2"/>-->
+<!--                                                <span>-->
+<!--                                                    info@yourcompany.example.com-->
+<!--                                                </span>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                         </section>
@@ -168,7 +167,7 @@
                                                                style="width: 200px"
                                                                for="contact2">
                                                             <span class="s_website_form_label_content">
-                                                                Phone
+                                                                Teléfono
                                                             </span>
                                                         </label>
                                                         <div class="col-sm">
@@ -214,7 +213,7 @@
                                                                style="width: 200px"
                                                                for="contact4">
                                                             <span class="s_website_form_label_content">
-                                                                Company
+                                                                Compañía
                                                             </span>
                                                         </label>
                                                         <div class="col-sm">
@@ -235,7 +234,7 @@
                                                                style="width: 200px"
                                                                for="contact5">
                                                             <span class="s_website_form_label_content">
-                                                                Subject
+                                                                Asunto
                                                             </span>
                                                             <span class="s_website_form_mark">
                                                                 *
@@ -260,7 +259,7 @@
                                                                style="width: 200px"
                                                                for="contact6">
                                                             <span class="s_website_form_label_content">
-                                                                Description
+                                                                Descripción
                                                             </span>
                                                         </label>
                                                         <div class="col-sm">
@@ -282,7 +281,7 @@
                                                         <label class="col-form-label col-sm-auto s_website_form_label"
                                                                style="width: 200px">
                                                             <span class="s_website_form_label_content">
-                                                                Priority
+                                                                Prioridad
                                                             </span>
                                                         </label>
                                                         <div class="col-sm">
@@ -292,17 +291,16 @@
                                                                     class="form-control s_website_form_input">
                                                                 <option value="0"
                                                                         selected="selected">
-                                                                    Very
-                                                                    Low
+                                                                    Muy Baja
                                                                 </option>
                                                                 <option value="1">
-                                                                    Low
+                                                                    Baja
                                                                 </option>
                                                                 <option value="2">
                                                                     Normal
                                                                 </option>
                                                                 <option value="3">
-                                                                    High
+                                                                    Alta
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -317,7 +315,7 @@
                                                                style="width: 200px"
                                                                for="contact6">
                                                             <span class="s_website_form_label_content">
-                                                                Attachment
+                                                                Adjunto
                                                             </span>
                                                         </label>
                                                         <div class="col-sm">
@@ -360,30 +358,30 @@
                                     </div>
                                 </section>
                             </div>
-                            <div class="col-lg-4 m-1 mt-5 mt-lg-0">
-                                <ul class="list-unstyled  mb-0 pl-2">
-                                    <li class="mt-5">My Company</li>
-                                    <li>
-                                        <i class="fa fa-map-marker fa-fw mr-2"/>
-                                        <span class="o_force_ltr">3575 Demo
-                                            Buena
-                                            Vista Avenue
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-phone fa-fw mr-2"/>
-                                        <span class="o_force_ltr">+1 (650)
-                                            555-0111
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-1x fa-fw fa-envelope mr-2"/>
-                                        <span>
-                                            info@yourcompany.example.com
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
+<!--                            <div class="col-lg-4 m-1 mt-5 mt-lg-0">-->
+<!--                                <ul class="list-unstyled  mb-0 pl-2">-->
+<!--                                    <li class="mt-5">My Company</li>-->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-map-marker fa-fw mr-2"/>-->
+<!--                                        <span class="o_force_ltr">3575 Demo-->
+<!--                                            Buena-->
+<!--                                            Vista Avenue-->
+<!--                                        </span>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-phone fa-fw mr-2"/>-->
+<!--                                        <span class="o_force_ltr">+1 (650)-->
+<!--                                            555-0111-->
+<!--                                        </span>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-1x fa-fw fa-envelope mr-2"/>-->
+<!--                                        <span>-->
+<!--                                            info@yourcompany.example.com-->
+<!--                                        </span>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </section>

@@ -21,7 +21,7 @@
                 <a t-if="ticket" t-attf-href="/my/tickets?{{ keep_query() }}">
                     Tickets
                 </a>
-                <t t-else="">HelpDesk Tickets</t>
+                <t t-else="">Tickets</t>
             </li>
             <li t-if="ticket" class="breadcrumb-item active">
                 <t t-esc="ticket.name" t-if="ticket.name != '/'"/>
@@ -43,11 +43,11 @@
                         <th>
                             <span class='d-none d-md-inline'>Ticket #</span>
                         </th>
-                        <th class="text-right">Subject</th>
-                        <th style="display:none;" class="text-right">Priority
+                        <th class="text-right">Asunto</th>
+                        <th style="display:none;" class="text-right">Prioridad
                         </th>
-                        <th class="text-right">Date</th>
-                        <th class="text-right">Stage</th>
+                        <th class="text-right">Fecha</th>
+                        <th class="text-right">Etapa</th>
                     </tr>
                 </thead>
                 <tbody>
