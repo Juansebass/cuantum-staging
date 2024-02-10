@@ -3,7 +3,7 @@
     <data noupdate="1">
         <!--    Sequence of ticket-->
         <record id="sequence_help_ticket_seq" model="ir.sequence">
-            <field name="name">Helpdesk</field>
+            <field name="name">Mesa de Ayuda</field>
             <field name="code">help.ticket</field>
             <field name="prefix">TKT</field>
             <field name="padding">5</field>
