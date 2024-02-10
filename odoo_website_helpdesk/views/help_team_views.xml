@@ -52,7 +52,7 @@
     </record>
 <!--   Helpdesk_team_action-->
     <record id="help_team_action" model="ir.actions.act_window">
-        <field name="name">Helpdesk</field>
+        <field name="name">Mesa de Ayuda</field>
         <field name="res_model">help.team</field>
         <field name="view_mode">tree,form</field>
     </record>

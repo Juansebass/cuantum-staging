@@ -192,7 +192,7 @@
     </record>
     <!--Help_ticket_actions-->
    <record id="help_ticket_action" model="ir.actions.act_window">
-        <field name="name">Helpdesk</field>
+        <field name="name">Mesa de Ayuda</field>
         <field name="res_model">help.ticket</field>
         <field name="view_mode">kanban,tree,form,calendar,activity</field>
     </record>

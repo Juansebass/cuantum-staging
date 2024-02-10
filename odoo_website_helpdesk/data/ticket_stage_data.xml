@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
+    <data>
         <!-- Project Stages -->
         <record id="stage_inbox" model="ticket.stage">
             <field name="sequence">10</field>
@@ -9,18 +9,18 @@
 
         <record id="ticket_stage_03" model="ticket.stage">
             <field name="sequence">20</field>
-            <field name="name">In Progress</field>
+            <field name="name">En Progreso</field>
         </record>
 
         <record id="ticket_stage_04" model="ticket.stage">
             <field name="sequence">25</field>
-            <field name="name">Done</field>
+            <field name="name">Terminado</field>
             <field name="folded" eval="True"/>
         </record>
 
         <record id="ticket_stage_05" model="ticket.stage">
             <field name="sequence">30</field>
-            <field name="name">Canceled</field>
+            <field name="name">Cancelado</field>
             <field name="folded" eval="True"/>
         </record>
     </data>
