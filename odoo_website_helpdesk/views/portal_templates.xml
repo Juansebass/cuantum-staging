@@ -19,7 +19,7 @@
     </template>
     <!--Portal_my_home_helpdesk-->
     <template id="portal_my_home_helpdesk" name="Tickets"
-              inherit_id="portal.portal_my_home" priority="1"
+              inherit_id="portal.portal_my_home"
               customize_show="True">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <t t-call="portal.portal_docs_entry">
