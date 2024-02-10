@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="portal_my_home_helpdesk" name="Tickets"
+    <template id="portal_my_home_helpdesk_count" name="Tickets"
               inherit_id="portal.portal_my_home"
               customize_show="True">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
