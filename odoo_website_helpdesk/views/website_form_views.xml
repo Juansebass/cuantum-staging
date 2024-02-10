@@ -2,7 +2,7 @@
 <odoo>
     <!--    Website_helpdesk_menu-->
     <record id="website_helpdesk" model="website.menu">
-        <field name="name">Helpdesk</field>
+        <field name="name">Mesa de Ayuda</field>
         <field name="url" eval="'/helpdesk_ticket'"/>
         <field name="parent_id" ref="website.main_menu"/>
         <field name="sequence" type="int">55</field>
@@ -347,7 +347,7 @@
                                                          class="s_website_form_label"/>
                                                     <a href="#" role="button"
                                                        class="btn btn-primary btn-lg s_website_form_send">
-                                                        Submit
+                                                        Enviar
                                                     </a>
                                                     <span id="s_website_form_result"/>
                                                 </div>

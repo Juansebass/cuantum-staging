@@ -12,7 +12,7 @@
             <xpath expr="//div[hasclass('settings')]" position="inside">
                 <div class="app_settings_block" data-string="Helpdesk"
                      string="Helpdesk" data-key="odoo_website_helpdesk">
-                    <h2>Helpdesk</h2>
+                    <h2>Mesa de Ayuda</h2>
                     <div class="row mt16 o_settings_container">
                         <div class="col-lg-6 o_setting_box">
                             <div class="o_setting_left_pane">
