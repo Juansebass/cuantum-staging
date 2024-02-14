@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="model_ctm_certificado_view_form" model="ir.ui.view">
+        <field name="name">ctm.certificado.view.form</field>
+        <field name="model">ctm.certificado</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="generar_certificado" type="object" string="Generar Certificado" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="cliente">
+                        <group name="izquierda">
+                            <field name="cliente"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])]}"
+                                   options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
+                                            "no_create":True, "no_open":True}'
+                            />
+                            <field name="year" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </group>
+                        <group name="derecha">
+                            <field name="type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </group>
+                    </group>
+                    <separator string="Valores" />
+                    <group name="valores">
+                        <group>
+                            <field name="facturas_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="facturas_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="sentencias_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="sentencias_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="libranzas_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="libranzas_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+
+                        </group>
+
+                        <group>
+                            <field name="mutuos_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="mutuos_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="rpr_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                            <field name="rpr_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
+                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="model_ctm_certificado_view_tree" model="ir.ui.view">
+        <field name="name">ati.certificado.view.tree</field>
+        <field name="model">ati.certificado</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="cliente" />
+                <field name="type" />
+                <field name="year" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

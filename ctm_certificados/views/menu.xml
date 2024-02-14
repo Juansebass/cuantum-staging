@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="action_open_certificado" model="ir.actions.act_window">
+        <field name="name">Certificados</field>
+        <field name="res_model">ctm.certificado</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu y Menus principales -->
+    <menuitem id="menu_certificado_main" name="Certificados"  web_icon="ctm_certificado,static/description/icon.png" />
+    <menuitem id="menu_certificado" sequence="1" name="Certificados" parent="menu_certificado_main" action="action_open_certificado"/>
+
+</odoo>
