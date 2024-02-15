@@ -32,29 +32,29 @@
                     <separator string="Valores" />
                     <group name="valores">
                         <group>
-                            <field name="facturas_valor" attrs="{
+                            <field name="facturas_valor" readonly="1" attrs="{
                                 'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="facturas_rendimiento" attrs="{
+                            <field name="facturas_rendimiento" readonly="1" attrs="{
                                     'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="sentencias_valor" attrs="{
+                            <field name="sentencias_valor" readonly="1" attrs="{
                                 'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="sentencias_rendimiento" attrs="{
+                            <field name="sentencias_rendimiento" readonly="1" attrs="{
                                     'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="libranzas_valor" attrs="{
+                            <field name="libranzas_valor" readonly="1" attrs="{
                                 'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="libranzas_rendimiento" attrs="{
+                            <field name="libranzas_rendimiento" readonly="1" attrs="{
                                     'invisible': [('type', 'not in', ['comprador'])]}"/>
 
                         </group>
 
                         <group>
-                            <field name="mutuos_valor" attrs="{
+                            <field name="mutuos_valor" readonly="1" attrs="{
                                 'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="mutuos_rendimiento" attrs="{
+                            <field name="mutuos_rendimiento" readonly="1" attrs="{
                                     'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="rpr_valor" attrs="{
+                            <field name="rpr_valor" readonly="1" attrs="{
                                 'invisible': [('type', 'not in', ['comprador'])]}"/>
-                            <field name="rpr_rendimiento" attrs="{
+                            <field name="rpr_rendimiento" readonly="1" attrs="{
                                     'invisible': [('type', 'not in', ['comprador'])]}"/>
                         </group>
                     </group>
