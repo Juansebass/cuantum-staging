@@ -26,7 +26,7 @@
                         </group>
                         <group name="derecha">
                             <field name="type" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
-                            <field name="created_date" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
                         </group>
                     </group>
                     <separator string="Valores" />
