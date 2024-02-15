@@ -21,7 +21,7 @@
         <field name="name">Certificado Comprador</field>
         <field name="model">ctm.certificado</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">ctm_certificado.report_comprador</field>
+        <field name="report_name">ctm_certificados.report_comprador</field>
         <field name="paperformat_id" ref="paperformat_account_report_comprador" />
         <field name="binding_model_id" ref="ctm_certificados.model_ctm_certificado" />
         <field name="binding_type">report</field>
