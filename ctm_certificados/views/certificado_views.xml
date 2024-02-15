@@ -65,8 +65,8 @@
     </record>
 
     <record id="model_ctm_certificado_view_tree" model="ir.ui.view">
-        <field name="name">ati.certificado.view.tree</field>
-        <field name="model">ati.certificado</field>
+        <field name="name">ctm.certificado.view.tree</field>
+        <field name="model">ctm.certificado</field>
         <field name="arch" type="xml">
             <tree string="">
                 <field name="cliente" />
