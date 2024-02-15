@@ -33,29 +33,29 @@
                     <group name="valores">
                         <group>
                             <field name="facturas_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                                'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="facturas_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                                    'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="sentencias_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                                'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="sentencias_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                                    'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="libranzas_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                                'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="libranzas_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                                    'invisible': [('type', 'not in', ['comprador'])]}"/>
 
                         </group>
 
                         <group>
                             <field name="mutuos_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                                'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="mutuos_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                                    'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="rpr_valor" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                'invisible': [('type', 'not in', ['comprador'])}"/>
+                                'invisible': [('type', 'not in', ['comprador'])]}"/>
                             <field name="rpr_rendimiento" attrs="{'readonly': [('state', 'not in', ['draft'])],
-                                    'invisible': [('type', 'not in', ['comprador'])}"/>
+                                    'invisible': [('type', 'not in', ['comprador'])]}"/>
                         </group>
                     </group>
 
