@@ -37,5 +37,5 @@ class Extracto(models.Model):
     @api.model
     def create(self, var):
         res = super(Extracto, self).create(var)
-        res.name = 'Certificado/' + res.type + '/' + res.cliente + '/' + res.year
+        res.name = 'Certificado/' + res.type + '/' + res.cliente.name + '/' + res.year
         return res

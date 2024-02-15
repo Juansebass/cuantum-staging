@@ -8,7 +8,7 @@
     </record>
 
     <!-- Menu y Menus principales -->
-    <menuitem id="menu_certificado_main" name="Certificados"  web_icon="ctm_certificado,static/description/icon.png" />
+    <menuitem id="menu_certificado_main" name="Certificados"  web_icon="ctm_certificados,static/description/icon.png" />
     <menuitem id="menu_certificado" sequence="1" name="Certificados" parent="menu_certificado_main" action="action_open_certificado"/>
 
 </odoo>
