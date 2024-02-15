@@ -14,6 +14,7 @@
         'security/ir.model.access.csv',
         'views/menu.xml',
         'views/certificado_views.xml',
+        'report/report_comprador.xml'
         ],
     'installable': True,
     'application': True,

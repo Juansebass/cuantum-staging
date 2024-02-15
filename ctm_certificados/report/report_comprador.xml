@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_account_report_comprador"
+        model="report.paperformat">
+        <field name="name">European A4 Landscape</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">8</field>
+        <field name="margin_left">9</field>
+        <field name="margin_right">9</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_comprador" model="ir.actions.report">
+        <field name="name">Certificado Comprador</field>
+        <field name="model">ctm.certificado</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ctm_certificado.report_comprador</field>
+        <field name="paperformat_id" ref="paperformat_account_report_comprador" />
+        <field name="binding_model_id" ref="ctm_certificados.model_ctm_certificado" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_comprador">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+
+                        <t t-set="result" t-value="o.get_group_results_fcl()"/>
+                        <p class="text-center"><b>A QUIEN PUEDA INTERESAR</b></p><br/><br/>
+
+                        <p class="text-justify">
+                            <b><span t-field="o.company_id.name"/>, </b> sociedad comercial identificada con el NIT.
+                            <b>900.242.548-7,</b> certifica que la persona <b><span t-field="o.cliente.name"/>, </b>
+                            identificada con cédula de ciudadanía Nro. <b><span t-field="o.cliente.vat"/>,</b> ha
+                            suscrito un contrato marco de compraventa de derechos económicos con nuestra empresa, en
+                            virtud del cual ha adquirido diferentes activos en calidad de comprador, contando al 31 de
+                            diciembre de <span t-field="o.year"/> con activos ofrecidos por <b>CUANTUM</b> en los
+                            siguientes valores:
+                        </p>
+                        <br/>
+                        <br/>
+
+                        <table  style="border-collapse: collapse; border: 1px solid;width: 100%;">
+                            <thead class="text-center">
+                                <tr>
+                                    <th style="border: 1px solid; width:35%;">DETALLE</th>
+                                    <th style="border: 1px solid; width:30%;">VALOR</th>
+                                    <th style="border: 1px solid; width:35%;">RENDIMIENTO ANUAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>Facturas</b></td>
+                                    <td style="border: 1px solid;"><span t-field="o.facturas_valor"/></td>
+                                    <td style="border: 1px solid;"><span t-field="o.facturas_rendimiento"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>Sentencias</b></td>
+                                    <td style="border: 1px solid;"><span t-field="o.sentencias_valor"/></td>
+                                    <td style="border: 1px solid;"><span t-field="o.sentencias_rendimiento"/></td>
+
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>Libranzas 1</b></td>
+                                    <td style="border: 1px solid;"><span t-field="o.libranzas_valor"/></td>
+                                    <td style="border: 1px solid;"><span t-field="o.libranzas_rendimiento"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>Mutuos</b></td>
+                                    <td style="border: 1px solid;"><span t-field="o.mutuos_valor"/></td>
+                                    <td style="border: 1px solid;"><span t-field="o.mutuos_rendimiento"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid;"><b>RPR 2</b></td>
+                                    <td style="border: 1px solid;"><span t-field="o.rpr_valor"/></td>
+                                    <td style="border: 1px solid;"><span t-field="o.rpr_rendimiento"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/><br/>
+
+                        <p>Se expide por solicitud del comprador el ##########</p>
+
+                        <br/><br/><br/>
+
+                        <p>
+                            <b><span t-field="o.company_id.name"/></b><br/>
+                            NIT: 900.242.548-7<br/>
+                            Dirección: Carrera 25 # 4-165 Of. 9838 Ámsterdam Plaza. Medellín, Colombia.<br/>
+                            Teléfono: 604 460 9820<br/>
+                            Correo: servicioalcliente@cuantum.co
+                        </p>
+                        <br/>
+                        <br/>
+                        <br/>
+
+                        <p>
+                            1 Libranzas alojadas en el Fideicomiso Cuantum Libranzas.<br/>
+                            2 Recursos en Proceso de Recompra.<br/>
+                        </p>
+
+                        <footer>
+                            <b><span t-field="o.company_id.name"/></b> S.A.Dirección: Carrera 25 # 4-165 Of. 9838
+                            Ámsterdam Plaza. Medellín, Colombia.Teléfono: 604 460 9820Correo: servicioalcliente@cuantum.co
+                        </footer>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+
+</odoo>
