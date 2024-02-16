@@ -117,7 +117,7 @@ class Liquidaciones(models.Model):
                     tasa = 0
             if cont > 0:
                 dias = (fecha - fecha_anterior).days
-                interes = round(((1 + (tasa/100)) ** (1/365) - 1), 6) * dias * self.valor_condena
+                interes = ((1 + (tasa/100)) ** (1/365) - 1) * dias * self.valor_condena
 
             self.env['ctm.liquidaciones_resumen'].create({
                 'liquidacion_id': self.id,
