@@ -10,8 +10,8 @@ class Tasas(models.Model):
     name = fields.Char('Nombre')
     fecha_inicio = fields.Date('Fecha de Inicio', required=True)
     fecha_final = fields.Date('Fecha Final', required=True)
-    dtf = fields.Float('DTF',  digits=(10, 6), required=True, help="Por favor poner las tasas efectivas anuales")
-    usura = fields.Float('Usura',  digits=(10, 6), required=True, help="Por favor poner las tasas efectivas anuales")
+    dtf = fields.Float('DTF', required=True, help="Por favor poner las tasas efectivas anuales")
+    usura = fields.Float('Usura', required=True, help="Por favor poner las tasas efectivas anuales")
 
     @api.model
     def create(self, var):

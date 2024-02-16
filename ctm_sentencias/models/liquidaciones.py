@@ -171,7 +171,7 @@ class LiquidacionesResumen(models.Model):
 
     liquidacion_id = fields.Many2one('ctm.liquidaciones', 'Liquidación')
     fecha = fields.Date('Fecha', required=1)
-    tasa = fields.Float('Tasa', digits=(10, 6))
+    tasa = fields.Float('Tasa')
     interes = fields.Float('Interés')
 
 
