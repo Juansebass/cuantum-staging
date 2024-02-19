@@ -259,4 +259,22 @@ class HelpDeskTicket(models.Model):
             mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
 
     def send_response(self):
-        pass
+        compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
+        ctx = {
+            'default_model': 'ati.extracto',
+            'default_res_id': self.id,
+            'default_composition_mode': 'comment',
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+            'notify_followers': True,
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
