@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-    <template id="portal_extractossss" name="Portal Extractos" customize_show="True" inherit_id="portal.portal_my_home">
+    <template id="portal_extractossss" name="Portal Casos" customize_show="True" inherit_id="portal.portal_my_home">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <t t-call="portal.portal_docs_entry">
                 <t t-set="title">Casos</t>
@@ -11,16 +11,6 @@
         </xpath>
     </template>
 
-
-    <template id="portal_extractos_2" name="Portal Extractos" customize_show="True" inherit_id="portal.portal_my_home">
-        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
-            <t t-call="portal.portal_docs_entry">
-                <t t-set="title">Tickets</t>
-                <t t-set="url" t-value="'my/tickets'" />
-                <t t-set="placeholder_count" t-value="'ticket_count'" />
-            </t>
-        </xpath>
-    </template>
     <!--    Portal_my_home_menu_tickets-->
     <template id="portal_my_home_menu_tickets"
               name="Portal layout : upcoming tickets"
