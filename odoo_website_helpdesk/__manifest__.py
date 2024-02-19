@@ -32,7 +32,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://cybrosys.com/",
-    'depends': ['website', 'sale_project', 'hr_timesheet'],
+    'depends': ['portal', 'website', 'sale_project', 'hr_timesheet'],
     'data': [
         'security/ir.model.access.csv',
         'data/ticket_sequence_data.xml',
