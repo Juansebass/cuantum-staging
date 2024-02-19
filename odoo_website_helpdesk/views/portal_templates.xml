@@ -19,9 +19,9 @@
             <li t-if="page_name == 'ticket'"
                 t-attf-class="breadcrumb-item #{'active ' if not ticket else ''}">
                 <a t-if="ticket" t-attf-href="/my/tickets?{{ keep_query() }}">
-                    Tickets
+                    Casos
                 </a>
-                <t t-else="">Tickets</t>
+                <t t-else="">Casos</t>
             </li>
             <li t-if="ticket" class="breadcrumb-item active">
                 <t t-esc="ticket.name" t-if="ticket.name != '/'"/>
@@ -35,7 +35,7 @@
         <t t-call="portal.portal_layout">
             <t t-set="breadcrumbs_searchbar" t-value="True"/>
             <t t-call="portal.portal_searchbar">
-                <t t-set="title">My Tickets</t>
+                <t t-set="title">Mis Casos</t>
             </t>
             <t t-if="tickets" t-call="portal.portal_table">
                 <thead>
@@ -92,7 +92,7 @@
                 </tbody>
             </t>
             <p t-else="">
-                There are currently no tickets issued for your account.
+                No hay Casos activos para tu cuenta.
             </p>
         </t>
     </template>
