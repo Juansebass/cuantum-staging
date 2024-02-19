@@ -32,10 +32,10 @@ class TicketPortal(portal.CustomerPortal):
         """Prepares a dictionary of values to be used in the home portal view
         and get their count."""
         values = super()._prepare_home_portal_values(counters)
-        if 'ticket_count' in counters:
+        if 'count_ticket' in counters:
             ticket_count = request.env['help.ticket'].sudo().search_count(
                 self._get_tickets_domain())
-            values['ticket_count'] = ticket_count
+            values['count_ticket'] = ticket_count
         return values
 
     def _get_tickets_domain(self):
