@@ -7,7 +7,7 @@
             <t t-call="portal.portal_docs_entry">
                 <t t-set="title">Tickets</t>
                 <t t-set="url" t-value="'/my/tickets'"/>
-                <t t-set="placeholder_count" t-value="'count_extracto'"/>
+                <t t-set="placeholder_count" t-value="'ticket_count'"/>
             </t>
         </xpath>
     </template>

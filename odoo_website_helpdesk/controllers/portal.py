@@ -33,7 +33,7 @@ class TicketPortal(portal.CustomerPortal):
         and get their count."""
         values = super()._prepare_home_portal_values(counters)
         if 'ticket_count' in counters:
-            ticket_count = request.env['help.ticket'].search_count(
+            ticket_count = request.env['help.ticket'].sudo().search_count(
                 self._get_tickets_domain())
             values['ticket_count'] = ticket_count
         return values
