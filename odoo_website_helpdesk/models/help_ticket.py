@@ -267,6 +267,7 @@ class HelpDeskTicket(models.Model):
             'custom_layout': "mail.mail_notification_paynow",
             'force_email': True,
             'notify_followers': True,
+            'email_to': self.email,
         }
         return {
             'type': 'ir.actions.act_window',
