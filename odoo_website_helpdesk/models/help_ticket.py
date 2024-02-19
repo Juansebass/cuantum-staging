@@ -261,7 +261,7 @@ class HelpDeskTicket(models.Model):
     def send_response(self):
         compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
         ctx = {
-            'default_model': 'ati.extracto',
+            'default_model': 'help.ticket',
             'default_res_id': self.id,
             'default_composition_mode': 'comment',
             'custom_layout': "mail.mail_notification_paynow",
