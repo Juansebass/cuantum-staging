@@ -92,7 +92,7 @@
                 </tbody>
             </t>
             <p t-else="">
-                No hay Casos activos para tu cuenta.
+                No hay casos activos para tu cuenta.
             </p>
         </t>
     </template>

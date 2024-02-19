@@ -13,6 +13,7 @@
                     <button name="action_create_invoice" string="Create Invoice"
                             type="object" class="btn-primary"
                             attrs="{'invisible':[('billable','=',False)]}"/>
+                    <button name="send_response" type="object" string="Enviar Respuesta"/>
                     <field name="stage_id" widget="statusbar"
                            options="{'clickable': '1'}"/>
                 </header>
