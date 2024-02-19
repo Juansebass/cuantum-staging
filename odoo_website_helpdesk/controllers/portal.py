@@ -32,10 +32,11 @@ class TicketPortal(portal.CustomerPortal):
         """Prepares a dictionary of values to be used in the home portal view
         and get their count."""
         values = super()._prepare_home_portal_values(counters)
-        if 'ticket_count' in counters:
-            ticket_count = request.env['help.ticket'].search_count(
-                self._get_tickets_domain())
-            values['ticket_count'] = ticket_count
+        if 'count_extracto' in counters:
+            partner = request.env.user.partner_id
+            values['count_extracto'] = request.env['ati.extracto'].search_count(
+                [('message_partner_ids', 'child_of', [partner.commercial_partner_id.id]),
+                 ('state', 'in', ['send'])])
         return values
 
     def _get_tickets_domain(self):
