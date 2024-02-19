@@ -41,19 +41,19 @@
                     </div>
                     <group>
                         <group>
-                            <field name="customer_id"/>
-                            <field name="customer_name"/>
+                            <field name="customer_id" string="Cliente"/>
+                            <field name="customer_name" string="Nombre Cliente"/>
                             <field name="email"/>
-                            <field name="phone"/>
+                            <field name="phone" string="Teléfono"/>
                             <field name="cost" invisible="1"/>
-                            <field name="start_date"/>
+                            <field name="start_date" string="Fecha de Inicio"/>
                         </group>
                         <group>
-                            <field name="team_id"/>
+                            <field name="team_id" string="Equipo de Soporte"/>
                             <field name="project_id" invisible="1"/>
                             <field name="service_product_id" attrs="{'invisible':[('create_task','=',False)],
                          'required': [('create_task','=', True)]}"/>
-                            <field name="priority" widget="priority"/>
+                            <field name="priority" widget="priority" string="Prioridad"/>
                             <field name="show_create_task" invisible="1"/>
                             <field name="create_task"
                                    attrs="{'invisible':[('show_create_task','=',False)]}"/>
@@ -63,7 +63,7 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Issue Description">
+                        <page string="Descripción">
                             <field name="description"
                                    placeholder="Provide the reason in detail"/>
                         </page>
@@ -85,11 +85,11 @@
         <field name="model">help.ticket</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
-                <field name="customer_id"/>
-                <field name="customer_name"/>
-                <field name="subject"/>
-                <field name="stage_id"/>
+                <field name="name" string="Nombre"/>
+                <field name="customer_id" string="Cliente"/>
+                <field name="customer_name" string="Nombre Cliente"/>
+                <field name="subject" string="Asunto"/>
+                <field name="stage_id" string="Estado"/>
             </tree>
         </field>
     </record>
