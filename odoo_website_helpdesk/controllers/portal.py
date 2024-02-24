@@ -61,10 +61,10 @@ class TicketPortal(portal.CustomerPortal):
         return request.render("odoo_website_helpdesk.portal_my_tickets",
                               values)
 
-    @http.route(['/cerrar/<int:ticket_id>'], type='http', auth='public', website=True, csrf=False)
-    def cerrar(self, ticket_id):
+    @http.route(['/cerrar'], type='http', auth='public', website=True, csrf=False)
+    def cerrar(self):
+        ticket_id = request.params.get('ticket_id')
         return request.redirect('/my/tickets')
-
 
 
 

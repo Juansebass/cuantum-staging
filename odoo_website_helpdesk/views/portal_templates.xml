@@ -89,7 +89,8 @@
                                 <span t-field="ticket.stage_id.name"/>
                             </td>
                             <td class="text-right">
-                                <form action="/cerrar/{{ticket.id}}" method="post">
+                                <form action="/cerrar" method="post">
+                                    <input type="hidden" name="ticket_id" t-att-value="ticket.id"/>
                                     <button type="submit" class="btn">Cerrar</button>
                                 </form>
                             </td>
