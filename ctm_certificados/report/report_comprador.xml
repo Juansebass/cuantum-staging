@@ -51,7 +51,7 @@
                         <br/>
                         <br/>
 
-                        <table  style="border-collapse: collapse; border: 1px solid;width: 100%;">
+                        <table  style="border-collapse: collapse; border: 0.5px solid;width: 100%;">
                             <thead class="text-center" style="background-color: #dfe0de">
                                 <tr>
                                     <th style="border: 0.5px solid; width:35%;">DETALLE</th>
@@ -79,7 +79,7 @@
                                 <tr>
                                     <td style="border: 0.5px solid;"><b>Mutuos</b></td>
                                     <td style="border: 0.5px solid;"><span t-field="o.mutuos_valor"/></td>
-                                    <td style="border: 1px solid;"><span t-field="o.mutuos_rendimiento"/></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.mutuos_rendimiento"/></td>
                                 </tr>
                                 <tr>
                                     <td style="border: 0.5px solid;"><b>RPR 1</b></td>
@@ -107,7 +107,7 @@
                             1 Recursos en Proceso de Recompra.<br/>
                         </p>
 
-                        <footer>
+                        <footer  style="position:absolute;bottom:-1115px">>
                             <b><span t-field="o.company_id.name"/></b> S.A.Dirección: Carrera 25 # 4-165 Of. 9838
                             Ámsterdam Plaza. Medellín, Colombia.Teléfono: 604 460 9820Correo: servicioalcliente@cuantum.co
                         </footer>
