@@ -35,15 +35,17 @@ class Extracto(models.Model):
     rpr_rendimiento = fields.Float('RPR Rendimiento')
 
     def generar_certificado(self):
+        #Extractos año
+        extractos = self.env['ati.extracto'].search([
+            ('cliente', '=', self.cliente.id),
+            ('year', '=', self.year),
+        ])
         #último extracto del año
         extracto_id = self.env['ati.extracto'].search([
             ('cliente', '=', self.cliente.id),
             ('year', '=', self.year),
             ('month', '=', 12),
         ], limit=1)
-        logger.error("@@###############")
-        logger.error(self.cliente)
-        logger.error(self.year)
 
         #Para obtener valores
         products = extracto_id.resumen_inversion_ids.filtered(
@@ -60,6 +62,34 @@ class Extracto(models.Model):
                 self.mutuos_valor = product.valor_actual
             elif product.name == 'RPR CSF':
                 self.rpr_valor = product.valor_actual
+
+        #Para calcular rendimientos
+        facturas_rendimiento = 0
+        sentencias_rendimiento = 0
+        libranzas_rendimiento = 0
+        mutuos_rendimiento = 0
+        rpr_rendimiento = 0
+        for extracto in extractos:
+            products = extracto.resumen_inversion_ids.filtered(
+                lambda x: x.gestor.code == 'CUANTUM' or x.name == 'RPR CSF'
+            )
+            for product in products:
+                if product.producto.code == 'FAC':
+                    facturas_rendimiento += product.rendimiento_causado
+                elif product.producto.code == 'SEN':
+                    sentencias_rendimiento += product.rendimiento_causado
+                elif product.producto.code == 'LIB':
+                    libranzas_rendimiento += product.rendimiento_causado
+                elif product.producto.code == 'MUT':
+                    mutuos_rendimiento += product.rendimiento_causado
+                elif product.name == 'RPR CSF':
+                    rpr_rendimiento += product.rendimiento_causado
+
+        self.facturas_rendimiento = facturas_rendimiento
+        self.sentencias_rendimiento = sentencias_rendimiento
+        self.libranzas_rendimiento = libranzas_rendimiento
+        self.mutuos_rendimiento = mutuos_rendimiento
+        self.rpr_rendimiento = rpr_rendimiento
 
 
     @api.model
