@@ -64,6 +64,9 @@ class TicketPortal(portal.CustomerPortal):
     @http.route(['/cerrar'], type='http', auth='public', website=True, csrf=False)
     def cerrar(self):
         ticket_id = request.params.get('ticket_id')
+        ticket = request.env['help.ticket'].search([('id', '=', ticket_id)])
+        stage_id = request.env['ticket.stage'].search([('name', '=', 'Terminado')])
+        ticket.stage_id = stage_id.id
         return request.redirect('/my/tickets')
 
 
