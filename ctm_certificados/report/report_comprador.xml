@@ -52,39 +52,39 @@
                         <br/>
 
                         <table  style="border-collapse: collapse; border: 1px solid;width: 100%;">
-                            <thead class="text-center">
+                            <thead class="text-center" style="background-color: #dfe0de">
                                 <tr>
-                                    <th style="border: 1px solid; width:35%;">DETALLE</th>
-                                    <th style="border: 1px solid; width:30%;">VALOR</th>
-                                    <th style="border: 1px solid; width:35%;">RENDIMIENTO ANUAL</th>
+                                    <th style="border: 0.5px solid; width:35%;">DETALLE</th>
+                                    <th style="border: 0.5px solid; width:30%;">VALOR</th>
+                                    <th style="border: 0.5px solid; width:35%;">RENDIMIENTO ANUAL</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="border: 1px solid;"><b>Facturas</b></td>
-                                    <td style="border: 1px solid;"><span t-field="o.facturas_valor"/></td>
-                                    <td style="border: 1px solid;"><span t-field="o.facturas_rendimiento"/></td>
+                                    <td style="border: 0.5px solid;"><b>Facturas</b></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.facturas_valor"/></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.facturas_rendimiento"/></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 1px solid;"><b>Sentencias</b></td>
-                                    <td style="border: 1px solid;"><span t-field="o.sentencias_valor"/></td>
-                                    <td style="border: 1px solid;"><span t-field="o.sentencias_rendimiento"/></td>
+                                    <td style="border: 0.5px solid;"><b>Sentencias</b></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.sentencias_valor"/></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.sentencias_rendimiento"/></td>
 
                                 </tr>
                                 <tr>
-                                    <td style="border: 1px solid;"><b>Libranzas</b></td>
-                                    <td style="border: 1px solid;"><span t-field="o.libranzas_valor"/></td>
-                                    <td style="border: 1px solid;"><span t-field="o.libranzas_rendimiento"/></td>
+                                    <td style="border: 0.5px solid;"><b>Libranzas</b></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.libranzas_valor"/></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.libranzas_rendimiento"/></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 1px solid;"><b>Mutuos</b></td>
-                                    <td style="border: 1px solid;"><span t-field="o.mutuos_valor"/></td>
+                                    <td style="border: 0.5px solid;"><b>Mutuos</b></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.mutuos_valor"/></td>
                                     <td style="border: 1px solid;"><span t-field="o.mutuos_rendimiento"/></td>
                                 </tr>
                                 <tr>
-                                    <td style="border: 1px solid;"><b>RPR 1</b></td>
-                                    <td style="border: 1px solid;"><span t-field="o.rpr_valor"/></td>
-                                    <td style="border: 1px solid;"><span t-field="o.rpr_rendimiento"/></td>
+                                    <td style="border: 0.5px solid;"><b>RPR 1</b></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.rpr_valor"/></td>
+                                    <td style="border: 0.5px solid;"><span t-field="o.rpr_rendimiento"/></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -97,8 +97,6 @@
                         <p>
                             <b><span t-field="o.company_id.name"/></b><br/>
                             NIT: 900.242.548-7<br/>
-                            Dirección: Carrera 25 # 4-165 Of. 9838 Ámsterdam Plaza. Medellín, Colombia.<br/>
-                            Teléfono: 604 460 9820<br/>
                             Correo: servicioalcliente@cuantum.co
                         </p>
                         <br/>
