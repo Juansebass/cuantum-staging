@@ -47,10 +47,8 @@ class Extracto(models.Model):
 
         #Para obtener valores
         products = extracto_id.resumen_inversion_ids.filtered(
-            lambda x: x.gestor.code == 'CUANTUM'
+            lambda x: x.gestor.code == 'CUANTUM' or x.name == 'RPR CSF'
         )
-        logger.error("@@###############")
-        logger.error(products)
         for product in products:
             if product.producto.code == 'FAC':
                 self.facturas_valor = product.valor_actual
