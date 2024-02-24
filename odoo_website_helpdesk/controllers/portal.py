@@ -61,6 +61,12 @@ class TicketPortal(portal.CustomerPortal):
         return request.render("odoo_website_helpdesk.portal_my_tickets",
                               values)
 
+    @http.route(['/aceptar'], type='http', auth='user', website=True)
+    def aceptar(self, redirect=None, **post):
+        pass
+
+
+
 
 class WebsiteHelpDeskForm(http.Controller):
     """ This controller handles the helpdesk ticket form and its submission."""
