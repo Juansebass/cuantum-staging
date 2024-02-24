@@ -62,8 +62,8 @@ class TicketPortal(portal.CustomerPortal):
                               values)
 
     @http.route(['/cerrar'], type='http', auth='public', website=True)
-    def cerrar(self, redirect='/my/tickets', **post):
-        pass
+    def cerrar(self, **post):
+        return request.redirect('/my/tickets')
 
 
 
