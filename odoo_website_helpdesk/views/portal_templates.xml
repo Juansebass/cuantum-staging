@@ -91,7 +91,7 @@
                             <td class="text-right">
                                 <form action="/cerrar" method="post">
                                     <input type="hidden" name="ticket_id" t-att-value="ticket.id"/>
-                                    <button type="submit" class="btn">Cerrar</button>
+                                    <button t-if="ticket_id.stage_id.name != 'Terminado'" type="submit" class="btn">Cerrar</button>
                                 </form>
                             </td>
 
