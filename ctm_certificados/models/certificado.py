@@ -3,7 +3,10 @@
 from email.policy import default
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+import logging
 
+
+logger = logging.getLogger(__name__)
 
 class Extracto(models.Model):
     _name = 'ctm.certificado'
@@ -38,11 +41,15 @@ class Extracto(models.Model):
             ('year', '=', self.year),
             ('month', '=', '12'),
         ], limit=1)
+        logger.error("@@###############")
+        logger.error(extracto_id)
 
         #Para obtener valores
         products = extracto_id.resumen_inversion_ids.filtered(
             lambda x: x.gestor.code == 'CUANTUM'
         )
+        logger.error("@@###############")
+        logger.error(products)
         for product in products:
             if product.producto.code == 'FAC':
                 self.facturas_valor = product.valor_actual
