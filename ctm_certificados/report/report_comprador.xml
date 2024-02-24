@@ -74,6 +74,7 @@
 
                                 </tr>
                                 <tr>
+                                    <td style="border: 0.5px solid;padding-left: 2px;"><b>Libranzas</b></td>
                                     <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.libranzas_valor"/></td>
                                     <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.libranzas_rendimiento"/></td>
                                 </tr>
