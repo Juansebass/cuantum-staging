@@ -32,7 +32,29 @@ class Extracto(models.Model):
     rpr_rendimiento = fields.Float('RPR Rendimiento')
 
     def generar_certificado(self):
-        pass
+        #último extracto del año
+        extracto_id = self.env['ati.extracto'].search([
+            ('cliente', '=', self.cliente.id),
+            ('year', '=', self.year),
+            ('month', '=', '12'),
+        ], limit=1)
+
+        #Para obtener valores
+        products = extracto_id.resumen_inversion_ids.filtered(
+            lambda x: x.gestor.code == 'CUANTUM'
+        )
+        for product in products:
+            if product.producto.code == 'FAC':
+                self.facturas_valor = product.valor_actual
+            elif product.producto.code == 'SEN':
+                self.sentencias_valor = product.valor_actual
+            elif product.producto.code == 'LIB':
+                self.libranzas_valor = product.valor_actual
+            elif product.producto.code == 'MUT':
+                self.mutuos_valor = product.valor_actual
+            elif product.name == 'RPR CSF':
+                self.rpr_valor = product.valor_actual
+
 
     @api.model
     def create(self, var):
