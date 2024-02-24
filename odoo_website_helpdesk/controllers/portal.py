@@ -61,8 +61,8 @@ class TicketPortal(portal.CustomerPortal):
         return request.render("odoo_website_helpdesk.portal_my_tickets",
                               values)
 
-    @http.route(['/aceptar'], type='http', auth='user', website=True)
-    def aceptar(self, redirect=None, **post):
+    @http.route(['/cerrar'], type='http', auth='public', website=True)
+    def cerrar(self, redirect='/my/tickets', **post):
         pass
 
 
