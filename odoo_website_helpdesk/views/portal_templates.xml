@@ -48,6 +48,7 @@
                         </th>
                         <th class="text-right">Fecha</th>
                         <th class="text-right">Etapa</th>
+                        <th class="text-right">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
