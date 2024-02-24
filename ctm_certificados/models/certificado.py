@@ -39,7 +39,7 @@ class Extracto(models.Model):
         extracto_id = self.env['ati.extracto'].search([
             ('cliente', '=', self.cliente.id),
             ('year', '=', self.year),
-            ('month', '=', '12'),
+            ('month', '=', 12),
         ], limit=1)
         logger.error("@@###############")
         logger.error(self.cliente)
