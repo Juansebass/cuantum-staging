@@ -42,7 +42,8 @@ class Extracto(models.Model):
             ('month', '=', '12'),
         ], limit=1)
         logger.error("@@###############")
-        logger.error(extracto_id)
+        logger.error(self.cliente)
+        logger.error(self.year)
 
         #Para obtener valores
         products = extracto_id.resumen_inversion_ids.filtered(
