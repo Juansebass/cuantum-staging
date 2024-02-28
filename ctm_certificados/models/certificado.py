@@ -22,7 +22,7 @@ class Certificado(models.Model):
         selection=[('draft', 'Borrador'), ('processed', 'Procesado')],
         string='Estado', default='draft')
 
-
+    #Comprador
     facturas_valor = fields.Float('Facturas Total')
     facturas_rendimiento = fields.Float('Facturas Rendimiento')
     sentencias_valor = fields.Float('Sentencias Total')
@@ -34,66 +34,84 @@ class Certificado(models.Model):
     rpr_valor = fields.Float('RPR Total')
     rpr_rendimiento = fields.Float('RPR Rendimiento')
 
+    #Retención
+    concepto = fields.Char('CONCEPTO DEL PAGO SUJETO A LA RETENCION')
+    porcentaje = fields.Char('PORCENTAJE APLICADO')
+    cuantia = fields.Float(' CUANTIA DE LA RETENCION ')
+
     def generar_certificado(self):
-        #Extractos año
-        extractos = self.env['ati.extracto'].search([
-            ('cliente', '=', self.cliente.id),
-            ('year', '=', self.year),
-        ])
-        #último extracto del año
-        extracto_id = self.env['ati.extracto'].search([
-            ('cliente', '=', self.cliente.id),
-            ('year', '=', self.year),
-            ('month', '=', 12),
-        ], limit=1)
+        if self.type == 'comprador':
+            #Extractos año
+            extractos = self.env['ati.extracto'].search([
+                ('cliente', '=', self.cliente.id),
+                ('year', '=', self.year),
+            ])
+            #último extracto del año
+            extracto_id = self.env['ati.extracto'].search([
+                ('cliente', '=', self.cliente.id),
+                ('year', '=', self.year),
+                ('month', '=', 12),
+            ], limit=1)
 
-        #Para obtener valores
-        products = extracto_id.resumen_inversion_ids.filtered(
-            lambda x: x.gestor.code == 'CUANTUM' or x.name == 'RPR CSF'
-        )
-        for product in products:
-            if product.producto.code == 'FAC':
-                self.facturas_valor = product.valor_actual
-            elif product.producto.code == 'SEN':
-                self.sentencias_valor = product.valor_actual
-            elif product.producto.code == 'LIB':
-                self.libranzas_valor = product.valor_actual
-            elif product.producto.code == 'MUT':
-                self.mutuos_valor = product.valor_actual
-            elif product.name == 'RPR CSF':
-                self.rpr_valor = product.valor_actual
-
-        #Para calcular rendimientos
-        facturas_rendimiento = 0
-        sentencias_rendimiento = 0
-        libranzas_rendimiento = 0
-        mutuos_rendimiento = 0
-        rpr_rendimiento = 0
-        for extracto in extractos:
-            products = extracto.resumen_inversion_ids.filtered(
+            #Para obtener valores
+            products = extracto_id.resumen_inversion_ids.filtered(
                 lambda x: x.gestor.code == 'CUANTUM' or x.name == 'RPR CSF'
             )
             for product in products:
                 if product.producto.code == 'FAC':
-                    facturas_rendimiento += product.rendimiento_causado
+                    self.facturas_valor = product.valor_actual
                 elif product.producto.code == 'SEN':
-                    sentencias_rendimiento += product.rendimiento_causado
+                    self.sentencias_valor = product.valor_actual
                 elif product.producto.code == 'LIB':
-                    libranzas_rendimiento += product.rendimiento_causado
+                    self.libranzas_valor = product.valor_actual
                 elif product.producto.code == 'MUT':
-                    mutuos_rendimiento += product.rendimiento_causado
+                    self.mutuos_valor = product.valor_actual
                 elif product.name == 'RPR CSF':
-                    rpr_rendimiento += product.rendimiento_causado
+                    self.rpr_valor = product.valor_actual
 
-        self.facturas_rendimiento = facturas_rendimiento
-        self.sentencias_rendimiento = sentencias_rendimiento
-        self.libranzas_rendimiento = libranzas_rendimiento
-        self.mutuos_rendimiento = mutuos_rendimiento
-        self.rpr_rendimiento = rpr_rendimiento
+            #Para calcular rendimientos
+            facturas_rendimiento = 0
+            sentencias_rendimiento = 0
+            libranzas_rendimiento = 0
+            mutuos_rendimiento = 0
+            rpr_rendimiento = 0
+            for extracto in extractos:
+                products = extracto.resumen_inversion_ids.filtered(
+                    lambda x: x.gestor.code == 'CUANTUM' or x.name == 'RPR CSF'
+                )
+                for product in products:
+                    if product.producto.code == 'FAC':
+                        facturas_rendimiento += product.rendimiento_causado
+                    elif product.producto.code == 'SEN':
+                        sentencias_rendimiento += product.rendimiento_causado
+                    elif product.producto.code == 'LIB':
+                        libranzas_rendimiento += product.rendimiento_causado
+                    elif product.producto.code == 'MUT':
+                        mutuos_rendimiento += product.rendimiento_causado
+                    elif product.name == 'RPR CSF':
+                        rpr_rendimiento += product.rendimiento_causado
 
+            self.facturas_rendimiento = facturas_rendimiento
+            self.sentencias_rendimiento = sentencias_rendimiento
+            self.libranzas_rendimiento = libranzas_rendimiento
+            self.mutuos_rendimiento = mutuos_rendimiento
+            self.rpr_rendimiento = rpr_rendimiento
+
+        if self.type == 'retencion':
+            retencion = self.env['ctm.retencion'].search([
+                ('retenido', '=', self.cliente.id),
+                ('year', '=', self.year),
+            ], limit=1)
+
+            if not retencion:
+                raise ValidationError('No existe una retención para {0}-{1}'.format(self.cliente.name, self.year))
+
+            self.concepto = retencion.concepto
+            self.porcentaje = retencion.porcentaje
+            self.cuantia = retencion.cuantia
 
     @api.model
     def create(self, var):
-        res = super(Extracto, self).create(var)
+        res = super(Certificado, self).create(var)
         res.name = 'Certificado/' + res.type + '/' + res.cliente.name + '/' + res.year
         return res

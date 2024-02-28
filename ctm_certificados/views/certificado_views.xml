@@ -57,6 +57,15 @@
                             <field name="rpr_rendimiento" readonly="1" attrs="{
                                     'invisible': [('type', 'not in', ['comprador'])]}"/>
                         </group>
+
+                        <group>
+                            <field name="concepto" readonly="1" attrs="{
+                                'invisible': [('type', 'not in', ['retencion'])]}"/>
+                            <field name="porcentaje" readonly="1" attrs="{
+                                'invisible': [('type', 'not in', ['retencion'])]}"/>
+                            <field name="cuantia" readonly="1" attrs="{
+                                'invisible': [('type', 'not in', ['retencion'])]}"/>
+                        </group>
                     </group>
 
                 </sheet>
