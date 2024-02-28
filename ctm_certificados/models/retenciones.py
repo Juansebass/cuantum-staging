@@ -3,9 +3,6 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 
-from odoo.exceptions import ValidationError
-
-
 class Retencion(models.Model):
     _name = 'ctm.retencion'
     _description = "Retenciones"
@@ -16,3 +13,10 @@ class Retencion(models.Model):
     retenido = fields.Many2one('res.partner', 'RETENIDO A')
     cuantia = fields.Float(' CUANTIA DE LA RETENCION ')
     year = fields.Char('AÑO')
+
+
+
+    _sql_constraints = [('record_unique', 'unique(retenido, year)',
+                         "No puede tener retenciones duplicadas")]
+
+
