@@ -8,7 +8,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class Extracto(models.Model):
+class Certificado(models.Model):
     _name = 'ctm.certificado'
     _description = "Certificado"
     _inherit = ['portal.mixin', 'mail.thread','mail.activity.mixin']
