@@ -6,9 +6,15 @@
         <field name="res_model">ctm.certificado</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_open_retencion" model="ir.actions.act_window">
+        <field name="name">Retenciones</field>
+        <field name="res_model">ctm.retencion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_certificado_main" name="Certificados"  web_icon="ctm_certificados,static/description/icon.png" />
     <menuitem id="menu_certificado" sequence="1" name="Certificados" parent="menu_certificado_main" action="action_open_certificado"/>
+    <menuitem id="menu_retencion" sequence="1" name="Retenciones" parent="menu_certificado_main" action="action_open_retencion"/>
 
 </odoo>
