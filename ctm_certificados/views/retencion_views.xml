@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record id="model_ctm_certificado_view_tree" model="ir.ui.view">
-        <field name="name">ctm.certificado.view.tree</field>
-        <field name="model">ctm.certificado</field>
+    <record id="model_ctm_retencion_view_tree" model="ir.ui.view">
+        <field name="name">ctm.retencion.view.tree</field>
+        <field name="model">ctm.retencion</field>
         <field name="arch" type="xml">
             <tree string="">
                 <field name="retenido" />
