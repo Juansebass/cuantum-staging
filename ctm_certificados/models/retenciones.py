@@ -12,7 +12,7 @@ class Retencion(models.Model):
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
 
     concepto = fields.Char('CONCEPTO DEL PAGO SUJETO A LA RETENCION')
-    porcentaje = fields.Char('CONCEPTO DEL PAGO SUJETO A LA RETENCION')
+    porcentaje = fields.Char('PORCENTAJE APLICADO')
     retenido = fields.Many2one('res.partner', 'RETENIDO A')
     cuantia = fields.Float(' CUANTIA DE LA RETENCION ')
-    year = fields.Char('Año')
+    year = fields.Char('AÑO')
