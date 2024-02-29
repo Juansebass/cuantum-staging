@@ -115,7 +115,7 @@
                         </t>
 
                         <t t-if="o.type == 'retencion'">
-                            <div class="row justify-content-center">
+                            <div class="row align-self-center">
                                 <div class="col-8 text-center">
                                     <p>
                                         <b>
@@ -131,56 +131,67 @@
                             <br/>
                             <br/>
                             <br/>
-                            <div class="row justify-content-center">
+                            <div class="row align-self-center">
                                 <div class="col-8 text-center">
                                     <h4>CERTIFICADO DE RETENCION EN LA FUENTE</h4>
                                 </div>
                             </div>
 
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+
                             <div class="row justify-content-center">
                                 <div class="col-8">
                                     <table>
                                         <tr>
-                                            <td>AÑO GRAVABLE:</td>
-                                            <td>##</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">AÑO GRAVABLE:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.year"/></td>
                                         </tr>
                                         <tr>
-                                            <td>RETENIDO A:</td>
-                                            <td>##</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">RETENIDO A:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.retenido.name"/></td>
                                         </tr>
                                         <tr>
-                                            <td>DOCUMENTO:</td>
-                                            <td>##</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">DOCUMENTO:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.retenido.vat"/></td>
                                         </tr>
                                         <tr>
-                                            <td>CONCEPTO DEL PAGO SUJETO A LA RETENCION:</td>
-                                            <td>##</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">CONCEPTO DEL PAGO SUJETO A LA RETENCION:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.concepto"/></td>
                                         </tr>
                                         <tr>
-                                            <td>CUANTIA DE LA RETENCION:</td>
-                                            <td>##</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">CUANTIA DE LA RETENCION:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.cuantia"/></td>
                                         </tr>
                                         <tr>
-                                            <td>PORCENTAJE APLICADO:</td>
-                                            <td>##</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">PORCENTAJE APLICADO:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.porcentaje"/></td>
                                         </tr>
                                         <tr>
-                                            <td>RETENCIONES CONSIGNADAS EN:</td>
-                                            <td>MEDELLIN</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">RETENCIONES CONSIGNADAS EN:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">MEDELLIN</td>
                                         </tr>
                                         <tr>
-                                            <td>CIUDAD DONDE SE PRACTICO LA RETENCION:</td>
-                                            <td>MEDELLIN</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">CIUDAD DONDE SE PRACTICO LA RETENCION:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">MEDELLIN</td>
                                         </tr>
                                         <tr>
-                                            <td>FECHA DE EXPEDICION DEL CERTIFICADO:</td>
-                                            <td>##</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px">FECHA DE EXPEDICION DEL CERTIFICADO:</td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.create_date"/></td>
                                         </tr>
                                     </table>
 
                                 </div>
                             </div>
                         </t>
+                        <br/>
+                        <br/>
+                        <p class="text-center">
+                            El presente certificado en cumplimiento de lo establecido en el artículo 381 E.T. No requiere de firma.
+                        </p>
+
 
 
 
