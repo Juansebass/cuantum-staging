@@ -114,8 +114,30 @@
                             </p>
                         </t>
 
+                        <t t-if="o.type == 'retencio'">
+                            <div class="row justify-content-left">
+                                <div class="col-8 text-center">
+                                    <p>
+                                        <b>
+                                            CUANTUM SOLUCIONES FINANCIERAS S.A N.I.T.: 900242548- 7<br/>
+                                            DIRECCION: CR 25 N 4-165 OFI 9838<br/>
+                                            TELEFONO: 4609820 <br/>
+                                        </b>
+                                    </p>
 
-                        <footer  style="position:absolute;bottom:-1115px">>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-left">
+                                <div class="col-8 text-center">
+                                    <h1>CERTIFICADO DE RETENCION EN LA FUENTE</h1>
+                                </div>
+                            </div>
+                        </t>
+
+
+
+                        <footer  style="position:absolute;bottom:-1115px">
                             <b><span t-field="o.company_id.name"/></b> S.A.Dirección: Carrera 25 # 4-165 Of. 9838
                             Ámsterdam Plaza. Medellín, Colombia.Teléfono: 604 460 9820Correo: servicioalcliente@cuantum.co
                         </footer>
