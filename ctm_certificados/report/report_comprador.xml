@@ -115,7 +115,7 @@
                         </t>
 
                         <t t-if="o.type == 'retencion'">
-                            <div class="row justify-content-left">
+                            <div class="row justify-content-center">
                                 <div class="col-8 text-center">
                                     <p>
                                         <b>
@@ -127,10 +127,57 @@
 
                                 </div>
                             </div>
-
-                            <div class="row justify-content-left">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="row justify-content-center">
                                 <div class="col-8 text-center">
-                                    <h1>CERTIFICADO DE RETENCION EN LA FUENTE</h1>
+                                    <h4>CERTIFICADO DE RETENCION EN LA FUENTE</h4>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <table>
+                                        <tr>
+                                            <td>AÑO GRAVABLE:</td>
+                                            <td>##</td>
+                                        </tr>
+                                        <tr>
+                                            <td>RETENIDO A:</td>
+                                            <td>##</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DOCUMENTO:</td>
+                                            <td>##</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CONCEPTO DEL PAGO SUJETO A LA RETENCION:</td>
+                                            <td>##</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CUANTIA DE LA RETENCION:</td>
+                                            <td>##</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PORCENTAJE APLICADO:</td>
+                                            <td>##</td>
+                                        </tr>
+                                        <tr>
+                                            <td>RETENCIONES CONSIGNADAS EN:</td>
+                                            <td>MEDELLIN</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CIUDAD DONDE SE PRACTICO LA RETENCION:</td>
+                                            <td>MEDELLIN</td>
+                                        </tr>
+                                        <tr>
+                                            <td>FECHA DE EXPEDICION DEL CERTIFICADO:</td>
+                                            <td>##</td>
+                                        </tr>
+                                    </table>
+
                                 </div>
                             </div>
                         </t>
