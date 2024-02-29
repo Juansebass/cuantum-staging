@@ -18,7 +18,7 @@
     </record>
 
     <record id="action_report_comprador" model="ir.actions.report">
-        <field name="name">Certificado Comprador</field>
+        <field name="name">Certificado</field>
         <field name="model">ctm.certificado</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">ctm_certificados.report_comprador</field>
@@ -114,7 +114,7 @@
                             </p>
                         </t>
 
-                        <t t-if="o.type == 'retencio'">
+                        <t t-if="o.type == 'retencion'">
                             <div class="row justify-content-left">
                                 <div class="col-8 text-center">
                                     <p>
