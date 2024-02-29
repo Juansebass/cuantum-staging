@@ -151,11 +151,11 @@
                                         </tr>
                                         <tr>
                                             <td style="border: 0.5px solid; padding-left: 2px">RETENIDO A:</td>
-                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.retenido.name"/></td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.cliente.name"/></td>
                                         </tr>
                                         <tr>
                                             <td style="border: 0.5px solid; padding-left: 2px">DOCUMENTO:</td>
-                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.retenido.vat"/></td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.cliente.vat"/></td>
                                         </tr>
                                         <tr>
                                             <td style="border: 0.5px solid; padding-left: 2px">CONCEPTO DEL PAGO SUJETO A LA RETENCION:</td>
