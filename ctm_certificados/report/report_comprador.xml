@@ -96,7 +96,7 @@
                             </table>
                             <br/><br/>
 
-                            <p>Se expide por solicitud del comprador el <t t-esc="create_date.day"/> de <t t-esc="create_date.month"/> del año <t t-esc="create_date.year"/></p>
+                            <p>Se expide por solicitud del comprador el <t t-esc="o.create_date.day"/> de <t t-esc="o.create_date.month"/> del año <t t-esc="o.create_date.year"/></p>
 
                             <br/><br/><br/>
 
