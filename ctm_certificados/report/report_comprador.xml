@@ -88,7 +88,7 @@
                                         <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.mutuos_rendimiento"/></td>
                                     </tr>
                                     <tr>
-                                        <td style="border: 0.5px solid;padding-left: 2px;"><b>RPR 1</b></td>
+                                        <td style="border: 0.5px solid;padding-left: 2px;"><b>RPR<sup>1</sup></b></td>
                                         <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.rpr_valor"/></td>
                                         <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.rpr_rendimiento"/></td>
                                     </tr>
@@ -110,7 +110,7 @@
                             <br/>
 
                             <p>
-                                1* Recursos en Proceso de Recompra.<br/>
+                                <sup>1</sup>Recursos en Proceso de Recompra.<br/>
                             </p>
                         </t>
 
