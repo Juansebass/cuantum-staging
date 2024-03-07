@@ -202,14 +202,15 @@
                                 El presente certificado en cumplimiento de lo establecido en el artículo 381 E.T. No requiere de firma.
                             </p>
                         </t>
-                        
 
 
 
 
-                        <footer  class="text-center" style="position:absolute;bottom:-1115px">
-                            <b><span t-field="o.company_id.name"/></b> S.A.Dirección: Carrera 25 # 4-165 Of. 9838
-                            Ámsterdam Plaza. Medellín, Colombia.Teléfono: 604 460 9820Correo: servicioalcliente@cuantum.co
+
+                        <footer  class="text-center" style="position:absolute;bottom:-1120px">
+                            <b><span t-field="o.company_id.name"/></b><br/>
+                            Dirección: Carrera 25 # 4-165 Of. 9838 Ámsterdam Plaza. Medellín, Colombia<br/>
+                            Teléfono: 604 460 9820 Correo: servicioalcliente@cuantum.co
                         </footer>
 
 
