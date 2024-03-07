@@ -96,8 +96,20 @@
                             </table>
                             <br/><br/>
 
-                            <p>Se expide por solicitud del comprador el <t t-esc="o.create_date.day"/> de <t t-esc="o.create_date.strftime('%B')"/> del año <t t-esc="o.create_date.year"/></p>
-                                <span t-field="o.create_date" t-field-options='{"widget": "date"}'/>
+                            <p>Se expide por solicitud del comprador el <t t-esc="o.create_date.day"/> de <t t-esc="o.create_date.strftime('%B')
+                                .replace('01','Enero')
+                                .replace('Febraury','Febrero')
+                                .replace('03','Marzo')
+                                .replace('04','Abril')
+                                .replace('05','Mayo')
+                                .replace('06','Junio')
+                                .replace('07','Julio')
+                                .replace('08','Agosto')
+                                .replace('09','Septiembre')
+                                .replace('10','Octubre')
+                                .replace('11','Noviembre')
+                                .replace('12','Diciembre')"/>
+                                "/> del año <t t-esc="o.create_date.year"/></p>
                             <br/><br/><br/>
 
                             <p>
