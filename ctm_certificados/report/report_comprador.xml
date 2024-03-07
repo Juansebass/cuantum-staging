@@ -97,18 +97,18 @@
                             <br/><br/>
 
                             <p>Se expide por solicitud del comprador el <t t-esc="o.create_date.day"/> de <t t-esc="o.create_date.strftime('%B')
-                                .replace('01','Enero')
-                                .replace('Febraury','Febrero')
-                                .replace('03','Marzo')
-                                .replace('04','Abril')
-                                .replace('05','Mayo')
-                                .replace('06','Junio')
-                                .replace('07','Julio')
-                                .replace('08','Agosto')
-                                .replace('09','Septiembre')
-                                .replace('10','Octubre')
-                                .replace('11','Noviembre')
-                                .replace('12','Diciembre')"/>
+                                .replace('January','Enero')
+                                .replace('February','Febrero')
+                                .replace('March','Marzo')
+                                .replace('April','Abril')
+                                .replace('May','Mayo')
+                                .replace('June','Junio')
+                                .replace('July','Julio')
+                                .replace('August','Agosto')
+                                .replace('September','Septiembre')
+                                .replace('October','Octubre')
+                                .replace('November','Noviembre')
+                                .replace('December','Diciembre')"/>
                                  del año <t t-esc="o.create_date.year"/></p>
                             <br/><br/><br/>
 
