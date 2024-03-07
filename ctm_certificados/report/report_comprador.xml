@@ -109,7 +109,7 @@
                                 .replace('10','Octubre')
                                 .replace('11','Noviembre')
                                 .replace('12','Diciembre')"/>
-                                "/> del año <t t-esc="o.create_date.year"/></p>
+                                 del año <t t-esc="o.create_date.year"/></p>
                             <br/><br/><br/>
 
                             <p>
