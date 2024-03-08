@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_certicates" name="Portal Certificados" customize_show="True" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Certificados</t>
+                <t t-set="url" t-value="'/my/certificates'" />
+                <t t-set="placeholder_count" t-value="'count_certificado'" />
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_certificates" name="Mis Certificados">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Certificados</t>
+            </t>
+            <t t-if="not extractos">
+                <p>Actualmente no hay certificados para su cuenta.</p>
+            </t>
+            <t t-if="certificates" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Tipo</th>
+                        <th class="text-right">Año</th>
+                    </tr>
+                </thead>
+                <t t-foreach="certificates" t-as="certificate">
+                    <tr>
+                        <td><a t-att-href="certificate.get_portal_url(report_type='pdf', download=True)"><t t-esc="certificate.type"/></a></td>
+                        <td class="text-right"><span t-field="certificate.year"/></td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

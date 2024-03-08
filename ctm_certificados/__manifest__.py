@@ -15,7 +15,8 @@
         'views/menu.xml',
         'views/certificado_views.xml',
         'views/retencion_views.xml',
-        'report/report_comprador.xml'
+        'report/report_comprador.xml',
+        'views/portal_certificado.xml',
         ],
     'installable': True,
     'application': True,
