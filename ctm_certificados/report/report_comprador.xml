@@ -205,7 +205,7 @@
                     </div>
                     <div class="footer">
                         <div class="row text-center justify-content-center" style="font-size:12px;">
-                            <div class="col-8">
+                            <div class="col-12">
                                 <b><span t-field="o.company_id.name"/></b><br/>
                                 Dirección: Carrera 25 # 4-165 Of. 9838 Ámsterdam Plaza. Medellín, Colombia<br/>
                                 Teléfono: 604 460 9820 Correo: servicioalcliente@cuantum.co
