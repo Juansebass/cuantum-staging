@@ -194,7 +194,7 @@ class CreateCertificates(models.Model):
 
             # Agregando clientes al detalle de seguidores
             for y in clients:
-                self.env['ati.detalle_create_certificates'].create({
+                self.env['ctm.detalle_create_certificates'].create({
                     'create_certificates_id': self.id,
                     'cliente': y.id,
                     'vat': y.vat,
@@ -211,6 +211,6 @@ class CreateCertificates(models.Model):
 class DetalleCreateExtractos(models.Model):
     _name = 'ctm.detalle_create_certificates'
 
-    create_certificates_id = fields.Many2one('ati.create_certificates', 'Crear Certificados')
+    create_certificates_id = fields.Many2one('ctm.create_certificates', 'Crear Certificados')
     cliente = fields.Many2one('res.partner', 'Cliente')
     vat = fields.Char('NIT')
