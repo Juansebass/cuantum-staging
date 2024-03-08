@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_ctm_certificado_user,ctm.certificado.user,model_ctm_certificado,base.group_user,1,1,1,1
 access_ctm_retencion_user,ctm.retencion.user,model_ctm_retencion,base.group_user,1,1,1,1
+access_ctm_create_certificates,ctm.create.certificates.user,model_ctm_create_certificates,base.group_user,1,1,1,1
+access_ctm_certificate_detalle_create_certificates,ctm.certificate.detalle_create_certificatesuser,model_ati_detalle_create_certificates,base.group_user,1,1,1,1
