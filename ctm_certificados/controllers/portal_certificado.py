@@ -17,7 +17,7 @@ class CertificadoCustomperPortal(CustomerPortal):
 
     def _get_certificado_domain(self):
         """ Checking domain"""
-        return [('cliente', '=', request.env.user.partner_id.id)]
+        return [('cliente', '=', request.env.user.partner_id.id), ('state', '=', 'processed')]
 
     @http.route(['/my/certificates'], type='http', auth="user", website=True)
     def portal_my_certificates(self):
