@@ -4,6 +4,7 @@ from email.policy import default
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import logging
+import base64
 
 
 logger = logging.getLogger(__name__)
@@ -125,3 +126,91 @@ class Certificado(models.Model):
         res = super(Certificado, self).create(var)
         res.name = 'Certificado/' + res.type + '/' + res.cliente.name + '/' + res.year
         return res
+
+
+class CreateCertificates(models.Model):
+    _name = 'ctm.create_certificates'
+    _description = "Crear varios certificados a la vez"
+    _inherit = []
+
+    responsible = fields.Many2one('res.partner', 'Responsable')
+    year = fields.Char('Año de Periodo', required=1)
+    type = fields.Selection(selection=[('retencion', 'Retención'), ('comprador', 'Comprador')],
+                            string='Tipo de Certificado', default='comprador')
+    status = fields.Selection([('sin_crear', 'Sin Crear'), ('creados', 'Creados')], default='sin_crear', string='Estado')
+
+    name = fields.Char('Nombre')
+    create_certificates_users_ids = fields.One2many('ctm.detalle_create_certificates','create_certificates_id', 'Clientes')
+    client_file = fields.Binary('Archivo')
+    file_content = fields.Text('Texto archivo')
+    delimiter = fields.Char('Delimitador', default=";")
+    skip_first_line = fields.Boolean('Saltar primera linea', default=True)
+
+    def crear_certificados(self):
+        for cliente in self.create_certificates_users_ids:
+            exists_certificate= self.env['ctm.certificado'].sudo().search([
+                ('cliente', '=', cliente.cliente.id),
+                ('year', '=', self.year),
+                ('type', '=', self.type)
+            ])
+
+            if not exists_certificate:
+                created_certificate = self.env['ctm.certificado'].sudo().create({
+                    'cliente': cliente.cliente.id,
+                    'year': self.year,
+                    'type': self.type
+
+                })
+                created_certificate.generar_certificado()
+            else:
+                raise ValidationError(
+                    'Ya existe un certificado para {0}-{1}'.format( cliente.cliente.name, self.year))
+
+
+        self.status = 'creados'
+
+
+    def action_cargar_clientes(self):
+        self.ensure_one()
+        if not self.delimiter:
+            raise ValidationError('Debe ingresar el delimitador')
+        if not self.client_file:
+            raise ValidationError('Debe seleccionar el archivo')
+
+        self.file_content = base64.decodebytes(self.client_file)
+        lines = self.file_content.split('\r')
+
+        for detalle  in self.create_certificates_users_ids:
+            detalle.unlink()
+
+        for i,line in enumerate(lines):
+            if self.skip_first_line and i == 0:
+                continue
+            lista = line.split(self.delimiter)
+            vat = lista[0].split('\n')[1]
+
+            clients = self.env['res.partner'].sudo().search(
+                [('vat', '=', str(vat))])
+
+            # Agregando clientes al detalle de seguidores
+            for y in clients:
+                self.env['ati.detalle_create_certificates'].create({
+                    'create_certificates_id': self.id,
+                    'cliente': y.id,
+                    'vat': y.vat,
+                })
+
+
+    @api.model
+    def create(self, var):
+        res = super(CreateCertificates, self).create(var)
+        res.name = 'Certificados/ ' + res.type + '/' + res.year
+        return res
+
+
+class DetalleCreateExtractos(models.Model):
+    _name = 'ctm.detalle_create_certificates'
+
+    create_certificates_id = fields.Many2one('ati.create_certificates', 'Crear Certificados')
+    cliente = fields.Many2one('res.partner', 'Cliente')
+    vat = fields.Char('NIT')

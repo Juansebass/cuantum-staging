@@ -86,4 +86,57 @@
         </field>
     </record>
 
+    <record id="model_create_certificates_view_form" model="ir.ui.view">
+        <field name="name">ctm.create.certificates.view.form</field>
+        <field name="model">ctm.create_certificates</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="crear_certificados" type="object" string="Crear Certificados" attrs="{'invisible': [('status', 'in', ['creados'])]}"/>
+
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="Usuario">
+                        <group name="izquierda">
+                            <field name="type" />
+                            <field name="year" />
+                            <field name="responsible" />
+                            <field name="status" readonly="1"/>
+                        </group>
+                        <group name="derecha">
+                            <field name="client_file" widget="binary"/>
+                            <field name="delimiter" />
+							<field name="skip_first_line" />
+                            <button name='action_cargar_clientes' type="object"
+                                                            string="Cargar Clientes"
+                                                            class="oe_stat_button"
+                                                            icon="fa-refresh"/>
+                        </group>
+                    </group>
+                </sheet>
+                <field name="create_certificates_users_ids">
+                    <tree string="Clientes" editable="bottom" >
+                        <field name="cliente" />
+                        <field name="vat" />
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="model_ati_create_certificates_view_tree" model="ir.ui.view">
+        <field name="name">ctm.create.certificates.view.tree</field>
+        <field name="model">ctm.create_certificates</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
 </odoo>
