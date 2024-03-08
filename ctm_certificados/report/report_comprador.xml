@@ -109,14 +109,16 @@
                                 .replace('October','Octubre')
                                 .replace('November','Noviembre')
                                 .replace('December','Diciembre')"/>
-                                 del año <t t-esc="o.create_date.year"/></p>
-                            <br/><br/><br/>
+                                 del año <t t-esc="o.create_date.year"/>.</p>
+                            <br/><br/><br/><br/><br/>
 
                             <p>
                                 <b><span t-field="o.company_id.name"/></b><br/>
                                 NIT: 900.242.548-7<br/>
                                 Correo: servicioalcliente@cuantum.co
                             </p>
+                            <br/>
+                            <br/>
                             <br/>
                             <br/>
                             <br/>
