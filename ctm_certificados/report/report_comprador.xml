@@ -147,7 +147,6 @@
                             </div>
                             <br/>
                             <br/>
-                            <br/>
                             <div class="row">
                                 <div class="col-8 mx-auto text-center">
                                     <h4>CERTIFICADO DE RETENCION EN LA FUENTE</h4>
@@ -196,12 +195,13 @@
                                         </tr>
                                         <tr>
                                             <td style="border: 0.5px solid; padding-left: 2px; background-color: #dfe0de">FECHA DE EXPEDICION DEL CERTIFICADO:</td>
-                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.create_date"/></td>
+                                            <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.create_date.date"/></td>
                                         </tr>
                                     </table>
 
                                 </div>
                             </div>
+                            <br/>
                             <br/>
                             <br/>
                             <p class="text-center">
