@@ -39,6 +39,15 @@ class Certificado(models.Model):
     porcentaje = fields.Char('PORCENTAJE APLICADO')
     cuantia = fields.Float(' CUANTIA DE LA RETENCION ')
 
+    def _compute_access_url(self):
+        super(Certificado, self)._compute_access_url()
+        for order in self:
+            order.access_url = '/my/certificate/%s' % (order.id)
+
+    def _get_report_base_filename(self):
+        self.ensure_one()
+        return 'Certificado %s' % (self.name)
+
     def generar_certificado(self):
         if self.type == 'comprador':
             #Extractos año

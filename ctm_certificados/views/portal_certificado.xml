@@ -17,7 +17,7 @@
             <t t-call="portal.portal_searchbar">
                 <t t-set="title">Certificados</t>
             </t>
-            <t t-if="not extractos">
+            <t t-if="not certificates">
                 <p>Actualmente no hay certificados para su cuenta.</p>
             </t>
             <t t-if="certificates" t-call="portal.portal_table">
