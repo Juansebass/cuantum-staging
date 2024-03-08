@@ -43,4 +43,4 @@ class CertificadoCustomperPortal(CustomerPortal):
 
         if report_type in ('html', 'pdf', 'text'):
             return self._show_report(model=order_sudo, report_type=report_type,
-                                     report_ref='ctm_certificados.report_comprador', download=download)
+                                     report_ref='ctm_certificados.action_report_comprador', download=download)
