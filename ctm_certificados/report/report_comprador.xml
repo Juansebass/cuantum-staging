@@ -9,7 +9,7 @@
         <field name="page_width">0</field>
         <field name="orientation">Portrait</field>
         <field name="margin_top">10</field>
-        <field name="margin_bottom">6</field>
+        <field name="margin_bottom">10</field>
         <field name="margin_left">9</field>
         <field name="margin_right">9</field>
         <field name="header_line" eval="False"/>
@@ -204,7 +204,7 @@
                         </t>
                     </div>
                     <div class="footer">
-                        <div class="row " style="font-size:10px;">
+                        <div class="row text-center" style="font-size:10px;">
                             <b><span t-field="o.company_id.name"/></b><br/>
                             Dirección: Carrera 25 # 4-165 Of. 9838 Ámsterdam Plaza. Medellín, Colombia<br/>
                             Teléfono: 604 460 9820 Correo: servicioalcliente@cuantum.co
