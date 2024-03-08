@@ -129,6 +129,10 @@
                         </t>
 
                         <t t-if="o.type == 'retencion'">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
                             <div class="row ">
                                 <div class="col-8 mx-auto text-center">
                                     <p>
