@@ -109,7 +109,7 @@ class Certificado(models.Model):
             self.concepto = retencion.concepto
             self.porcentaje = retencion.porcentaje
             self.cuantia = retencion.cuantia
-        self.type = 'processed'
+        self.state = 'processed'
 
     @api.model
     def create(self, var):
