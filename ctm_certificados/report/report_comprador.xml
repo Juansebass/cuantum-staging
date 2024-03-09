@@ -88,7 +88,7 @@
                                     <tr>
                                         <td style="border: 0.5px solid;padding-left: 2px;"><b>Libranzas</b></td>
                                         <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
-                                            <span t-options="{'widget': 'monetary, 'display_currency': o.company_id.currency_id}" t-field="o.libranzas_valor"/>
+                                            <span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-field="o.libranzas_valor"/>
                                         </td>
                                         <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
                                             <span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-field="o.libranzas_rendimiento"/>
