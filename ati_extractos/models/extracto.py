@@ -184,9 +184,9 @@ class Extracto(models.Model):
                             'valor_anterior' : i[2]['valor_anterior'],
                             'rendimiento_causado' : valor_rendimiento_tmp,
                             'administracion' : valor_administracion_tmp,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value != None else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value != None else i[2]['cant_movimientos']
                         })
                         prod_cargado = True
                     ind += 1
@@ -199,9 +199,9 @@ class Extracto(models.Model):
                         'valor_anterior' :self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
                         'rendimiento_causado' : valor_rendimiento_tmp,
                         'administracion' : valor_administracion_tmp,
-                        'tasa_rendimiento' : moviemiento.fee if moviemiento.value > 0 else 0, #Solamente promediamos los mayores a cero
+                        'tasa_rendimiento' : moviemiento.fee, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1 if moviemiento.value > 0 else 0
+                        'cant_movimientos' : 1 if moviemiento.value != None else 0
                     }))
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
@@ -253,9 +253,9 @@ class Extracto(models.Model):
                             'valor_anterior' : i[2]['valor_anterior'],
                             'rendimiento_causado' : valor_rendimiento_tmp,
                             'administracion' : valor_administracion_tmp,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value != None else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value != None else i[2]['cant_movimientos']
                         })
                         prod_cargado = True
                     index += 1
@@ -268,9 +268,9 @@ class Extracto(models.Model):
                         'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
                         'rendimiento_causado' : valor_rendimiento_tmp,
                         'administracion' : valor_administracion_tmp,
-                        'tasa_rendimiento' : moviemiento.fee if moviemiento.value > 0 else 0, #Solamente promediamos los mayores a cero
+                        'tasa_rendimiento' : moviemiento.fee, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1 if moviemiento.value > 0 else 0
+                        'cant_movimientos' : 1 if moviemiento.value != None else 0
                     }))
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
@@ -327,9 +327,9 @@ class Extracto(models.Model):
                             'valor_anterior' : i[2]['valor_anterior'],
                             'rendimiento_causado' : valor_rendimiento_tmp,
                             'administracion' : valor_administracion_tmp,
-                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value > 0 else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
+                            'tasa_rendimiento' : moviemiento.fee + i[2]['tasa_rendimiento'] if moviemiento.value != None else i[2]['tasa_rendimiento'], #Solamente promediamos los mayores a cero
                             'gestor' : moviemiento.manager.id,
-                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value > 0 else i[2]['cant_movimientos']
+                            'cant_movimientos' : 1 + i[2]['cant_movimientos'] if moviemiento.value != None else i[2]['cant_movimientos']
                         })
                         prod_cargado = True
                     index += 1
@@ -342,9 +342,9 @@ class Extracto(models.Model):
                         'valor_anterior' : self._get_value_before(moviemiento.investment_type.id,moviemiento.manager.id,self.month,self.year),
                         'rendimiento_causado' : valor_rendimiento_tmp,
                         'administracion' : valor_administracion_tmp,
-                        'tasa_rendimiento' : moviemiento.fee if rendimiento.value > 0 else 0, #Solamente promediamos los mayores a cero
+                        'tasa_rendimiento' : moviemiento.fee, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1 if rendimiento.value > 0 else 0
+                        'cant_movimientos' : 1 if rendimiento.value != None else 0
                     }))
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):

@@ -68,29 +68,49 @@
                                 <tbody>
                                     <tr>
                                         <td style="border: 0.5px solid; padding-left: 2px"><b>Facturas</b></td>
-                                        <td style="border: 0.5px solid; padding-left: 2px"><span t-field="o.facturas_valor"/></td>
-                                        <td style="border: 0.5px solid; padding-left: 2px;"><span t-field="o.facturas_rendimiento"/></td>
+                                        <td style="border: 0.5px solid; padding-left: 2px" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.facturas_valor"/>
+                                        </td>
+                                        <td style="border: 0.5px solid; padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.facturas_rendimiento"/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0.5px solid; padding-left: 2px;"><b>Sentencias</b></td>
-                                        <td style="border: 0.5px solid; padding-left: 2px;"><span t-field="o.sentencias_valor"/></td>
-                                        <td style="border: 0.5px solid; padding-left: 2px;"><span t-field="o.sentencias_rendimiento"/></td>
+                                        <td style="border: 0.5px solid; padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.sentencias_valor"/>
+                                        </td>
+                                        <td style="border: 0.5px solid; padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.sentencias_rendimiento"/>
+                                        </td>
 
                                     </tr>
                                     <tr>
                                         <td style="border: 0.5px solid;padding-left: 2px;"><b>Libranzas</b></td>
-                                        <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.libranzas_valor"/></td>
-                                        <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.libranzas_rendimiento"/></td>
+                                        <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.libranzas_valor"/>
+                                        </td>
+                                        <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.libranzas_rendimiento"/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0.5px solid;padding-left: 2px;"><b>Mutuos</b></td>
-                                        <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.mutuos_valor"/></td>
-                                        <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.mutuos_rendimiento"/></td>
+                                        <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.mutuos_valor"/>
+                                        </td>
+                                        <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.mutuos_rendimiento"/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="border: 0.5px solid;padding-left: 2px;"><b>RPR<sup>1</sup></b></td>
-                                        <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.rpr_valor"/></td>
-                                        <td style="border: 0.5px solid;padding-left: 2px;"><span t-field="o.rpr_rendimiento"/></td>
+                                        <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.rpr_valor"/>
+                                        </td>
+                                        <td style="border: 0.5px solid;padding-left: 2px;" class="text-center">
+                                            <span t-options="{'widget': 'monetary'}" t-field="o.rpr_rendimiento"/>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
