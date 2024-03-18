@@ -137,7 +137,7 @@
     <!-- Menu y Menus principales -->
     <menuitem id="menu_tit" name="Titulos" web_icon="ati_titulos,static/description/icon.png"/>
     <menuitem id="menu_titulos" sequence="1" name="Titulos" parent="menu_tit" action="action_open_titulo"/>
-    <menuitem id="menu_titulos_ofer" sequence="2" name="Titulos en Oferta" parent="menu_tit" />
+    <menuitem id="menu_titulos_ofer" sequence="2" name="Titulos en Oferta" parent="sale.menu_sale_root" />
     <menuitem id="menu_carga_extractos" sequence="3" name="Carga de extractos" parent="menu_tit"/>
     <menuitem id="menu_recursos_recompra" sequence="4" name="Carga recursos en p.recompra" parent="menu_tit"/>
     <menuitem id="menu_rendimiento_administracion" sequence="5" name="Rendimientos y administracion" parent="menu_tit"/>
