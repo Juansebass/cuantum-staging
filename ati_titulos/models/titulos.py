@@ -23,7 +23,7 @@ class Titulo(models.Model):
     sale_value = fields.Float('Valor de Compra')
     value = fields.Float('Valor')
     recaudo_total = fields.Float('Recaudo Total')
-    fee = fields.Float('Tasa')
+    fee = fields.Float('Tasa', group_operator=False)
     bonding_date = fields.Date('Fecha de validacion')
     redemption_date = fields.Date('Fecha de redencion')
     state_titulo = fields.Many2one('ati.state.titulo','Estado de titulo')
