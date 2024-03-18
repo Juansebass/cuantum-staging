@@ -87,8 +87,9 @@
                 <field name="name" />
                 <field name="client" />
                 <field name="last_periodo" />
-                <field name="title" />
                 <field name="state_titulo" />
+                <field name="fee" />
+                <field name="value" />
             </tree>
         </field>
     </record>
