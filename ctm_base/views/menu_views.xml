@@ -4,4 +4,7 @@
     <menuitem name="Manager Invoicing" id="account.menu_finance"  groups="group_cuantum_manager"/>
 
     <menuitem name="Icon CRM" id="crm.crm_menu_root" web_icon="ctm_base,static/description/CRM.png"/>
+    <menuitem name="Icon Settings" id="base.menu_management" web_icon="ctm_base,static/description/AJUSTES.png"/>
+    <menuitem name="Icon Calendar" id="calendar.mail_menu_calendar" web_icon="ctm_base,static/description/CALENDARIO.png"/>
+    <menuitem name="Icon Contacts" id="contacts.menu_contacts" web_icon="ctm_base,static/description/CONTACTOS.png"/>
 </odoo>
