@@ -1,0 +1,3 @@
+<odoo>
+    <menuitem name="Manager Board" id="board.menu_board_my_dash"  groups="group_cuantum_manager"/>
+</odoo>

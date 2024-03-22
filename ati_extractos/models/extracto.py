@@ -649,7 +649,7 @@ class Extracto(models.Model):
                     #if cf.titulo.value > 0:
                     #    self.estado_portafolios_ids = [(0,0,{ 'name' : cf.titulo.name + ' - ' + estado, 'valor' : cf.titulo.value })]
                 if valor > 0:
-                    porcentaje = (valor * 100) / total_valor_csf
+                    porcentaje = ((valor * 100) / total_valor_csf) if total_valor_csf != 0 else 0
                     self.estado_portafolios_ids = [(0,0,{ 'name' : estado.capitalize(), 'valor' : valor, 'porcentaje' : porcentaje })]
         
 

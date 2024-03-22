@@ -8,7 +8,8 @@
     'author': 'Juan Sebastian Correa Acevedo',
     'license': '',
     'depends': [
-        'contacts'
+        'contacts',
+        'board',
         ],
     'data': [
         'security/cuantum_security.xml',
