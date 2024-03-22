@@ -1,4 +1,5 @@
 <odoo>
     <menuitem name="Manager Board" id="board.menu_board_my_dash"  groups="group_cuantum_manager"/>
     <menuitem name="Manager Hr" id="hr.menu_hr_root"  groups="group_cuantum_manager"/>
+    <menuitem name="Manager Invoicing" id="account.menu_finance"  groups="group_cuantum_manager"/>
 </odoo>
