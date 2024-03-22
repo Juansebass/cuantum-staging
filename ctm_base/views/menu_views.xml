@@ -4,7 +4,11 @@
     <menuitem name="Manager Invoicing" id="account.menu_finance"  groups="group_cuantum_manager"/>
 
     <menuitem name="Icon CRM" id="crm.crm_menu_root" web_icon="ctm_base,static/description/CRM.png"/>
-    <menuitem name="Icon Settings" id="base.menu_management" web_icon="ctm_base,static/description/AJUSTES.png"/>
+    <menuitem name="Icon Settings" id="base.menu_administration" web_icon="ctm_base,static/description/AJUSTES.png"/>
     <menuitem name="Icon Calendar" id="calendar.mail_menu_calendar" web_icon="ctm_base,static/description/CALENDARIO.png"/>
     <menuitem name="Icon Contacts" id="contacts.menu_contacts" web_icon="ctm_base,static/description/CONTACTOS.png"/>
+    <menuitem name="Icon Discuss" id="mail.menu_root_discuss" web_icon="ctm_base,static/description/CONVERSACIONES.png"/>
+    <menuitem name="Icon Marketing" id="mass_mailing.mass_mailing_menu_root" web_icon="ctm_base,static/description/MARKETING POR EMAIL.png"/>
+    <menuitem name="Icon Notes" id="note.menu_note_notes" web_icon="ctm_base,static/description/NOTAS.png"/>
+    <menuitem name="Icon Sale" id="sale.sale_menu_root" web_icon="ctm_base,static/description/OFERTAS.png"/>
 </odoo>
