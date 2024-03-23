@@ -3,7 +3,7 @@
     <menuitem id="res_partner_menu_contacts_ctm"
         name="Dashboard"
         action="action_ctm_contacts"
-        parent="menu_contacts"
+        parent="contacts.menu_contacts"
         sequence="1"/>
 
 </odoo>
