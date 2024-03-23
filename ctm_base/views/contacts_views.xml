@@ -5,7 +5,7 @@
         <field name="name">action.ctm.contacts.kanban</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <kanban class="o_res_partner_kanban">
+            <kanban >
                 <field name="vat"/>
                 <templates>
                     <t t-name="kanban-box">
