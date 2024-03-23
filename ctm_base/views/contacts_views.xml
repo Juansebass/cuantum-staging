@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="action_ctm_contacts" model="ir.ui.view">
-        <field name="name">action.ctm.contacts.kanban</field>
-        <field name="model">res.partner</field>
-        <field name="arch" type="xml">
-<!--            <kanban class="o_res_partner_kanban">-->
-<!--                <field name="vat"/>-->
-<!--                <templates>-->
-<!--                    <t t-name="kanban-box">-->
-<!--                        <div t-attf-class="oe_kanban_global_click">-->
-<!--                            <div class="oe_kanban_details">-->
-<!--                                <strong class="o_kanban_record_title">-->
-<!--                                    <field name="name"/>-->
-<!--                                </strong>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </t>-->
-<!--                </templates>-->
-<!--            </kanban>-->
-        </field>
-    </record>
+<!--    <record id="action_ctm_contacts" model="ir.ui.view">-->
+<!--        <field name="name">action.ctm.contacts.kanban</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--&lt;!&ndash;            <kanban class="o_res_partner_kanban">&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="vat"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <templates>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <t t-name="kanban-box">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div t-attf-class="oe_kanban_global_click">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="oe_kanban_details">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <strong class="o_kanban_record_title">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <field name="name"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </t>&ndash;&gt;-->
+<!--&lt;!&ndash;                </templates>&ndash;&gt;-->
+<!--&lt;!&ndash;            </kanban>&ndash;&gt;-->
+<!--        </field>-->
+<!--    </record>-->
 
 
     <record model="ir.actions.act_window" id="action_ctm_contacts">
         <field name="name">Contactos</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="view_ids" eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'kanban', 'view_id': ref('ctm_base.ctm_contacts_kanban_view')}),
-            ]"/>
+<!--        <field name="view_ids" eval="[(5, 0, 0),-->
+<!--            (0, 0, {'view_mode': 'kanban', 'view_id': ref('ctm_base.ctm_contacts_kanban_view')}),-->
+<!--            ]"/>-->
     </record>
 
     <menuitem id="res_partner_menu_contacts_ctm"
