@@ -2,7 +2,7 @@
 <odoo>
     <record model="ir.actions.act_window" id="action_ctm_contacts">
         <field name="name">Contactos</field>
-        <field name="res_model">contacts</field>
+        <field name="res_model">res.partner</field>
         <field name="view_mode">kanban,tree,form</field>
     </record>
 
