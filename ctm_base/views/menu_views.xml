@@ -17,5 +17,5 @@
     <menuitem name="Icon Website" id="website.menu_website_configuration" web_icon="ctm_base,static/description/GENERAL.png"/>
     <menuitem name="Icon hr" id="hr.menu_hr_root" web_icon="ctm_base,static/description/GENERAL.png"/>
     <menuitem name="Icon management" id="base.menu_management" web_icon="ctm_base,static/description/GENERAL.png"/>
-    
+
 </odoo>
