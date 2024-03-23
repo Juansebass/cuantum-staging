@@ -58,10 +58,11 @@ class CargarSentencias(models.Model):
                     emisor = lista[1]
                     pagador = lista[2]
                     codigo = lista[3]
-                    fecha_ejecutoria = lista[4]
-                    fecha_cuenta_cobro= lista[5]
-                    fecha_liquidar = lista[6]
-                    valor_condena = lista[7]
+                    statum = lista[4]
+                    fecha_ejecutoria = lista[5]
+                    fecha_cuenta_cobro= lista[6]
+                    fecha_liquidar = lista[7]
+                    valor_condena = lista[8]
 
                     vals.clear()
 
@@ -99,6 +100,7 @@ class CargarSentencias(models.Model):
                             "emisor": emisor.id,
                             "pagador": pagador.id,
                             "codigo": codigo,
+                            "statum": statum,
                             "fecha_ejecutoria": datetime.strptime(fecha_ejecutoria, '%d/%m/%Y'),
                             "fecha_cuenta_cobro": datetime.strptime(fecha_cuenta_cobro, '%d/%m/%Y'),
                             "fecha_liquidar": datetime.strptime(fecha_liquidar, '%d/%m/%Y'),
