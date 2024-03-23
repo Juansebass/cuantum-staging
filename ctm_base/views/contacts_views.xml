@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="bank_balance_kanban_view" model="ir.ui.view">
-        <field name="name">bank.balance.kanban</field>
-        <field name="model">bank.balance</field>
+    <record id="action_ctm_contacts" model="ir.ui.view">
+        <field name="name">action.ctm.contacts.kanban</field>
+        <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <kanban class="o_res_partner_kanban">
-                <field name="journal_id"/>
-                <field name="bank_account"/>
-                <field name="value"/>
+                <field name="vat"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_global_click">
