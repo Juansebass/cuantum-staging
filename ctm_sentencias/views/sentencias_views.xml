@@ -17,6 +17,7 @@
                                         "no_create":True, "no_open":True}'
                         />
                         <field name="codigo"/>
+                        <field name="statum"/>
                     </group>
                     <group name="derecha">
                         <field name="fecha_ejecutoria"/>
