@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record model="ir.actions.act_window" id="action_ctm_contacts">
+        <field name="name">Contactos</field>
+        <field name="res_model">contacts</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
     <menuitem id="res_partner_menu_contacts_ctm"
         name="Dashboard"
         action="action_ctm_contacts"
