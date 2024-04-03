@@ -187,6 +187,7 @@
                 <filter name="activo" string="Activo" domain="[('act_in', '=', 'activo')]"/>
                 <filter name="inactivo" string="Inactivo" domain="[('act_in', '=', 'inactivo')]"/>
                 <filter name="vinculado" string="Vinculado" domain="[('vinculado', '=', True)]"/>
+                <filter string="estado" name="Estado" context="{'group_by':'act_in'}"/>
             </filter>
         </field>
     </record>
