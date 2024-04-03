@@ -184,9 +184,9 @@
             <filter name="inactive" position="after">
                 <filter name="emisor" string="Emisor" domain="[('emisor', '=', True)]"/>
                 <filter name="pagador" string="Pagador" domain="[('pagador', '=', True)]"/>
-                <filter name="activo" string="Activo" domain="[('act_in', '=', activo)]"/>
-                <filter name="inactivo" string="Inactivo" domain="[('act_in', '=', inactivo)]"/>
-                <filter name="vinculado" string="Vinculado" domain="[('vinculado', '=', true)]"/>
+                <filter name="activo" string="Activo" domain="[('act_in', '=', 'activo')]"/>
+                <filter name="inactivo" string="Inactivo" domain="[('act_in', '=', 'inactivo')]"/>
+                <filter name="vinculado" string="Vinculado" domain="[('vinculado', '=', True)]"/>
             </filter>
         </field>
     </record>
