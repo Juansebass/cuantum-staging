@@ -66,11 +66,5 @@
         groups="base.group_system"
         sequence="8"
     />
-    <menuitem id="informe_errores_menu"
-        name="Informe Errores"
-        parent="ati_extractos.menu_extracto"
-        action="informe_errores_wizard_action"
-        sequence="8"
-    />
 
 </odoo>

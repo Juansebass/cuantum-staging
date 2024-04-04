@@ -17,7 +17,6 @@
         'base','contacts','ati_titulos','portal', 'ctm_validaciones'
         ],
     'data': [
-        'wizards/informe_errores_wizard.xml',
         'views/menu.xml',
         'views/extracto_views.xml',
         'views/portal_extracto.xml',
@@ -26,6 +25,7 @@
         'report/report_extracto.xml',
         'data/mail_template_extracto.xml',
         'wizards/validate_extractos_views.xml',
+        'wizards/informe_errores_wizard.xml',
         ],
     'installable': True,
     'application': True,
