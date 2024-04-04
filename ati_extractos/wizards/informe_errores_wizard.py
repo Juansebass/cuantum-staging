@@ -40,6 +40,7 @@ class InformeErroresWizard(models.TransientModel):
         ])
         row += 1
         for extracto in extractos:
+            worksheet.write(row, 0, extracto.cliente.name)
             worksheet.write(row, 4, extracto.message_product_validation)
             row += 1
 
