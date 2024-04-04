@@ -10,4 +10,4 @@ access_ati_extracto_recompra_fcp,ati.extracto.recompra.fcp.user,model_ati_extrac
 access_ati_extracto_user_portal,ati.extracto.user.portal,model_ati_extracto,base.group_portal,1,0,0,0
 access_ati_create_extractos,ati.create.extractos.user,model_ati_create_extractos,base.group_user,1,1,1,1
 access_ati_extracto_detalle_create_extractos,ati.extracto.detalle_create_extractos.user,model_ati_detalle_create_extractos,base.group_user,1,1,1,1
-access_informe_errores,informe.errores.user,model_informe.errores.wizard,base.group_user,1,1,1,1
+access_informe_errores,informe.errores.user,model_informe_errores_wizard,base.group_user,1,1,1,1
