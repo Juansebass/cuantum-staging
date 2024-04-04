@@ -11,6 +11,5 @@
     <!-- Menu y Menus principales -->
     <menuitem id="menu_extracto" sequence="5" name="Extractos" parent="ati_titulos.menu_tit"/>
     <menuitem id="menu_extractos" sequence="6" name="Extractos" parent="menu_extracto" action="action_open_extracto"/>
-    <menuitem id="menu_informe_errores" sequence="7" name="Informe Errores" parent="ati_titulos.menu_tit"/>
 
 </odoo>

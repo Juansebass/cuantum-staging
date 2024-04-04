@@ -20,6 +20,5 @@
         <field name="view_id" ref="informe_errores_wizard_form"/>
         <field name="target">new</field>
     </record>
-
     <menuitem id="menu_informe_errores" sequence="20" name="Informe Errores" parent="ati_extractos.menu_extracto" action="informe_errores_wizard_action"/>
 </odoo>
