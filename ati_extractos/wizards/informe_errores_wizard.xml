@@ -5,9 +5,29 @@
         <field name="model">informe.errores.wizard</field>
         <field name="arch" type="xml">
             <form>
+                <group>
+                    <field name="fecha_inicio"/>
+                    <field name="fecha_fin"/>
+                </group>
                 <footer>
                     <button string="Confirm" type="object" class="oe_highlight" name="confirm_informe_errores"/>
                     <button string="Cancel" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+     <record id="informe_errores_download_view" model="ir.ui.view">
+        <field name="name">informe.errores.download.form</field>
+        <field name="model">informe.errores.download</field>
+        <field name="arch" type="xml">
+            <form string="Excel Output">
+                <seperator colspan="4" string="Please Save file as .xls excel formate"/>
+                <field name="name" invisible="1"/>
+                <field name="xls_output" filename="name"/>
+                <footer>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
         </field>
@@ -19,6 +39,9 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="informe_errores_wizard_form"/>
         <field name="target">new</field>
+
+
+
     </record>
     <menuitem id="menu_informe_errores" sequence="20" name="Informe Errores" parent="ati_extractos.menu_extracto" action="informe_errores_wizard_action"/>
 </odoo>
