@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="fecha_inicio"/>
-                    <field name="fecha_fin"/>
+                    <field name="year"/>
+                    <field name="month"/>
                 </group>
                 <footer>
                     <button string="Confirm" type="object" class="oe_highlight" name="confirm_informe_errores"/>
