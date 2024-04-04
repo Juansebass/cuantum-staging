@@ -10,8 +10,8 @@
                     <field name="month"/>
                 </group>
                 <footer>
-                    <button string="Confirm" type="object" class="oe_highlight" name="confirm_informe_errores"/>
-                    <button string="Cancel" type="object" special="cancel"/>
+                    <button string="Confirmar" type="object" class="oe_highlight" name="confirm_informe_errores"/>
+                    <button string="Cancelar" type="object" special="cancel"/>
                 </footer>
             </form>
         </field>

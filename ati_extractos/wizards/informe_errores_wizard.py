@@ -19,7 +19,7 @@ class InformeErroresWizard(models.TransientModel):
         date_default_col1_style = workbook.add_format(
             {'font_name': 'Arial', 'font_size': 12, 'num_format': 'yyyy-mm-dd', 'align': 'right', })
 
-        row = 1
+        row = 0
         # worksheet.write(row, 0, 'CLIENTE')
         # worksheet.write(row, 1, 'VALOR ACTUAL')
         # worksheet.write(row, 2, 'VALOR VALIDADO')
