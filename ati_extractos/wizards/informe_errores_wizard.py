@@ -9,8 +9,8 @@ class InformeErroresWizard(models.TransientModel):
     _description = 'Wizard To Informe Errores'
     _inherit = ["mail.thread"]
 
-    fecha_inicio = fields.Date('Fecha de Inicio', required=1)
-    fecha_fin = fields.Date('Fecha de Fin', required=1)
+    month = fields.Char('Mes de Periodo', required=1)
+    year = fields.Char('Año de Periodo', required=1)
 
     def confirm_informe_errores(self):
         output = io.BytesIO()
@@ -23,7 +23,24 @@ class InformeErroresWizard(models.TransientModel):
         worksheet.write(row, 0, 'CLIENTE')
         worksheet.write(row, 1, 'VALOR ACTUAL')
         worksheet.write(row, 2, 'VALOR VALIDADO')
-        worksheet.write(row, 2, 'VALOR DIFERENCIA')
+        worksheet.write(row, 3, 'VALOR DIFERENCIA')
+        worksheet.write(row, 4, 'MENSAJE')
+
+        worksheet.set_column(0, 0, 50)
+        worksheet.set_column(1, 1, 20)
+        worksheet.set_column(2, 2, 20)
+        worksheet.set_column(3, 3, 20)
+        worksheet.set_column(4, 4, 100)
+
+        #Buscando extractos
+        extractos = self.env['ati.extracto'].search([
+            ('year', '=', self.year),
+            ('month', '=', self.month),
+            ('show_alert_product_validation', '=', True)
+        ])
+        row += 1
+        for extracto in extractos:
+            worksheet.write(row, 4, extracto.message_product_validation)
 
         workbook.close()
         output.seek(0)
