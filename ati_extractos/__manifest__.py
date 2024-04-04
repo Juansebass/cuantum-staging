@@ -24,7 +24,8 @@
         'security/ir.model.access.csv',
         'report/report_extracto.xml',
         'data/mail_template_extracto.xml',
-        'wizards/validate_extractos_views.xml'
+        'wizards/validate_extractos_views.xml',
+        'wizards/informe_errores_wizard.xml'
         ],
     'installable': True,
     'application': True,

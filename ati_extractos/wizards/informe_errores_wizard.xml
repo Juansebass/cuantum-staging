@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>=
+<odoo>
+    <record id="informe_errores_wizard_form" model="ir.ui.view">
+        <field name="name">informe.errores.wizard.form</field>
+        <field name="model">informe.errores.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <footer>
+                    <button string="Confirm" type="object" class="oe_highlight" name="confirm_informe_errores"/>
+                    <button string="Cancel" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="informe_errores_wizard_action" model="ir.actions.act_window">
+        <field name="name">Informe Errores</field>
+        <field name="res_model">informe.errores.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="informe_errores_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>
