@@ -20,17 +20,23 @@ class InformeErroresWizard(models.TransientModel):
             {'font_name': 'Arial', 'font_size': 12, 'num_format': 'yyyy-mm-dd', 'align': 'right', })
 
         row = 1
+        # worksheet.write(row, 0, 'CLIENTE')
+        # worksheet.write(row, 1, 'VALOR ACTUAL')
+        # worksheet.write(row, 2, 'VALOR VALIDADO')
+        # worksheet.write(row, 3, 'VALOR DIFERENCIA')
+        # worksheet.write(row, 4, 'MENSAJE')
+        #
+        # worksheet.set_column(0, 0, 50)
+        # worksheet.set_column(1, 1, 20)
+        # worksheet.set_column(2, 2, 20)
+        # worksheet.set_column(3, 3, 20)
+        # worksheet.set_column(4, 4, 100)
+
         worksheet.write(row, 0, 'CLIENTE')
-        worksheet.write(row, 1, 'VALOR ACTUAL')
-        worksheet.write(row, 2, 'VALOR VALIDADO')
-        worksheet.write(row, 3, 'VALOR DIFERENCIA')
-        worksheet.write(row, 4, 'MENSAJE')
+        worksheet.write(row, 1, 'MENSAJE')
 
         worksheet.set_column(0, 0, 50)
-        worksheet.set_column(1, 1, 20)
-        worksheet.set_column(2, 2, 20)
-        worksheet.set_column(3, 3, 20)
-        worksheet.set_column(4, 4, 100)
+        worksheet.set_column(1, 1, 100)
 
         #Buscando extractos
         extractos = self.env['ati.extracto'].search([
@@ -41,7 +47,7 @@ class InformeErroresWizard(models.TransientModel):
         row += 1
         for extracto in extractos:
             worksheet.write(row, 0, extracto.cliente.name)
-            worksheet.write(row, 4, extracto.message_product_validation)
+            worksheet.write(row, 1, extracto.message_product_validation)
             row += 1
 
         workbook.close()
