@@ -21,5 +21,5 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="menu_informe_errores" sequence="20" name="Informe Errores" parent="menu_extracto" action="informe_errores_wizard_action"/>
+    <menuitem id="menu_informe_errores" sequence="20" name="Informe Errores" parent="ati_extractos.menu_extracto" action="informe_errores_wizard_action"/>
 </odoo>
