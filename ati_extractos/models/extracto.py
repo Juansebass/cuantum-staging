@@ -871,12 +871,11 @@ class Extracto(models.Model):
         for dm in self.tir_ids:
             dm.unlink()
         range = calendar.monthrange(int(self.year), int(self.month))
-        first_day = range[0]
         last_day = range[1]
         #Primer día
         self.env['ati.tir'].create({
             'extracto_id': self.id,
-            'date': datetime(int(self.year),int(self.month), first_day),
+            'date': datetime(int(self.year),int(self.month), 1),
             'valor': self.valor_anterior_total_resumen,
         })
 
