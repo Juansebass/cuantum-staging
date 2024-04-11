@@ -8,7 +8,7 @@
     'name': 'Extractos',
     'category': 'Web',
     'summary': 'Modulo de Extractos Cuantum',
-    'version': '11.0.2',
+    'version': '11.0.1',
     'description': """ """,
     'author': 'Ivan Arriola - Autodidacta TI / Agil 365',
     'website': 'http://www.autodidactati.com/',

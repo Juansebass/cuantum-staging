@@ -63,6 +63,7 @@ class Extracto(models.Model):
 
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado'),('validated','Validado'),('send','Enviado')],string='Estado',default='draft')
 
+
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
     def _compute_access_url(self):
         super(Extracto, self)._compute_access_url()
@@ -1213,6 +1214,17 @@ class RecursoRecompraCSF(models.Model):
 
 class RecursoRecompraFCL(models.Model):
     _name = 'ati.extracto.recompra.fcl'
+
+    name = fields.Char('Nombre')
+    date = fields.Date('Fecha')
+    value = fields.Float('Valores')
+    investment_type = fields.Many2one('ati.investment.type','Producto')
+    movement_type = fields.Many2one('ati.movement.type','Movimiento')
+    buyer = fields.Many2one('res.partner','Comprador',required=1)
+    extracto_id = fields.Many2one('ati.extracto', 'Extracto')
+
+class RecursoRecompraFCP(models.Model):
+    _name = 'ati.extracto.recompra.fcp'
 
     name = fields.Char('Nombre')
     date = fields.Date('Fecha')
