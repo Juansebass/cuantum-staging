@@ -62,7 +62,7 @@ class Extracto(models.Model):
     estado_portafolios_ids = fields.One2many('ati.extracto.estado_portafolios','extracto_id','Estados de Portafolios')
 
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado'),('validated','Validado'),('send','Enviado')],string='Estado',default='draft')
-    tir_ids = fields.One2many('ctm.tir', 'extracto_id', 'TIR')
+    # tir_ids = fields.One2many('ctm.tir', 'extracto_id', 'TIR')
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
     def _compute_access_url(self):
