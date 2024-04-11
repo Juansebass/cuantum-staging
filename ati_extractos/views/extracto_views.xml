@@ -162,6 +162,8 @@
                                 </tree>
                             </field>
                         </page>
+                        <page name="tir" string="TIR">
+                        </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
