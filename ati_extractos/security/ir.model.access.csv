@@ -12,3 +12,4 @@ access_ati_create_extractos,ati.create.extractos.user,model_ati_create_extractos
 access_ati_extracto_detalle_create_extractos,ati.extracto.detalle_create_extractos.user,model_ati_detalle_create_extractos,base.group_user,1,1,1,1
 access_informe_errores,informe.errores.user,model_informe_errores_wizard,base.group_user,1,1,1,1
 access_informe_errores_download,informe.errores.download.user,model_informe_errores_download,base.group_user,1,1,1,1
+access_ctm_tir,ctm.tir.user,model_ctm_tir,base.group_user,1,1,1,1
