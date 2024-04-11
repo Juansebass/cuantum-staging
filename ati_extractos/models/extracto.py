@@ -1222,11 +1222,3 @@ class RecursoRecompraFCL(models.Model):
     movement_type = fields.Many2one('ati.movement.type','Movimiento')
     buyer = fields.Many2one('res.partner','Comprador',required=1)
     extracto_id = fields.Many2one('ati.extracto', 'Extracto')
-
-# class Tir(models.Model):
-#     _name = 'ctm.tir'
-#     _order = 'date asc'
-#
-#     date = fields.Date('Día')
-#     value = fields.Float('Valor')
-#     # extracto_id = fields.Many2one('ati.extracto', 'Extracto')
