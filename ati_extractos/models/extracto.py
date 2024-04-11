@@ -870,7 +870,7 @@ class Extracto(models.Model):
     def _generar_tir(self):
         for dm in self.tir_ids:
             dm.unlink()
-        range = calendar.monthrange(self.year, self.month)
+        range = calendar.monthrange(int(self.year), int(self.month))
         first_day = range[0]
         last_day = range[1]
         #Primer día
