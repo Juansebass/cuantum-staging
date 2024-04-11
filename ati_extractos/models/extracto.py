@@ -28,6 +28,7 @@ class Extracto(models.Model):
 
     valor_anterior_recursos_fcl = fields.Float('Valor Anterior')
     valor_actual_recursos_fcl = fields.Float('Valor Actual')
+    tir_ids = fields.One2many('ati.tir', 'extracto_id', 'TIR')
     recursos_csf = fields.One2many('ati.extracto.recompra.csf', 'extracto_id', 'Recuros de recompra CSF')
     recursos_fcl = fields.One2many('ati.extracto.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL')
     recursos_fcp = fields.One2many('ati.extracto.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP')
