@@ -862,7 +862,7 @@ class Extracto(models.Model):
         #Validación Totales Factoring, libranzas sentencias
         self.validacion_totales()
 
-        #self._generar_tir()
+        self._generar_tir()
 
         #Cambiamos estado
         self.state = 'processed'
