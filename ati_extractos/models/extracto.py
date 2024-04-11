@@ -1229,4 +1229,4 @@ class Tir(models.Model):
 
     date = fields.Date('Día')
     value = fields.Float('Valor')
-    extracto_id = fields.Many2one('ati.extracto', 'Extracto')
+    extracto_ids = fields.Many2one('ati.extracto', 'Extracto')
