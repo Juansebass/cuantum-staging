@@ -62,7 +62,7 @@ class Extracto(models.Model):
     estado_portafolios_ids = fields.One2many('ati.extracto.estado_portafolios','extracto_id','Estados de Portafolios')
 
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado'),('validated','Validado'),('send','Enviado')],string='Estado',default='draft')
-
+    tir_ids = fields.One2many('ctm.tir', 'extracto_id', 'TIR')
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
     def _compute_access_url(self):
@@ -1223,13 +1223,10 @@ class RecursoRecompraFCL(models.Model):
     buyer = fields.Many2one('res.partner','Comprador',required=1)
     extracto_id = fields.Many2one('ati.extracto', 'Extracto')
 
-class RecursoRecompraFCP(models.Model):
-    _name = 'ati.extracto.recompra.fcp'
+class Tir(models.Model):
+    _name = 'ctm.tir'
+    _order = 'date asc'
 
-    name = fields.Char('Nombre')
-    date = fields.Date('Fecha')
-    value = fields.Float('Valores')
-    investment_type = fields.Many2one('ati.investment.type','Producto')
-    movement_type = fields.Many2one('ati.movement.type','Movimiento')
-    buyer = fields.Many2one('res.partner','Comprador',required=1)
+    date = fields.Date('Día')
+    value = fields.Float('Valor')
     extracto_id = fields.Many2one('ati.extracto', 'Extracto')
