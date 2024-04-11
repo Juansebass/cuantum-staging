@@ -876,7 +876,7 @@ class Extracto(models.Model):
         #Primer día
         self.env['ati.tir'].create({
             'extracto_id': self.id,
-            'date': first_day,
+            'date': first_day.date(),
             'valor': self.valor_anterior_total_resumen,
         })
 
@@ -886,7 +886,7 @@ class Extracto(models.Model):
         #último día
         self.env['ati.tir'].create({
             'extracto_id': self.id,
-            'date': last_day,
+            'date': last_day.date(),
             'valor': self.valor_actual_total_resumen * -1,
         })
 
