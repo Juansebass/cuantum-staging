@@ -1115,6 +1115,13 @@ class Extracto(models.Model):
 
         return res
 
+class Tir(models.Model):
+    _name = 'ati.tir'
+
+    extracto_id = fields.Many2one('ati.extracto','Extracto')
+    valor = fields.Float('Valor')
+    date = fields.Date('Día')
+
 class ResumenInversionesFCL(models.Model):
     _name = 'ati.extracto.resumen_inversion'
 
