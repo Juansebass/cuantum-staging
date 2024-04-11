@@ -866,20 +866,20 @@ class Extracto(models.Model):
 
         #Cambiamos estado
         self.state = 'processed'
-        
+
 
     def _add_record_tir(self, rec):
         if rec.movement_type.code == 'ADICION':
             self.env['ati.tir'].create({
                 'extracto_id': self.id,
                 'date': rec.date,
-                'valor': self.value,
+                'valor': rec.value,
             })
         elif rec.movement_type.code == 'RETIRO':
             self.env['ati.tir'].create({
                 'extracto_id': self.id,
                 'date': rec.date,
-                'valor': self.value * -1,
+                'valor': rec.value * -1,
             })
 
 
