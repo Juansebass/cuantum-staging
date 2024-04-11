@@ -906,7 +906,7 @@ class Extracto(models.Model):
         #último día
         self.env['ati.tir'].create({
             'extracto_id': self.id,
-            'date': datetime(int(self.year),int(self.month), last_day),
+            'date': datetime(int(self.year),int(self.month), last_day).date(),
             'valor': self.valor_actual_total_resumen * -1,
         })
 
