@@ -1118,6 +1118,7 @@ class Extracto(models.Model):
 
 class Tir(models.Model):
     _name = 'ati.tir'
+    _order = 'date asc'
 
     extracto_id = fields.Many2one('ati.extracto','Extracto')
     valor = fields.Float('Valor')

@@ -163,6 +163,13 @@
                             </field>
                         </page>
                         <page name="tir" string="TIR">
+                            <field name="tir_ids" readonly="1">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="valor"/>
+                                </tree>
+                            </field>
+
                         </page>
                     </notebook>
                 </sheet>
