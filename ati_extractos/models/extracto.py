@@ -866,6 +866,22 @@ class Extracto(models.Model):
 
         #Cambiamos estado
         self.state = 'processed'
+        
+
+    def _add_record_tir(self, rec):
+        if rec.movement_type.code == 'ADICION':
+            self.env['ati.tir'].create({
+                'extracto_id': self.id,
+                'date': rec.date,
+                'valor': self.value,
+            })
+        elif rec.movement_type.code == 'RETIRO':
+            self.env['ati.tir'].create({
+                'extracto_id': self.id,
+                'date': rec.date,
+                'valor': self.value * -1,
+            })
+
 
     def _generar_tir(self):
         for dm in self.tir_ids:
@@ -879,8 +895,13 @@ class Extracto(models.Model):
             'valor': self.valor_anterior_total_resumen,
         })
 
-
-
+        #Recorriendo detalle d emovimiento
+        for rec in self.recursos_csf:
+            self._add_record_tir(rec)
+        for rec in self.recursos_fcl:
+            self._add_record_tir(rec)
+        for rec in self.recursos_fcp:
+            self._add_record_tir(rec)
 
         #último día
         self.env['ati.tir'].create({
