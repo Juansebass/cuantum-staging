@@ -7,9 +7,9 @@ import base64
 import matplotlib.pyplot as plt
 from datetime import datetime
 import calendar
-import calendar
 import logging
 from io import BytesIO ## for Python 3
+from dateutil.relativedelta import relativedelta
 
 
 logger = logging.getLogger(__name__)
@@ -63,6 +63,9 @@ class Extracto(models.Model):
     estado_portafolios_ids = fields.One2many('ati.extracto.estado_portafolios','extracto_id','Estados de Portafolios')
 
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado'),('validated','Validado'),('send','Enviado')],string='Estado',default='draft')
+
+    valor_actual_total_resumen = fields.Float('Valor Total Actual Resumen')
+    valor_anterior_total_resumen = fields.Float('Valor Total Anterior Resumen')
 
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
@@ -388,6 +391,9 @@ class Extracto(models.Model):
             if ri.tasa_rendimiento > 0:
                 cant_tasas += 1
             total_diferencia += ri.diferencia
+
+        self.valor_anterior_total_resumen = total_valor_anterior
+        self.valor_actual_total_resumen = total_valor_actual
 
 
         #######################
@@ -856,8 +862,33 @@ class Extracto(models.Model):
         #Validación Totales Factoring, libranzas sentencias
         self.validacion_totales()
 
+        #self._generar_tir()
+
         #Cambiamos estado
         self.state = 'processed'
+
+    def _generar_tir(self):
+        for dm in self.tir_ids:
+            dm.unlink()
+        range = calendar.monthrange(self.year, self.month)
+        first_day = range[0]
+        last_day = range[1]
+        #Primer día
+        self.env['ati.tir'].create({
+            'extracto_id': self.id,
+            'date': first_day,
+            'valor': self.valor_anterior_total_resumen,
+        })
+
+
+
+
+        #último día
+        self.env['ati.tir'].create({
+            'extracto_id': self.id,
+            'date': last_day,
+            'valor': self.valor_actual_total_resumen * -1,
+        })
 
     def validacion_totales(self):
         self.show_alert_product_validation = False
