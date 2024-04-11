@@ -163,12 +163,12 @@
                             </field>
                         </page>
                         <page name="tir" string="TIR">
-                            <field name="tir_ids" readonly="1">
-                                <tree>
-                                    <field name="date"/>
-                                    <field name="value"/>
-                                </tree>
-                            </field>
+<!--                            <field name="tir_ids" readonly="1">-->
+<!--                                <tree>-->
+<!--                                    <field name="date"/>-->
+<!--                                    <field name="value"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
                         </page>
                     </notebook>
                 </sheet>
