@@ -873,13 +873,13 @@ class Extracto(models.Model):
             self.env['ati.tir'].create({
                 'extracto_id': self.id,
                 'date': rec.date,
-                'valor': rec.value,
+                'move': rec.value,
             })
         elif rec.movement_type.code == 'RETIRO':
             self.env['ati.tir'].create({
                 'extracto_id': self.id,
                 'date': rec.date,
-                'valor': rec.value * -1,
+                'move': rec.value * -1,
             })
 
 
