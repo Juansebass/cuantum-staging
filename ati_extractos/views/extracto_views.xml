@@ -166,6 +166,7 @@
                             <field name="tir_ids" readonly="1">
                                 <tree>
                                     <field name="date"/>
+                                    <field name="move"/>
                                     <field name="valor"/>
                                 </tree>
                             </field>

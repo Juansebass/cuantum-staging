@@ -1172,8 +1172,9 @@ class Tir(models.Model):
     _order = 'date asc'
 
     extracto_id = fields.Many2one('ati.extracto','Extracto')
-    valor = fields.Float('Valor')
+    valor = fields.Float('Valor del Portafolio')
     date = fields.Date('Día')
+    move = fields.Float('Movimiento')
 
 class ResumenInversionesFCL(models.Model):
     _name = 'ati.extracto.resumen_inversion'
