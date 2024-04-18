@@ -78,12 +78,7 @@
                                     <th style="width:20%; vertical-align: middle">Valor Anterior</th>
                                     <th style="width:20%; vertical-align: middle">Diferencia</th>
                                     <th style="width:2%; vertical-align: middle">Participación</th>
-                                    <t t-if="o.cliente.id == 1112">
-                                        <th style="width:2%; vertical-align: middle">Ingreso por Ajustes a Valor Razonable</th>
-                                    </t>
-                                    <t t-if="o.cliente.id != 1112">
-                                        <th style="width:2%; vertical-align: middle">Rendimiento Causado</th>
-                                    </t>
+                                    <th style="width:2%; vertical-align: middle">Rendimiento Causado</th>
                                     <th style="width:2%; vertical-align: middle">Administración</th>
                                     <th style="width:2%; vertical-align: middle">Retorno Proyectado</th>
                                 </tr>

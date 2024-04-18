@@ -162,7 +162,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page name="tir" string="TIR">
+                        <page name="flujo_caja" string="Flujo de Caja">
                             <field name="tir_ids" readonly="1">
                                 <tree>
                                     <field name="date"/>
