@@ -5,7 +5,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
 import matplotlib.pyplot as plt
-from datetime import datetime
+from datetime import datetime, timedelta
 import calendar
 import logging
 from io import BytesIO ## for Python 3
@@ -891,7 +891,7 @@ class Extracto(models.Model):
         #Primer día
         self.env['ati.tir'].create({
             'extracto_id': self.id,
-            'date': datetime(int(self.year),int(self.month), 1),
+            'date': datetime(int(self.year),int(self.month), 1) - timedelta(days=1),
             'valor': self.valor_anterior_total_resumen,
         })
 
