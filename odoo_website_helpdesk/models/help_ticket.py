@@ -101,8 +101,8 @@ class HelpDeskTicket(models.Model):
                                               "service. Only service products "
                                               "are available for selection.")
     start_date = fields.Date(string='Start Date', help="Start Date of the "
-                                                       "Ticket")
-    end_date = fields.Date(string='End Date', help="End Date of the Ticket")
+                                                       "Ticket", default=fields.Date.today)
+    end_date = fields.Date(string='End Date', help="End Date of the Ticket", required=True)
     public_ticket = fields.Boolean(string="Public Ticket")
     invoice_ids = fields.Many2many('account.move', string='Invoices',
                                    store=True,
