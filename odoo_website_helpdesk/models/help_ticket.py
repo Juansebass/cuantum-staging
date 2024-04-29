@@ -125,6 +125,9 @@ class HelpDeskTicket(models.Model):
                               help="Indicates whether the ticket is billable "
                                    "or not.")
 
+    #Custom fields
+    movement_type = fields.Many2one('ati.movement.type', 'Tipo de Movimiento')
+
     @api.model
     def create(self, var):
         res = super(HelpDeskTicket, self).create(var)

@@ -47,6 +47,7 @@
                             <field name="phone" string="Teléfono" invisible="1"/>
                             <field name="cost" invisible="1"/>
                             <field name="start_date" string="Fecha de Inicio" readonly="1"/>
+                            <field name="movement_type"/>
                         </group>
                         <group>
                             <field name="team_id" string="Equipo de Soporte"/>
