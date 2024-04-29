@@ -278,7 +278,7 @@ class ImportFactoring(models.Model):
     year = fields.Char('Año de Periodo')
     client_file = fields.Binary('Archivo')
     manager = fields.Many2one('ati.gestor', 'Gestor', required=True)
-    delimiter = fields.Char('Delimitador',default=";")
+    delimiter = fields.Char('Delimitador',default=";")1
     fch_procesado = fields.Datetime('Fecha procesado')
     responsable = fields.Many2one('res.partner','Responsable de proceso')
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado')],string='Estado',default='draft')

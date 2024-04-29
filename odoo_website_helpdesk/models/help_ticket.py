@@ -127,6 +127,8 @@ class HelpDeskTicket(models.Model):
 
     #Custom fields
     movement_type = fields.Many2one('ati.movement.type', 'Tipo de Movimiento')
+    manager = fields.Many2one('ati.gestor', 'Gestor')
+    investment_type = fields.Many2one('ati.investment.type', 'Tipo de inversión')
 
     @api.model
     def create(self, var):
