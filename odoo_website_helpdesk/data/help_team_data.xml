@@ -2,29 +2,20 @@
 <odoo>
     <data>
         <!-- Project Stages -->
-        <record id="team_soporte" model="help.team">
-            <field name="name">Soporte</field>
+        <record id="team_tesoreria" model="help.team">
+            <field name="name">Tesorería</field>
         </record>
 
-        <record id="team_cliente_comprador" model="help.team">
-            <field name="name">Cliente Comprador</field>
+        <record id="team_comercial" model="help.team">
+            <field name="name">Comercial</field>
         </record>
 
-        <record id="team_cliente_factoring" model="help.team">
-            <field name="name">Cliente Factoring</field>
+        <record id="team_riesgos" model="help.team">
+            <field name="name">Riesgos</field>
         </record>
 
-        <record id="team_cliente_libranzas" model="help.team">
-            <field name="name">Cliente Libranzas</field>
+        <record id="team_gerencia" model="help.team">
+            <field name="name">Gerencia</field>
         </record>
-
-        <record id="team_cliente_sentencias" model="help.team">
-            <field name="name">Cliente Sentencias</field>
-        </record>
-
-        <record id="team_juridico" model="help.team">
-            <field name="name">Jurídico</field>
-        </record>
-
     </data>
 </odoo>
