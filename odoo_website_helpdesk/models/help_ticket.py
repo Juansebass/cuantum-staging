@@ -306,3 +306,9 @@ class HelpDeskTicket(models.Model):
 
     def action_start(self):
         self.stage_id = 'in_progress'
+
+    def action_end(self):
+        if self.management_risk_approved == 'no':
+            raise UserError('El Ticket debe ser aprobado por Riesgos')
+        self.stage_id = 'done'
+
