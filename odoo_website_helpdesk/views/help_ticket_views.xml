@@ -19,6 +19,9 @@
                     <button name="action_end" type="object" string="Terminar" attrs="{'invisible':[('stage_id','!=','in_progress')]}"
                             groups="odoo_website_helpdesk.group_cuatum_mesa_tesoreria"
                     />
+                    <button name="action_approve" type="object" string="Aprobar" attrs="{'invisible':[('stage_id','!=','in_progress'), ('management_risk_approved','=','si')]}"
+                            groups="odoo_website_helpdesk.group_cuatum_mesa_riesgos"
+                    />
                     <field name="stage_id" widget="statusbar"/>
                 </header>
                 <sheet>

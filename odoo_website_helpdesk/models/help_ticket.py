@@ -140,7 +140,7 @@ class HelpDeskTicket(models.Model):
     manager = fields.Many2one('ati.gestor', 'Gestor', required=True,)
     investment_type = fields.Many2one('ati.investment.type', 'Tipo de inversión')
     management_risk_approved = fields.Selection(
-        string='Aprovado por Riesgos',
+        string='Aprobado por Riesgos',
         selection=[
             ('si', 'Sí'),
             ('no', 'No')
@@ -311,4 +311,7 @@ class HelpDeskTicket(models.Model):
         if self.management_risk_approved == 'no':
             raise UserError('El Ticket debe ser aprobado por Riesgos')
         self.stage_id = 'done'
+
+    def action_approve(self):
+        self.management_risk_approved = 'si'
 
