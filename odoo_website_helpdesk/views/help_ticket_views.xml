@@ -14,8 +14,7 @@
                             type="object" class="btn-primary"
                             attrs="{'invisible':[('billable','=',False)]}"/>
                     <button name="send_response" type="object" string="Enviar Respuesta"/>
-                    <field name="stage_id" widget="statusbar"
-                           options="{'clickable': '1'}"/>
+                    <field name="stage_id" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
