@@ -31,44 +31,44 @@
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only"/>
                         <h1>
-                            <field name="name"/>
+                            <field name="name" readonly="1"/>
                         </h1>
                         <label for="subject" class="oe_edit_only"/>
                         <h1 class="mt0">
-                            <field name="subject"/>
+                            <field name="subject" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                         </h1>
                     </div>
                     <group>
                         <group>
-                            <field name="customer_id" string="Cliente"/>
+                            <field name="customer_id" string="Cliente"  attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                             <field name="customer_name" string="Nombre Cliente" invisible="1"/>
                             <field name="email" invisible="1"/>
                             <field name="phone" string="Teléfono" invisible="1"/>
                             <field name="cost" invisible="1"/>
                             <field name="start_date" string="Fecha de Inicio" readonly="1"/>
-                            <field name="movement_type"/>
-                            <field name="manager"/>
-                            <field name="investment_type"/>
+                            <field name="movement_type" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
+                            <field name="manager" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
+                            <field name="investment_type" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                         </group>
                         <group>
-                            <field name="team_id" string="Equipo de Soporte"/>
+                            <field name="team_id" string="Equipo de Soporte" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                             <field name="project_id" invisible="1"/>
                             <field name="service_product_id" attrs="{'invisible':[('create_task','=',False)],
                          'required': [('create_task','=', True)]}"/>
-                            <field name="priority" widget="priority" string="Prioridad"/>
+                            <field name="priority" widget="priority" string="Prioridad" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                             <field name="show_create_task" invisible="1"/>
                             <field name="create_task"
                                    attrs="{'invisible':[('show_create_task','=',False)]}"/>
                             <field name="billable"
                                    attrs="{'invisible':[('create_task','=',False)]}"/>
-                            <field name="end_date" string="Fecha de Fin"/>
+                            <field name="end_date" string="Fecha de Fin" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                             <field name="management_risk_approved" readonly="1"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Descripción">
                             <field name="description"
-                                   placeholder="Provide the reason in detail"/>
+                                   placeholder="Provide the reason in detail" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                         </page>
                     </notebook>
                 </sheet>

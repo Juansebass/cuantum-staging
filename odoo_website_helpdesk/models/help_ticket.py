@@ -54,7 +54,7 @@ class HelpDeskTicket(models.Model):
                        help='The name of the help ticket. By default, a new '
                             'unique sequence number is assigned to each '
                             'help ticket, unless a name is provided.')
-    customer_id = fields.Many2one('res.partner', string='Customer',
+    customer_id = fields.Many2one('res.partner', string='Customer', required=True,
                                   help="Select the Customer",
                                   domain="[('type', '!=', 'private')]")
     customer_name = fields.Char(string='Customer Name', help="Add the "
@@ -136,8 +136,8 @@ class HelpDeskTicket(models.Model):
                                    "or not.")
 
     #Custom fields
-    movement_type = fields.Many2one('ati.movement.type', 'Tipo de Movimiento')
-    manager = fields.Many2one('ati.gestor', 'Gestor')
+    movement_type = fields.Many2one('ati.movement.type', 'Tipo de Movimiento', required=True)
+    manager = fields.Many2one('ati.gestor', 'Gestor', required=True,)
     investment_type = fields.Many2one('ati.investment.type', 'Tipo de inversión')
     management_risk_approved = fields.Selection(
         string='Aprovado por Riesgos',
