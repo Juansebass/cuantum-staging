@@ -303,3 +303,6 @@ class HelpDeskTicket(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    def action_start(self):
+        self.stage_id = 'in_progress'
