@@ -3,7 +3,8 @@
         <!--All Menus-->
     <menuitem id="menu_helpdesk" name="Mesa de Ayuda" action="help_ticket_action"
               sequence="1"
-              web_icon="odoo_website_helpdesk,static/description/icon.png"/>
+              web_icon="odoo_website_helpdesk,static/description/icon.png"
+    />
     <menuitem id="menu_helpdesk_management" parent="menu_helpdesk"
               name="Soporte"
               action="help_ticket_action" sequence="1"/>
