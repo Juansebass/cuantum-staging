@@ -268,18 +268,19 @@ class HelpDeskTicket(models.Model):
 
 
     def _inverse_team_id(self):
-        for rec in self:
-            #Enviando notificación
-            notification_emails = ""
-            for user in rec.team_id.member_ids:
-                notification_emails += "{0};".format(user.partner_id.email)
-
-            email_data = {
-                'email_from': "comunicaciones@cuantum.co",
-                'email_to': notification_emails
-            }
-            template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
-            mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
+        pass
+        # for rec in self:
+        #     #Enviando notificación
+        #     notification_emails = ""
+        #     for user in rec.team_id.member_ids:
+        #         notification_emails += "{0};".format(user.partner_id.email)
+        #
+        #     email_data = {
+        #         'email_from': "comunicaciones@cuantum.co",
+        #         'email_to': notification_emails
+        #     }
+        #     template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
+        #     mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
 
     def send_response(self):
         compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
