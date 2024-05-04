@@ -13,7 +13,9 @@
                     <button name="action_create_invoice" string="Create Invoice"
                             type="object" class="btn-primary"
                             attrs="{'invisible':[('billable','=',False)]}"/>
-<!--                    <button name="send_response" type="object" string="Enviar Respuesta"/>-->
+                    <button name="action_start" type="object" string="Iniciar" attrs="{'invisible':[('stage_id','!=','inbox')]}"
+                            groups="group_cuatum_mesa_tesoreria,group_cuatum_mesa_comercial_factoring,group_cuatum_mesa_comercial_libranzas,group_cuatum_mesa_comercial_sentencias"
+                    />
                     <field name="stage_id" widget="statusbar"/>
                 </header>
                 <sheet>
