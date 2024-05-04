@@ -22,7 +22,7 @@
                     <button name="action_approve" type="object" string="Aprobar" attrs="{'invisible':[('stage_id','!=','in_progress'), ('management_risk_approved','=','si')]}"
                             groups="odoo_website_helpdesk.group_cuatum_mesa_riesgos"
                     />
-                    <button name="action_cancel" type="object" string="Cancelar" attrs="{'invisible':[('stage_id','!=','done')]}"/>
+                    <button name="action_cancel" type="object" string="Cancelar" attrs="{'invisible':[('stage_id','=','done')]}"/>
 
                     <field name="stage_id" widget="statusbar"/>
                 </header>

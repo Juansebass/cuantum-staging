@@ -317,5 +317,5 @@ class HelpDeskTicket(models.Model):
 
     def action_cancel(self):
         self.stage_id = 'canceled'
-        
+
 
