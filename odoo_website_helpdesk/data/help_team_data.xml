@@ -31,32 +31,32 @@
             <field name="parent_id" ref="module_category_mesa"/>
         </record>
         <!-- Grupos -->
-        <record id="group_cuatum_mesa_tesoreria" model="res.groups">
+        <record id="group_cuantum_mesa_tesoreria" model="res.groups">
             <field name="name">Tesorería</field>
             <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
             <field name="category_id" ref="module_category_mesa_mesa"/>
         </record>
-        <record id="group_cuatum_mesa_comercial_factoring" model="res.groups">
+        <record id="group_cuantum_mesa_comercial_factoring" model="res.groups">
             <field name="name">Comercial Factoring</field>
             <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
             <field name="category_id" ref="module_category_mesa_mesa"/>
         </record>
-        <record id="group_cuatum_mesa_comercial_libranzas" model="res.groups">
+        <record id="group_cuantum_mesa_comercial_libranzas" model="res.groups">
             <field name="name">Comercial Libranzas</field>
             <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
             <field name="category_id" ref="module_category_mesa_mesa"/>
         </record>
-        <record id="group_cuatum_mesa_comercial_sentencias" model="res.groups">
+        <record id="group_cuantum_mesa_comercial_sentencias" model="res.groups">
             <field name="name">Comercial Sentencias</field>
             <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
             <field name="category_id" ref="module_category_mesa_mesa"/>
         </record>
-        <record id="group_cuatum_mesa_riesgos" model="res.groups">
+        <record id="group_cuantum_mesa_riesgos" model="res.groups">
             <field name="name">Riesgos</field>
             <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
             <field name="category_id" ref="module_category_mesa_mesa"/>
         </record>
-        <record id="group_cuatum_mesa_gerencia" model="res.groups">
+        <record id="group_cuantum_mesa_gerencia" model="res.groups">
             <field name="name">Gerencia</field>
             <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
             <field name="category_id" ref="module_category_mesa_mesa"/>

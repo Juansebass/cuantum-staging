@@ -14,7 +14,7 @@
                             type="object" class="btn-primary"
                             attrs="{'invisible':[('billable','=',False)]}"/>
                     <button name="action_start" type="object" string="Iniciar" attrs="{'invisible':[('stage_id','!=','inbox')]}"
-                            groups="group_cuatum_mesa_tesoreria,group_cuatum_mesa_comercial_factoring,group_cuatum_mesa_comercial_libranzas,group_cuatum_mesa_comercial_sentencias"
+                            groups="odoo_website_helpdesk.group_cuantum_mesa_tesoreria,odoo_website_helpdesk.group_cuantum_mesa_comercial_factoring,odoo_website_helpdesk.group_cuantum_mesa_comercial_libranzas,odoo_website_helpdesk.group_cuantum_mesa_comercial_sentencias"
                     />
                     <field name="stage_id" widget="statusbar"/>
                 </header>
