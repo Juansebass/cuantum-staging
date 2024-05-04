@@ -63,6 +63,7 @@
                             <field name="billable"
                                    attrs="{'invisible':[('create_task','=',False)]}"/>
                             <field name="end_date" string="Fecha de Fin"/>
+                            <field name="management_risk_approved" readonly="1"/>
                         </group>
                     </group>
                     <notebook>

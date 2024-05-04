@@ -82,12 +82,22 @@ class HelpDeskTicket(models.Model):
                                       "the team.")
     priority = fields.Selection(PRIORITIES, default='1',
                                 help="Set the priority level")
-    stage_id = fields.Many2one('ticket.stage', string='Stage',
-                               default=lambda self: self.env.ref(
-                                   'odoo_website_helpdesk.stage_inbox').id,
-                               tracking=True,
-                               group_expand='_read_group_stage_ids',
-                               help="Stages of the Ticket")
+    # stage_id = fields.Many2one('ticket.stage', string='Stage',
+    #                            default=lambda self: self.env.ref(
+    #                                'odoo_website_helpdesk.stage_inbox').id,
+    #                            tracking=True,
+    #                            group_expand='_read_group_stage_ids',
+    #                            help="Stages of the Ticket")
+
+    stage_id = fields.Selection(selection=[
+        ('inbox','Inbox'),
+        ('in_progress','En Progreso'),
+        ('done', 'Terminado'),
+        ('cancel', 'Cancelado'),
+    ],string='Estado',default='inbox', tracking=True,)
+
+
+
     cost = fields.Float(string='Cost per hour',
                         help='The cost per hour for this record. This field '
                              'specifies the hourly cost associated with the '
@@ -129,6 +139,14 @@ class HelpDeskTicket(models.Model):
     movement_type = fields.Many2one('ati.movement.type', 'Tipo de Movimiento')
     manager = fields.Many2one('ati.gestor', 'Gestor')
     investment_type = fields.Many2one('ati.investment.type', 'Tipo de inversión')
+    management_risk_approved = fields.Selection(
+        string='Aprovado por Riesgos',
+        selection=[
+            ('si', 'Sí'),
+            ('no', 'No')
+        ],
+        default='no',
+    )
 
     @api.model
     def create(self, var):
