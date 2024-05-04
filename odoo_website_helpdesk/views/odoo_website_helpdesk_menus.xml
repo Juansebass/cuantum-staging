@@ -18,7 +18,7 @@
     <menuitem id="menu_helpdesk_settings" name="Configuraciones"
               action="res_config_settings_action"
               parent="menu_helpdesk_configuration" sequence="1"/>
-    <menuitem id="menu_helpdesk_stage" name="Etapas"
-              action="ticket_stage_action"
-              parent="menu_helpdesk_configuration" sequence="5"/>
+<!--    <menuitem id="menu_helpdesk_stage" name="Etapas"-->
+<!--              action="ticket_stage_action"-->
+<!--              parent="menu_helpdesk_configuration" sequence="5"/>-->
 </odoo>

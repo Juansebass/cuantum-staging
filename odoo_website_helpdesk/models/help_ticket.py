@@ -93,8 +93,8 @@ class HelpDeskTicket(models.Model):
         ('inbox','Inbox'),
         ('in_progress','En Progreso'),
         ('done', 'Terminado'),
-        ('cancel', 'Cancelado'),
-    ],string='Estado',default='inbox', tracking=True,)
+        ('canceled', 'Cancelado'),
+    ],group_expand='_read_group_stage_ids', string='Estado',default='inbox', tracking=True,)
 
 
 
@@ -175,7 +175,7 @@ class HelpDeskTicket(models.Model):
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         """Return the stages to stage_ids"""
-        stage_ids = self.env['ticket.stage'].search([])
+        stage_ids = ['inbox', 'in_progress', 'done', 'canceled']
         return stage_ids
 
     def action_create_invoice(self):
