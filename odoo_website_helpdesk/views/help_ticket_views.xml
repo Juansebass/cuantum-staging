@@ -61,7 +61,7 @@
                             <field name="investment_type" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
                         </group>
                         <group>
-                            <field name="team_id" string="Equipo de Soporte" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
+                            <field name="team_id" string="Equipo de Soporte" attrs="{'readonly':[('stage_id','!=','inbox')]}" invisible="1"/>
                             <field name="project_id" invisible="1"/>
                             <field name="service_product_id" attrs="{'invisible':[('create_task','=',False)],
                          'required': [('create_task','=', True)]}"/>
