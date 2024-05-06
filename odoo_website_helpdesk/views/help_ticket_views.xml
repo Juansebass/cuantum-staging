@@ -111,8 +111,8 @@
         <field name="name">help.ticket.view.kanban</field>
         <field name="model">help.ticket</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" class="o_kanban_small_column"
-                    quick_create="false" on_create="quick_create" records_draggable="false">
+            <kanban records_draggable="0" default_group_by="stage_id" class="o_kanban_small_column"
+                    quick_create="false" on_create="quick_create" >
                 <field name="color"/>
                 <field name="name"/>
                 <field name="stage_id"/>
