@@ -94,7 +94,7 @@ class HelpDeskTicket(models.Model):
         ('in_progress','En Progreso'),
         ('done', 'Terminado'),
         ('canceled', 'Cancelado'),
-    ],group_expand='_read_group_stage_ids', string='Estado',default='inbox', tracking=True,)
+    ],group_expand='_read_group_stage_ids', string='Estado',default='inbox', tracking=True, readonly=True)
 
 
 
