@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="new_ticket_request_email_template" model="mail.template">
+        <record id="new_ticket_create_email_template" model="mail.template">
             <field name="name">Ticket: Nuevo Ticket</field>
             <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
             <field name="subject">{{object.name}}</field>
@@ -33,6 +33,16 @@
                 </div>
             </field>
             <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="generate_ticket_create_notification" model="base.automation">
+            <field name="name">Notificación Creación de Ticket</field>
+            <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
+            <field name="state">mail_post</field>
+            <field name="trigger">on_create</field>
+            <field name="code">record.send_activity_macro_user()</field>
+            <field name="active" eval="True"/>
+            <field name="template_id" ref="odoo_website_helpdesk.new_ticket_create_email_template"/>
         </record>
     </data>
 </odoo>
