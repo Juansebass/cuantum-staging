@@ -318,4 +318,23 @@ class HelpDeskTicket(models.Model):
     def action_cancel(self):
         self.stage_id = 'canceled'
 
+    def get_email_created(self):
+        tesorería_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_tesoreria")
+        comercial_factoring_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_factoring")
+        comercial_libranzas_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_libranzas")
+        comercial_sentencias_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_sentencias")
 
+
+        tesoreria_list = [
+            usr.partner_id.email for usr in tesorería_group.users if usr.partner_id.email]
+
+        factoring_list = [
+            usr.partner_id.email for usr in comercial_factoring_group.users if usr.partner_id.email]
+        libranzas_list = [
+            usr.partner_id.email for usr in comercial_libranzas_group.users if usr.partner_id.email]
+        sentencias_list = [
+            usr.partner_id.email for usr in comercial_sentencias_group.users if usr.partner_id.email]
+
+        email_list = tesoreria_list + factoring_list + libranzas_list + sentencias_list
+
+        return ",".join(email_list)

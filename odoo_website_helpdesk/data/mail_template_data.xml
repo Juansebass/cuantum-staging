@@ -6,12 +6,12 @@
             <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
             <field name="subject">{{object.name}}</field>
 <!--            <field name="email_from">{{(object.user_id.email_formatted or user.email_formatted)}}</field>-->
-<!--            <field name="email_to">{{object.sudo().}}</field>-->
+            <field name="email_to">{{object.get_email_created()}}</field>
             <field name="body_html" type="html">
                 <div>
-                    Equipo de <t t-out="object.team_id.name or 'Helpdesk' "></t>,<br /><br />
+                    Equipos de Tesorería y Compras,<br /><br />
 
-                     Se ha asignado el ticket <t t-out="object.name or ''"></t> en Mesa de ayuda.
+                     Se ha creado el ticket <t t-out="object.name or ''"></t> en Mesa de ayuda.
 
                 </div>
             </field>
