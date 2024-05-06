@@ -47,7 +47,7 @@
             <field name="state">email</field>
             <field name="trigger">on_write</field>
             <field name="active" eval="True"/>
-            <field name="filter_domain">[('stage_id', 'in', ('in_progress'))]</field>
+            <field name="filter_domain">[["stage_id","=","in_progress"]]</field>
             <field name="template_id" ref="odoo_website_helpdesk.in_progress_ticket__email_template"/>
         </record>
     </data>
