@@ -38,7 +38,7 @@
         <record id="generate_ticket_create_notification" model="base.automation">
             <field name="name">Notificación Creación de Ticket</field>
             <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
-            <field name="state">mail_post</field>
+            <field name="state">email</field>
             <field name="trigger">on_create</field>
             <field name="active" eval="True"/>
             <field name="template_id" ref="odoo_website_helpdesk.new_ticket_create_email_template"/>
