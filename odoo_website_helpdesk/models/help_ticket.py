@@ -319,22 +319,31 @@ class HelpDeskTicket(models.Model):
         self.stage_id = 'canceled'
 
     def get_email_created(self):
-        tesorería_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_tesoreria")
-        comercial_factoring_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_factoring")
-        comercial_libranzas_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_libranzas")
-        comercial_sentencias_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_sentencias")
+        email_list = []
+        #Gestor csf correo a tesorería
+        if self.manager.code == 'CUANTUM':
+            tesorería_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_tesoreria")
+            tesoreria_list = [
+                usr.partner_id.email for usr in tesorería_group.users if usr.partner_id.email]
+            email_list += tesoreria_list
 
+        #Lineas y grupos de compras
+        if self.investment_type.code == 'FAC':
+            comercial_factoring_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_factoring")
+            factoring_list = [
+                usr.partner_id.email for usr in comercial_factoring_group.users if usr.partner_id.email]
+            email_list += factoring_list
 
-        tesoreria_list = [
-            usr.partner_id.email for usr in tesorería_group.users if usr.partner_id.email]
+        if self.investment_type.code == 'LIB':
+            comercial_libranzas_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_libranzas")
+            libranzas_list = [
+                usr.partner_id.email for usr in comercial_libranzas_group.users if usr.partner_id.email]
+            email_list += libranzas_list
 
-        factoring_list = [
-            usr.partner_id.email for usr in comercial_factoring_group.users if usr.partner_id.email]
-        libranzas_list = [
-            usr.partner_id.email for usr in comercial_libranzas_group.users if usr.partner_id.email]
-        sentencias_list = [
-            usr.partner_id.email for usr in comercial_sentencias_group.users if usr.partner_id.email]
-
-        email_list = tesoreria_list + factoring_list + libranzas_list + sentencias_list
+        if self.investment_type.code == 'SEN':
+            comercial_sentencias_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_sentencias")
+            sentencias_list = [
+                usr.partner_id.email for usr in comercial_sentencias_group.users if usr.partner_id.email]
+            email_list += sentencias_list
 
         return ",".join(email_list)
