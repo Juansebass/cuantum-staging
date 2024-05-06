@@ -347,3 +347,19 @@ class HelpDeskTicket(models.Model):
             email_list += sentencias_list
 
         return ",".join(email_list)
+
+
+    def get_email_in_progress(self):
+        email_list = []
+        tesorería_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_tesoreria")
+        tesoreria_list = [
+            usr.partner_id.email for usr in tesorería_group.users if usr.partner_id.email]
+
+        riesgos_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_riesgos")
+        riesgos_list = [
+            usr.partner_id.email for usr in riesgos_group.users if usr.partner_id.email]
+
+        email_list = tesoreria_list + riesgos_list
+        return ",".join(email_list)
+
+
