@@ -914,7 +914,7 @@ class Extracto(models.Model):
 
 
         #Calculando TIR
-        cash_flows = [(x.date, x.move + x.valor) for x in self.tir_ids]
+        cash_flows = [(x.move + x.valor, x.date) for x in self.tir_ids]
 
         dates = [datetime.strptime(cf[1], "%Y-%m-%d") for cf in cash_flows]
         amounts = [cf[0] for cf in cash_flows]
