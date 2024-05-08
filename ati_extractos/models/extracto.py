@@ -914,6 +914,34 @@ class Extracto(models.Model):
 
 
         #Calculando TIR
+        cash_flows = [(x.date, x.move + x.valor) for x in self.tir_ids]
+
+        dates = [datetime.strptime(cf[1], "%Y-%m-%d") for cf in cash_flows]
+        amounts = [cf[0] for cf in cash_flows]
+
+        def npv(rate):
+            # Start with the first date as the base
+            base_date = dates[0]
+            total_npv = 0
+
+            if rate <= -1:
+                return float('inf')  # Return a high value to indicate invalid IRR
+
+            for i, date in enumerate(dates):
+                # Calculate the time difference in days
+                days_difference = (date - base_date).days
+
+                # Discount factor
+                discount_factor = (1 + rate) ** (days_difference / 365.0)
+
+                # Contribution to NPV
+                total_npv += amounts[i] / discount_factor
+
+            return total_npv
+
+        initial_guess = 0.1
+        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        self.tir_mensual = irr
 
 
 

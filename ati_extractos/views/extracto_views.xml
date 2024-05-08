@@ -163,7 +163,9 @@
                             </field>
                         </page>
                         <page name="flujo_caja" string="Flujo de Caja">
-                            <field name="tir_mensual" readonly="1"/>
+                            <group>
+                                <field name="tir_mensual" readonly="1"/>
+                            </group>
                             <field name="tir_ids" readonly="1">
                                 <tree>
                                     <field name="date"/>
