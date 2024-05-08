@@ -10,6 +10,7 @@ import calendar
 import logging
 from io import BytesIO ## for Python 3
 from dateutil.relativedelta import relativedelta
+import scipy.optimize as opt
 
 
 logger = logging.getLogger(__name__)
@@ -66,6 +67,7 @@ class Extracto(models.Model):
 
     valor_actual_total_resumen = fields.Float('Valor Total Actual Resumen')
     valor_anterior_total_resumen = fields.Float('Valor Total Anterior Resumen')
+    tir_mensual = fields.Float('TIR Mensual')
 
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
@@ -909,6 +911,11 @@ class Extracto(models.Model):
             'date': datetime(int(self.year),int(self.month), last_day).date(),
             'valor': self.valor_actual_total_resumen * -1,
         })
+
+
+        #Calculando TIR
+
+
 
     def validacion_totales(self):
         self.show_alert_product_validation = False
