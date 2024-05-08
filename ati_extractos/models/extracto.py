@@ -67,7 +67,7 @@ class Extracto(models.Model):
 
     valor_actual_total_resumen = fields.Float('Valor Total Actual Resumen')
     valor_anterior_total_resumen = fields.Float('Valor Total Anterior Resumen')
-    tir_mensual = fields.Float('TIR Mensual')
+    tir_mensual = fields.Float('TIR Mensual', digits=(3, 3))
 
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
@@ -941,7 +941,7 @@ class Extracto(models.Model):
 
         initial_guess = 0.1
         irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
-        self.tir_mensual = irr
+        self.tir_mensual = irr * 100
 
 
 
