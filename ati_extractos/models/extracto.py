@@ -350,7 +350,7 @@ class Extracto(models.Model):
                         'administracion' : valor_administracion_tmp,
                         'tasa_rendimiento' : moviemiento.fee, #Solamente promediamos los mayores a cero
                         'gestor' : moviemiento.manager.id,
-                        'cant_movimientos' : 1 if rendimiento.value != None else 0
+                        'cant_movimientos' : 1 if moviemiento.value != None else 0
                     }))
         #Promediamos las tasas de inversiones
         for n in range(len(_inversiones)):
