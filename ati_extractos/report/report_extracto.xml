@@ -67,18 +67,6 @@
                             <br/>RPR = Recursos en proceso de recompra
                         </p>
 
-                        <table class="table" style="border-bottom: 2px solid black; border: 2px solid black; border-collapse: collapse; width: 50%;margin: auto;" border="1">
-                          <tbody>
-                            <tr>
-                              <td class="text-center" style=" border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;"><strong>TIR Mensual</strong></td>
-                            </tr>
-                            <tr>
-                              <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <br/>
-
                         <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
                             <thead>
                                 <tr class="text-center" style="background-color: #619f11; font-size: 12px;">
@@ -111,6 +99,18 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <table class="table" style="border-bottom: 2px solid black; border: 2px solid black; border-collapse: collapse; width: 50%;margin: auto;" border="1">
+                          <tbody>
+                            <tr>
+                              <td class="text-center" style=" border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;"><strong>TIR Mensual</strong></td>
+                            </tr>
+                            <tr>
+                              <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <br/>
                         
                         <p style="page-break-before:always;"> </p>
                         
