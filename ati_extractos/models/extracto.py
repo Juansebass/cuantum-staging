@@ -1132,6 +1132,7 @@ class Extracto(models.Model):
                 ('cliente', '=', rec.cliente.id),
                 ('year', '=', rec.year),
                 ('month', '>', rec.month),
+                ('state', '!=', 'draft'),
             ])
             if future_extractos:
                 raise ValidationError(
