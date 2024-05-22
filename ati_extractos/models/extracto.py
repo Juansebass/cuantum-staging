@@ -1129,7 +1129,7 @@ class Extracto(models.Model):
     def set_borrador_extracto(self):
         for rec in self:
             future_extractos = self.search([
-                ('cliente', '=', rec.cliente,id),
+                ('cliente', '=', rec.cliente.id),
                 ('year', '=', rec.year),
                 ('month', '>', rec.month),
             ])
