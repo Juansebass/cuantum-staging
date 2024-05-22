@@ -101,7 +101,7 @@
                         </table>
 
                         <br/>
-                        <table class="table" style="page-break-inside: avoid; border-bottom: 2px solid black; border: 2px solid black; border-collapse: collapse; width: 50%;margin: auto;" border="1">
+                        <table class="table" style="page-break-inside: avoid; border-bottom: 2px solid black; border: 2px solid black; border-collapse: collapse; width: 70%;margin: auto;" border="1">
                           <tbody>
                               <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;" colspan="4">
