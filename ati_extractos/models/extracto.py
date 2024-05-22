@@ -1129,13 +1129,13 @@ class Extracto(models.Model):
     def set_borrador_extracto(self):
         for rec in self:
             future_extractos = self.search([
-                ('cliente', '!=', rec.cliente),
+                ('cliente', '=', rec.cliente,id),
                 ('year', '=', rec.year),
                 ('month', '>', rec.month),
             ])
             if future_extractos:
                 raise ValidationError(
-                    'No se puede cambiar a borrador porque existen extractos futuros que no están en borrador')
+                    'No se puede cambiar a borrador porque existen extractos futurosdel mismo año que no están en borrador')
 
             if self.env.user.id in [8,2,10, 108]:
                 rec.state = 'draft'
