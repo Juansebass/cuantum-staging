@@ -1175,7 +1175,7 @@ class Extracto(models.Model):
             ])
             if future_extractos:
                 raise ValidationError(
-                    'No se puede cambiar a borrador porque existen extractos futurosdel mismo año que no están en borrador')
+                    'No se puede cambiar a borrador porque existen extractos futuros del mismo año que no están en borrador')
 
             if self.env.user.id in [8,2,10, 108]:
                 rec.state = 'draft'
