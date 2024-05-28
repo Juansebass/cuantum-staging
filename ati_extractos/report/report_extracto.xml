@@ -126,8 +126,8 @@
                                 </td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_trimestral"/>%</td>
-                                <td></td>
-                                <td></td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_semestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_anual"/>%</td>
                             </tr>
                           </tbody>
                         </table>
