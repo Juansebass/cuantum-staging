@@ -104,25 +104,26 @@
                         <table class="table" style="page-break-inside: avoid; border-bottom: 2px solid black; border: 2px solid black; border-collapse: collapse; width: 70%;margin: auto;" border="1">
                           <tbody>
                               <tr>
-                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;" colspan="4">
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
                                     <strong>TIR</strong>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center" style="width: 33%; background-color: #619f11; color: white;">
-                                    Mensual
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
+                                    <strong>Mensual</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%; background-color: #619f11; color: white;">
-                                    Trimestral
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
+                                    <strong>Trimestral</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%; background-color: #619f11; color: white;">
-                                    Semestral
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
+                                    <strong>Semestral</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%; background-color: #619f11; color: white;">
-                                    Anual
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
+                                    <strong>Anual</strong>
                                 </td>
                             </tr>
                             <tr>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
+                                    <strong>TOTAL PORTAFOLIO</strong>
+                                </td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_trimestral"/>%</td>
                                 <td></td>
