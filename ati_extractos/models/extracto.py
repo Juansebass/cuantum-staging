@@ -69,6 +69,8 @@ class Extracto(models.Model):
     valor_anterior_total_resumen = fields.Float('Valor Total Anterior Resumen')
     tir_mensual = fields.Float('TIR Mensual', digits=(3, 3))
     tir_trimestral = fields.Float('TIR Trimestral', digits=(3, 3))
+    tir_semestral = fields.Float('TIR Semestral', digits=(3, 3))
+    tir_anual = fields.Float('TIR Anual', digits=(3, 3))
 
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
@@ -945,12 +947,14 @@ class Extracto(models.Model):
         self.tir_mensual = irr * 100
 
         self.calculate_tir_trimestral()
+        self.calculate_tir_semestral()
+        self.calculate_tir_anual()
 
     def calculate_tir_trimestral(self):
         # Calculando
         past_extractos = self.search([
             ('cliente', '=', self.cliente.id),
-            ('year', '=', self.year),
+            ('year', '<=', self.year),
             ('month', '<=', self.month)
         ], limit=3, order='year desc, month desc')
         tir_ids = past_extractos.mapped('tir_ids')
@@ -982,6 +986,80 @@ class Extracto(models.Model):
         initial_guess = 0.1
         irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
         self.tir_trimestral = irr * 100
+
+    def calculate_tir_semestral(self):
+        # Calculando
+        past_extractos = self.search([
+            ('cliente', '=', self.cliente.id),
+            ('year', '<=', self.year),
+            ('month', '<=', self.month)
+        ], limit=6, order='year desc, month desc')
+        tir_ids = past_extractos.mapped('tir_ids')
+        cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
+
+        dates = [cf[1] for cf in cash_flows]
+        amounts = [cf[0] for cf in cash_flows]
+
+        def npv(rate):
+            # Start with the first date as the base
+            base_date = dates[0]
+            total_npv = 0
+
+            if rate <= -1:
+                return float('inf')  # Return a high value to indicate invalid IRR
+
+            for i, date in enumerate(dates):
+                # Calculate the time difference in days
+                days_difference = (date - base_date).days
+
+                # Discount factor
+                discount_factor = (1 + rate) ** (days_difference / 365.0)
+
+                # Contribution to NPV
+                total_npv += amounts[i] / discount_factor
+
+            return total_npv
+
+        initial_guess = 0.1
+        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        self.tir_semestral = irr * 100
+
+    def calculate_tir_anual(self):
+        # Calculando
+        past_extractos = self.search([
+            ('cliente', '=', self.cliente.id),
+            ('year', '<=', self.year),
+            ('month', '<=', self.month)
+        ], limit=12, order='year desc, month desc')
+        tir_ids = past_extractos.mapped('tir_ids')
+        cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
+
+        dates = [cf[1] for cf in cash_flows]
+        amounts = [cf[0] for cf in cash_flows]
+
+        def npv(rate):
+            # Start with the first date as the base
+            base_date = dates[0]
+            total_npv = 0
+
+            if rate <= -1:
+                return float('inf')  # Return a high value to indicate invalid IRR
+
+            for i, date in enumerate(dates):
+                # Calculate the time difference in days
+                days_difference = (date - base_date).days
+
+                # Discount factor
+                discount_factor = (1 + rate) ** (days_difference / 365.0)
+
+                # Contribution to NPV
+                total_npv += amounts[i] / discount_factor
+
+            return total_npv
+
+        initial_guess = 0.1
+        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        self.tir_anual = irr * 100
 
 
     def validacion_totales(self):
