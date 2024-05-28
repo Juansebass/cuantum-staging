@@ -121,7 +121,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;">
                                     <strong>TOTAL PORTAFOLIO</strong>
                                 </td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
