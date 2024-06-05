@@ -996,11 +996,17 @@ class Extracto(models.Model):
 
     def calculate_tir_semestral(self):
         # Calculando
-        past_extractos = self.search([
-            ('cliente', '=', self.cliente.id),
-            ('year', '<=', self.year),
-            ('month', '<=', self.month)
-        ], limit=6, order='year desc, month desc')
+        date = datetime(int(self.year), int(self.month), 1)
+        past_extractos = self.env['ati.extracto']
+        for i in range(0, 6):
+            previous_date = date - relativedelta(months=i)
+            past_extracto = self.search([
+                ('cliente', '=', self.cliente.id),
+                ('month', '=', str(previous_date.month)),
+                ('year', '=', str(previous_date.year)),
+            ], limit=1)
+            past_extractos += past_extracto
+
         tir_ids = past_extractos.mapped('tir_ids')
         cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
 
@@ -1033,11 +1039,16 @@ class Extracto(models.Model):
 
     def calculate_tir_anual(self):
         # Calculando
-        past_extractos = self.search([
-            ('cliente', '=', self.cliente.id),
-            ('year', '<=', self.year),
-            ('month', '<=', self.month)
-        ], limit=12, order='year desc, month desc')
+        date = datetime(int(self.year), int(self.month), 1)
+        past_extractos = self.env['ati.extracto']
+        for i in range(0, 12):
+            previous_date = date - relativedelta(months=i)
+            past_extracto = self.search([
+                ('cliente', '=', self.cliente.id),
+                ('month', '=', str(previous_date.month)),
+                ('year', '=', str(previous_date.year)),
+            ], limit=1)
+            past_extractos += past_extracto
         tir_ids = past_extractos.mapped('tir_ids')
         cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
 
