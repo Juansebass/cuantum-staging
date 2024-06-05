@@ -954,8 +954,8 @@ class Extracto(models.Model):
         # Calculando
         past_extractos = self.search([
             ('cliente', '=', self.cliente.id),
+            ('month', '<=', self.month),
             ('year', '<=', self.year),
-            ('month', '<=', self.month)
         ], limit=3, order='year desc, month desc')
         tir_ids = past_extractos.mapped('tir_ids')
         cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
