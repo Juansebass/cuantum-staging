@@ -5,7 +5,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import calendar
 import logging
 from io import BytesIO ## for Python 3
@@ -952,11 +952,18 @@ class Extracto(models.Model):
 
     def calculate_tir_trimestral(self):
         # Calculando
-        past_extractos = self.search([
-            ('cliente', '=', self.cliente.id),
-            ('month', '<=', self.month),
-            ('year', '<=', self.year),
-        ], limit=3, order='year desc, month desc')
+        date = date(int(self.year), int(self.month))
+        past_extractos = self.env['ati.extracto']
+        for i in range(0, 3):
+            previous_date = date - timedelta(months=i)
+            past_extracto = self.search([
+                ('cliente', '=', self.cliente.id),
+                ('month', '<=', previous_date.month),
+                ('year', '<=', previous_date.year),
+            ], limit=1)
+            past_extractos.append(past_extracto)
+
+
         tir_ids = past_extractos.mapped('tir_ids')
         cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
 
