@@ -106,7 +106,7 @@ class InformeTIR(models.Model):
             'name': 'Informe TIR',
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': 'tir.informe',
+            'res_model': 'informe.tir',
             'res_id': self.id,
             'type': 'ir.actions.act_window',
         }
