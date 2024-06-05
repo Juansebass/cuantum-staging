@@ -959,7 +959,7 @@ class Extracto(models.Model):
             past_extracto = self.env['ati.extracto'].search([
                 ('cliente', '=', self.cliente.id),
                 ('year', '=', str(previous_date.year)),
-                ('month', '=', str(previous_date.mont)),
+                ('month', '=', str(previous_date.month)),
 
             ], limit=1)
             logger.error(past_extracto)
