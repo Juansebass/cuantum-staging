@@ -51,7 +51,7 @@ class InformeTIR(models.Model):
             ('month', '=', self.month),
             ('year', '=', self.year),
             ('state', '!=', 'draft')
-        ], limit=1)
+        ])
 
         for extracto in extractos:
             self.env['informe.detalle.tir'].create({
