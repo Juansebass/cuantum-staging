@@ -958,10 +958,11 @@ class Extracto(models.Model):
             previous_date = date - relativedelta(months=i)
             past_extracto = self.env['ati.extracto'].search([
                 ('cliente', '=', self.cliente.id),
-                ('year', '=', str(previous_date.year())),
-                ('month', '=', str(previous_date.month())),
+                ('year', '=', str(previous_date.year)),
+                ('month', '=', str(previous_date.mont)),
 
             ], limit=1)
+            logger.error(past_extracto)
             past_extractos += past_extracto
 
         logger.error(past_extractos)
