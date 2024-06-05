@@ -5,7 +5,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
 import matplotlib.pyplot as plt
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 import calendar
 import logging
 from io import BytesIO ## for Python 3
@@ -952,7 +952,7 @@ class Extracto(models.Model):
 
     def calculate_tir_trimestral(self):
         # Calculando
-        date = date(int(self.year), int(self.month))
+        date = datetime(int(self.year), int(self.month), 1)
         past_extractos = self.env['ati.extracto']
         for i in range(0, 3):
             previous_date = date - timedelta(months=i)
