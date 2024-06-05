@@ -14,6 +14,7 @@
         'views/menu.xml',
         'views/validacion_views.xml',
         'views/informe_administracion_views.xml',
+        'views/informe_tir_views.xml',
         'security/ir.model.access.csv',
         # 'report/xls_informe_clientes.xml',
         # 'data/mail_template_extracto.xml'

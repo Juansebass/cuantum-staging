@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_informe_tir_form" model="ir.ui.view">
+        <field name="name">informe.tir.form</field>
+        <field name="model">informe.tir</field>
+        <field name="arch" type="xml">
+            <form string="Informe TIR">
+                <header>
+                    <button name="generar_informe_tir" type="object" string="Generar Informe TIR" attrs="{'invisible': [('state', 'in', ['processed'])]}"/>
+                    <button name="set_borrador_tir" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="action_exportar_xls" type="object" string="Exportar Excel" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group>
+                        <field name="day" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                        <field name="month" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                        <field name="year" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                        <field name="responsible" readonly="1"/>
+                        <group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                            <group>
+                                <field name="xls_output"/>
+                            </group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detalle TIR">
+                            <field name="detalle_tir_ids">
+                                <tree>
+                                    <field name="cliente"/>
+                                    <field name="tir_mensual"/>
+                                    <field name="tir_trimestral"/>
+                                    <field name="tir_semestral"/>
+                                    <field name="tir_anual"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_informe_tir_tree" model="ir.ui.view">
+        <field name="name">informe.tir.tree</field>
+        <field name="model">informe.tir</field>
+        <field name="arch" type="xml">
+            <tree string="Informe TIR">
+                <field name="name"/>
+                <field name="month"/>
+                <field name="year"/>
+                <field name="day"/>
+                <field name="responsible"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

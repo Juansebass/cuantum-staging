@@ -2,3 +2,4 @@
 
 from . import validacion
 from . import informe_administracion
+from . import informe_tir
