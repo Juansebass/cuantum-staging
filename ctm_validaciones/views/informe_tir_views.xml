@@ -19,13 +19,15 @@
                         </div>
                     </div>
                     <group>
-                        <field name="day" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
-                        <field name="month" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
-                        <field name="year" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
-                        <field name="responsible" readonly="1"/>
-                        <group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
-                            <group>
-                                <field name="xls_output"/>
+                        <group>
+                            <field name="day" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                            <field name="month" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                            <field name="year" attrs="{'readonly': [('state', 'in', ['processed'])]}"/>
+                            <field name="responsible" readonly="1"/>
+                            <group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                                <group>
+                                    <field name="xls_output"/>
+                                </group>
                             </group>
                         </group>
                     </group>
