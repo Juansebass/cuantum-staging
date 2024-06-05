@@ -34,7 +34,7 @@
                     <notebook>
                         <page string="Detalle TIR">
                             <field name="detalle_tir_ids">
-                                <tree>
+                                <tree default_order='cliente asc'>
                                     <field name="cliente"/>
                                     <field name="tir_mensual"/>
                                     <field name="tir_trimestral"/>
