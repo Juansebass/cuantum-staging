@@ -959,7 +959,7 @@ class Extracto(models.Model):
             past_extracto = self.env['ati.extracto'].search([
                 ('cliente', '=', self.cliente.id),
                 ('year', '=', str(previous_date.year)),
-                ('month', '=', str(previous_date.month)),
+                ('month', '=', str(previous_date.month).zfill(2)),
 
             ], limit=1)
             logger.error(past_extracto)
@@ -1007,7 +1007,7 @@ class Extracto(models.Model):
             previous_date = date - relativedelta(months=i)
             past_extracto = self.search([
                 ('cliente', '=', self.cliente.id),
-                ('month', '=', str(previous_date.month)),
+                ('month', '=', str(previous_date.month).zfill(2)),
                 ('year', '=', str(previous_date.year)),
             ], limit=1)
             past_extractos += past_extracto
@@ -1050,7 +1050,7 @@ class Extracto(models.Model):
             previous_date = date - relativedelta(months=i)
             past_extracto = self.search([
                 ('cliente', '=', self.cliente.id),
-                ('month', '=', str(previous_date.month)),
+                ('month', '=', str(previous_date.month).zfill(2)),
                 ('year', '=', str(previous_date.year)),
             ], limit=1)
             past_extractos += past_extracto
