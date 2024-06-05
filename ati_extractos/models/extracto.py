@@ -1247,7 +1247,7 @@ class Extracto(models.Model):
         for rec in self:
             future_extractos = self.search([
                 ('cliente', '=', rec.cliente.id),
-                ('year', '=', rec.year),
+                ('year', '>=', rec.year),
                 ('month', '>', rec.month),
                 ('state', '!=', 'draft'),
             ])
