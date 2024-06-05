@@ -44,7 +44,8 @@ class InformeTIR(models.Model):
     def generar_informe_tir(self):
         if not (self.month and self.year and self.day):
             raise ValidationError('Debe introducir un mes, un año y un día de periodo para este cargue')
-        self.detalle_tir_ids.unlink()
+        for detalle in self.detalle_tir_ids:
+            detalle.unlink()
 
         extractos = self.env['ati.extracto'].search([
             ('month', '=', self.month),
