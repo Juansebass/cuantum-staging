@@ -953,7 +953,7 @@ class Extracto(models.Model):
     def calculate_tir_trimestral(self):
         # Calculando
         date = datetime(int(self.year), int(self.month), 1)
-        past_extractos = self.env['ati.extracto']
+        past_extractos = []
         for i in range(0, 3):
             previous_date = date - relativedelta(months=i)
             past_extracto = self.search([
