@@ -958,8 +958,8 @@ class Extracto(models.Model):
             previous_date = date - relativedelta(months=i)
             past_extracto = self.search([
                 ('cliente', '=', self.cliente.id),
-                ('month', '<=', previous_date.month),
-                ('year', '<=', previous_date.year),
+                ('month', '=', str(previous_date.month)),
+                ('year', '=', str(previous_date.year)),
             ], limit=1)
             past_extractos += past_extracto
 
