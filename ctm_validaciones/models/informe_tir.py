@@ -55,7 +55,7 @@ class InformeTIR(models.Model):
 
         for extracto in extractos:
             self.env['informe.detalle.tir'].create({
-                'informe_tir_id': extracto.id,
+                'informe_tir_id': self.id,
                 'cliente': extracto.cliente.id,
                 'tir_mensual': extracto.tir_mensual,
                 'tir_trimestral': extracto.tir_trimestral,
