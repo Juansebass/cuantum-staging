@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
-                    <button name="generar_extracto" type="object" string="Generar Extracto" attrs="{'invisible': [('state', 'in', ['validated','send'])]}"/>
+                    <button name="generar_extracto" type="object" string="Generar Extracto" attrs="{'invisible': [('state', 'in', ['validated','send', 'processed'])]}"/>
                     <button name="validar_extracto" type="object" string="Validar" attrs="{'invisible': [('state', '!=', 'processed')]}"/>
                     <button name="enviar_extracto" type="object" string="Enviar Extracto" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <button name="set_borrador_extracto" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
