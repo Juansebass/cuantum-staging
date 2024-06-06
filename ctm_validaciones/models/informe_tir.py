@@ -86,10 +86,10 @@ class InformeTIR(models.Model):
         row = 1
         for detalle in self.detalle_tir_ids:
             sheet.write(row, 0, detalle.cliente.name)
-            sheet.write(row, 1, detalle.tir_mensual, money)
-            sheet.write(row, 2, detalle.tir_trimestral, money)
-            sheet.write(row, 3, detalle.tir_semestral, money)
-            sheet.write(row, 4, detalle.tir_anual, money)
+            sheet.write(row, 1, detalle.tir_mensual)
+            sheet.write(row, 2, detalle.tir_trimestral)
+            sheet.write(row, 3, detalle.tir_semestral)
+            sheet.write(row, 4, detalle.tir_anual)
             row += 1
 
         workbook.close()
