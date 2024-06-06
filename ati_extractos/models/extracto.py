@@ -962,14 +962,9 @@ class Extracto(models.Model):
                 ('month', '=', str(previous_date.month).zfill(2)),
 
             ], limit=1)
-            logger.error(past_extracto)
             past_extractos += past_extracto
 
-        logger.error(past_extractos)
-
-
         tir_ids = past_extractos.mapped('tir_ids')
-        logger.error(tir_ids)
         cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
 
         dates = [cf[1] for cf in cash_flows]

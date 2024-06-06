@@ -70,7 +70,7 @@ class InformeTIR(models.Model):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet('Detalle TIR')
-        money = workbook.add_format({'num_format': '0.00%'})
+        money = workbook.add_format({'num_format': '0 %'})
 
         # Write headers
         sheet.write(0, 0, 'Cliente')
