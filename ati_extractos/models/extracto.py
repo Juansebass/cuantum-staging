@@ -879,12 +879,14 @@ class Extracto(models.Model):
                 'extracto_id': self.id,
                 'date': rec.date,
                 'move': rec.value,
+                'tipo': rec.investment_type.id,
             })
         elif rec.movement_type.code == 'RETIRO':
             self.env['ati.tir'].create({
                 'extracto_id': self.id,
                 'date': rec.date,
                 'move': rec.value * -1,
+                'tipo': rec.investment_type.id,
             })
 
 
@@ -1360,6 +1362,9 @@ class Tir(models.Model):
     valor = fields.Float('Valor del Portafolio')
     date = fields.Date('Día')
     move = fields.Float('Movimiento')
+    gestor = fields.Many2one('ati.gestor', 'Gestor')
+    tipo = fields.Many2one('ati.investment.type', 'Tipo')
+
 
 class ResumenInversionesFCL(models.Model):
     _name = 'ati.extracto.resumen_inversion'
