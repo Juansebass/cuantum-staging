@@ -72,6 +72,8 @@ class Extracto(models.Model):
     tir_trimestral = fields.Float('TIR Trimestral', digits=(3, 3))
     tir_semestral = fields.Float('TIR Semestral', digits=(3, 3))
     tir_anual = fields.Float('TIR Anual', digits=(3, 3))
+    tir_gestor_result = fields.Json('TIR Gestor Result')
+
 
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
@@ -909,7 +911,51 @@ class Extracto(models.Model):
                 'tipo_id': rec.investment_type.id,
             })
 
-
+    def calculate_tir_gestor(self):
+        self.tir_gestor_result = {
+            'CUANTUM': {
+                'FAC': {
+                    'MENSUAL': 0,
+                    'TRIMESTRAL': 0,
+                    'SEMESTRAL': 0,
+                    'ANUAL': 0,
+                },
+                'LIB': {
+                    'MENSUAL': 0,
+                    'TRIMESTRAL': 0,
+                    'SEMESTRAL': 0,
+                    'ANUAL': 0,
+                },
+                'MUT': {
+                    'MENSUAL': 0,
+                    'TRIMESTRAL': 0,
+                    'SEMESTRAL': 0,
+                    'ANUAL': 0,
+                },
+                'SEN': {
+                    'MENSUAL': 0,
+                    'TRIMESTRAL': 0,
+                    'SEMESTRAL': 0,
+                    'ANUAL': 0,
+                },
+            },
+            'FCL': {
+                'LIB': {
+                    'MENSUAL': 0,
+                    'TRIMESTRAL': 0,
+                    'SEMESTRAL': 0,
+                    'ANUAL': 0,
+                },
+            },
+            'FCP': {
+                'SEN': {
+                    'MENSUAL': 0,
+                    'TRIMESTRAL': 0,
+                    'SEMESTRAL': 0,
+                    'ANUAL': 0,
+                },
+            },
+        }
 
     def _generar_tir(self):
         for dm in self.tir_ids:
@@ -958,6 +1004,7 @@ class Extracto(models.Model):
                     'tipo_id': line.producto.id,
                 })
 
+        self.calculate_tir_gestor()
 
 
         #Calculando TIR
