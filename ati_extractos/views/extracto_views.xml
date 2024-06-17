@@ -64,6 +64,10 @@
                                     <field name="rendimiento_causado" readonly="1"/>
                                     <field name="administracion" readonly="1"/>
                                     <field name="tasa_rendimiento" readonly="0"/>
+                                    <field name="tir_mensual" readonly="1"/>
+                                    <field name="tir_trimestral" readonly="1"/>
+                                    <field name="tir_semestral" readonly="1"/>
+                                    <field name="tir_anual" readonly="1"/>
                                 </tree>
                             </field>
                             <group>

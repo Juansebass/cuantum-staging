@@ -1393,6 +1393,10 @@ class ResumenInversionesFCL(models.Model):
     is_total = fields.Boolean('Linea de TOTAL', default=False)
     is_other = fields.Boolean('Linea de detalle', default=False)
     detalle = fields.Char('Detalle')
+    tir_mensual = fields.Float('TIR Mensual', help="Tasa Interna de Retorno Mensual")
+    tir_trimestral = fields.Float('TIR Trimestral', help="Tasa Interna de Retorno Trimestral")
+    tir_semestral = fields.Float('TIR Semestral', help="Tasa Interna de Retorno Semestral")
+    tir_anual = fields.Float('TIR Anual', help="Tasa Interna de Retorno Anual")
 
 class EstadoPortafolios(models.Model):
     _name = 'ati.extracto.estado_portafolios'
