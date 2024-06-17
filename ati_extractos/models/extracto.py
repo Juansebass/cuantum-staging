@@ -939,8 +939,70 @@ class Extracto(models.Model):
                 'tipo_id': rec.investment_type.id,
             })
 
+    def calculate_tir_function(self, cash_flows):
+        dates = [cf[1] for cf in cash_flows]
+        amounts = [cf[0] for cf in cash_flows]
+
+        def npv(rate):
+            # Start with the first date as the base
+            base_date = dates[0]
+            total_npv = 0
+
+            if rate <= -1:
+                return float('inf')  # Return a high value to indicate invalid IRR
+
+            for i, date in enumerate(dates):
+                # Calculate the time difference in days
+                days_difference = (date - base_date).days
+
+                # Discount factor
+                discount_factor = (1 + rate) ** (days_difference / 365.0)
+
+                # Contribution to NPV
+                total_npv += amounts[i] / discount_factor
+
+            return total_npv
+
+        initial_guess = 0.1
+        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        return irr * 100
+
+
+
     def calculate_tir_gestor(self):
-        pass
+        #CSF
+        for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
+            # Mensual
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'CUANTUM' and line.tipo_id.code == tipo
+                )
+            ]
+            value = self.calculate_tir_function(cash_flows)
+            if tipo == 'FAC':
+                self.cuantum_fac_mensual = value
+            elif tipo == 'LIB':
+                self.cuantum_lib_mensual = value
+            elif tipo == 'SEN':
+                self.cuantum_sen_mensual = value
+            elif tipo == 'MUT':
+                self.cuantum_mut_mensual = value
+
+        #FCL
+        cash_flows = [
+            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                lambda x: x.gestor_id.code == 'FCL' and line.tipo_id.code == 'LIB'
+            )
+        ]
+        self.fcl_lib_mensual = self.calculate_tir_function(cash_flows)
+
+        #FCP
+        cash_flows = [
+            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                lambda x: x.gestor_id.code == 'FCP' and line.tipo_id.code == 'SEN'
+            )
+        ]
+        self.fcp_sen_mensual = self.calculate_tir_function(cash_flows)
 
     def _generar_tir(self):
         for dm in self.tir_ids:
