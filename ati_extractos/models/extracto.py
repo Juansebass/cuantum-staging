@@ -940,6 +940,25 @@ class Extracto(models.Model):
             'valor': self.valor_actual_total_resumen * -1,
         })
 
+        #Generando Flujo de caja por gestor último y primer día
+        for line in self.resumen_inversion_ids:
+            if line.producto.code in ['FAC', 'LIB', 'SEN', 'MUT']:
+                self.env['ati.tir.gestor'].create({
+                    'extracto_id': self.id,
+                    'date': datetime(int(self.year),int(self.month), 1) - timedelta(days=1),
+                    'gestor_id': line.gestor.id,
+                    'valor': line.valor_anterior,
+                    'tipo_id': line.producto.id,
+                })
+                self.env['ati.tir.gestor'].create({
+                    'extracto_id': self.id,
+                    'date': datetime(int(self.year),int(self.month), last_day).date(),
+                    'gestor_id': line.gestor.id,
+                    'valor': line.valor_actual * -1,
+                    'tipo_id': line.producto.id,
+                })
+
+
 
         #Calculando TIR
         cash_flows = [(x.move + x.valor, x.date) for x in self.tir_ids]
