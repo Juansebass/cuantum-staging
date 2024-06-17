@@ -1390,14 +1390,14 @@ class Tir(models.Model):
 class TirGestor(models.Model):
     _name = 'ati.tir.gestor'
     _description = 'TIR por Gestor'
-    _order = 'date asc'
+    _order = 'gestor_id asc, date asc'
 
     extracto_id = fields.Many2one('ati.extracto', 'Extracto')
     valor = fields.Float('Valor del Portafolio')
     date = fields.Date('Día')
     move = fields.Float('Movimiento')
     gestor_id = fields.Many2one('ati.gestor', 'Gestor')
-    tipo_id = fields.Many2one('ati.investment.type', 'Tipo')
+    tipo_id = fields.Many2one('ati.movement.type', 'Tipo')
 
 class ResumenInversionesFCL(models.Model):
     _name = 'ati.extracto.resumen_inversion'
