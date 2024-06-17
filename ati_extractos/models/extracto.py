@@ -978,7 +978,7 @@ class Extracto(models.Model):
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
-            value = self.calculate_tir_function(cash_flows)
+            value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
             if tipo == 'FAC':
                 self.cuantum_fac_mensual = value
             elif tipo == 'LIB':
@@ -994,7 +994,7 @@ class Extracto(models.Model):
                 lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
             )
         ]
-        self.fcl_lib_mensual = self.calculate_tir_function(cash_flows)
+        self.fcl_lib_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
         #FCP
         cash_flows = [
@@ -1002,7 +1002,7 @@ class Extracto(models.Model):
                 lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
             )
         ]
-        self.fcp_sen_mensual = self.calculate_tir_function(cash_flows)
+        self.fcp_sen_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
     def _generar_tir(self):
         for dm in self.tir_ids:
