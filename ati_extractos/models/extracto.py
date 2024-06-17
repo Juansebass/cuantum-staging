@@ -898,7 +898,7 @@ class Extracto(models.Model):
                 'date': rec.date,
                 'move': rec.value,
                 'gestor_id': gestor.id,
-                'tipo_id': rec.movement_type.id,
+                'tipo_id': rec.investment_type.id,
             })
         elif rec.movement_type.code == 'APLICACION':
             self.env['ati.tir.gestor'].create({
@@ -906,7 +906,7 @@ class Extracto(models.Model):
                 'date': rec.date,
                 'move': rec.value * -1,
                 'gestor_id': gestor.id,
-                'tipo_id': rec.movement_type.id,
+                'tipo_id': rec.investment_type.id,
             })
 
 
@@ -1397,7 +1397,7 @@ class TirGestor(models.Model):
     date = fields.Date('Día')
     move = fields.Float('Movimiento')
     gestor_id = fields.Many2one('ati.gestor', 'Gestor')
-    tipo_id = fields.Many2one('ati.movement.type', 'Tipo')
+    tipo_id = fields.Many2one('ati.investment.type', 'Tipo')
 
 class ResumenInversionesFCL(models.Model):
     _name = 'ati.extracto.resumen_inversion'
