@@ -876,7 +876,7 @@ class Extracto(models.Model):
         self.state = 'processed'
 
 
-    def _add_record_tir(self, rec):
+    def _add_record_tir(self, rec, gestor=None):
         if rec.movement_type.code == 'ADICION':
             self.env['ati.tir'].create({
                 'extracto_id': self.id,
@@ -890,9 +890,31 @@ class Extracto(models.Model):
                 'move': rec.value * -1,
             })
 
+        gestor = self.env['ati.gestor'].search([('code', '=', gestor)])
+        #Agregando por Gestor
+        if rec.movement_type.code == 'COMPRA':
+            self.env['ati.tir.gestor'].create({
+                'extracto_id': self.id,
+                'date': rec.date,
+                'move': rec.value,
+                'gestor_id': gestor.id,
+                'tipo_id ': rec.investment_type.id,
+            })
+        elif rec.movement_type.code == 'APLICACION':
+            self.env['ati.tir'].create({
+                'extracto_id': self.id,
+                'date': rec.date,
+                'move': rec.value * -1,
+                'gestor_id': gestor.id,
+                'tipo_id ': rec.investment_type.id,
+            })
+
+
 
     def _generar_tir(self):
         for dm in self.tir_ids:
+            dm.unlink()
+        for dm in self.tir_gestor_ids :
             dm.unlink()
         range = calendar.monthrange(int(self.year), int(self.month))
         last_day = range[1]
@@ -905,11 +927,11 @@ class Extracto(models.Model):
 
         #Recorriendo detalle d emovimiento
         for rec in self.recursos_csf:
-            self._add_record_tir(rec)
+            self._add_record_tir(rec, 'CUANTUM')
         for rec in self.recursos_fcl:
-            self._add_record_tir(rec)
+            self._add_record_tir(rec, 'FCL')
         for rec in self.recursos_fcp:
-            self._add_record_tir(rec)
+            self._add_record_tir(rec, 'FCP')
 
         #último día
         self.env['ati.tir'].create({
