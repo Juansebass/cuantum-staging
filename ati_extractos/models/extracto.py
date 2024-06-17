@@ -72,9 +72,36 @@ class Extracto(models.Model):
     tir_trimestral = fields.Float('TIR Trimestral', digits=(3, 3))
     tir_semestral = fields.Float('TIR Semestral', digits=(3, 3))
     tir_anual = fields.Float('TIR Anual', digits=(3, 3))
-    my_json_field = fields.Json(string='My JSON Field')
 
+    cuantum_fac_mensual = fields.Float('CUANTUM FAC Mensual', digits=(3, 3))
+    cuantum_fac_trimestral = fields.Float('CUANTUM FAC Trimestral', digits=(3, 3))
+    cuantum_fac_semestral = fields.Float('CUANTUM FAC Semestral', digits=(3, 3))
+    cuantum_fac_anual = fields.Float('CUANTUM FAC Anual', digits=(3, 3))
 
+    cuantum_lib_mensual = fields.Float('CUANTUM LIB Mensual', digits=(3, 3))
+    cuantum_lib_trimestral = fields.Float('CUANTUM LIB Trimestral', digits=(3, 3))
+    cuantum_lib_semestral = fields.Float('CUANTUM LIB Semestral', digits=(3, 3))
+    cuantum_lib_anual = fields.Float('CUANTUM LIB Anual', digits=(3, 3))
+
+    cuantum_mut_mensual = fields.Float('CUANTUM MUT Mensual', digits=(3, 3))
+    cuantum_mut_trimestral = fields.Float('CUANTUM MUT Trimestral', digits=(3, 3))
+    cuantum_mut_semestral = fields.Float('CUANTUM MUT Semestral', digits=(3, 3))
+    cuantum_mut_anual = fields.Float('CUANTUM MUT Anual', digits=(3, 3))
+
+    cuantum_sen_mensual = fields.Float('CUANTUM SEN Mensual', digits=(3, 3))
+    cuantum_sen_trimestral = fields.Float('CUANTUM SEN Trimestral', digits=(3, 3))
+    cuantum_sen_semestral = fields.Float('CUANTUM SEN Semestral', digits=(3, 3))
+    cuantum_sen_anual = fields.Float('CUANTUM SEN Anual', digits=(3, 3))
+
+    fcl_lib_mensual = fields.Float('FCL LIB Mensual', digits=(3, 3))
+    fcl_lib_trimestral = fields.Float('FCL LIB Trimestral', digits=(3, 3))
+    fcl_lib_semestral = fields.Float('FCL LIB Semestral', digits=(3, 3))
+    fcl_lib_anual = fields.Float('FCL LIB Anual', digits=(3, 3))
+
+    fcp_sen_mensual = fields.Float('FCP SEN Mensual', digits=(3, 3))
+    fcp_sen_trimestral = fields.Float('FCP SEN Trimestral', digits=(3, 3))
+    fcp_sen_semestral = fields.Float('FCP SEN Semestral', digits=(3, 3))
+    fcp_sen_anual = fields.Float('FCP SEN Anual', digits=(3, 3))
 
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
@@ -913,50 +940,7 @@ class Extracto(models.Model):
             })
 
     def calculate_tir_gestor(self):
-        self.tir_gestor_result = {
-            'CUANTUM': {
-                'FAC': {
-                    'MENSUAL': 0,
-                    'TRIMESTRAL': 0,
-                    'SEMESTRAL': 0,
-                    'ANUAL': 0,
-                },
-                'LIB': {
-                    'MENSUAL': 0,
-                    'TRIMESTRAL': 0,
-                    'SEMESTRAL': 0,
-                    'ANUAL': 0,
-                },
-                'MUT': {
-                    'MENSUAL': 0,
-                    'TRIMESTRAL': 0,
-                    'SEMESTRAL': 0,
-                    'ANUAL': 0,
-                },
-                'SEN': {
-                    'MENSUAL': 0,
-                    'TRIMESTRAL': 0,
-                    'SEMESTRAL': 0,
-                    'ANUAL': 0,
-                },
-            },
-            'FCL': {
-                'LIB': {
-                    'MENSUAL': 0,
-                    'TRIMESTRAL': 0,
-                    'SEMESTRAL': 0,
-                    'ANUAL': 0,
-                },
-            },
-            'FCP': {
-                'SEN': {
-                    'MENSUAL': 0,
-                    'TRIMESTRAL': 0,
-                    'SEMESTRAL': 0,
-                    'ANUAL': 0,
-                },
-            },
-        }
+        pass
 
     def _generar_tir(self):
         for dm in self.tir_ids:

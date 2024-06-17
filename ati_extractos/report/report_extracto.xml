@@ -136,37 +136,37 @@
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Libranzas</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['LIB']['MENSUAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['LIB']['TRIMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['LIB']['SEMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['LIB']['ANUAL']"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_lib_mensual"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_lib_trimestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_lib_semestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_lib_anual"/>%</td>
                             </tr>
                             <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Factoring</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['FAC']['MENSUAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['FAC']['TRIMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['FAC']['SEMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['FAC']['ANUAL']"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_fac_mensual"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_fac_trimestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_fac_semestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_fac_anual"/>%</td>
                             </tr>
                             <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Sentencias</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['SEN']['MENSUAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['SEN']['TRIMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['SEN']['SEMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['SEN']['ANUAL']"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_sen_mensual"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_sen_trimestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_sen_semestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_sen_anual"/>%</td>
                             </tr>
                             <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Mutuos</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['MUT']['MENSUAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['MUT']['TRIMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['MUT']['SEMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['CUANTUM']['MUT']['ANUAL']"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_mensual"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_trimestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_semestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_anual"/>%</td>
                             </tr>
                             <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
@@ -175,10 +175,10 @@
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Libranzas</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCL']['LIB']['MENSUAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCL']['LIB']['TRIMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCL']['LIB']['SEMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCL']['LIB']['ANUAL']"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_mensual"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_trimestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_semestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_anual"/>%</td>
                             </tr>
                                 <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
@@ -187,10 +187,10 @@
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Sentencias</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCP']['SEN']['MENSUAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCP']['SEN']['TRIMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCP']['SEN']['SEMESTRAL']"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-esc="o.tir_gestor_result['FCP']['SEN']['ANUAL']"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcp_sen_mensual"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcp_sen_trimestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcp_sen_semestral"/>%</td>
+                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcp_sen_anual"/>%</td>
                             </tr>
                           </tbody>
                         </table>
