@@ -30,6 +30,7 @@ class Extracto(models.Model):
     valor_anterior_recursos_fcl = fields.Float('Valor Anterior')
     valor_actual_recursos_fcl = fields.Float('Valor Actual')
     tir_ids = fields.One2many('ati.tir', 'extracto_id', 'TIR')
+    tir_gestor_ids = fields.One2many('ati.tir.gestor', 'extracto_id', 'TIR Gestor')
     recursos_csf = fields.One2many('ati.extracto.recompra.csf', 'extracto_id', 'Recuros de recompra CSF')
     recursos_fcl = fields.One2many('ati.extracto.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL')
     recursos_fcp = fields.One2many('ati.extracto.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP')
@@ -183,6 +184,8 @@ class Extracto(models.Model):
                 valor_administracion_tmp = 0
                 for a in administracion:
                     valor_administracion_tmp += a.value
+
+
 
                 # Recorremos las inversiones en CUANTUM para consultar si el tipo de producto ya se cargo, en tal caso sumamos su vpn al producto ya cargado
                 for i in _inversiones:
@@ -1361,6 +1364,19 @@ class Tir(models.Model):
     date = fields.Date('Día')
     move = fields.Float('Movimiento')
 
+
+class TirGestor(models.Model):
+    _name = 'ati.tir.gestor'
+    _description = 'TIR por Gestor'
+    _order = 'date asc'
+
+    extracto_id = fields.Many2one('ati.extracto', 'Extracto')
+    valor = fields.Float('Valor del Portafolio')
+    date = fields.Date('Día')
+    move = fields.Float('Movimiento')
+    gestor_id = fields.Many2one('ati.gestor', 'Gestor')
+    tipo_id = fields.Many2one('ati.investment.type', 'Tipo')
+
 class ResumenInversionesFCL(models.Model):
     _name = 'ati.extracto.resumen_inversion'
 
@@ -1393,10 +1409,6 @@ class ResumenInversionesFCL(models.Model):
     is_total = fields.Boolean('Linea de TOTAL', default=False)
     is_other = fields.Boolean('Linea de detalle', default=False)
     detalle = fields.Char('Detalle')
-    tir_mensual = fields.Float('TIR Mensual', help="Tasa Interna de Retorno Mensual")
-    tir_trimestral = fields.Float('TIR Trimestral', help="Tasa Interna de Retorno Trimestral")
-    tir_semestral = fields.Float('TIR Semestral', help="Tasa Interna de Retorno Semestral")
-    tir_anual = fields.Float('TIR Anual', help="Tasa Interna de Retorno Anual")
 
 class EstadoPortafolios(models.Model):
     _name = 'ati.extracto.estado_portafolios'

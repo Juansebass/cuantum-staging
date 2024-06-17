@@ -64,10 +64,6 @@
                                     <field name="rendimiento_causado" readonly="1"/>
                                     <field name="administracion" readonly="1"/>
                                     <field name="tasa_rendimiento" readonly="0"/>
-                                    <field name="tir_mensual" readonly="1"/>
-                                    <field name="tir_trimestral" readonly="1"/>
-                                    <field name="tir_semestral" readonly="1"/>
-                                    <field name="tir_anual" readonly="1"/>
                                 </tree>
                             </field>
                             <group>
@@ -167,12 +163,23 @@
                             </field>
                         </page>
                         <page name="flujo_caja" string="Flujo de Caja">
+                            <h3 style="text-align: center;">Total</h3>
                             <group>
                                 <field name="tir_mensual" readonly="1"/>
                             </group>
                             <field name="tir_ids" readonly="1">
                                 <tree>
                                     <field name="date"/>
+                                    <field name="move"/>
+                                    <field name="valor"/>
+                                </tree>
+                            </field>
+                            <h3 style="text-align: center;">Gestores</h3>
+                            <field name="tir_gestor_ids" readonly="1">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="gestor_id"/>
+                                    <field name="tipo_id"/>
                                     <field name="move"/>
                                     <field name="valor"/>
                                 </tree>

@@ -13,3 +13,4 @@ access_ati_extracto_detalle_create_extractos,ati.extracto.detalle_create_extract
 access_informe_errores,informe.errores.user,model_informe_errores_wizard,base.group_user,1,1,1,1
 access_informe_errores_download,informe.errores.download.user,model_informe_errores_download,base.group_user,1,1,1,1
 access_ati_tir,ati.tir.user,model_ati_tir,base.group_user,1,1,1,1
+access_ati_tir_gestor,ati.tir.gestor.user,model_ati_tir_gestor,base.group_user,1,1,1,1
