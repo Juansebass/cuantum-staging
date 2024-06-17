@@ -975,7 +975,7 @@ class Extracto(models.Model):
             # Mensual
             cash_flows = [
                 (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'CUANTUM' and line.tipo_id.code == tipo
+                    lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
             value = self.calculate_tir_function(cash_flows)
@@ -991,7 +991,7 @@ class Extracto(models.Model):
         #FCL
         cash_flows = [
             (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCL' and line.tipo_id.code == 'LIB'
+                lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
             )
         ]
         self.fcl_lib_mensual = self.calculate_tir_function(cash_flows)
@@ -999,7 +999,7 @@ class Extracto(models.Model):
         #FCP
         cash_flows = [
             (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCP' and line.tipo_id.code == 'SEN'
+                lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
             )
         ]
         self.fcp_sen_mensual = self.calculate_tir_function(cash_flows)
