@@ -1409,7 +1409,7 @@ class Tir(models.Model):
 class TirGestor(models.Model):
     _name = 'ati.tir.gestor'
     _description = 'TIR por Gestor'
-    _order = 'gestor_id asc, date asc'
+    _order = 'gestor_id asc, tipo_id asc, date asc, valor desc'
 
     extracto_id = fields.Many2one('ati.extracto', 'Extracto')
     valor = fields.Float('Valor del Portafolio')
