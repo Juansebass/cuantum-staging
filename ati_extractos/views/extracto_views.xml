@@ -170,8 +170,6 @@
                                 <tree>
                                     <field name="date"/>
                                     <field name="move"/>
-                                    <field name="gestor"/>
-                                    <field name="tipo"/>
                                     <field name="valor"/>
                                 </tree>
                             </field>

@@ -1362,9 +1362,6 @@ class Tir(models.Model):
     valor = fields.Float('Valor del Portafolio')
     date = fields.Date('Día')
     move = fields.Float('Movimiento')
-    gestor = fields.Many2one('ati.gestor', 'Gestor')
-    tipo = fields.Many2one('ati.investment.type', 'Tipo')
-
 
 class ResumenInversionesFCL(models.Model):
     _name = 'ati.extracto.resumen_inversion'
