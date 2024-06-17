@@ -898,7 +898,7 @@ class Extracto(models.Model):
                 'date': rec.date,
                 'move': rec.value,
                 'gestor_id': gestor.id,
-                'tipo_id ': rec.movement_type.id,
+                'tipo_id': rec.movement_type.id,
             })
         elif rec.movement_type.code == 'APLICACION':
             self.env['ati.tir.gestor'].create({
@@ -906,7 +906,7 @@ class Extracto(models.Model):
                 'date': rec.date,
                 'move': rec.value * -1,
                 'gestor_id': gestor.id,
-                'tipo_id ': rec.movement_type.id,
+                'tipo_id': rec.movement_type.id,
             })
 
 
