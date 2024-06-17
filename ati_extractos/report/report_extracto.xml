@@ -104,7 +104,7 @@
                         <table class="table" style="page-break-inside: avoid; border-bottom: 2px solid black; border: 2px solid black; border-collapse: collapse; width: 70%;margin: auto;" border="1">
                           <tbody>
                               <tr>
-                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
+                                <td colspan="2" class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
                                     <strong>TIR</strong>
                                 </td>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
@@ -124,16 +124,16 @@
                                 <td colspan="2" class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>TOTAL PORTAFOLIO</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_trimestral"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_semestral"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.tir_anual"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.tir_trimestral"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.tir_semestral"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.tir_anual"/>%</td>
                             </tr>
                             <tr>
-                                <td rowspan="4" class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td rowspan="4" class="text-center" style="width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>CSF</strong>
                                 </td>
-                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td class="text-center" style="width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Libranzas</strong>
                                 </td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_lib_mensual"/>%</td>
@@ -142,7 +142,7 @@
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_lib_anual"/>%</td>
                             </tr>
                             <tr>
-                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td class="text-center" style="width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Factoring</strong>
                                 </td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_fac_mensual"/>%</td>
@@ -151,7 +151,7 @@
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_fac_anual"/>%</td>
                             </tr>
                             <tr>
-                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td class="text-center" style="width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Sentencias</strong>
                                 </td>
                                 <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_sen_mensual"/>%</td>
@@ -163,10 +163,10 @@
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Mutuos</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_mensual"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_trimestral"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_semestral"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_anual"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_mensual"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_trimestral"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_semestral"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.cuantum_mut_anual"/>%</td>
                             </tr>
                             <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
@@ -175,10 +175,10 @@
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Libranzas</strong>
                                 </td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_mensual"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_trimestral"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_semestral"/>%</td>
-                                <td class="text-center" style="width: 33%;  background-color: white;"><span t-field="o.fcl_lib_anual"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.fcl_lib_mensual"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.fcl_lib_trimestral"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.fcl_lib_semestral"/>%</td>
+                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.fcl_lib_anual"/>%</td>
                             </tr>
                                 <tr>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
