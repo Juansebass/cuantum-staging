@@ -901,7 +901,7 @@ class Extracto(models.Model):
                 'tipo_id ': rec.investment_type.id,
             })
         elif rec.movement_type.code == 'APLICACION':
-            self.env['ati.tir'].create({
+            self.env['ati.tir.gestor'].create({
                 'extracto_id': self.id,
                 'date': rec.date,
                 'move': rec.value * -1,
