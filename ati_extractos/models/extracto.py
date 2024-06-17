@@ -72,6 +72,7 @@ class Extracto(models.Model):
     tir_trimestral = fields.Float('TIR Trimestral', digits=(3, 3))
     tir_semestral = fields.Float('TIR Semestral', digits=(3, 3))
     tir_anual = fields.Float('TIR Anual', digits=(3, 3))
+    my_json_field = fields.Json(string='My JSON Field')
 
 
 
