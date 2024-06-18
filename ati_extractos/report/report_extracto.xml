@@ -108,21 +108,21 @@
                                     <strong>TIR E.A.</strong>
                                 </td>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
-                                    <strong>Mensual</strong>
+                                    <strong>MENSUAL</strong>
                                 </td>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
-                                    <strong>Trimestral</strong>
+                                    <strong>TRIMESTRAL</strong>
                                 </td>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
-                                    <strong>Semestral</strong>
+                                    <strong>SEMESTRAL</strong>
                                 </td>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: #619f11; font-size: 14px; color: white;">
-                                    <strong>Anual</strong>
+                                    <strong>ANUAL</strong>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
-                                    <strong>TOTAL PORTAFOLIO</strong>
+                                    <strong>Total Portafolio</strong>
                                 </td>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.tir_mensual"/>%</td>
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.tir_trimestral"/>%</td>
@@ -130,7 +130,7 @@
                                 <td class="text-center" style="border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.tir_anual"/>%</td>
                             </tr>
                             <tr>
-                                <td rowspan="4" class="text-center" style="width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td rowspan="4" class="text-center" style="width: 33%; text-align: center; vertical-align: middle; background-color: white;; font-size: 14px;" >
                                     <strong>Cuantum Soluciones Financieras</strong>
                                 </td>
                                 <td class="text-center" style="width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
