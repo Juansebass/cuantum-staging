@@ -1023,7 +1023,7 @@ class Extracto(models.Model):
         for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
             # Mensual
             cash_flows = [
-                (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
@@ -1039,7 +1039,7 @@ class Extracto(models.Model):
 
         # FCL
         cash_flows = [
-            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                 lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
             )
         ]
@@ -1047,7 +1047,7 @@ class Extracto(models.Model):
 
         # FCP
         cash_flows = [
-            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                 lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
             )
         ]
@@ -1069,7 +1069,7 @@ class Extracto(models.Model):
         for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
             # Mensual
             cash_flows = [
-                (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
@@ -1085,7 +1085,7 @@ class Extracto(models.Model):
 
         # FCL
         cash_flows = [
-            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                 lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
             )
         ]
@@ -1093,7 +1093,7 @@ class Extracto(models.Model):
 
         # FCP
         cash_flows = [
-            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                 lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
             )
         ]
@@ -1114,7 +1114,7 @@ class Extracto(models.Model):
         for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
             # Mensual
             cash_flows = [
-                (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
@@ -1130,7 +1130,7 @@ class Extracto(models.Model):
 
         # FCL
         cash_flows = [
-            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                 lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
             )
         ]
@@ -1138,7 +1138,7 @@ class Extracto(models.Model):
 
         # FCP
         cash_flows = [
-            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
                 lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
             )
         ]
