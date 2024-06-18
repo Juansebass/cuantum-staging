@@ -1099,6 +1099,50 @@ class Extracto(models.Model):
         ]
         self.fcp_sen_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
+        #ANUAL
+        past_extractos = self.env['ati.extracto']
+        for i in range(0, 12):
+            previous_date = date - relativedelta(months=i)
+            past_extracto = self.search([
+                ('cliente', '=', self.cliente.id),
+                ('month', '=', str(previous_date.month).zfill(2)),
+                ('year', '=', str(previous_date.year)),
+            ], limit=1)
+            past_extractos += past_extracto
+        tir_gestor_ids = past_extractos.mapped('tir_gestor_ids')
+
+        for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
+            # Mensual
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
+                )
+            ]
+            value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if tipo == 'FAC':
+                self.cuantum_fac_anual = value
+            elif tipo == 'LIB':
+                self.cuantum_lib_anual = value
+            elif tipo == 'SEN':
+                self.cuantum_sen_anual = value
+            elif tipo == 'MUT':
+                self.cuantum_mut_anual = value
+
+        # FCL
+        cash_flows = [
+            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
+            )
+        ]
+        self.fcl_lib_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+
+        # FCP
+        cash_flows = [
+            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
+            )
+        ]
+        self.fcp_sen_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
 
     def _generar_tir(self):
