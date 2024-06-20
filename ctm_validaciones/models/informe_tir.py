@@ -68,6 +68,10 @@ class InformeTIR(models.Model):
             gestor = self.env['ati.gestor'].search([('code', '=', 'CUANTUM')])
             for tipo_inv in ['FAC', 'LIB', 'SEN', 'MUT']:
                 tipo = self.env['ati.investment.type'].search([('code', '=', tipo_inv)])
+                mensual = 0
+                trimestral = 0
+                semestral = 0
+                anual = 0
                 if tipo == 'FAC':
                     mensual = extracto.cuantum_fac_mensual
                     trimestral = extracto.cuantum_fac_trimestral
