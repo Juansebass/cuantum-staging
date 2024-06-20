@@ -36,6 +36,8 @@
                             <field name="detalle_tir_ids">
                                 <tree default_order='cliente asc'>
                                     <field name="cliente"/>
+                                    <field name="gestor_id"/>
+                                    <field name="tipo_id"/>
                                     <field name="tir_mensual"/>
                                     <field name="tir_trimestral"/>
                                     <field name="tir_semestral"/>
