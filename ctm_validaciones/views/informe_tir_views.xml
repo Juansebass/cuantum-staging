@@ -36,12 +36,34 @@
                             <field name="detalle_tir_ids">
                                 <tree default_order='cliente asc'>
                                     <field name="cliente"/>
-                                    <field name="gestor_id"/>
-                                    <field name="tipo_id"/>
                                     <field name="tir_mensual"/>
                                     <field name="tir_trimestral"/>
                                     <field name="tir_semestral"/>
                                     <field name="tir_anual"/>
+                                    <field name="csf_lib_mensual"/>
+                                    <field name="csf_lib_trimestral"/>
+                                    <field name="csf_lib_semestral"/>
+                                    <field name="csf_lib_anual"/>
+                                    <field name="csf_sen_mensual"/>
+                                    <field name="csf_sen_trimestral"/>
+                                    <field name="csf_sen_semestral"/>
+                                    <field name="csf_sen_anual"/>
+                                    <field name="csf_mut_mensual"/>
+                                    <field name="csf_mut_trimestral"/>
+                                    <field name="csf_mut_semestral"/>
+                                    <field name="csf_mut_anual"/>
+                                    <field name="csf_fac_mensual"/>
+                                    <field name="csf_fac_trimestral"/>
+                                    <field name="csf_fac_semestral"/>
+                                    <field name="csf_fac_anual"/>
+                                    <field name="fcl_lib_mensual"/>
+                                    <field name="fcl_lib_trimestral"/>
+                                    <field name="fcl_lib_semestral"/>
+                                    <field name="fcl_lib_anual"/>
+                                    <field name="fcp_sen_mensual"/>
+                                    <field name="fcp_sen_trimestral"/>
+                                    <field name="fcp_sen_semestral"/>
+                                    <field name="fcp_sen_anual"/>
                                 </tree>
                             </field>
                         </page>
