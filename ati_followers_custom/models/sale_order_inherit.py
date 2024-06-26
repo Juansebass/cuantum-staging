@@ -44,9 +44,9 @@ class SaleOrderInherit(models.Model):
         self.ensure_one()
         default = dict(default or {})
         duplicated = super().copy(default)
-        duplicated.env['mail.followers'].sudo().search([
+        self.env['mail.followers'].sudo().search([
             ('partner_id', '=', self.partner_id.id),
             ('res_model', '=', 'sale.order'),
             ('res_id', '=', duplicated.id)
         ]).unlink()
-        return super().copy(default)
+        return duplicated
