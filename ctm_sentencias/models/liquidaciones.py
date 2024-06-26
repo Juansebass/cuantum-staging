@@ -27,7 +27,8 @@ class Liquidaciones(models.Model):
     total_intereses = fields.Float('Total Intereses')
     liquidaciones_resumen_ids = fields.One2many('ctm.liquidaciones_resumen','liquidacion_id','Resumen Liquidación Sentencia')
     responsible = fields.Many2one('res.partner', 'Responsable')
-    state = fields.Selection(selection=[('draft','Borrador'),('liquidated','Liquidado')],string='Estado',default='draft')
+    state = fields.Selection(selection=[('draft','Borrador'), ('liquidated','Liquidado')], string='Estado', default='draft')
+    simulacion_ids = fields.One2many('liquidacion.simulacion', 'liquidacion')
 
     def generar_liquidacion(self):
         # existe_liquidacion = self.env['ctm.liquidaciones'].search(
@@ -163,6 +164,31 @@ class Liquidaciones(models.Model):
         res = super(Liquidaciones, self).create(var)
         res.name = "Liquidación" ' - ' + res.sentencia.name
         return res
+
+    def generar_simulacion(self):
+        for rec in self:
+            self.env['liquidacion.simulacion'].create({
+                'name': str(len(self.simulacion_ids) + 1),
+                'liquidacion_id': rec.id,
+                'fecha_ejecutoria': rec.fecha_ejecutoria,
+                'fecha_cuenta_cobro': rec.fecha_cuenta_cobro,
+                'fecha_liquidar': rec.fecha_liquidar,
+                'valor_condena': rec.valor_condena,
+                'total_intereses': rec.total_intereses,
+                'resultado': rec.resultado,
+            })
+
+    def action_view_simulaciones(self):
+        self.ensure_one()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Simulaciones',
+            'view_mode': 'tree',
+            'res_model': 'liquidacion.simulacion',
+            'domain': [('liquidacion_id', '=', self.id)],
+            'context': "{'create': False, 'delete': False}",
+        }
 
 class LiquidacionesResumen(models.Model):
     _name = 'ctm.liquidaciones_resumen'

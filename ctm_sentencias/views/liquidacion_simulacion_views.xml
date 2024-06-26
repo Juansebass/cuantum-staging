@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="liquidacion_simulacion_view_tree" model="ir.ui.view">
+        <field name="name">liquidacion.simulacion.tree</field>
+        <field name="model">liquidacion.simulacion</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="fecha_ejecutoria"/>
+                <field name="fecha_cuenta_cobro"/>
+                <field name="fecha_liquidar"/>
+                <field name="valor_condena"/>
+                <field name="total_intereses"/>
+                <field name="resultado"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

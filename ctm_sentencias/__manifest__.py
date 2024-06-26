@@ -17,7 +17,8 @@
         'views/cargar_sentencias_views.xml',
         'views/liquidaciones_views.xml',
         'views/create_sentencias_views.xml',
-        'views/sentencias_views.xml'
+        'views/sentencias_views.xml',
+        'views/liquidacion_simulacion_views.xml',
         ],
     'installable': True,
     'application': True,
