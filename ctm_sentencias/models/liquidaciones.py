@@ -43,7 +43,7 @@ class Liquidaciones(models.Model):
         self.codigo = self.sentencia.codigo
         self.fecha_ejecutoria = self.sentencia.fecha_ejecutoria
         self.fecha_cuenta_cobro = self.sentencia.fecha_cuenta_cobro
-        self.fecha_liquidar = self.sentencia.fecha_liquidar
+        self.fecha_liquidar = self.fecha_liquidar if self.fecha_liquidar else self.sentencia.fecha_liquidar
         self.valor_condena = self.sentencia.valor_condena
         self.resultado = self.valor_condena
         self.total_intereses = 0
