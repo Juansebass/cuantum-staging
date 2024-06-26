@@ -35,23 +35,23 @@
                     </div>
                     <group name="cliente">
                         <group name="izquierda">
-                            <field name="sentencia" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
-                            <field name="emisor" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"
+                            <field name="sentencia" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
+                            <field name="emisor" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"
                                    options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
                                             "no_create":True, "no_open":True}'
                             />
-                            <field name="pagador" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"
+                            <field name="pagador" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"
                                    options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
                                             "no_create":True, "no_open":True}'
                             />
-                            <field name="codigo" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="codigo" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
 
                         </group>
                         <group name="derecha">
-                            <field name="fecha_ejecutoria" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
-                            <field name="fecha_cuenta_cobro" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="fecha_ejecutoria" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
+                            <field name="fecha_cuenta_cobro" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
                             <field name="fecha_liquidar" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
-                            <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated'])]}"/>
+                            <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
                             <field name="total_intereses" readonly="1"/>
                             <field name="resultado" readonly="1"/>
                             <field name="responsible" readonly="1"/>
