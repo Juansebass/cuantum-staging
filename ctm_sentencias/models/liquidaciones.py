@@ -167,6 +167,7 @@ class Liquidaciones(models.Model):
 
     def generar_simulacion(self):
         for rec in self:
+            self.generar_liquidacion()
             self.env['liquidacion.simulacion'].create({
                 'name': str(len(self.simulacion_ids) + 1),
                 'liquidacion_id': rec.id,
