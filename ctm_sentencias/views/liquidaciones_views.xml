@@ -26,18 +26,15 @@
                     <button name="generar_liquidacion" type="object" string="Generar Liquidación" attrs="{'invisible': [('state', 'in', ['liquidated'])]}"/>
                     <button name="set_borrador_liquidacion" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <button name="generar_simulacion" type="object" string="Generar Simulación" attrs="{'invisible': [('state', 'not in', ['liquidated'])]}"/>
+                    <button name="action_view_simulaciones"
+                            type="object"
+                            string="Simulaciones"
+                            class="oe_stat_button"
+                            icon="fa-calculator"
+                    />
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
-                    <div name="button_box" position="inside">
-                        <button name="action_view_simulaciones"
-                                type="object"
-                                string="Simulaciones"
-                                widget="statinfo"
-                                class="oe_stat_button"
-                                icon="fa-calculator"
-                        />
-                    </div>
                     <div class="oe_title">
                         <div class="o_row">
                             <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
