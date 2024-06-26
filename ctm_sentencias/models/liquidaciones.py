@@ -168,7 +168,7 @@ class Liquidaciones(models.Model):
     def generar_simulacion(self):
         for rec in self:
             #Validando que no exista una simulación con la misma fecha a liquidar
-            if rec.simulacion_ids.filtered(lambda x: x.fecha_liquidar == rec.fecha_liquidar) > 0:
+            if len(rec.simulacion_ids.filtered(lambda x: x.fecha_liquidar == rec.fecha_liquidar)) > 0:
                 raise ValidationError('Ya existe una simulación para la fecha {0}'.format(rec.fecha_liquidar))
             self.generar_liquidacion()
             self.env['liquidacion.simulacion'].create({
