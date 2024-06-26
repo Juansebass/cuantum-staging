@@ -28,7 +28,7 @@ class Liquidaciones(models.Model):
     liquidaciones_resumen_ids = fields.One2many('ctm.liquidaciones_resumen','liquidacion_id','Resumen Liquidación Sentencia')
     responsible = fields.Many2one('res.partner', 'Responsable')
     state = fields.Selection(selection=[('draft','Borrador'), ('liquidated','Liquidado')], string='Estado', default='draft')
-    simulacion_ids = fields.One2many('liquidacion.simulacion', 'liquidacion')
+    simulacion_ids = fields.One2many('liquidacion.simulacion', 'liquidacion_id')
 
     def generar_liquidacion(self):
         # existe_liquidacion = self.env['ctm.liquidaciones'].search(
