@@ -78,8 +78,8 @@ class Liquidaciones(models.Model):
         fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
         fechas_periodos += fechas_base
         unique_fechas_periodos = sorted(list(set(fechas_periodos)))
-        if unique_fechas_periodos[-1].month == unique_fechas_periodos[-2].month:
-            unique_fechas_periodos.pop(-1)
+        # if unique_fechas_periodos[-1].month == unique_fechas_periodos[-2].month:
+        #     unique_fechas_periodos.pop(-1)
 
 
 
