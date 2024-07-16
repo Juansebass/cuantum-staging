@@ -1,55 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="new_ticket_create_email_template" model="mail.template">
+        <record id="new_ticket_request_email_template" model="mail.template">
             <field name="name">Ticket: Nuevo Ticket</field>
             <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
             <field name="subject">{{object.name}}</field>
 <!--            <field name="email_from">{{(object.user_id.email_formatted or user.email_formatted)}}</field>-->
-            <field name="email_to">{{object.get_email_created()}}</field>
+<!--            <field name="email_to">{{object.sudo().}}</field>-->
             <field name="body_html" type="html">
                 <div>
-                    Equipos de Tesorería y Compras,<br /><br />
+                    Equipo de <t t-out="object.team_id.name or 'Helpdesk' "></t>,<br /><br />
 
-                     Se ha creado el ticket <t t-out="object.name or ''"></t> en Mesa de ayuda.
+                     Se ha asignado el ticket <t t-out="object.name or ''"></t> en Mesa de ayuda.
 
                 </div>
             </field>
             <field name="auto_delete" eval="False"/>
         </record>
 
-        <record id="in_progress_ticket__email_template" model="mail.template">
-            <field name="name">Ticket: Ticket En Progreso</field>
+        <record id="new_ticket_confirm_email_template" model="mail.template">
+            <field name="name">Ticket: Nuevo Ticket</field>
             <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
             <field name="subject">{{object.name}}</field>
-            <field name="email_to">{{object.get_email_in_progress()}}</field>
             <field name="body_html" type="html">
                 <div>
-                      Equipos de Tesorería y Riesgos,<br /><br />
+                     <t t-out="object.customer_name or 'Usuario' "></t>,<br /><br />
 
-                    El ticket <t t-out="object.name or ''"></t> Ha pasado a estado En progreso, favor revisar.<br />
+                     Se ha crado el ticket <t t-out="object.name or ''"></t> en nuestra Mesa de ayuda.<br />
+
+                    Este será atendido lo antes posible por nuestro equipo de soporte.
 
                 </div>
             </field>
             <field name="auto_delete" eval="False"/>
-        </record>
-
-        <record id="generate_ticket_create_notification" model="base.automation">
-            <field name="name">Notificación Creación de Ticket</field>
-            <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
-            <field name="state">email</field>
-            <field name="trigger">on_create</field>
-            <field name="active" eval="True"/>
-            <field name="template_id" ref="odoo_website_helpdesk.new_ticket_create_email_template"/>
-        </record>
-        <record id="generate_ticket_in_progress_notification" model="base.automation">
-            <field name="name">Notificación Cambio a En Progreso de Ticket</field>
-            <field name="model_id" ref="odoo_website_helpdesk.model_help_ticket"/>
-            <field name="state">email</field>
-            <field name="trigger">on_write</field>
-            <field name="active" eval="True"/>
-            <field name="filter_domain">[["stage_id","=","in_progress"]]</field>
-            <field name="template_id" ref="odoo_website_helpdesk.in_progress_ticket__email_template"/>
         </record>
     </data>
 </odoo>

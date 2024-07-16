@@ -13,18 +13,9 @@
                     <button name="action_create_invoice" string="Create Invoice"
                             type="object" class="btn-primary"
                             attrs="{'invisible':[('billable','=',False)]}"/>
-                    <button name="action_start" type="object" string="Iniciar" attrs="{'invisible':[('stage_id','!=','inbox')]}"
-                            groups="odoo_website_helpdesk.group_cuatum_mesa_tesoreria,odoo_website_helpdesk.group_cuatum_mesa_comercial_factoring,odoo_website_helpdesk.group_cuatum_mesa_comercial_libranzas,odoo_website_helpdesk.group_cuatum_mesa_comercial_sentencias"
-                    />
-                    <button name="action_end" type="object" string="Terminar" attrs="{'invisible':[('stage_id','!=','in_progress')]}"
-                            groups="odoo_website_helpdesk.group_cuatum_mesa_tesoreria"
-                    />
-                    <button name="action_approve" type="object" string="Aprobar" attrs="{'invisible':['|', ('stage_id','!=','in_progress'), ('management_risk_approved','=','si')]}"
-                            groups="odoo_website_helpdesk.group_cuatum_mesa_riesgos"
-                    />
-                    <button name="action_cancel" type="object" string="Cancelar" attrs="{'invisible':[('stage_id','in',['done', 'canceled'])]}"/>
-
-                    <field name="stage_id" widget="statusbar"/>
+                    <button name="send_response" type="object" string="Enviar Respuesta"/>
+                    <field name="stage_id" widget="statusbar"
+                           options="{'clickable': '1'}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -41,44 +32,40 @@
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only"/>
                         <h1>
-                            <field name="name" readonly="1"/>
+                            <field name="name"/>
                         </h1>
                         <label for="subject" class="oe_edit_only"/>
                         <h1 class="mt0">
-                            <field name="subject" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
+                            <field name="subject"/>
                         </h1>
                     </div>
                     <group>
                         <group>
-                            <field name="customer_id" string="Cliente"  attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
-                            <field name="customer_name" string="Nombre Cliente" invisible="1"/>
-                            <field name="email" invisible="1"/>
-                            <field name="phone" string="Teléfono" invisible="1"/>
+                            <field name="customer_id" string="Cliente"/>
+                            <field name="customer_name" string="Nombre Cliente"/>
+                            <field name="email"/>
+                            <field name="phone" string="Teléfono"/>
                             <field name="cost" invisible="1"/>
-                            <field name="start_date" string="Fecha de Inicio" readonly="1"/>
-                            <field name="movement_type" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
-                            <field name="manager" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
-                            <field name="investment_type" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
+                            <field name="start_date" string="Fecha de Inicio"/>
                         </group>
                         <group>
-                            <field name="team_id" string="Equipo de Soporte" attrs="{'readonly':[('stage_id','!=','inbox')]}" invisible="1"/>
+                            <field name="team_id" string="Equipo de Soporte"/>
                             <field name="project_id" invisible="1"/>
                             <field name="service_product_id" attrs="{'invisible':[('create_task','=',False)],
                          'required': [('create_task','=', True)]}"/>
-                            <field name="priority" widget="priority" string="Prioridad" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
+                            <field name="priority" widget="priority" string="Prioridad"/>
                             <field name="show_create_task" invisible="1"/>
                             <field name="create_task"
                                    attrs="{'invisible':[('show_create_task','=',False)]}"/>
                             <field name="billable"
                                    attrs="{'invisible':[('create_task','=',False)]}"/>
-                            <field name="end_date" string="Fecha de Fin" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
-                            <field name="management_risk_approved" readonly="1"/>
+                            <field name="end_date"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Descripción">
                             <field name="description"
-                                   placeholder="Provide the reason in detail" attrs="{'readonly':[('stage_id','!=','inbox')]}"/>
+                                   placeholder="Provide the reason in detail"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -111,8 +98,8 @@
         <field name="name">help.ticket.view.kanban</field>
         <field name="model">help.ticket</field>
         <field name="arch" type="xml">
-            <kanban records_draggable="0" default_group_by="stage_id" class="o_kanban_small_column"
-                    quick_create="false" on_create="quick_create" >
+            <kanban default_group_by="stage_id" class="o_kanban_small_column"
+                    quick_create="false" on_create="quick_create">
                 <field name="color"/>
                 <field name="name"/>
                 <field name="stage_id"/>

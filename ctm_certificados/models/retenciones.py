@@ -14,9 +14,9 @@ class Retencion(models.Model):
     cuantia = fields.Float(' CUANTIA DE LA RETENCION ')
     year = fields.Char('AÑO')
 
-    @api.constrains('retenido', 'year')
-    def _check_unique_record(self):
-        for record in self:
-            duplicate_records = self.search([('retenido', '=', record.retenido.id), ('year', '=', record.year)])
-            if duplicate_records:
-                raise ValidationError('El registro {0}-{1} ya existe'.format(record.retenido.name, record.year))
+    # @api.constrains('retenido', 'year')
+    # def _check_unique_record(self):
+    #     for record in self:
+    #         duplicate_records = self.search([('retenido', '=', record.retenido.id), ('year', '=', record.year)])
+    #         if duplicate_records:
+    #             raise ValidationError('El registro {0}-{1} ya existe'.format(record.retenido.name, record.year))

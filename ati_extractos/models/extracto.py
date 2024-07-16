@@ -68,6 +68,7 @@ class Extracto(models.Model):
 
     valor_actual_total_resumen = fields.Float('Valor Total Actual Resumen')
     valor_anterior_total_resumen = fields.Float('Valor Total Anterior Resumen')
+    valor_rendimiento_causado = fields.Float('Valor Total Rendimiento Causado')
     tir_mensual = fields.Float('TIR Mensual', digits=(3, 3))
     tir_trimestral = fields.Float('TIR Trimestral', digits=(3, 3))
     tir_semestral = fields.Float('TIR Semestral', digits=(3, 3))
@@ -432,7 +433,7 @@ class Extracto(models.Model):
 
         self.valor_anterior_total_resumen = total_valor_anterior
         self.valor_actual_total_resumen = total_valor_actual
-
+        self.valor_rendimiento_causado = total_rendimiento_causado
 
         #######################
         #TOTALES
@@ -900,8 +901,13 @@ class Extracto(models.Model):
         #Validación Totales Factoring, libranzas sentencias
         self.validacion_totales()
 
-        self._generar_tir()
+        # try:
+        #     self._generar_tir()
+        # except Exception as e:
+        #     raise ValidationError('No sepuede generar extracto {}'.format(self.name))
 
+        self._generar_tir()
+        
         #Cambiamos estado
         self.state = 'processed'
 
@@ -964,20 +970,38 @@ class Extracto(models.Model):
             return total_npv
 
         initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
         return irr * 100
+    
+    def calulate_mutuos_cuantum(self, extractos_ids):
+        values = []
+        tir = 0
+        for extracto in extractos_ids:
+            line = extracto.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'CUANTUM' and x.producto.code == 'MUT')
+            valor = line.valor_actual
+            tasa =  line.tasa_rendimiento
+            values.append((valor, tasa))
+        total = sum([x[0] for x in values])
+        if total > 0:
+            for i in values:
+                tir += (i[0] / total) * i[1]  
+        return tir
 
 
 
     def calculate_tir_gestor(self):
         #CSF
-        for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
+        for tipo in ['FAC', 'LIB', 'SEN']:
             # Mensual
             cash_flows = [
                 (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
+            logger.error('flows CSF MENSUAL')
+            to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
+            logger.error(tipo)
+            logger.error(to_print)
             value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
             if tipo == 'FAC':
                 self.cuantum_fac_mensual = value
@@ -985,8 +1009,9 @@ class Extracto(models.Model):
                 self.cuantum_lib_mensual = value
             elif tipo == 'SEN':
                 self.cuantum_sen_mensual = value
-            elif tipo == 'MUT':
-                self.cuantum_mut_mensual = value
+
+        #Para mutuos CUANTUM
+        self.cuantum_mut_mensual = self.resumen_inversion_ids.filtered(lambda x: x.gestor.code == 'CUANTUM' and x.producto.code == 'MUT').tasa_rendimiento
 
         #FCL
         cash_flows = [
@@ -1020,7 +1045,7 @@ class Extracto(models.Model):
 
         tir_gestor_ids = past_extractos.mapped('tir_gestor_ids')
 
-        for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
+        for tipo in ['FAC', 'LIB', 'SEN']:
             # Mensual
             cash_flows = [
                 (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
@@ -1034,8 +1059,9 @@ class Extracto(models.Model):
                 self.cuantum_lib_trimestral = value
             elif tipo == 'SEN':
                 self.cuantum_sen_trimestral = value
-            elif tipo == 'MUT':
-                self.cuantum_mut_trimestral = value
+
+        #Para mutuos CUANTUM
+        self.cuantum_mut_trimestral = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
         cash_flows = [
@@ -1066,7 +1092,7 @@ class Extracto(models.Model):
 
         tir_gestor_ids = past_extractos.mapped('tir_gestor_ids')
 
-        for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
+        for tipo in ['FAC', 'LIB', 'SEN']:
             # Mensual
             cash_flows = [
                 (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
@@ -1080,8 +1106,9 @@ class Extracto(models.Model):
                 self.cuantum_lib_semestral = value
             elif tipo == 'SEN':
                 self.cuantum_sen_semestral = value
-            elif tipo == 'MUT':
-                self.cuantum_mut_semestral = value
+        
+        # Para mutuos CUANTUM
+        self.cuantum_mut_semestral = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
         cash_flows = [
@@ -1111,7 +1138,7 @@ class Extracto(models.Model):
             past_extractos += past_extracto
         tir_gestor_ids = past_extractos.mapped('tir_gestor_ids')
 
-        for tipo in ['FAC', 'LIB', 'SEN', 'MUT']:
+        for tipo in ['FAC', 'LIB', 'SEN']:
             # Mensual
             cash_flows = [
                 (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
@@ -1125,8 +1152,9 @@ class Extracto(models.Model):
                 self.cuantum_lib_anual = value
             elif tipo == 'SEN':
                 self.cuantum_sen_anual = value
-            elif tipo == 'MUT':
-                self.cuantum_mut_anual = value
+        
+        # Para mutuos CUANTUM
+        self.cuantum_mut_anual = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
         cash_flows = [
@@ -1153,10 +1181,15 @@ class Extracto(models.Model):
         range = calendar.monthrange(int(self.year), int(self.month))
         last_day = range[1]
         #Primer día
+        #valor_anterior = self.valor_anterior_total_resumen if self.valor_anterior_total_resumen != 0 else self.valor_actual_total_resumen - self.valor_rendimiento_causado
+        valor_anterior = self.valor_anterior_total_resumen
+        past_extractos = self.env['ati.extracto'].search([('cliente', '=', self.cliente.id)])
+        if len(past_extractos) == 1:
+            valor_anterior = self.valor_anterior_total_resumen if self.valor_anterior_total_resumen != 0 else self.valor_actual_total_resumen - self.valor_rendimiento_causado
         self.env['ati.tir'].create({
             'extracto_id': self.id,
             'date': datetime(int(self.year),int(self.month), 1) - timedelta(days=1),
-            'valor': self.valor_anterior_total_resumen,
+            'valor': valor_anterior,
         })
 
         #Recorriendo detalle d emovimiento
@@ -1177,11 +1210,15 @@ class Extracto(models.Model):
         #Generando Flujo de caja por gestor último y primer día
         for line in self.resumen_inversion_ids:
             if line.producto.code in ['FAC', 'LIB', 'SEN', 'MUT']:
+                if line.producto.code == 'SEN' and line.gestor.code == 'FCP':
+                    valor_anterior = line.valor_anterior if line.valor_anterior != 0 else line.valor_actual - line.rendimiento_causado
+                else:
+                    valor_anterior = line.valor_anterior
                 self.env['ati.tir.gestor'].create({
                     'extracto_id': self.id,
-                    'date': datetime(int(self.year),int(self.month), 1) - timedelta(days=1),
+                    'date': datetime(int(self.year), int(self.month), 1) - timedelta(days=1),
                     'gestor_id': line.gestor.id,
-                    'valor': line.valor_anterior,
+                    'valor': valor_anterior,
                     'tipo_id': line.producto.id,
                 })
                 self.env['ati.tir.gestor'].create({
@@ -1197,6 +1234,9 @@ class Extracto(models.Model):
 
         #Calculando TIR
         cash_flows = [(x.move + x.valor, x.date) for x in self.tir_ids]
+        logger.error('cash_flows')
+        to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
+        logger.error(to_print)
 
         dates = [cf[1] for cf in cash_flows]
         amounts = [cf[0] for cf in cash_flows]
@@ -1222,7 +1262,7 @@ class Extracto(models.Model):
             return total_npv
 
         initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
         self.tir_mensual = irr * 100
 
         self.calculate_tir_trimestral()
@@ -1270,7 +1310,7 @@ class Extracto(models.Model):
             return total_npv
 
         initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
         self.tir_trimestral = irr * 100
 
     def calculate_tir_semestral(self):
@@ -1313,7 +1353,7 @@ class Extracto(models.Model):
             return total_npv
 
         initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
         self.tir_semestral = irr * 100
 
     def calculate_tir_anual(self):
@@ -1355,7 +1395,7 @@ class Extracto(models.Model):
             return total_npv
 
         initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 1], method='brentq').root
+        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
         self.tir_anual = irr * 100
 
 

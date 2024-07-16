@@ -8,7 +8,7 @@ class LiquidacionSimulacion(models.Model):
     _description = 'Simulacion de Liquidaciones'
 
     name = fields.Char('Nombre', required=True)
-    liquidacion_id = fields.Many2one('ctm.liquidaciones', 'Liquidación', required=True)
+    liquidacion_id = fields.Many2one('ctm.liquidaciones', 'Liquidación', required=True, ondelete='cascade')
     fecha_ejecutoria = fields.Date('Fecha de Ejecutoría')
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro')
     fecha_liquidar = fields.Date('Fecha a Liquidar')

@@ -2,64 +2,29 @@
 <odoo>
     <data>
         <!-- Project Stages -->
-        <record id="team_tesoreria" model="help.team">
-            <field name="name">Tesorería</field>
+        <record id="team_soporte" model="help.team">
+            <field name="name">Soporte</field>
         </record>
 
-        <record id="team_comercial" model="help.team">
-            <field name="name">Comercial</field>
+        <record id="team_cliente_comprador" model="help.team">
+            <field name="name">Cliente Comprador</field>
         </record>
 
-        <record id="team_riesgos" model="help.team">
-            <field name="name">Riesgos</field>
+        <record id="team_cliente_factoring" model="help.team">
+            <field name="name">Cliente Factoring</field>
         </record>
 
-        <record id="team_gerencia" model="help.team">
-            <field name="name">Gerencia</field>
+        <record id="team_cliente_libranzas" model="help.team">
+            <field name="name">Cliente Libranzas</field>
         </record>
 
-        <!-- Grupos seguridad -->
-        <!-- Categoria Inicial -->
-        <record id="module_category_mesa" model="ir.module.category">
-            <field name="name">Mesa</field>
-            <field name="sequence">1</field>
+        <record id="team_cliente_sentencias" model="help.team">
+            <field name="name">Cliente Sentencias</field>
         </record>
-        <!-- Sub Categorias -->
-        <record id="module_category_mesa_mesa" model="ir.module.category">
-            <field name="name">Mesa</field>
-            <field name="sequence">1</field>
-            <field name="parent_id" ref="module_category_mesa"/>
+
+        <record id="team_juridico" model="help.team">
+            <field name="name">Jurídico</field>
         </record>
-        <!-- Grupos -->
-        <record id="group_cuatum_mesa_tesoreria" model="res.groups">
-            <field name="name">Tesorería</field>
-            <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
-            <field name="category_id" ref="module_category_mesa_mesa"/>
-        </record>
-        <record id="group_cuatum_mesa_comercial_factoring" model="res.groups">
-            <field name="name">Comercial Factoring</field>
-            <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
-            <field name="category_id" ref="module_category_mesa_mesa"/>
-        </record>
-        <record id="group_cuatum_mesa_comercial_libranzas" model="res.groups">
-            <field name="name">Comercial Libranzas</field>
-            <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
-            <field name="category_id" ref="module_category_mesa_mesa"/>
-        </record>
-        <record id="group_cuatum_mesa_comercial_sentencias" model="res.groups">
-            <field name="name">Comercial Sentencias</field>
-            <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
-            <field name="category_id" ref="module_category_mesa_mesa"/>
-        </record>
-        <record id="group_cuatum_mesa_riesgos" model="res.groups">
-            <field name="name">Riesgos</field>
-            <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
-            <field name="category_id" ref="module_category_mesa_mesa"/>
-        </record>
-        <record id="group_cuatum_mesa_gerencia" model="res.groups">
-            <field name="name">Gerencia</field>
-            <field name="menu_access" eval="[(4,ref('odoo_website_helpdesk.menu_helpdesk'))]"/>
-            <field name="category_id" ref="module_category_mesa_mesa"/>
-        </record>
+
     </data>
 </odoo>

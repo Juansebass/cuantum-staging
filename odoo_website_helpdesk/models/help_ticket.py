@@ -54,7 +54,7 @@ class HelpDeskTicket(models.Model):
                        help='The name of the help ticket. By default, a new '
                             'unique sequence number is assigned to each '
                             'help ticket, unless a name is provided.')
-    customer_id = fields.Many2one('res.partner', string='Customer', required=True,
+    customer_id = fields.Many2one('res.partner', string='Customer',
                                   help="Select the Customer",
                                   domain="[('type', '!=', 'private')]")
     customer_name = fields.Char(string='Customer Name', help="Add the "
@@ -82,22 +82,12 @@ class HelpDeskTicket(models.Model):
                                       "the team.")
     priority = fields.Selection(PRIORITIES, default='1',
                                 help="Set the priority level")
-    # stage_id = fields.Many2one('ticket.stage', string='Stage',
-    #                            default=lambda self: self.env.ref(
-    #                                'odoo_website_helpdesk.stage_inbox').id,
-    #                            tracking=True,
-    #                            group_expand='_read_group_stage_ids',
-    #                            help="Stages of the Ticket")
-
-    stage_id = fields.Selection(selection=[
-        ('inbox','Inbox'),
-        ('in_progress','En Progreso'),
-        ('done', 'Terminado'),
-        ('canceled', 'Cancelado'),
-    ],group_expand='_read_group_stage_ids', string='Estado',default='inbox', tracking=True, readonly=True)
-
-
-
+    stage_id = fields.Many2one('ticket.stage', string='Stage',
+                               default=lambda self: self.env.ref(
+                                   'odoo_website_helpdesk.stage_inbox').id,
+                               tracking=True,
+                               group_expand='_read_group_stage_ids',
+                               help="Stages of the Ticket")
     cost = fields.Float(string='Cost per hour',
                         help='The cost per hour for this record. This field '
                              'specifies the hourly cost associated with the '
@@ -111,8 +101,8 @@ class HelpDeskTicket(models.Model):
                                               "service. Only service products "
                                               "are available for selection.")
     start_date = fields.Date(string='Start Date', help="Start Date of the "
-                                                       "Ticket", default=fields.Date.today)
-    end_date = fields.Date(string='End Date', help="End Date of the Ticket", required=True)
+                                                       "Ticket")
+    end_date = fields.Date(string='End Date', help="End Date of the Ticket")
     public_ticket = fields.Boolean(string="Public Ticket")
     invoice_ids = fields.Many2many('account.move', string='Invoices',
                                    store=True,
@@ -135,33 +125,20 @@ class HelpDeskTicket(models.Model):
                               help="Indicates whether the ticket is billable "
                                    "or not.")
 
-    #Custom fields
-    movement_type = fields.Many2one('ati.movement.type', 'Tipo de Movimiento', required=True)
-    manager = fields.Many2one('ati.gestor', 'Gestor', required=True,)
-    investment_type = fields.Many2one('ati.investment.type', 'Tipo de inversión')
-    management_risk_approved = fields.Selection(
-        string='Aprobado por Riesgos',
-        selection=[
-            ('si', 'Sí'),
-            ('no', 'No')
-        ],
-        default='no',
-    )
-
     @api.model
     def create(self, var):
         res = super(HelpDeskTicket, self).create(var)
         #Asigando grupo por defecto
-        # team_soporte = self.env.ref('odoo_website_helpdesk.team_soporte').id
-        # res.team_id = team_soporte
+        team_soporte = self.env.ref('odoo_website_helpdesk.team_soporte').id
+        res.team_id = team_soporte
 
         #Enviando Email
-        # email_data = {
-        #     'email_from': "comunicaciones@cuantum.co",
-        #     'email_to': res.email
-        # }
-        # template = self.env.ref('odoo_website_helpdesk.new_ticket_confirm_email_template')
-        # mail = template.send_mail(res.id, force_send=True, email_values=email_data)
+        email_data = {
+            'email_from': "comunicaciones@cuantum.co",
+            'email_to': res.email
+        }
+        template = self.env.ref('odoo_website_helpdesk.new_ticket_confirm_email_template')
+        mail = template.send_mail(res.id, force_send=True, email_values=email_data)
 
         return res
 
@@ -175,7 +152,7 @@ class HelpDeskTicket(models.Model):
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         """Return the stages to stage_ids"""
-        stage_ids = ['inbox', 'in_progress', 'done', 'canceled']
+        stage_ids = self.env['ticket.stage'].search([])
         return stage_ids
 
     def action_create_invoice(self):
@@ -268,19 +245,18 @@ class HelpDeskTicket(models.Model):
 
 
     def _inverse_team_id(self):
-        pass
-        # for rec in self:
-        #     #Enviando notificación
-        #     notification_emails = ""
-        #     for user in rec.team_id.member_ids:
-        #         notification_emails += "{0};".format(user.partner_id.email)
-        #
-        #     email_data = {
-        #         'email_from': "comunicaciones@cuantum.co",
-        #         'email_to': notification_emails
-        #     }
-        #     template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
-        #     mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
+        for rec in self:
+            #Enviando notificación
+            notification_emails = ""
+            for user in rec.team_id.member_ids:
+                notification_emails += "{0};".format(user.partner_id.email)
+
+            email_data = {
+                'email_from': "comunicaciones@cuantum.co",
+                'email_to': notification_emails
+            }
+            template = self.env.ref('odoo_website_helpdesk.new_ticket_request_email_template')
+            mail = template.send_mail(rec.id, force_send=True, email_values=email_data)
 
     def send_response(self):
         compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
@@ -303,63 +279,3 @@ class HelpDeskTicket(models.Model):
             'target': 'new',
             'context': ctx,
         }
-
-    def action_start(self):
-        self.stage_id = 'in_progress'
-
-    def action_end(self):
-        if self.management_risk_approved == 'no':
-            raise UserError('El Ticket debe ser aprobado por Riesgos')
-        self.stage_id = 'done'
-
-    def action_approve(self):
-        self.management_risk_approved = 'si'
-
-    def action_cancel(self):
-        self.stage_id = 'canceled'
-
-    def get_email_created(self):
-        email_list = []
-        #Gestor csf correo a tesorería
-        if self.manager.code == 'CUANTUM':
-            tesorería_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_tesoreria")
-            tesoreria_list = [
-                usr.partner_id.email for usr in tesorería_group.users if usr.partner_id.email]
-            email_list += tesoreria_list
-
-        #Lineas y grupos de compras
-        if self.investment_type.code == 'FAC':
-            comercial_factoring_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_factoring")
-            factoring_list = [
-                usr.partner_id.email for usr in comercial_factoring_group.users if usr.partner_id.email]
-            email_list += factoring_list
-
-        if self.investment_type.code == 'LIB':
-            comercial_libranzas_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_libranzas")
-            libranzas_list = [
-                usr.partner_id.email for usr in comercial_libranzas_group.users if usr.partner_id.email]
-            email_list += libranzas_list
-
-        if self.investment_type.code == 'SEN':
-            comercial_sentencias_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_comercial_sentencias")
-            sentencias_list = [
-                usr.partner_id.email for usr in comercial_sentencias_group.users if usr.partner_id.email]
-            email_list += sentencias_list
-
-        return ",".join(email_list)
-
-
-    def get_email_in_progress(self):
-        email_list = []
-        tesorería_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_tesoreria")
-        tesoreria_list = [
-            usr.partner_id.email for usr in tesorería_group.users if usr.partner_id.email]
-
-        riesgos_group = self.env.ref("odoo_website_helpdesk.group_cuatum_mesa_riesgos")
-        riesgos_list = [
-            usr.partner_id.email for usr in riesgos_group.users if usr.partner_id.email]
-
-        email_list = tesoreria_list + riesgos_list
-        return ",".join(email_list)
-
-

@@ -206,9 +206,6 @@ class SaleOrder(models.Model):
             'context': ctx,
         }
 
-    def _send_order_confirmation_mail(self):
-        pass
-
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
