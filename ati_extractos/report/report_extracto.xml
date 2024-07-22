@@ -186,16 +186,19 @@
                                 <td class="text-center" style="vertical-align: middle; border-bottom: 2px solid black; width: 33%;  background-color: white;"><span t-field="o.fcl_lib_anual"/>%</td>
                             </tr>
                             <tr style="vertical-align: middle;">
-                                <td class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td rowspan="2" class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Fondo de Capital Privado Statum</strong>
                                 </td>
-                                <td class="text-center" style="vertical-align: middle; border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td rowspan="2" class="text-center" style="vertical-align: middle; border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Sentencias</strong>
                                 </td>
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_sen_mensual"/>%</td>
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_sen_trimestral"/>%</td>
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_sen_semestral"/>%</td>
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_sen_anual"/>%</td>
+                            </tr>
+                            <tr style="vertical-align: middle;">
+                                <td colspan="3" class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.cliente.fcp_historic_tir"/>%</td>
                             </tr>
                           </tbody>
                         </table>
