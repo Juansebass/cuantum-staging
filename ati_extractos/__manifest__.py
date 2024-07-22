@@ -21,6 +21,7 @@
         'views/extracto_views.xml',
         'views/portal_extracto.xml',
         'views/create_extractos_views.xml',
+        'views/res_partner_views.xml',
         'security/ir.model.access.csv',
         'report/report_extracto.xml',
         'data/mail_template_extracto.xml',

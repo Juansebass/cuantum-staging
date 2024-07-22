@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <record id="view_partner_tir_form" model="ir.ui.view">
+        <field name="name">res.partner.tir.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='totales_fcp']" position="before">
+                <group name="tir" string="TIR" col="2" attrs="{'class': 'oe_highlight'}">
+                    <field name="fcp_historic_tir" string="TIR Histórica FCP"/>
+                </group>
+            </xpath> 
+        </field>
+    </record>
+</odoo>
