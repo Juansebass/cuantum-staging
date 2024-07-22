@@ -198,6 +198,9 @@
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_sen_anual"/>%</td>
                             </tr>
                             <tr style="vertical-align: middle;">
+                                <td rowspan="2" class="text-center" style="vertical-align: middle; border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                    <strong>TIR Histórica</strong>
+                                </td>
                                 <td colspan="3" class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.cliente.fcp_historic_tir"/>%</td>
                             </tr>
                           </tbody>
