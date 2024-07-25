@@ -1049,32 +1049,41 @@ class Extracto(models.Model):
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
-            value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            if tipo == 'FAC':
-                self.cuantum_fac_trimestral = value
-            elif tipo == 'LIB':
-                self.cuantum_lib_trimestral = value
-            elif tipo == 'SEN':
-                self.cuantum_sen_trimestral = value
+            if len(past_extractos) == 3:
+                value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+                if tipo == 'FAC':
+                    self.cuantum_fac_trimestral = value
+                elif tipo == 'LIB':
+                    self.cuantum_lib_trimestral = value
+                elif tipo == 'SEN':
+                    self.cuantum_sen_trimestral = value
+            else:
+                self.cuantum_fac_trimestral = 0
+                self.cuantum_lib_trimestral = 0
+                self.cuantum_sen_trimestral = 0
 
         #Para mutuos CUANTUM
         self.cuantum_mut_trimestral = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
-        cash_flows = [
-            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
-            )
-        ]
-        self.fcl_lib_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        if len(past_extractos) == 3:
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
+                )
+            ]
+            self.fcl_lib_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
-        # FCP
-        cash_flows = [
-            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
-            )
-        ]
-        self.fcp_sen_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            # FCP
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
+                )
+            ]
+            self.fcp_sen_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        else:
+            self.fcl_lib_trimestral = 0
+            self.fcp_sen_trimestral = 0
 
         #SEMESTRAL
         past_extractos = self.env['ati.extracto']
@@ -1096,32 +1105,41 @@ class Extracto(models.Model):
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
-            value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            if tipo == 'FAC':
-                self.cuantum_fac_semestral = value
-            elif tipo == 'LIB':
-                self.cuantum_lib_semestral = value
-            elif tipo == 'SEN':
-                self.cuantum_sen_semestral = value
-        
+            if len(past_extractos) == 6:
+                value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+                if tipo == 'FAC':
+                    self.cuantum_fac_semestral = value
+                elif tipo == 'LIB':
+                    self.cuantum_lib_semestral = value
+                elif tipo == 'SEN':
+                    self.cuantum_sen_semestral = value
+            else:
+                self.cuantum_fac_semestral = 0
+                self.cuantum_lib_semestral = 0
+                self.cuantum_sen_semestral = 0
+
         # Para mutuos CUANTUM
         self.cuantum_mut_semestral = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
-        cash_flows = [
-            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
-            )
-        ]
-        self.fcl_lib_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        if len (past_extractos) == 6:
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
+                )
+            ]
+            self.fcl_lib_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
-        # FCP
-        cash_flows = [
-            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
-            )
-        ]
-        self.fcp_sen_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            # FCP
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
+                )
+            ]
+            self.fcp_sen_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        else:
+            self.fcl_lib_semestral = 0
+            self.fcp_sen_semestral = 0
 
         #ANUAL
         past_extractos = self.env['ati.extracto']
@@ -1142,32 +1160,41 @@ class Extracto(models.Model):
                     lambda x: x.gestor_id.code == 'CUANTUM' and x.tipo_id.code == tipo
                 )
             ]
-            value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            if tipo == 'FAC':
-                self.cuantum_fac_anual = value
-            elif tipo == 'LIB':
-                self.cuantum_lib_anual = value
-            elif tipo == 'SEN':
-                self.cuantum_sen_anual = value
+            if len(past_extractos) == 12:
+                value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+                if tipo == 'FAC':
+                    self.cuantum_fac_anual = value
+                elif tipo == 'LIB':
+                    self.cuantum_lib_anual = value
+                elif tipo == 'SEN':
+                    self.cuantum_sen_anual = value
+            else:
+                self.cuantum_fac_anual = 0
+                self.cuantum_lib_anual = 0
+                self.cuantum_sen_anual = 0
         
         # Para mutuos CUANTUM
         self.cuantum_mut_anual = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
-        cash_flows = [
-            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
-            )
-        ]
-        self.fcl_lib_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        if len(past_extractos) == 12:
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
+                )
+            ]
+            self.fcl_lib_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
-        # FCP
-        cash_flows = [
-            (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
-            )
-        ]
-        self.fcp_sen_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            # FCP
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
+                )
+            ]
+            self.fcp_sen_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        else:
+            self.fcl_lib_anual = 0
+            self.fcp_sen_anual = 0
 
 
     def _generar_tir(self):
@@ -1279,36 +1306,39 @@ class Extracto(models.Model):
 
             ], limit=1)
             past_extractos += past_extracto
+        if len(past_extractos) == 3:
 
-        tir_ids = past_extractos.mapped('tir_ids')
-        cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
+            tir_ids = past_extractos.mapped('tir_ids')
+            cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
 
-        dates = [cf[1] for cf in cash_flows]
-        amounts = [cf[0] for cf in cash_flows]
+            dates = [cf[1] for cf in cash_flows]
+            amounts = [cf[0] for cf in cash_flows]
 
-        def npv(rate):
-            # Start with the first date as the base
-            base_date = dates[0]
-            total_npv = 0
+            def npv(rate):
+                # Start with the first date as the base
+                base_date = dates[0]
+                total_npv = 0
 
-            if rate <= -1:
-                return float('inf')  # Return a high value to indicate invalid IRR
+                if rate <= -1:
+                    return float('inf')  # Return a high value to indicate invalid IRR
 
-            for i, date in enumerate(dates):
-                # Calculate the time difference in days
-                days_difference = (date - base_date).days
+                for i, date in enumerate(dates):
+                    # Calculate the time difference in days
+                    days_difference = (date - base_date).days
 
-                # Discount factor
-                discount_factor = (1 + rate) ** (days_difference / 365.0)
+                    # Discount factor
+                    discount_factor = (1 + rate) ** (days_difference / 365.0)
 
-                # Contribution to NPV
-                total_npv += amounts[i] / discount_factor
+                    # Contribution to NPV
+                    total_npv += amounts[i] / discount_factor
 
-            return total_npv
+                return total_npv
 
-        initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
-        self.tir_trimestral = irr * 100
+            initial_guess = 0.1
+            irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
+            self.tir_trimestral = irr * 100
+        else:
+            self.tir_trimestral = 0
 
     def calculate_tir_semestral(self):
         # Calculando
@@ -1322,36 +1352,38 @@ class Extracto(models.Model):
                 ('year', '=', str(previous_date.year)),
             ], limit=1)
             past_extractos += past_extracto
+        if len(past_extractos) == 6:
+            tir_ids = past_extractos.mapped('tir_ids')
+            cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
 
-        tir_ids = past_extractos.mapped('tir_ids')
-        cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
+            dates = [cf[1] for cf in cash_flows]
+            amounts = [cf[0] for cf in cash_flows]
 
-        dates = [cf[1] for cf in cash_flows]
-        amounts = [cf[0] for cf in cash_flows]
+            def npv(rate):
+                # Start with the first date as the base
+                base_date = dates[0]
+                total_npv = 0
 
-        def npv(rate):
-            # Start with the first date as the base
-            base_date = dates[0]
-            total_npv = 0
+                if rate <= -1:
+                    return float('inf')  # Return a high value to indicate invalid IRR
 
-            if rate <= -1:
-                return float('inf')  # Return a high value to indicate invalid IRR
+                for i, date in enumerate(dates):
+                    # Calculate the time difference in days
+                    days_difference = (date - base_date).days
 
-            for i, date in enumerate(dates):
-                # Calculate the time difference in days
-                days_difference = (date - base_date).days
+                    # Discount factor
+                    discount_factor = (1 + rate) ** (days_difference / 365.0)
 
-                # Discount factor
-                discount_factor = (1 + rate) ** (days_difference / 365.0)
+                    # Contribution to NPV
+                    total_npv += amounts[i] / discount_factor
 
-                # Contribution to NPV
-                total_npv += amounts[i] / discount_factor
+                return total_npv
 
-            return total_npv
-
-        initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
-        self.tir_semestral = irr * 100
+            initial_guess = 0.1
+            irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
+            self.tir_semestral = irr * 100
+        else:
+            self.tir_semestral = 0
 
     def calculate_tir_anual(self):
         # Calculando
@@ -1365,35 +1397,38 @@ class Extracto(models.Model):
                 ('year', '=', str(previous_date.year)),
             ], limit=1)
             past_extractos += past_extracto
-        tir_ids = past_extractos.mapped('tir_ids')
-        cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
+        if len(past_extractos) == 12:
+            tir_ids = past_extractos.mapped('tir_ids')
+            cash_flows = [(x.move + x.valor, x.date) for x in tir_ids]
 
-        dates = [cf[1] for cf in cash_flows]
-        amounts = [cf[0] for cf in cash_flows]
+            dates = [cf[1] for cf in cash_flows]
+            amounts = [cf[0] for cf in cash_flows]
 
-        def npv(rate):
-            # Start with the first date as the base
-            base_date = dates[0]
-            total_npv = 0
+            def npv(rate):
+                # Start with the first date as the base
+                base_date = dates[0]
+                total_npv = 0
 
-            if rate <= -1:
-                return float('inf')  # Return a high value to indicate invalid IRR
+                if rate <= -1:
+                    return float('inf')  # Return a high value to indicate invalid IRR
 
-            for i, date in enumerate(dates):
-                # Calculate the time difference in days
-                days_difference = (date - base_date).days
+                for i, date in enumerate(dates):
+                    # Calculate the time difference in days
+                    days_difference = (date - base_date).days
 
-                # Discount factor
-                discount_factor = (1 + rate) ** (days_difference / 365.0)
+                    # Discount factor
+                    discount_factor = (1 + rate) ** (days_difference / 365.0)
 
-                # Contribution to NPV
-                total_npv += amounts[i] / discount_factor
+                    # Contribution to NPV
+                    total_npv += amounts[i] / discount_factor
 
-            return total_npv
+                return total_npv
 
-        initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
-        self.tir_anual = irr * 100
+            initial_guess = 0.1
+            irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
+            self.tir_anual = irr * 100
+        else:
+            self.tir_anual = 0
 
 
     def validacion_totales(self):

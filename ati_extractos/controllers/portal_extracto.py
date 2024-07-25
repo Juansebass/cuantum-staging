@@ -14,13 +14,13 @@ class ExtractoCustomperPortal(CustomerPortal):
         if 'count_extracto' in counters:
             partner = request.env.user.partner_id
             values['count_extracto'] = request.env['ati.extracto'].search_count([ ('message_partner_ids', 'child_of', [partner.commercial_partner_id.id]),
-            ('state', 'in', ['send'])])
+            ('state', 'in', ['send', 'validated'])])
         return values
 
     def _prepare_extracto_domain(self, partner):
         return [
             ('message_partner_ids', 'child_of', [partner.commercial_partner_id.id]),
-            ('state', 'in', ['send'])
+            ('state', 'in', ['send', 'validated'])
         ]
 
     @http.route(['/my/extracto', '/my/extracto/page/<int:page>'], type='http', auth="user", website=True)
