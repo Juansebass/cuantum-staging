@@ -903,7 +903,7 @@ class Extracto(models.Model):
         # except Exception as e:
         #     raise ValidationError('No sepuede generar extracto {}'.format(self.name))
 
-        self._generar_tir()
+        #self._generar_tir()
         
         #Cambiamos estado
         self.state = 'processed'
