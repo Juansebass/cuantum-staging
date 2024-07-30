@@ -56,6 +56,7 @@
                                     <field name="state_titulo"/>
                                     <field name="periodo" />
                                     <field name="manager" />
+                                    <field name="investment_type" />
                                 </tree>
                             </field>
                         </page>
