@@ -70,7 +70,7 @@ class TitulosHistorico(models.Model):
 
     name = fields.Char('Nombre')
     titulo_id = fields.Many2one('ati.titulo','Titulo', ondelete='cascade')
-    investment_type = fields.Many2one('Tipo de inversion', required=1, related='titulo_id.investment_type')
+    investment_type = fields.Many2one('ati.investment.type','Tipo de inversion', required=1, related='titulo_id.investment_type')
     client = fields.Many2one('res.partner','Cliente',required=1)
     manager = fields.Many2one('ati.gestor','Gestor',required=1)
     issuing = fields.Many2one('res.partner','Emisor',required=1)
