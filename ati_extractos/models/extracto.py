@@ -1233,7 +1233,7 @@ class Extracto(models.Model):
 
         #Generando Flujo de caja por gestor último y primer día
         for line in self.resumen_inversion_ids:
-            if line.producto.code in ['FAC', 'LIB', 'SEN']:
+            if line.producto.code in ['FAC', 'LIB', 'SEN', 'S1', 'S2']:
                 if line.producto.code == 'SEN' and line.gestor.code == 'FCP':
                     valor_anterior = line.valor_anterior if line.valor_anterior != 0 else line.valor_actual - line.rendimiento_causado
                 else:
