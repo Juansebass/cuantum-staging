@@ -10,4 +10,12 @@
     <record id="ext_inv_type_sentencias" model="ati.investment.type">
         <field name="name">Sentencias</field>
     </record>
+    <record id="ext_inv_type_statum_i" model="ati.investment.type">
+        <field name="name">Statum I</field>
+        <field name="code">S1</field>
+    </record>
+    <record id="ext_inv_type_statum_ii" model="ati.investment.type">
+        <field name="name">Statum II</field>
+        <field name="code">S2</field>
+    </record>
 </odoo>
