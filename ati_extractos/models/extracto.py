@@ -1253,45 +1253,45 @@ class Extracto(models.Model):
                     'tipo_id': line.producto.id,
                 })
 
-        self.calculate_tir_gestor()
+        # self.calculate_tir_gestor()
 
 
-        #Calculando TIR
-        cash_flows = [(x.move + x.valor, x.date) for x in self.tir_ids]
-        logger.error('cash_flows')
-        to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
-        logger.error(to_print)
+        # #Calculando TIR
+        # cash_flows = [(x.move + x.valor, x.date) for x in self.tir_ids]
+        # logger.error('cash_flows')
+        # to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
+        # logger.error(to_print)
 
-        dates = [cf[1] for cf in cash_flows]
-        amounts = [cf[0] for cf in cash_flows]
+        # dates = [cf[1] for cf in cash_flows]
+        # amounts = [cf[0] for cf in cash_flows]
 
-        def npv(rate):
-            # Start with the first date as the base
-            base_date = dates[0]
-            total_npv = 0
+        # def npv(rate):
+        #     # Start with the first date as the base
+        #     base_date = dates[0]
+        #     total_npv = 0
 
-            if rate <= -1:
-                return float('inf')  # Return a high value to indicate invalid IRR
+        #     if rate <= -1:
+        #         return float('inf')  # Return a high value to indicate invalid IRR
 
-            for i, date in enumerate(dates):
-                # Calculate the time difference in days
-                days_difference = (date - base_date).days
+        #     for i, date in enumerate(dates):
+        #         # Calculate the time difference in days
+        #         days_difference = (date - base_date).days
 
-                # Discount factor
-                discount_factor = (1 + rate) ** (days_difference / 365.0)
+        #         # Discount factor
+        #         discount_factor = (1 + rate) ** (days_difference / 365.0)
 
-                # Contribution to NPV
-                total_npv += amounts[i] / discount_factor
+        #         # Contribution to NPV
+        #         total_npv += amounts[i] / discount_factor
 
-            return total_npv
+        #     return total_npv
 
-        initial_guess = 0.1
-        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
-        self.tir_mensual = irr * 100
+        # initial_guess = 0.1
+        # irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
+        # self.tir_mensual = irr * 100
 
-        self.calculate_tir_trimestral()
-        self.calculate_tir_semestral()
-        self.calculate_tir_anual()
+        # self.calculate_tir_trimestral()
+        # self.calculate_tir_semestral()
+        # self.calculate_tir_anual()
 
     def calculate_tir_trimestral(self):
         # Calculando
