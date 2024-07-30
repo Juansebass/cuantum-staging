@@ -903,8 +903,9 @@ class Extracto(models.Model):
         # except Exception as e:
         #     raise ValidationError('No sepuede generar extracto {}'.format(self.name))
 
-        self._generar_tir()
-        
+        if self.year != '2023' and self.month != '01':
+            self._generar_tir()
+
         #Cambiamos estado
         self.state = 'processed'
 
