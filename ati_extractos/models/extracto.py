@@ -1035,6 +1035,7 @@ class Extracto(models.Model):
                 lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'SEN'
             )
         ]
+        
         self.fcp_sen_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
         cash_flows = [
@@ -1300,7 +1301,7 @@ class Extracto(models.Model):
         #Generando Flujo de caja por gestor último y primer día
         for line in self.resumen_inversion_ids:
             if line.producto.code in ['FAC', 'LIB', 'SEN', 'S1', 'S2']:
-                if line.producto.code == 'SEN' and line.gestor.code == 'FCP':
+                if line.producto.code in ['SEN', 'S1', 'S2'] and line.gestor.code == 'FCP':
                     valor_anterior = line.valor_anterior if line.valor_anterior != 0 else line.valor_actual - line.rendimiento_causado
                 else:
                     valor_anterior = line.valor_anterior
