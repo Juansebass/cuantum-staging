@@ -104,6 +104,16 @@ class Extracto(models.Model):
     fcp_sen_semestral = fields.Float('FCP SEN Semestral', digits=(3, 3))
     fcp_sen_anual = fields.Float('FCP SEN Anual', digits=(3, 3))
 
+    fcp_si_mensual = fields.Float('FCP SI Mensual', digits=(3, 3))
+    fcp_si_trimestral = fields.Float('FCP SI Trimestral', digits=(3, 3))
+    fcp_si_semestral = fields.Float('FCP SI Semestral', digits=(3, 3))
+    fcp_si_anual = fields.Float('FCP SI Anual', digits=(3, 3))
+
+    fcp_sii_mensual = fields.Float('FCP SII Mensual', digits=(3, 3))
+    fcp_sii_trimestral = fields.Float('FCP SII Trimestral', digits=(3, 3))
+    fcp_sii_semestral = fields.Float('FCP SII Semestral', digits=(3, 3))
+    fcp_sii_anual = fields.Float('FCP SII Anual', digits=(3, 3))
+
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
     def _compute_access_url(self):
@@ -1027,6 +1037,19 @@ class Extracto(models.Model):
         ]
         self.fcp_sen_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
+        cash_flows = [
+            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
+            )
+        ]
+        self.fcp_si_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        cash_flows = [
+            (line.move + line.valor, line.date) for line in self.tir_gestor_ids.filtered(
+                lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
+            )
+        ]
+        self.fcp_sii_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+
 
         #TRIMESTRAL
         date = datetime(int(self.year), int(self.month), 1)
@@ -1082,9 +1105,23 @@ class Extracto(models.Model):
                 )
             ]
             self.fcp_sen_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
+                )
+            ]
+            self.fcp_si_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
+                )
+            ]
+            self.fcp_sii_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_trimestral = 0
             self.fcp_sen_trimestral = 0
+            self.fcp_si_trimestral = 0
+            self.fcp_sii_trimestral = 0
 
         #SEMESTRAL
         past_extractos = self.env['ati.extracto']
@@ -1138,9 +1175,23 @@ class Extracto(models.Model):
                 )
             ]
             self.fcp_sen_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
+                )
+            ]
+            self.fcp_si_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
+                )
+            ]
+            self.fcp_sii_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_semestral = 0
             self.fcp_sen_semestral = 0
+            self.fcp_si_semestral = 0
+            self.fcp_sii_semestral = 0
 
         #ANUAL
         past_extractos = self.env['ati.extracto']
@@ -1193,9 +1244,23 @@ class Extracto(models.Model):
                 )
             ]
             self.fcp_sen_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
+                )
+            ]
+            self.fcp_si_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            cash_flows = [
+                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
+                )
+            ]
+            self.fcp_sii_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_anual = 0
             self.fcp_sen_anual = 0
+            self.fcp_si_anual = 0
+            self.fcp_sii_anual = 0
 
 
     def _generar_tir(self):
