@@ -189,7 +189,7 @@
                                 <td rowspan="3" class="text-center" style="border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Fondo de Capital Privado Statum</strong>
                                 </td>
-                                <td class="text-center" style="vertical-align: middle; border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td class="text-center" style="vertical-align: middle; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Statum I</strong>
                                 </td>
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_si_mensual"/>%</td>
@@ -198,7 +198,7 @@
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_si_anual"/>%</td>
                             </tr>
                             <tr style="vertical-align: middle;">
-                                <td class="text-center" style="vertical-align: middle; border-bottom: 2px solid black; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
+                                <td class="text-center" style="vertical-align: middle; width: 33%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>Statum II</strong>
                                 </td>
                                 <td class="text-center" style="vertical-align: middle; width: 33%;  background-color: white;"><span t-field="o.fcp_sii_mensual"/>%</td>
@@ -210,7 +210,7 @@
                                 <td class="text-center" style="vertical-align: middle; border-bottom: 2px solid black; width: 34%; text-align: center; background-color: white;; font-size: 14px;" >
                                     <strong>TIR Acumulada</strong>
                                 </td>
-                                <td colspan="3" class="text-center" style="vertical-align: middle; width: 33%; border-bottom: 2px solid black; background-color: white;"><span t-field="o.cliente.fcp_historic_tir"/>%</td>
+                                <td colspan="4" class="text-center" style="vertical-align: middle; width: 33%; border-bottom: 2px solid black; background-color: white;"><span t-field="o.cliente.fcp_historic_tir"/>%</td>
                             </tr>
                           </tbody>
                         </table>
