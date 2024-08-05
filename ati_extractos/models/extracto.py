@@ -1587,19 +1587,33 @@ class Extracto(models.Model):
                         self.message_product_validation += 'Validación de totales para gestor FCL producto Libranzas no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
             # Para FCP
             if line.gestor.code == 'FCP':
-                if line.name == 'Sentencias':
+                if line.name == 'Statum I':
                     compras = sum( [recurso.value for recurso in self.recursos_fcp.filtered(
-                        lambda x: x.investment_type.name == 'Sentencias' and x.movement_type.name == 'Compra'
+                        lambda x: x.investment_type.name == 'Statum I' and x.movement_type.name == 'Compra'
                     )])
                     recaudos = sum( [recurso.value for recurso in self.recursos_fcp.filtered(
-                        lambda x: x.investment_type.name == 'Sentencias' and x.movement_type.name == 'Aplicación de recaudo'
+                        lambda x: x.investment_type.name == 'Statum I' and x.movement_type.name == 'Aplicación de recaudo'
                     )])
                     valor_validado = (
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
                     validation = line.valor_actual != valor_validado
                     if validation:
-                        self.message_product_validation += 'Validación de totales para gestor FCP producto Sentencias no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+                        self.message_product_validation += 'Validación de totales para gestor FCP producto Statum I no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+                if line.name == 'Statum II':
+                    compras = sum( [recurso.value for recurso in self.recursos_fcp.filtered(
+                        lambda x: x.investment_type.name == 'Statum II' and x.movement_type.name == 'Compra'
+                    )])
+                    recaudos = sum( [recurso.value for recurso in self.recursos_fcp.filtered(
+                        lambda x: x.investment_type.name == 'Statum II' and x.movement_type.name == 'Aplicación de recaudo'
+                    )])
+                    valor_validado = (
+                            line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
+                    )
+                    validation = line.valor_actual != valor_validado
+                    if validation:
+                        self.message_product_validation += 'Validación de totales para gestor FCP producto Statum II no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+
 
         if len(self.message_product_validation) > 0:
             self.show_alert_product_validation = True
