@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='totales_fcp']" position="before">
                 <group name="tir" string="TIR" col="2" attrs="{'class': 'oe_highlight'}">
-                    <field name="fcp_historic_tir" string="TIR Histórica FCP"/>
+                    <field name="fcp_historic_tir_si" string="TIR Histórica Statum I"/>
+                    <field name="fcp_historic_tir_sii" string="TIR Histórica Statum II"/>
                 </group>
             </xpath> 
         </field>

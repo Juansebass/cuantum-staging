@@ -7,4 +7,5 @@ class ResPartnerTir(models.Model):
     """
     _inherit = "res.partner"
 
-    fcp_historic_tir = fields.Float(string='TIR Acumulada', help='TIR histórico de la FCP')
+    fcp_historic_tir_si = fields.Float(string='Statum I')
+    fcp_historic_tir_sii = fields.Float(string='Statum II')
