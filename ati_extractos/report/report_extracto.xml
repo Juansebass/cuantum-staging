@@ -329,7 +329,7 @@
                             </tbody>
                         </table>
                         <br/>
-                         <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
+                         <!-- <table class="table" style="border-radius: 4px; !important ; border-spacing: 0px; overflow: hidden !important; padding: 1px; margin-right: 5px; margin-bottom: 0px; border-collapse: separate; border: 2px solid black">
                             <thead>
                                 <tr class="text-center" style="background-color: #619f11; font-size: 12px; border-bottom: 2px solid black;">
                                     <th COLSPAN="4" style="color: white;width:100%;">Movimiento de Caja</th>
@@ -359,7 +359,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        
+                         -->
                        <p style="page-break-before:always;"> </p>
                         
                         <!-- Estado del Portafolio -->
