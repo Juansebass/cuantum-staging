@@ -38,7 +38,10 @@ class CreateExtractos(models.Model):
                     'year': self.year,
 
                 })
-                created_extracto.generar_extracto()
+                try:
+                    created_extracto.generar_extracto()
+                except Exception as e:
+                    raise ValidationError('Error al crear extracto: {0}. cliente {1}'.format(e, cliente.cliente.name))
 
         self.status = 'creados'
 

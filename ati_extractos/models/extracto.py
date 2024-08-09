@@ -913,7 +913,9 @@ class Extracto(models.Model):
         # except Exception as e:
         #     raise ValidationError('No sepuede generar extracto {}'.format(self.name))
 
+        logger.error('######################@@@@@@ entra antes de generar TIR')
         if self.year != '2023' and self.month != '01':
+            logger.error('######################@@@@@@ entra a generar TIR')
             self._generar_tir()
 
         #Cambiamos estado
@@ -1027,6 +1029,10 @@ class Extracto(models.Model):
                 lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
             )
         ]
+        logger.error('flows FCL MENSUAL')
+        to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
+        logger.error('Libranzas')
+        logger.error(to_print)
         self.fcl_lib_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
         #FCP
@@ -1049,7 +1055,12 @@ class Extracto(models.Model):
                 lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
             )
         ]
+        logger.error('flows FCP MENSUAL')
+        to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
+        logger.error('S2')
+        logger.error(to_print)
         self.fcp_sii_mensual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+        logger.error(self.fcp_sii_mensual)
 
 
         #TRIMESTRAL
@@ -1091,6 +1102,8 @@ class Extracto(models.Model):
         self.cuantum_mut_trimestral = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
+        tir_si_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_si_mensual') if x != 0]
+        tir_sii_mensual_past_extracto =[x for x in past_extractos.mapped('fcp_sii_mensual') if x!= 0]
         if len(past_extractos) == 3:
             cash_flows = [
                 (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
@@ -1106,18 +1119,20 @@ class Extracto(models.Model):
                 )
             ]
             self.fcp_sen_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
-                )
-            ]
-            self.fcp_si_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
-                )
-            ]
-            self.fcp_sii_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_si_mensual_past_extracto) == 3:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
+                    )
+                ]
+                self.fcp_si_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_sii_mensual_past_extracto) == 3:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
+                    )
+                ]
+                self.fcp_sii_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_trimestral = 0
             self.fcp_sen_trimestral = 0
@@ -1161,6 +1176,8 @@ class Extracto(models.Model):
         self.cuantum_mut_semestral = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
+        tir_si_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_si_mensual') if x != 0]
+        tir_sii_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_sii_mensual') if x != 0]
         if len (past_extractos) == 6:
             cash_flows = [
                 (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
@@ -1176,18 +1193,20 @@ class Extracto(models.Model):
                 )
             ]
             self.fcp_sen_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
-                )
-            ]
-            self.fcp_si_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
-                )
-            ]
-            self.fcp_sii_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_si_mensual_past_extracto) == 6:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
+                    )
+                ]
+                self.fcp_si_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_sii_mensual_past_extracto) == 6:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
+                    )
+                ]
+                self.fcp_sii_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_semestral = 0
             self.fcp_sen_semestral = 0
@@ -1230,6 +1249,8 @@ class Extracto(models.Model):
         self.cuantum_mut_anual = self.calulate_mutuos_cuantum(past_extractos)
 
         # FCL
+        tir_si_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_si_mensual') if x!= 0]
+        tir_sii_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_sii_mensual') if x!= 0]
         if len(past_extractos) == 12:
             cash_flows = [
                 (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
@@ -1245,18 +1266,20 @@ class Extracto(models.Model):
                 )
             ]
             self.fcp_sen_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
-                )
-            ]
-            self.fcp_si_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
-                )
-            ]
-            self.fcp_sii_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_si_mensual_past_extracto) == 12:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S1'
+                    )
+                ]
+                self.fcp_si_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_sii_mensual_past_extracto) == 12:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
+                    )
+                ]
+                self.fcp_sii_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_anual = 0
             self.fcp_sen_anual = 0
