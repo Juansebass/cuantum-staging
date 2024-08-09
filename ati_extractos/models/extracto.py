@@ -913,9 +913,7 @@ class Extracto(models.Model):
         # except Exception as e:
         #     raise ValidationError('No sepuede generar extracto {}'.format(self.name))
 
-        logger.error('######################@@@@@@ entra antes de generar TIR')
         if not (self.month == '01' and self.year== '2023'):
-            logger.error('######################@@@@@@ entra a generar TIR')
             self._generar_tir()
 
         #Cambiamos estado
