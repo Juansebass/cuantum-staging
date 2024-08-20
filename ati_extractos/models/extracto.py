@@ -260,6 +260,9 @@ class Extracto(models.Model):
         for n in range(len(_inversiones)):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2) if _inversiones[n][2]['cant_movimientos'] != 0 else 0})
         #Agregamos total de Recursos en proceso de recompra
+        _administracion_rpr_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(
+            lambda x: x.date.month == int(self.month) and x.date.year == int(
+                self.year) and x.movement_type.code == 'ADMINISTRACION'))
         _rendimient_rpr_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
         _inversiones.append((0,0,{
                         'detalle': 'RPR CSF',
@@ -267,6 +270,7 @@ class Extracto(models.Model):
                         'valor_anterior' : self._get_value_before('RPR CSF',False,self.month,self.year,True),
                         'rendimiento_causado' : _rendimient_rpr_csf,
                         'tasa_rendimiento': self.cliente.tasa_rendimiento_csf,
+                        'administracion': _administracion_rpr_csf,
                         'is_other' : True
                     }))
         #Calculamos diferencia 
