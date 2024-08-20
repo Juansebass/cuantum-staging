@@ -1313,7 +1313,7 @@ class Extracto(models.Model):
         past_extractos = self.env['ati.extracto'].search([('cliente', '=', self.cliente.id)])
         for resumen in self.resumen_inversion_ids:
             if resumen.gestor.code in ['FCP'] and resumen.valor_anterior == 0:
-                valor_anterior += resumen.valor_actual_total_resumen - resumen.valor_rendimiento_causado
+                valor_anterior += resumen.valor_actual - resumen.rendimiento_causado
         if len(past_extractos) == 1:
             valor_anterior = self.valor_anterior_total_resumen if self.valor_anterior_total_resumen != 0 else self.valor_actual_total_resumen - self.valor_rendimiento_causado
         self.env['ati.tir'].create({
