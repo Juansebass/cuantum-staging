@@ -1086,11 +1086,14 @@ class Extracto(models.Model):
             if len(past_extractos) == 3:
                 value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
                 if tipo == 'FAC':
-                    self.cuantum_fac_trimestral = value
+                    tir_cuantum_fac_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_fac_mensual') if x != 0]
+                    self.cuantum_fac_trimestral = value if len(tir_cuantum_fac_mensual_past_extracto) == 3 else 0
                 elif tipo == 'LIB':
-                    self.cuantum_lib_trimestral = value
+                    tir_cuantum_lib_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_lib_mensual') if x!= 0]
+                    self.cuantum_lib_trimestral = value if len(tir_cuantum_lib_mensual_past_extracto) == 3 else 0
                 elif tipo == 'SEN':
-                    self.cuantum_sen_trimestral = value
+                    tir_cuantum_sen_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_sen_mensual') if x!= 0]
+                    self.cuantum_sen_trimestral = value if len(tir_cuantum_sen_mensual_past_extracto) == 3 else 0
             else:
                 self.cuantum_fac_trimestral = 0
                 self.cuantum_lib_trimestral = 0
@@ -1102,13 +1105,15 @@ class Extracto(models.Model):
         # FCL
         tir_si_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_si_mensual') if x != 0]
         tir_sii_mensual_past_extracto =[x for x in past_extractos.mapped('fcp_sii_mensual') if x!= 0]
+        tir_fcl_lib_mensual_past_extracto = [x for x in past_extractos.mapped('fcl_lib_mensual') if x!= 0]
         if len(past_extractos) == 3:
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
-                )
-            ]
-            self.fcl_lib_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_fcl_lib_mensual_past_extracto) == 3:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
+                    )
+                ]
+                self.fcl_lib_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
             # FCP
             cash_flows = [
@@ -1160,11 +1165,14 @@ class Extracto(models.Model):
             if len(past_extractos) == 6:
                 value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
                 if tipo == 'FAC':
-                    self.cuantum_fac_semestral = value
+                    tir_cuantum_fac_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_fac_mensual') if x!= 0]
+                    self.cuantum_fac_semestral = value if len(tir_cuantum_fac_mensual_past_extracto) == 6 else 0
                 elif tipo == 'LIB':
-                    self.cuantum_lib_semestral = value
+                    tir_cuantum_lib_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_lib_mensual') if x!= 0]
+                    self.cuantum_lib_semestral = value if len(tir_cuantum_lib_mensual_past_extracto) == 6 else 0
                 elif tipo == 'SEN':
-                    self.cuantum_sen_semestral = value
+                    tir_cuantum_sen_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_sen_mensual') if x!= 0]
+                    self.cuantum_sen_semestral = value if len(tir_cuantum_sen_mensual_past_extracto) == 6 else 0
             else:
                 self.cuantum_fac_semestral = 0
                 self.cuantum_lib_semestral = 0
@@ -1176,13 +1184,15 @@ class Extracto(models.Model):
         # FCL
         tir_si_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_si_mensual') if x != 0]
         tir_sii_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_sii_mensual') if x != 0]
+        tir_fcl_lib_mensual_past_extracto = [x for x in past_extractos.mapped('fcl_lib_mensual') if x!= 0]
         if len (past_extractos) == 6:
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
-                )
-            ]
-            self.fcl_lib_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_fcl_lib_mensual_past_extracto) == 6:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
+                    )
+                ]
+                self.fcl_lib_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
             # FCP
             cash_flows = [
@@ -1233,11 +1243,14 @@ class Extracto(models.Model):
             if len(past_extractos) == 12:
                 value = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
                 if tipo == 'FAC':
-                    self.cuantum_fac_anual = value
+                    tir_cuantum_fac_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_fac_mensual') if x!= 0]
+                    self.cuantum_fac_anual = value if len(tir_cuantum_fac_mensual_past_extracto) == 12 else 0
                 elif tipo == 'LIB':
-                    self.cuantum_lib_anual = value
+                    tir_cuantum_lib_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_lib_mensual') if x!= 0]
+                    self.cuantum_lib_anual = value if len(tir_cuantum_lib_mensual_past_extracto) == 12 else 0
                 elif tipo == 'SEN':
-                    self.cuantum_sen_anual = value
+                    tir_cuantum_sen_mensual_past_extracto = [x for x in past_extractos.mapped('cuantum_sen_mensual') if x!= 0]
+                    self.cuantum_sen_anual = value if len(tir_cuantum_sen_mensual_past_extracto) == 12 else 0
             else:
                 self.cuantum_fac_anual = 0
                 self.cuantum_lib_anual = 0
@@ -1249,13 +1262,15 @@ class Extracto(models.Model):
         # FCL
         tir_si_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_si_mensual') if x!= 0]
         tir_sii_mensual_past_extracto = [x for x in past_extractos.mapped('fcp_sii_mensual') if x!= 0]
+        tir_fcl_lib_mensual_past_extracto = [x for x in past_extractos.mapped('fcl_lib_mensual') if x!= 0]
         if len(past_extractos) == 12:
-            cash_flows = [
-                (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
-                    lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
-                )
-            ]
-            self.fcl_lib_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
+            if len(tir_fcl_lib_mensual_past_extracto) == 12:
+                cash_flows = [
+                    (line.move + line.valor, line.date) for line in tir_gestor_ids.filtered(
+                        lambda x: x.gestor_id.code == 'FCL' and x.tipo_id.code == 'LIB'
+                    )
+                ]
+                self.fcl_lib_anual = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
 
             # FCP
             cash_flows = [
