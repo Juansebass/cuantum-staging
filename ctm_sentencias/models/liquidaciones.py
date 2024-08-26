@@ -58,7 +58,7 @@ class Liquidaciones(models.Model):
         self.state = 'liquidated'
         self.responsible = self.env.user.partner_id
     
-    def _geerar_tir_sentencia_bruta(self):
+    def _generar_tir_sentencia_bruta(self):
         for record in self:
             self.tir_sentencia_bruta = 0
             cash_flows = [(-record.valor_condena, record.fecha_ejecutoria), (record.resultado, record.fecha_liquidar)]
