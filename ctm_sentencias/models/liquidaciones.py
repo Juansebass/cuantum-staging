@@ -8,6 +8,7 @@ import xlsxwriter
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import calendar
+import scipy.optimize as opt
 
 class Liquidaciones(models.Model):
     _name = 'ctm.liquidaciones'
@@ -29,6 +30,7 @@ class Liquidaciones(models.Model):
     responsible = fields.Many2one('res.partner', 'Responsable')
     state = fields.Selection(selection=[('draft','Borrador'), ('liquidated','Liquidado')], string='Estado', default='draft')
     simulacion_ids = fields.One2many('liquidacion.simulacion', 'liquidacion_id')
+    tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
 
     def generar_liquidacion(self):
         # existe_liquidacion = self.env['ctm.liquidaciones'].search(
@@ -51,10 +53,41 @@ class Liquidaciones(models.Model):
 
         #Generando resumen
         self._generar_resumen_liquidacion()
-
+        self._generar_tir_sentencia_bruta()
 
         self.state = 'liquidated'
         self.responsible = self.env.user.partner_id
+    
+    def _geerar_tir_sentencia_bruta(self):
+        for record in self:
+            self.tir_sentencia_bruta = 0
+            cash_flows = [(-record.valor_condena, record.fecha_ejecutoria), (record.resultado, record.fecha_liquidar)]
+            dates = [cf[1] for cf in cash_flows]
+            amounts = [cf[0] for cf in cash_flows]
+
+            def npv(rate):
+                # Start with the first date as the base
+                base_date = dates[0]
+                total_npv = 0
+
+                if rate <= -1:
+                    return float('inf')  # Return a high value to indicate invalid IRR
+
+                for i, date in enumerate(dates):
+                    # Calculate the time difference in days
+                    days_difference = (date - base_date).days
+
+                    # Discount factor
+                    discount_factor = (1 + rate) ** (days_difference / 365.0)
+
+                    # Contribution to NPV
+                    total_npv += amounts[i] / discount_factor
+
+                return total_npv
+
+            initial_guess = 0.1
+            irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
+            self.tir_sentencia_bruta = irr * 100
 
 
     def _generar_resumen_liquidacion(self):
@@ -180,6 +213,7 @@ class Liquidaciones(models.Model):
                 'valor_condena': rec.valor_condena,
                 'total_intereses': rec.total_intereses,
                 'resultado': rec.resultado,
+                'tir_sentencia_bruta': rec.tir_sentencia_bruta,
             })
 
     def action_view_simulaciones(self):

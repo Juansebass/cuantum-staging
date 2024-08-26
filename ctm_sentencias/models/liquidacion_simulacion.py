@@ -15,3 +15,4 @@ class LiquidacionSimulacion(models.Model):
     valor_condena = fields.Float('Valor Condena')
     total_intereses = fields.Float('Total Intereses')
     resultado = fields.Float('Resultado')
+    tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')

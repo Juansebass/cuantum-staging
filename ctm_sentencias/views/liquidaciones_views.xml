@@ -13,6 +13,7 @@
                 <field name="valor_condena" />
                 <field name="total_intereses" />
                 <field name="resultado" />
+                <field name="tir_sentencia_bruta" />
             </tree>
         </field>
     </record>
@@ -61,6 +62,7 @@
                             <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
                             <field name="total_intereses" readonly="1"/>
                             <field name="resultado" readonly="1"/>
+                            <field name="tir_sentencia_bruta" readonly="1"/>
                             <field name="responsible" readonly="1"/>
                         </group>
                     </group>
