@@ -14,10 +14,10 @@
                         </div>
                         <group>
                             <field name="liquidacion_id"/>
-                            <field name="descuento_bruto"/>
-                            <field name="retencion_total"/>
+                            <field name="descuento_bruto" widget="percentage"/>
+                            <field name="retencion_total" widget="percentage"/>
                             <field name="estructuracion"/>
-                            <field name="intermediacion"/>
+                            <field name="intermediacion" widget="percentage"/>
                         </group>
                     </sheet>
                 </form>

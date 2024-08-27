@@ -13,7 +13,7 @@ class Descuentos(models.Model):
 
     name = fields.Char(string='Nombre', required=True)
     liquidacion_id = fields.Many2one(
-        'liquidaciones', 
+        'ctm.liquidaciones', 
         string='Liquidación',
     )
     descuento_bruto = fields.Float(
