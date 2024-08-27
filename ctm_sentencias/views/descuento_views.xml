@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="descuentos_form_view" model="ir.ui.view">
+            <field name="name">descuentos.form</field>
+            <field name="model">descuentos</field>
+            <field name="arch" type="xml">
+                <form string="Descuentos">
+                    <sheet>
+                        <div class="oe_title">
+                            <div class="o_row">
+                                <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                            </div>
+                        </div>
+                        <group>
+                            <field name="liquidacion_id"/>
+                            <field name="descuento_bruto"/>
+                            <field name="retencion_total"/>
+                            <field name="estructuracion"/>
+                            <field name="intermediacion"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="descuentos_tree_view" model="ir.ui.view">
+            <field name="name">descuentos.tree</field>
+            <field name="model">descuentos</field>
+            <field name="arch" type="xml">
+                <tree string="Descuentos">
+                    <field name="name"/>
+                    <field name="liquidacion_id"/>
+                    <field name="descuento_bruto"/>
+                    <field name="retencion_total"/>
+                    <field name="estructuracion"/>
+                    <field name="intermediacion"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
