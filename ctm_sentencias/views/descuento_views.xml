@@ -38,5 +38,11 @@
                 </tree>
             </field>
         </record>
+
+        <record id="action_descuentos" model="ir.actions.act_window">
+            <field name="name">Descuentos</field>
+            <field name="res_model">descuentos</field>
+            <field name="view_mode">tree,form</field>
+        </record>
     </data>
 </odoo>

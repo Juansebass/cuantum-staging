@@ -32,6 +32,7 @@
     <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
     <menuitem id="menu_carga_sentencias_main" sequence="1" name="Carga Sentencias" parent="menu_sentencias_main"/>
     <menuitem id="menu_liquidaciones_main" sequence="2" name="Liquidaciones" parent="menu_sentencias_main"/>
+    <menuitem id="menu_descuentos_main" sequence="3" name="Descuentos" parent="menu_sentencias_main" action="action_descuentos"/>
     <menuitem id="menu_configuraciones" sequence="10" name="Configuraciones" parent="menu_sentencias_main"/>
 
     <!-- Menus de tercer nivel-->

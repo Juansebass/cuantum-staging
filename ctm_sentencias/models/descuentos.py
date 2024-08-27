@@ -13,10 +13,10 @@ class Descuentos(models.Model):
     name = fields.Char(string='Nombre', required=True)
     liquidacion_id = fields.Many2one('liquidaciones', string='Liquidación', required=True)
     descuento_bruto = fields.Float(
-        string='Descuento Bruto', 
-        required=True, 
+        string='Descuento Bruto',
+        required=True,
         domain=[('descuento_bruto', '>=', 0)]
     )
     retencion_total = fields.Float(string='Retención Total', required=True)
-    estructuracion = fields.Field(string='Estructuración', required=True)
+    estructuracion = fields.Float(string='Estructuración', required=True)
     intermediacion = fields.Float(string='Intermediación', required=True)
