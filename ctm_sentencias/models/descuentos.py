@@ -24,6 +24,14 @@ class Descuentos(models.Model):
     estructuracion = fields.Float(string='Estructuración', required=True)
     intermediacion = fields.Float(string='Intermediación', required=True)
 
+
+    valor_condena = fields.Float('Valor Condena')
+    fecha_liquidar = fields.Date('Fecha a Liquidar')
+    total_intereses = fields.Float('Total Intereses')
+    resultado = fields.Float('Resultado')
+    tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
+    
+
     @api.onchange('descuento_bruto')
     def _onchange_descuento_bruto(self):
         for record in self:
@@ -47,3 +55,11 @@ class Descuentos(models.Model):
         for record in self:
             if record.intermediacion < 0:
                 raise ValueError(_('Intermediación no puede ser negativa.'))
+     
+    def crear_descuento(self):
+        for record in self:
+            record.valor_condena = record.liquidacion_id.valor_condena
+            record.fecha_liquidar = record.liquidacion_id.fecha_liquidar
+            record.total_intereses = record.liquidacion_id.total_intereses
+            record.resultado = record.liquidacion_id.resultado
+            record.tir_sentencia_bruta = record.liquidacion_id.tir_sentencia_bruta
