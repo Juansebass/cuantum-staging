@@ -26,6 +26,11 @@
         <field name="res_model">ctm.crear_sentencias</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_descuentos" model="ir.actions.act_window">
+        <field name="name">Descuentos</field>
+        <field name="res_model">descuentos</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias"  web_icon="ctm_sentencias,static/description/icon.png" />
