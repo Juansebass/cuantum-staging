@@ -10,8 +10,13 @@
                         <button name="crear_descuento" type="object" string="Crear"/>
                     </header>
                     <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
                         <group>
-                            <h3><field name="name"/></h3>
                             <field name="liquidacion_id"/>
                             <field name="descuento_bruto" widget="percentage"/>
                             <field name="retencion_total" widget="percentage"/>
