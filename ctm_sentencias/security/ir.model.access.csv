@@ -6,4 +6,4 @@ access_ctm_liquidaciones_user,ctm.liquidaciones.user,model_ctm_liquidaciones,bas
 access_ctm_liquidaciones_resumen_user,ctm.liquidaciones_resumen.user,model_ctm_liquidaciones_resumen,base.group_user,1,1,1,1
 access_ctm_crear_sentencias_user,ctm.crear_sentencias.user,model_ctm_crear_sentencias,base.group_user,1,1,1,1
 access_ctm_detalle_crear_sentencias_user,ctm.detalle_crear_sentencias.user,model_ctm_detalle_crear_sentencias,base.group_user,1,1,1,1
-access_liquidacion_simulacion_user,liquidacion.simulacion.user,model_liquidacion_simulacion,base.group_user,1,1,1,1
+access_descuentos_user,descuentos.user,model_descuentos,base.group_user,1,1,1,1
