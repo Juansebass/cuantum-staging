@@ -63,7 +63,7 @@ class Descuentos(models.Model):
         for record in self:
             if record.intermediacion < 0:
                 raise UserError(_('Intermediación no puede ser negativa.'))
-     
+
     def crear_descuento(self):
         for record in self:
             record.valor_condena = record.liquidacion_id.valor_condena
@@ -71,3 +71,11 @@ class Descuentos(models.Model):
             record.total_intereses = record.liquidacion_id.total_intereses
             record.resultado = record.liquidacion_id.resultado
             record.tir_sentencia_bruta = record.liquidacion_id.tir_sentencia_bruta
+
+            record.descuento_bruto_resultado = record.descuento_bruto * record.resultado
+            record.retencion_total_resultado = record.retencion_total * record.resultado
+            record.estructuracion_resultado = record.estructuracion
+            record.intermediacion_resultado = record.intermediacion * record.resultado
+            record.total_descuentos = record.descuento_bruto_resultado + record.retencion_total_resultado + record.estructuracion_resultado + record.intermediacion_resultado
+            record.porcentaje_total_descuentos = (record.total_descuentos / record.resultado) * 100
+            record.valor_compra = record.resultado- record.total_descuentos
