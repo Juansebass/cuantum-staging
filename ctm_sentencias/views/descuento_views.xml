@@ -24,11 +24,22 @@
                             <field name="intermediacion" widget="percentage"/>
                         </group>
                         <group string="Resultados">
-                            <field name="valor_condena" readonly="1"/>
-                            <field name="fecha_liquidar" readonly="1"/>
-                            <field name="total_intereses" readonly="1"/>
-                            <field name="resultado" readonly="1"/>
-                            <field name="tir_sentencia_bruta" readonly="1"/>
+                            <group>
+                                <field name="valor_condena" readonly="1"/>
+                                <field name="fecha_liquidar" readonly="1"/>
+                                <field name="total_intereses" readonly="1"/>
+                                <field name="resultado" readonly="1"/>
+                                <field name="tir_sentencia_bruta" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="descuento_bruto_resultado" readonly="1"/>
+                                <field name="retencion_total_resultado" readonly="1"/>
+                                <field name="estructuracion_resultado" readonly="1"/>
+                                <field name="intermediacion_resultado" readonly="1"/>
+                                <field name="total_descuentos" readonly="1"/>
+                                <field name="porcentaje_total_descuentos" readonly="1"/>
+                                <field name="valor_compra" readonly="1"/>
+                            </group>
                         </group>
                     </sheet>
                 </form>

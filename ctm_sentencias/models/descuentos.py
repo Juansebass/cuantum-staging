@@ -30,31 +30,39 @@ class Descuentos(models.Model):
     total_intereses = fields.Float('Total Intereses')
     resultado = fields.Float('Resultado')
     tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
-    
+
+    descuento_bruto_resultado = fields.Float('Descuento Bruto')
+    retencion_total_resultado = fields.Float('Retención Total')
+    estructuracion_resultado = fields.Float('Estructuración')
+    intermediacion_resultado = fields.Float('Intermediación')
+    total_descuentos = fields.Float('Total Descuentos')
+    porcentaje_total_descuentos = fields.Float('% Total Descuentos')
+    valor_compra = fields.Float('Valor de Compra')
+
 
     @api.onchange('descuento_bruto')
     def _onchange_descuento_bruto(self):
         for record in self:
             if record.descuento_bruto < 0:
-                raise ValueError(_('Descuento bruto no puede ser negativo.'))
+                raise UserError(_('Descuento bruto no puede ser negativo.'))
 
     @api.onchange('retencion_total')
     def _onchange_retencion_total(self):
         for record in self:
             if record.retencion_total < 0:
-                raise ValueError(_('Retención total no puede ser negativa.'))
+                raise UserError(_('Retención total no puede ser negativa.'))
 
     @api.onchange('estructuracion')
     def _onchange_estructuracion(self):
         for record in self:
             if record.estructuracion < 0:
-                raise ValueError(_('Estructuración no puede ser negativa.'))
+                raise UserError(_('Estructuración no puede ser negativa.'))
 
     @api.onchange('intermediacion')
     def _onchange_intermediacion(self):
         for record in self:
             if record.intermediacion < 0:
-                raise ValueError(_('Intermediación no puede ser negativa.'))
+                raise UserError(_('Intermediación no puede ser negativa.'))
      
     def crear_descuento(self):
         for record in self:
