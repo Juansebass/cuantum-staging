@@ -19,6 +19,8 @@
 							<field name="month" />
 							<field name="year" />
 							<field name="manager" />
+							<field name="investment_type" />
+
 						</group>
 						<group>
 							<field name="delimiter" />

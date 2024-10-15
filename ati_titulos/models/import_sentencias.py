@@ -106,7 +106,7 @@ class ImportSentencias(models.Model):
                     if tasa_desc != '':
                         vals['fee'] = float(tasa_desc.replace(',','.').replace('%',''))
 
-                    inves_type = self.env['ati.investment.type'].search([('code', '=', 'SEN')])
+                    inves_type = self.env['ati.investment.type'].search([('code', '=', self.investment_type.code)], limit=1)
                     vals['investment_type'] = inves_type.id
                     vals['client'] = client.id
                     vals['manager'] = self.manager.id
@@ -278,6 +278,7 @@ class ImportSentencias(models.Model):
     year = fields.Char('Año de Periodo')
     client_file = fields.Binary('Archivo')
     manager = fields.Many2one('ati.gestor', 'Gestor', required=True)
+    investment_type = fields.Many2one('ati.investment.type', 'Tipo de Inversión', required=True)
     delimiter = fields.Char('Delimitador',default=";")
     fch_procesado = fields.Datetime('Fecha procesado')
     responsable = fields.Many2one('res.partner','Responsable de proceso')
