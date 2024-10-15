@@ -52,6 +52,10 @@
                         <field name="rendimiento_rpr_fcl" />
                         <field name="administracion_sentencias_fcp" />
                         <field name="rendimiento_sentencias_fcp" />
+                        <field name="administracion_si_fcp" />
+                        <field name="rendimiento_si_fcp" />
+                        <field name="administracion_sii_fcp" />
+                        <field name="rendimiento_sii_fcp" />
                         <field name="administracion_rpr_fcp" />
                         <field name="rendimiento_rpr_fcp" />
                         <field name="administracion_total" />

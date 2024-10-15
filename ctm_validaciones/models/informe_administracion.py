@@ -85,6 +85,20 @@ class InformeAdministracion(models.Model):
                 rendimiento_sentencias_fcp  = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
                         x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
+                
+                administracon_si_fcp = sum(objeto['value'] for objeto in objetos.filtered(
+                    lambda
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SI' and x.movement_type == 'ADMINISTRACION'))
+                rendimiento_si_fcp = sum(objeto['value'] for objeto in objetos.filtered(
+                    lambda
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SI' and x.movement_type == 'RENDIMIENTO'))
+                
+                admnistracion_sii_fcp = sum(objeto['value'] for objeto in objetos.filtered(
+                    lambda
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SII' and x.movement_type == 'ADMINISTRACION'))
+                rendimiento_sii_fcp = sum(objeto['value'] for objeto in objetos.filtered(
+                    lambda
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SII' and x.movement_type == 'RENDIMIENTO'))
 
                 administracion_rpr_csf = sum(recurso.value for recurso in cliente.recursos_recompra_csf_ids.filtered(
                     lambda x: x.date.month == int(self.month) and
@@ -128,6 +142,8 @@ class InformeAdministracion(models.Model):
                     administracion_libranzas_fcl,
                     administracion_rpr_fcl,
                     administracion_sentencias_fcp,
+                    administracon_si_fcp,
+                    admnistracion_sii_fcp,
                     administracion_rpr_fcp,
                 ])
 
@@ -140,6 +156,8 @@ class InformeAdministracion(models.Model):
                     rendimiento_libranzas_fcl,
                     rendimiento_rpr_fcl,
                     rendimiento_sentencias_fcp,
+                    rendimiento_si_fcp,
+                    rendimiento_sii_fcp,
                     rendimiento_rpr_fcp,
                 ])
 
@@ -164,6 +182,10 @@ class InformeAdministracion(models.Model):
                     'rendimiento_rpr_fcl': rendimiento_rpr_fcl,
                     'administracion_sentencias_fcp': administracion_sentencias_fcp,
                     'rendimiento_sentencias_fcp': rendimiento_sentencias_fcp,
+                    'administracon_si_fcp': administracon_si_fcp,
+                    'rendimiento_si_fcp': rendimiento_si_fcp,
+                    'admnistracion_sii_fcp': admnistracion_sii_fcp,
+                    'rendimiento_sii_fcp': rendimiento_sii_fcp,
                     'administracion_rpr_fcp': administracion_rpr_fcp,
                     'rendimiento_rpr_fcp': rendimiento_rpr_fcp,
                     'administracion_total': administracion_total,
@@ -205,8 +227,10 @@ class InformeAdministracion(models.Model):
         worksheet.write(row, 11, 'LIBRANZAS - FCL')
         worksheet.write(row, 13, 'RPR FCL')
         worksheet.write(row, 15, 'SENTENCIAS - STATUM')
-        worksheet.write(row, 17, 'RPR STATUM')
-        worksheet.write(row, 19, 'TOTAL')
+        worksheet.write(row, 17, 'SI - STATUM')
+        worksheet.write(row, 19, 'SII - STATUM')
+        worksheet.write(row, 21, 'RPR STATUM')
+        worksheet.write(row, 23, 'TOTAL')
 
         row += 1
 
@@ -230,9 +254,13 @@ class InformeAdministracion(models.Model):
         worksheet.write(row, 18, 'RENDIMIENTO')
         worksheet.write(row, 19, 'ADMINISTRACIÓN')
         worksheet.write(row, 20, 'RENDIMIENTO')
+        worksheet.write(row, 21, 'ADMINISTRACIÓN')
+        worksheet.write(row, 22, 'RENDIMIENTO')
+        worksheet.write(row, 23, 'ADMINISTRACIÓN')
+        worksheet.write(row, 24, 'RENDIMIENTO')
 
         worksheet.set_column(0, 0, 50)
-        worksheet.set_column(1, 20, 20)
+        worksheet.set_column(1, 24, 20)
 
         row += 1
 
@@ -254,10 +282,14 @@ class InformeAdministracion(models.Model):
             worksheet.write(row, 14, detalle.rendimiento_rpr_fcl, money)
             worksheet.write(row, 15, detalle.administracion_sentencias_fcp, money)
             worksheet.write(row, 16, detalle.rendimiento_sentencias_fcp, money)
-            worksheet.write(row, 17, detalle.administracion_rpr_fcp, money)
-            worksheet.write(row, 18, detalle.rendimiento_rpr_fcp, money)
-            worksheet.write(row, 19, detalle.administracion_total, money)
-            worksheet.write(row, 20, detalle.rendimiento_total, money)
+            worksheet.write(row, 17, detalle.administracion_si_fcp, money)
+            worksheet.write(row, 18, detalle.rendimiento_si_fcp, money)
+            worksheet.write(row, 19, detalle.admnistracion_sii_fcp, money)
+            worksheet.write(row, 20, detalle.rendimiento_sii_fcp, money)
+            worksheet.write(row, 21, detalle.administracion_rpr_fcp, money)
+            worksheet.write(row, 22, detalle.rendimiento_rpr_fcp, money)
+            worksheet.write(row, 23, detalle.administracion_total, money)
+            worksheet.write(row, 24, detalle.rendimiento_total, money)
 
             row += 1
 
@@ -302,6 +334,10 @@ class DetalleMovimiento(models.Model):
     #FCP
     administracion_sentencias_fcp = fields.Float('ADM SENTENCIAS - STATUM')
     rendimiento_sentencias_fcp = fields.Float('REND SENTENCIAS - STATUM')
+    administracon_si_fcp = fields.Float('ADM SI - STATUM')
+    rendimiento_si_fcp = fields.Float('REND SI - STATUM')
+    admnistracion_sii_fcp = fields.Float('ADM SII - STATUM')
+    rendimiento_sii_fcp = fields.Float('REND SII - STATUM')
     administracion_rpr_fcp = fields.Float('ADM RPR STATUM')
     rendimiento_rpr_fcp = fields.Float('REND RPR STATUM')
 
