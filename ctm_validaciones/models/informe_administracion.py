@@ -88,17 +88,17 @@ class InformeAdministracion(models.Model):
                 
                 administracion_si_fcp = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SI' and x.movement_type == 'ADMINISTRACION'))
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'S1' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_si_fcp = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SI' and x.movement_type == 'RENDIMIENTO'))
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'S1' and x.movement_type == 'RENDIMIENTO'))
                 
                 administracion_sii_fcp = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SII' and x.movement_type == 'ADMINISTRACION'))
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'S2' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_sii_fcp = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
-                        x: x.manager.code == 'FCP' and x.investment_type.code == 'SII' and x.movement_type == 'RENDIMIENTO'))
+                        x: x.manager.code == 'FCP' and x.investment_type.code == 'S2' and x.movement_type == 'RENDIMIENTO'))
 
                 administracion_rpr_csf = sum(recurso.value for recurso in cliente.recursos_recompra_csf_ids.filtered(
                     lambda x: x.date.month == int(self.month) and
