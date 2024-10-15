@@ -64,6 +64,14 @@
                                     <field name="fcp_sen_trimestral"/>
                                     <field name="fcp_sen_semestral"/>
                                     <field name="fcp_sen_anual"/>
+                                    <field name="fcp_si_mensual"/>
+                                    <field name="fcp_si_trimestral"/>
+                                    <field name="fcp_si_semestral"/>
+                                    <field name="fcp_si_anual"/>
+                                    <field name="fcp_sii_mensual"/>
+                                    <field name="fcp_sii_trimestral"/>
+                                    <field name="fcp_sii_semestral"/>
+                                    <field name="fcp_sii_anual"/>
                                 </tree>
                             </field>
                         </page>

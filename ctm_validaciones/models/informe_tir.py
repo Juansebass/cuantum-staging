@@ -86,6 +86,14 @@ class InformeTIR(models.Model):
                 'fcp_sen_trimestral': extracto.fcp_sen_trimestral,
                 'fcp_sen_semestral': extracto.fcp_sen_semestral,
                 'fcp_sen_anual': extracto.fcp_sen_anual,
+                'fcp_si_mensual': extracto.fcp_si_mensual,
+                'fcp_si_trimestral': extracto.fcp_si_trimestral,
+                'fcp_si_semestral': extracto.fcp_si_semestral,
+                'fcp_si_anual': extracto.fcp_si_anual,
+                'fcp_sii_mensual': extracto.fcp_sii_mensual,
+                'fcp_sii_trimestral': extracto.fcp_sii_trimestral,
+                'fcp_sii_semestral': extracto.fcp_sii_semestral,
+                'fcp_sii_anual': extracto.fcp_sii_anual
             })
         self.responsible = self.env.user.partner_id
         self.state = 'processed'
@@ -139,8 +147,14 @@ class InformeTIR(models.Model):
         sheet.write(0, 26, 'FCP-SEN-Trimestral')
         sheet.write(0, 27, 'FCP-SEN-Semestral')
         sheet.write(0, 28, 'FCP-SEN-Anual')
-
-
+        sheet.write(0, 29, 'FCP-SI-Mensual')
+        sheet.write(0, 30, 'FCP-SI-Trimestral')
+        sheet.write(0, 31, 'FCP-SI-Semestral')
+        sheet.write(0, 32, 'FCP-SI-Anual')
+        sheet.write(0, 33, 'FCP-SII-Mensual')
+        sheet.write(0, 34, 'FCP-SII-Trimestral')
+        sheet.write(0, 35, 'FCP-SII-Semestral')
+        sheet.write(0, 36, 'FCP-SII-Anual')
 
 
         sheet.set_column(0, 0, 50)
@@ -178,6 +192,15 @@ class InformeTIR(models.Model):
             sheet.write(row, 26, detalle.fcp_sen_trimestral / 100, money)
             sheet.write(row, 27, detalle.fcp_sen_semestral / 100, money)
             sheet.write(row, 28, detalle.fcp_sen_anual / 100, money)
+            sheet.write(row, 29, detalle.fcp_si_mensual / 100, money)
+            sheet.write(row, 30, detalle.fcp_si_trimestral / 100, money)
+            sheet.write(row, 31, detalle.fcp_si_semestral / 100, money)
+            sheet.write(row, 32, detalle.fcp_si_anual / 100, money)
+            sheet.write(row, 33, detalle.fcp_sii_mensual / 100, money)
+            sheet.write(row, 34, detalle.fcp_sii_trimestral / 100, money)
+            sheet.write(row, 35, detalle.fcp_sii_semestral / 100, money)
+            sheet.write(row, 36, detalle.fcp_sii_anual / 100, money)
+            
             row += 1
 
         workbook.close()
@@ -247,3 +270,11 @@ class DetalleTIR(models.Model):
     fcp_sen_trimestral = fields.Float('FCP-SEN-Trimestral')
     fcp_sen_semestral = fields.Float('FCP-SEN-Semestral')
     fcp_sen_anual = fields.Float('FCP-SEN-Anual')
+    fcp_si_mensual = fields.Float('FCP-SI-Mensual')
+    fcp_si_trimestral = fields.Float('FCP-SI-Trimestral')
+    fcp_si_semestral = fields.Float('FCP-SI-Semestral')
+    fcp_si_anual = fields.Float('FCP-SI-Anual')
+    fcp_sii_mensual = fields.Float('FCP-SII-Mensual')
+    fcp_sii_trimestral = fields.Float('FCP-SII-Trimestral')
+    fcp_sii_semestral = fields.Float('FCP-SII-Semestral')
+    fcp_sii_anual = fields.Float('FCP-SII-Anual')
