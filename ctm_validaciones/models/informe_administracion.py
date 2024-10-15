@@ -86,14 +86,14 @@ class InformeAdministracion(models.Model):
                     lambda
                         x: x.manager.code == 'FCP' and x.investment_type.code == 'SEN' and x.movement_type == 'RENDIMIENTO'))
                 
-                administracon_si_fcp = sum(objeto['value'] for objeto in objetos.filtered(
+                administracion_si_fcp = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
                         x: x.manager.code == 'FCP' and x.investment_type.code == 'SI' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_si_fcp = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
                         x: x.manager.code == 'FCP' and x.investment_type.code == 'SI' and x.movement_type == 'RENDIMIENTO'))
                 
-                admnistracion_sii_fcp = sum(objeto['value'] for objeto in objetos.filtered(
+                administracion_sii_fcp = sum(objeto['value'] for objeto in objetos.filtered(
                     lambda
                         x: x.manager.code == 'FCP' and x.investment_type.code == 'SII' and x.movement_type == 'ADMINISTRACION'))
                 rendimiento_sii_fcp = sum(objeto['value'] for objeto in objetos.filtered(
@@ -142,8 +142,8 @@ class InformeAdministracion(models.Model):
                     administracion_libranzas_fcl,
                     administracion_rpr_fcl,
                     administracion_sentencias_fcp,
-                    administracon_si_fcp,
-                    admnistracion_sii_fcp,
+                    administracion_si_fcp,
+                    administracion_sii_fcp,
                     administracion_rpr_fcp,
                 ])
 
@@ -182,9 +182,9 @@ class InformeAdministracion(models.Model):
                     'rendimiento_rpr_fcl': rendimiento_rpr_fcl,
                     'administracion_sentencias_fcp': administracion_sentencias_fcp,
                     'rendimiento_sentencias_fcp': rendimiento_sentencias_fcp,
-                    'administracon_si_fcp': administracon_si_fcp,
+                    'administracion_si_fcp': administracion_si_fcp,
                     'rendimiento_si_fcp': rendimiento_si_fcp,
-                    'admnistracion_sii_fcp': admnistracion_sii_fcp,
+                    'administracion_sii_fcp': administracion_sii_fcp,
                     'rendimiento_sii_fcp': rendimiento_sii_fcp,
                     'administracion_rpr_fcp': administracion_rpr_fcp,
                     'rendimiento_rpr_fcp': rendimiento_rpr_fcp,
