@@ -284,7 +284,7 @@ class InformeAdministracion(models.Model):
             worksheet.write(row, 16, detalle.rendimiento_sentencias_fcp, money)
             worksheet.write(row, 17, detalle.administracion_si_fcp, money)
             worksheet.write(row, 18, detalle.rendimiento_si_fcp, money)
-            worksheet.write(row, 19, detalle.admnistracion_sii_fcp, money)
+            worksheet.write(row, 19, detalle.administracion_sii_fcp, money)
             worksheet.write(row, 20, detalle.rendimiento_sii_fcp, money)
             worksheet.write(row, 21, detalle.administracion_rpr_fcp, money)
             worksheet.write(row, 22, detalle.rendimiento_rpr_fcp, money)
