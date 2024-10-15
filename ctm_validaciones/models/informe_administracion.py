@@ -336,7 +336,7 @@ class DetalleMovimiento(models.Model):
     rendimiento_sentencias_fcp = fields.Float('REND SENTENCIAS - STATUM')
     administracion_si_fcp = fields.Float('ADM SI - STATUM')
     rendimiento_si_fcp = fields.Float('REND SI - STATUM')
-    admnistracion_sii_fcp = fields.Float('ADM SII - STATUM')
+    administracion_sii_fcp = fields.Float('ADM SII - STATUM')
     rendimiento_sii_fcp = fields.Float('REND SII - STATUM')
     administracion_rpr_fcp = fields.Float('ADM RPR STATUM')
     rendimiento_rpr_fcp = fields.Float('REND RPR STATUM')
