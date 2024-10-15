@@ -45,6 +45,8 @@
                         <field name="libranzas_fcl" />
                         <field name="rpr_fcl" />
                         <field name="sentencias_fcp" />
+                        <field name="si_fcp" />
+                        <field name="sii_fcp" />
                         <field name="rpr_fcp" />
                         <field name="total" />
                     </tree>

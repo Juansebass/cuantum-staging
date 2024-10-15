@@ -182,7 +182,7 @@ class Extracto(models.Model):
                     valor_actual -= recurso.value
         elif gestor == 'FCP':
             _temp_recursos = self.cliente.recursos_recompra_fcp_ids.filtered(
-                lambda x: x.date <= fecha_actual
+                lambda x: x.date <= fecha_actual and x.investment_type.code == 'SEN'
             )
             for recurso in _temp_recursos:
                 if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
@@ -408,6 +408,7 @@ class Extracto(models.Model):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2) if _inversiones[n][2]['cant_movimientos'] != 0 else 0})
         #Agregamos total de Recursos en proceso de recompra
         _rendimient_rpr_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
+        _rendimient_rpr_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO' and x.investment_type.code == 'SEN'))
         _inversiones.append((0,0,{
                         'detalle': 'RPR STATUM',
                         'valor_actual' : self._valor_actual_rpr('FCP'),
@@ -520,7 +521,7 @@ class Extracto(models.Model):
 
         _temp_recursos_fcp = self.cliente.recursos_recompra_fcp_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
-                self.year)).sorted(key=lambda x: int(x.date.day))
+                self.year) and x.investment_type.code == "SEN").sorted(key=lambda x: int(x.date.day))
         self.recursos_fcp = [(2, x.id) for x in self.recursos_fcp]
         self.recursos_fcp = [
             (0, 0,
@@ -919,7 +920,6 @@ class Extracto(models.Model):
 
         if not (self.month == '01' and self.year== '2023'):
             self._generar_tir()
-
         #Cambiamos estado
         self.state = 'processed'
 
@@ -1318,8 +1318,8 @@ class Extracto(models.Model):
         for resumen in self.resumen_inversion_ids:
             if resumen.gestor.code in ['FCP'] and resumen.valor_anterior == 0:
                 valor_anterior += resumen.valor_actual - resumen.rendimiento_causado
-        if len(past_extractos) == 1:
-            valor_anterior = self.valor_anterior_total_resumen if self.valor_anterior_total_resumen != 0 else self.valor_actual_total_resumen - self.valor_rendimiento_causado
+        # if len(past_extractos) == 1:
+        #     valor_anterior = self.valor_anterior_total_resumen if self.valor_anterior_total_resumen != 0 else self.valor_actual_total_resumen - self.valor_rendimiento_causado
         self.env['ati.tir'].create({
             'extracto_id': self.id,
             'date': datetime(int(self.year),int(self.month), 1) - timedelta(days=1),
@@ -1331,8 +1331,18 @@ class Extracto(models.Model):
             self._add_record_tir(rec, 'CUANTUM')
         for rec in self.recursos_fcl:
             self._add_record_tir(rec, 'FCL')
-        for rec in self.recursos_fcp:
+        # for rec in self.recursos_fcp:
+        #     self._add_record_tir(rec, 'FCP')
+        
+        recursos_si_sii = self.cliente.recursos_recompra_fcp_ids.filtered(
+            lambda x: x.date.month == int(self.month) and x.date.year == int(
+                self.year)).sorted(key=lambda x: int(x.date.day))
+
+        for rec in recursos_si_sii:
             self._add_record_tir(rec, 'FCP')
+
+       
+        
 
         #último día
         self.env['ati.tir'].create({

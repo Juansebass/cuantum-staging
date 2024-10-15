@@ -20,16 +20,15 @@ class Sentencias(models.Model):
         string='Statum',
         selection=[
             ('CSF', 'CSF'),
-            ('1', '1'),
-            ('2', '2'),
-            ('3', '3'),
-            ('4', '4'),
-            ('5', '5'),
-            ('6', '6'),
-            ('7', '7'),
-            ('8', '8'),
-            ('9', '9'),
-
+            ('Statum Compartimento 1', 'Statum Compartimento 1'),
+            ('Statum Compartimento 2', 'Statum Compartimento 2'),
+            ('Statum Compartimento 3', 'Statum Compartimento 3'),
+            ('Statum Compartimento 4', 'Statum Compartimento 4'),
+            ('Statum Compartimento 5', 'Statum Compartimento 5'),
+            ('Statum Compartimento 6', 'Statum Compartimento 6'),
+            ('Statum Compartimento 7', 'Statum Compartimento 7'),
+            ('Statum Compartimento 8', 'Statum Compartimento 8'),
+            ('Statum Compartimento 9', 'Statum Compartimento 9'),
         ],
         default='CSF',
         required=True
@@ -38,3 +37,13 @@ class Sentencias(models.Model):
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
     fecha_liquidar = fields.Date('Fecha a Liquidar', required=1)
     valor_condena = fields.Float('Valor Condena', required=1)
+    nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)', required=1)
+    vendedor  = fields.Char('Vendedor')
+    nemotecnico = fields.Char('Nemotecnico')
+    fecha_vencimiento = fields.Date('Fecha de Vencimiento')
+    fecha_compra = fields.Date('Fecha de Compra')
+    valor_giro = fields.Float('Valor Giro')
+    comision = fields.Float('Comisión')
+    valor_contable_ayer = fields.Float('Valor Contable Ayer')
+    precio = fields.Float('Precio', required=1)
+    costas = fields.Float('Costas')

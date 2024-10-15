@@ -18,15 +18,33 @@
                         />
                         <field name="codigo"/>
                         <field name="statum"/>
+                        <field name="nit_fcp_statum"/>
+                        <field name="vendedor"  attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
+                        <field name="nemotecnico" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                     </group>
                     <group name="derecha">
                         <field name="fecha_ejecutoria"/>
                         <field name="fecha_cuenta_cobro"/>
                         <field name="fecha_liquidar"/>
+                        <field name="fecha_vencimiento" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
+                        <field name="fecha_compra" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
+                        <field name="valor_giro" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
+                        <field name="comision" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                         <field name="valor_condena"/>
+                        <field name="costas"/>
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+    <record id="model_ctm_sentencias_view_tree" model="ir.ui.view">
+        <field name="name">ctm.sentencias.view.tree</field>
+        <field name="model">ctm.sentencias</field>
+        <field name="arch" type="xml">
+            <tree string="Sentencias">
+                <field name="name"/>
+                <field name="statum"/>
+            </tree>
         </field>
     </record>
 </odoo>

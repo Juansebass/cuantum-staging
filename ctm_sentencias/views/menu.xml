@@ -26,18 +26,12 @@
         <field name="res_model">ctm.crear_sentencias</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <record id="action_descuentos" model="ir.actions.act_window">
-        <field name="name">Descuentos</field>
-        <field name="res_model">descuentos</field>
-        <field name="view_mode">tree,form</field>
-    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias"  web_icon="ctm_sentencias,static/description/icon.png" />
     <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
     <menuitem id="menu_carga_sentencias_main" sequence="1" name="Carga Sentencias" parent="menu_sentencias_main"/>
     <menuitem id="menu_liquidaciones_main" sequence="2" name="Liquidaciones" parent="menu_sentencias_main"/>
-    <menuitem id="menu_descuentos_main" sequence="3" name="Descuentos" parent="menu_sentencias_main" action="action_descuentos"/>
     <menuitem id="menu_configuraciones" sequence="10" name="Configuraciones" parent="menu_sentencias_main"/>
 
     <!-- Menus de tercer nivel-->

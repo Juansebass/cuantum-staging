@@ -19,7 +19,6 @@
         'views/create_sentencias_views.xml',
         'views/sentencias_views.xml',
         'views/liquidacion_simulacion_views.xml',
-        'views/descuento_views.xml',
         ],
     'installable': True,
     'application': True,

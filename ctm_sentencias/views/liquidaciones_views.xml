@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <tree string="">
                 <field name="name" />
+                <field name="statum"/>
                 <field name="emisor" />
                 <field name="pagador" />
                 <field name="valor_condena" />
@@ -61,6 +62,8 @@
                             <field name="fecha_liquidar"/>
                             <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
                             <field name="total_intereses" readonly="1"/>
+                            <field name="valor_contable_ayer" readonly="1"/>
+                            <field name="precio" readonly="1"/>
                             <field name="resultado" readonly="1"/>
                             <field name="tir_sentencia_bruta" readonly="1"/>
                             <field name="responsible" readonly="1"/>
@@ -82,4 +85,28 @@
         </field>
     </record>
 
+    <record id="create_txt_action" model="ir.actions.server">
+        <field name="name">Crear TXT</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ctm_liquidaciones"/>
+        <field name="binding_model_id" ref="model_ctm_liquidaciones" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.create_txt()
+        </field>
+    </record>
+    <record id="create_excel_action" model="ir.actions.server">
+        <field name="name">Crear Excel</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ctm_liquidaciones"/>
+        <field name="binding_model_id" ref="model_ctm_liquidaciones" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.create_excel()
+        </field>
+    </record>
 </odoo>

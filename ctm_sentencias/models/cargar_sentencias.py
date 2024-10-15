@@ -63,6 +63,15 @@ class CargarSentencias(models.Model):
                     fecha_cuenta_cobro= lista[6]
                     fecha_liquidar = lista[7]
                     valor_condena = lista[8]
+                    nit_fcp_statum = lista[9]
+                    vendedor = lista[10]
+                    nemotecnico = lista[11]
+                    fecha_vencimiento = lista[12]
+                    fecha_compra = lista[13]
+                    valor_giro = lista[14]
+                    comision = lista[15]
+                    costas = lista[16]
+
 
                     vals.clear()
 
@@ -95,6 +104,8 @@ class CargarSentencias(models.Model):
                         titulo_existente.sudo().write(vals)
                     else:
                         formated_valor_condena = valor_condena.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
+                        formated_valor_giro = valor_giro.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
+                        formated_comision = comision.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
                         vals = {
                             "name": titulo,
                             "emisor": emisor.id,
@@ -104,7 +115,16 @@ class CargarSentencias(models.Model):
                             "fecha_ejecutoria": datetime.strptime(fecha_ejecutoria, '%d/%m/%Y'),
                             "fecha_cuenta_cobro": datetime.strptime(fecha_cuenta_cobro, '%d/%m/%Y'),
                             "fecha_liquidar": datetime.strptime(fecha_liquidar, '%d/%m/%Y'),
-                            "valor_condena": formated_valor_condena
+                            "valor_condena": formated_valor_condena,
+                            "nit_fcp_statum": nit_fcp_statum,
+                            "vendedor": vendedor,
+                            "nemotecnico": nemotecnico,
+                            "fecha_vencimiento": datetime.strptime(fecha_vencimiento, '%d/%m/%Y') if fecha_vencimiento else None,
+                            "fecha_compra": datetime.strptime(fecha_compra, '%d/%m/%Y') if fecha_compra else None,
+                            "valor_giro": formated_valor_giro,
+                            "comision": formated_comision,
+                            "costas": costas,
+
                         }
                         new_record = self.env['ctm.sentencias'].sudo().create(vals)
                         _procesados += "{0};{1};{2};{3}\n".format(titulo, emisor.name, pagador.name, new_record.id)

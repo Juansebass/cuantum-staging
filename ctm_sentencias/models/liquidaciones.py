@@ -32,6 +32,17 @@ class Liquidaciones(models.Model):
     simulacion_ids = fields.One2many('liquidacion.simulacion', 'liquidacion_id')
     tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
 
+    nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)', related='sentencia.nit_fcp_statum')
+    statum = fields.Selection(string='Statum', related='sentencia.statum')
+    vendedor  = fields.Char('Vendedor', related='sentencia.vendedor')
+    nemotecnico = fields.Char('Nemotecnico', related='sentencia.nemotecnico')
+    fecha_vencimiento = fields.Date('Fecha de Vencimiento', related='sentencia.fecha_vencimiento')
+    fecha_compra = fields.Date('Fecha de Compra', related='sentencia.fecha_compra')
+    valor_giro = fields.Float('Valor Giro', related='sentencia.valor_giro')
+    comision = fields.Float('Comisión', related='sentencia.comision')
+    valor_contable_ayer = fields.Float('Valor Contable Ayer')
+    precio = fields.Float('Precio', digits=(16, 7))
+
     def generar_liquidacion(self):
         # existe_liquidacion = self.env['ctm.liquidaciones'].search(
         #     [('sentencia', '=', self.sentencia.id)])
@@ -54,6 +65,17 @@ class Liquidaciones(models.Model):
         #Generando resumen
         self._generar_resumen_liquidacion()
         self._generar_tir_sentencia_bruta()
+
+        self.resultado += self.sentencia.costas
+        self.precio = (self.resultado / self.valor_condena) * 100
+        fecha_anterior = self.fecha_liquidar - timedelta(days=1)
+        simulacion_anterior = self.simulacion_ids.filtered(lambda x: x.fecha_liquidar == fecha_anterior)
+        if len(self.simulacion_ids) == 0:
+            self.valor_contable_ayer = 0
+        else:
+            if len(simulacion_anterior) == 0 and self.state == 'liquidated':
+                raise ValidationError("No existe simulación para la fecha anterior")
+            self.valor_contable_ayer = simulacion_anterior[0].resultado
 
         self.state = 'liquidated'
         self.responsible = self.env.user.partner_id
@@ -228,6 +250,124 @@ class Liquidaciones(models.Model):
             'context': "{'create': False, 'delete': False}",
         }
 
+    def create_txt(self):
+        fechas = self.mapped('fecha_liquidar')
+
+        if len(set(fechas)) > 1:
+            raise ValidationError('Todos los registros deben tener la misma fecha de liquidación')
+        
+        contenido_txt = ""
+        for rec in self:
+            fecha = rec.fecha_liquidar.strftime('%Y%m%d')
+            nit_fcp_statum = rec.nit_fcp_statum
+            descripcion = rec.statum
+            if descripcion == 'CSF':
+                raise ValidationError('Alguna de las sentencias es de Cuantum, por lo que no se genera precio')
+            demandante = rec.emisor.name
+            vendedor = rec.vendedor
+            id_especie = rec.sentencia.name
+            nemotecnico = rec.nemotecnico
+            fecha_cuenta_cobro = rec.fecha_cuenta_cobro.strftime('%Y%m%d')
+            fecha_emision = rec.fecha_ejecutoria.strftime('%Y%m%d')
+            fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
+            nit_emisor = rec.pagador.vat
+            nombre_emisor = rec.pagador.name
+            fecha_compra = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
+            nominal = round(rec.valor_condena, 2)
+            valor_giro = round(rec.valor_giro, 2) if rec.valor_giro else 0
+            comision = round(rec.comision, 2) if rec.comision else 0
+            valor_contable_actual = round(rec.resultado, 2)
+            valor_contable_ayer = round(rec.valor_contable_ayer, 2) if rec.valor_contable_ayer else 0
+            precio = round(rec.precio, 7)
+            contenido_txt += f"{fecha};{nit_fcp_statum};{descripcion};{demandante};{vendedor};{id_especie};{nemotecnico};{fecha_cuenta_cobro};{fecha_emision};{fecha_vencimiento};{nit_emisor};{nombre_emisor};{fecha_compra};{nominal};{valor_giro};{comision};{valor_contable_actual};{valor_contable_ayer};{precio:0.7f}\n"
+
+        archivo_txt = base64.b64encode(contenido_txt.encode('utf-8'))
+
+        attachment = self.env['ir.attachment'].create({
+            'name': f"{fecha}.txt",
+            'type': 'binary',
+            'datas': archivo_txt,
+            'res_model': 'ctm.liquidaciones',
+            'res_id': self[0].id,  # Puedes modificar este ID si es necesario
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'new',
+        }
+    def create_excel(self):
+        fechas = self.mapped('fecha_liquidar')
+
+        if len(set(fechas)) > 1:
+            raise ValidationError('Todos los registros deben tener la misma fecha de liquidación')
+
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        headers = [
+            'Fecha', 'NIT FCP STATUM', 'Descripción', 'Demandante', 'Vendedor', 'ID Especie', 
+            'Nemotecnico', 'Fecha Cuenta Cobro', 'Fecha Emisión', 'Fecha Vencimiento', 
+            'NIT Emisor', 'Nombre Emisor', 'Fecha Compra', 'Nominal', 'Valor Giro', 
+            'Comisión', 'Valor Contable Actual', 'Valor Contable Ayer', 'Precio'
+        ]
+
+        for col_num, header in enumerate(headers):
+            worksheet.write(0, col_num, header)
+
+        row = 1
+        for rec in self:
+            fecha = rec.fecha_liquidar.strftime('%Y%m%d')
+            nit_fcp_statum = rec.nit_fcp_statum
+            descripcion = rec.statum
+            if descripcion == 'CSF':
+                raise ValidationError('Alguna de las sentencias es de Cuantum, por lo que no se genera precio')
+            demandante = rec.emisor.name
+            vendedor = rec.vendedor
+            id_especie = rec.sentencia.name
+            nemotecnico = rec.nemotecnico
+            fecha_cuenta_cobro = rec.fecha_cuenta_cobro.strftime('%Y%m%d')
+            fecha_emision = rec.fecha_ejecutoria.strftime('%Y%m%d')
+            fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
+            nit_emisor = rec.pagador.vat
+            nombre_emisor = rec.pagador.name
+            fecha_compra = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
+            nominal = round(rec.valor_condena, 2)
+            valor_giro = round(rec.valor_giro, 2) if rec.valor_giro else 0
+            comision = round(rec.comision, 2) if rec.comision else 0
+            valor_contable_actual = round(rec.resultado, 2)
+            valor_contable_ayer = round(rec.valor_contable_ayer, 2) if rec.valor_contable_ayer else 0
+            precio = round(rec.precio, 7)
+
+            data = [
+                fecha, nit_fcp_statum, descripcion, demandante, vendedor, id_especie, 
+                nemotecnico, fecha_cuenta_cobro, fecha_emision, fecha_vencimiento, 
+                nit_emisor, nombre_emisor, fecha_compra, nominal, valor_giro, 
+                comision, valor_contable_actual, valor_contable_ayer, precio
+            ]
+
+            for col_num, cell_data in enumerate(data):
+                worksheet.write(row, col_num, cell_data)
+            row += 1
+
+        workbook.close()
+        output.seek(0)
+        archivo_excel = base64.b64encode(output.read())
+
+        attachment = self.env['ir.attachment'].create({
+            'name': f"{fecha}.xlsx",
+            'type': 'binary',
+            'datas': archivo_excel,
+            'res_model': 'ctm.liquidaciones',
+            'res_id': self[0].id,
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'new',
+        }
 class LiquidacionesResumen(models.Model):
     _name = 'ctm.liquidaciones_resumen'
     _description = "Liquidaciones Resumen Cuantum"

@@ -69,6 +69,8 @@ class Validacion(models.Model):
             mutuos_csf = self._get_total_titlles_period(titulos, 'CUANTUM', 'MUT')
             libranzas_fcl = self._get_total_titlles_period(titulos, 'FCL', 'LIB')
             sentencias_fcp = self._get_total_titlles_period(titulos, 'FCP', 'SEN')
+            si_fcp  = self._get_total_titlles_period(titulos, 'FCP', 'S1')
+            sii_fcp = self._get_total_titlles_period(titulos, 'FCP', 'S2')
 
             date_tmp = (datetime.strptime('01/' + self.month + '/' + self.year, '%d/%m/%Y')).date()
             if self.month == '12':
@@ -84,7 +86,7 @@ class Validacion(models.Model):
                 temp_rpr_fcp = cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date < date_next_tmp)
                 rpr_fcp = self._get_rpr_total_period(temp_rpr_fcp)
 
-                total = sum([factoring_csf, libranzas_csf, sentencias_csf,mutuos_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, rpr_fcp])
+                total = sum([factoring_csf, libranzas_csf, sentencias_csf,mutuos_csf, rpr_csf, libranzas_fcl, rpr_fcl, sentencias_fcp, si_fcp, sii_fcp, rpr_fcp])
             except:
                 raise ValidationError('El cliente {0} no tiene alguna fecha definida'.format(cliente.name))
 
@@ -99,6 +101,8 @@ class Validacion(models.Model):
                 'libranzas_fcl': libranzas_fcl,
                 'rpr_fcl': rpr_fcl,
                 'sentencias_fcp': sentencias_fcp,
+                'si_fcp': si_fcp,
+                'sii_fcp': sii_fcp,
                 'rpr_fcp': rpr_fcp,
                 'total': total,
                 })
@@ -138,11 +142,13 @@ class Validacion(models.Model):
         worksheet.write(row, 6, 'LIBRANZAS - FCL')
         worksheet.write(row, 7, 'RPR FCL')
         worksheet.write(row, 8, 'SENTENCIAS - STATUM')
-        worksheet.write(row, 9, 'RPR STATUM')
-        worksheet.write(row, 10, 'TOTAL')
+        worksheet.write(row, 9, 'SI - STATUM')
+        worksheet.write(row, 10, 'SII - STATUM')
+        worksheet.write(row, 11, 'RPR STATUM')
+        worksheet.write(row, 12, 'TOTAL')
 
         worksheet.set_column(0, 0, 50)
-        worksheet.set_column(1, 10, 20)
+        worksheet.set_column(1, 12, 20)
 
         row += 1
 
@@ -156,8 +162,10 @@ class Validacion(models.Model):
             worksheet.write(row, 6, detalle.libranzas_fcl, money)
             worksheet.write(row, 7, detalle.rpr_fcl, money)
             worksheet.write(row, 8, detalle.sentencias_fcp, money)
-            worksheet.write(row, 9, detalle.rpr_fcp, money)
-            worksheet.write(row, 10, detalle.total, money)
+            worksheet.write(row, 9, detalle.si_fcp, money)
+            worksheet.write(row, 10, detalle.sii_fcp, money)
+            worksheet.write(row, 11, detalle.rpr_fcp, money)
+            worksheet.write(row, 12, detalle.total, money)
 
             row += 1
 
@@ -195,6 +203,8 @@ class DetalleMovimiento(models.Model):
     rpr_fcl = fields.Float('RPR FCL')
     #FCP
     sentencias_fcp = fields.Float('SENTENCIAS - STATUM')
+    si_fcp = fields.Float('SI - STATUM')
+    sii_fcp = fields.Float('SII - STATUM')
     rpr_fcp = fields.Float('RPR STATUM')
 
     total = fields.Float('TOTAL')
