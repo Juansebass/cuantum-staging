@@ -74,7 +74,7 @@ class Liquidaciones(models.Model):
             self.valor_contable_ayer = 0
         else:
             if len(simulacion_anterior) == 0 and self.state == 'liquidated':
-                raise ValidationError("No existe simulación para la fecha anterior")
+                raise ValidationError("No existe simulación para la fecha anterior para la liquidación {0}".format(self.name))
             self.valor_contable_ayer = simulacion_anterior[0].resultado
 
         self.state = 'liquidated'
@@ -224,7 +224,7 @@ class Liquidaciones(models.Model):
         for rec in self:
             #Validando que no exista una simulación con la misma fecha a liquidar
             if len(rec.simulacion_ids.filtered(lambda x: x.fecha_liquidar == rec.fecha_liquidar)) > 0:
-                raise ValidationError('Ya existe una simulación para la fecha {0}'.format(rec.fecha_liquidar))
+                raise ValidationError('Ya existe una simulación para la fecha {0}, de la liquidación {1}'.format(rec.fecha_liquidar, rec.name))
             self.generar_liquidacion()
             self.env['liquidacion.simulacion'].create({
                 'name': str(len(self.simulacion_ids) + 1),
@@ -382,7 +382,7 @@ class Liquidaciones(models.Model):
             },
         }
     
-    
+
 class LiquidacionesResumen(models.Model):
     _name = 'ctm.liquidaciones_resumen'
     _description = "Liquidaciones Resumen Cuantum"
