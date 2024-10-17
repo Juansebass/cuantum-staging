@@ -368,6 +368,21 @@ class Liquidaciones(models.Model):
             'url': f'/web/content/{attachment.id}?download=true',
             'target': 'new',
         }
+    
+
+    def generate_simulations(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'simulation.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_date': fields.Date.today(),
+                'active_ids': self.ids,
+            },
+        }
+    
+    
 class LiquidacionesResumen(models.Model):
     _name = 'ctm.liquidaciones_resumen'
     _description = "Liquidaciones Resumen Cuantum"

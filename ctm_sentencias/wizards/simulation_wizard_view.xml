@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_simulation_wizard_form" model="ir.ui.view">
+        <field name="name">simulation.wizard.form</field>
+        <field name="model">simulation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Simulation Wizard">
+                <group>
+                    <field name="date"/>
+                </group>
+                <footer>
+                    <button string="Generate Simulations" type="object" name="action_generate_simulations" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_simulation_wizard" model="ir.actions.act_window">
+        <field name="name">Simulation Wizard</field>
+        <field name="res_model">simulation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

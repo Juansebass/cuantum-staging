@@ -109,4 +109,17 @@
                 action = records.create_excel()
         </field>
     </record>
+
+    <record id="generate_simulations_action" model="ir.actions.server">
+        <field name="name">Generar Simulaciones</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ctm_liquidaciones"/>
+        <field name="binding_model_id" ref="model_ctm_liquidaciones" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.generate_simulations()
+        </field>
+    </record>
 </odoo>
