@@ -8,6 +8,7 @@
                 <header>
                     <button name="generar_proyeccion" type="object" string="Generar Proyección"/>
                     <field name="state" widget="statusbar" />
+                </header>
                 <sheet>
                     <group name="izquierda">
                         <field name="name"/>
