@@ -70,7 +70,7 @@ class Sentencias(models.Model):
             ('en_venta', 'En Venta'),
             ('venta_completa', 'Venta Completa'),
         ],
-        default='draft',
+        default='negociacion',
         required=True
     )
 
