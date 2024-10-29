@@ -47,3 +47,32 @@ class Sentencias(models.Model):
     valor_contable_ayer = fields.Float('Valor Contable Ayer')
     precio = fields.Float('Precio', required=1)
     costas = fields.Float('Costas')
+
+
+    #Descuentos
+    retenciton_total = fields.Float('Retención Total')
+    estrucuturacion = fields.Float('Estructuración')
+    intermediacion = fields.Float('Intermediación')
+    descuento_diluido = fields.Float('Descuento Diluido')
+    comision_gestion_cuantum = fields.Float('Comisión Gestión Cuantum')
+
+    #Fechas
+    fecha_liquidar_neutral = fields.Date('Fecha a Liquidar Neutral')
+    fecha_liquidar_optimista = fields.Date('Fecha a Liquidar Optimista')
+    fecha_liquidar_compra = fields.Date('Fecha a Liquidar Compra')
+    fecha_liquidar_acido = fields.Date('Fecha a Liquidar Ácido')
+
+    state = fields.Selection(
+        string='Estado',
+        selection=[
+            ('negociacion', 'Negociación'),
+            ('proyeccion', 'Proyección'),
+            ('en_venta', 'En Venta'),
+            ('venta_completa', 'Venta Completa'),
+        ],
+        default='draft',
+        required=True
+    )
+
+    def generar_proyeccion(self):
+        pass

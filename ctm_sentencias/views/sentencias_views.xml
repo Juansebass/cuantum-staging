@@ -5,6 +5,9 @@
         <field name="model">ctm.sentencias</field>
         <field name="arch" type="xml">
             <form string="">
+                <header>
+                    <button name="generar_proyeccion" type="object" string="Generar Proyección"/>
+                    <field name="state" widget="statusbar" />
                 <sheet>
                     <group name="izquierda">
                         <field name="name"/>
@@ -33,6 +36,23 @@
                         <field name="valor_condena"/>
                         <field name="costas"/>
                     </group>
+                    <notebook>
+                        <page string="Datos Compraventa">
+                            <group string="Descuentos">
+                                <field name="retenciton_total" required="1"/>
+                                <field name="estrucuturacion" required="1"/>
+                                <field name="intermediacion" required="1"/>
+                                <field name="descuento_diluido" required="1"/>
+                                <field name="comision_gestion_cuantum" required="1"/>
+                            </group>
+                            <group string="Fechas a Liquidar">
+                                <field name="fecha_liquidar_neutral" required="1"/>
+                                <field name="fecha_liquidar_optimista" required="1"/>
+                                <field name="fecha_liquidar_compra" required="1"/>
+                                <field name="fecha_liquidar_acido" required="1"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
