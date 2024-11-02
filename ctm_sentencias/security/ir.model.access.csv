@@ -9,3 +9,4 @@ access_ctm_detalle_crear_sentencias_user,ctm.detalle_crear_sentencias.user,model
 access_liquidacion_simulacion_user,liquidacion.simulacion.user,model_liquidacion_simulacion,base.group_user,1,1,1,1
 access_simulation_wizard_user,simulation.wizard.user,model_simulation_wizard,base.group_user,1,1,1,1
 access_ctm_proyecciones_user,ctm.proyecciones.user,model_ctm_proyecciones,base.group_user,1,1,1,1
+access_ctm_liquidacion_inicial_user,ctm.liquidacion_inicial.user,model_ctm_liquidacion_inicial,base.group_user,1,1,1,1

@@ -5,10 +5,10 @@
         <field name="model">ctm.proyecciones</field>
         <field name="arch" type="xml">
             <form string="Proyecciones">
+                <header>
+                    <button name="calcular_proyeccion" type="object" string="Calcular Proyección"/>
+                </header>
                 <sheet>
-                    <header>
-                        <button name="calcular_proyeccion" type="object" string="Calcular Proyección"/>
-                    </header>
                     <group>
                         <field name="name"  readonly="1"/>
                         <field name="sentencia_id"/>
@@ -27,6 +27,17 @@
                         <field name="tir_acido"/>
                         <field name="tir_compra"/>
                     </group>
+                    <notebook>
+                        <page name="liquidacion_inicial" string="Liquidación Inicial">
+                            <field name="liquidacion_inicial_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="fecha"/>
+                                    <field name="tasa"/>
+                                    <field name="interes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

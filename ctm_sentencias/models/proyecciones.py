@@ -18,6 +18,19 @@ class Proyecciones(models.Model):
     tir_neutral = fields.Float(string='TIR Neutral')
     tir_acido = fields.Float(string='TIR Ácido')
     tir_compra = fields.Float(string='TIR Compra')
+    liquidacion_inicial_ids = fields.One2many('ctm.liquidacion_inicial', 'proyeccion_id', string='Liquidaciones Iniciales')
+
 
     def calcular_proyeccion(self):
-        pass
+        for record in self:
+            record.liquidacion_inicial_ids.unlink()
+
+
+class LiquidacionInicial(models.Model):
+    _name = 'ctm.liquidacion_inicial'
+    _description = 'Liquidación Inicial'
+
+    proyeccion_id = fields.Many2one('ctm.proyecciones', string='Proyección')
+    fecha = fields.Date('Fecha', required=1)
+    tasa = fields.Float('Tasa', digits=(10, 6))
+    interes = fields.Float('Interés')
