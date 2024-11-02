@@ -1,5 +1,8 @@
 from odoo import models, fields
-
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+import calendar
+from odoo.exceptions import ValidationError
 
 class Proyecciones(models.Model):
     _name = 'ctm.proyecciones'
@@ -24,6 +27,99 @@ class Proyecciones(models.Model):
     def calcular_proyeccion(self):
         for record in self:
             record.liquidacion_inicial_ids.unlink()
+            record.generar_liquidacion_inicial()
+    
+    def generar_liquidacion_inicial(self):
+        for record in self:
+            codigo = record.sentencia_id.codigo
+            fecha_ejecutoria = record.sentencia_id.fecha_ejecutoria
+            fecha_periodo_cero = None
+            fecha_cuenta_cobro = record.sentencia_id.fecha_cuenta_cobro
+            fecha_liquidar = record.sentencia_id.fecha_liquidar
+            valor_condena = record.sentencia_id.valor_condena
+            resultado = valor_condena
+            total_intereses = 0
+            if  codigo == "CPACA":
+                fecha_periodo_cero = fecha_ejecutoria + relativedelta(months=+3)
+
+            else:
+                fecha_periodo_cero = fecha_ejecutoria + relativedelta(months=+6)
+            fechas_base = [
+                fecha_ejecutoria,
+                fecha_periodo_cero,
+                fecha_cuenta_cobro,
+                fecha_liquidar
+            ]
+            if codigo == "CPACA":
+                fecha_periodo_diez = self.fecha_ejecutoria + relativedelta(months=+10)
+                fechas_base.append(fecha_periodo_diez)
+            fechas_periodos = self.generate_last_days(fecha_ejecutoria, fecha_liquidar)
+            fechas_periodos += fechas_base
+            unique_fechas_periodos = sorted(list(set(fechas_periodos)))
+            if unique_fechas_periodos[-1].month == unique_fechas_periodos[-2].month:
+                unique_fechas_periodos.pop(-1)
+
+            cont = 0
+            fecha_anterior = None
+            for fecha in  unique_fechas_periodos:
+                tasa = 0
+                interes = 0
+                #Buscando tasas
+                tasa_conf = self.env['ctm.tasas'].search(
+                [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1)
+
+                if not tasa_conf:
+                    raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
+
+                #Todos los ajustes para CPACA
+                if codigo == "CPACA":
+                    if fecha <= fecha_periodo_diez:
+                        tasa = tasa_conf.dtf
+                    else:
+                        tasa = tasa_conf.usura
+
+                    if (
+                            fecha <= fecha_cuenta_cobro and
+                            fecha > fecha_periodo_cero and
+                            fecha_cuenta_cobro >=  fecha_periodo_cero
+                    ):
+                        tasa = 0
+                if codigo == "CCA":
+                    tasa = tasa_conf.usura
+                    if (
+                            fecha <= fecha_cuenta_cobro and
+                            fecha > fecha_periodo_cero and
+                            fecha_cuenta_cobro >= fecha_periodo_cero
+                    ):
+                        tasa = 0
+                if cont > 0:
+                    dias = (fecha - fecha_anterior).days
+                    interes = round(((1 + (tasa/100)) ** (1/365) - 1), 6) * dias * valor_condena
+
+                self.env['ctm.liquidacion_inicial'].create({
+                    'proyeccion_id': self.id,
+                    'fecha': fecha,
+                    'tasa': tasa,
+                    'interes': interes,
+                })
+                resultado += interes
+                total_intereses += interes
+                fecha_anterior = fecha
+                cont += 1
+
+    def last_day_of_month(self, date):
+        _, last_day = calendar.monthrange(date.year, date.month)
+        return datetime(date.year, date.month, last_day).date()
+
+    def generate_last_days(self,start_date, end_date):
+        current_date = start_date
+        last_days = []
+
+        while current_date < end_date:
+            last_days.append(self.last_day_of_month(current_date))
+            current_date = self.last_day_of_month(current_date) + relativedelta(days=+1)
+
+        return last_days
 
 
 class LiquidacionInicial(models.Model):
