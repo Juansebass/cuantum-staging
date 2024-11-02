@@ -92,5 +92,5 @@ class Sentencias(models.Model):
             'view_mode': 'tree',
             'res_model': 'ctm.proyecciones',
             'domain': [('sentencia_id', '=', self.id)],
-            'context': "{'create': False, 'delete': False}",
+            'context': "{'create': False, 'delete': False, 'open': True}",
         }
