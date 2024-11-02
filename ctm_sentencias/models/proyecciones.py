@@ -6,7 +6,7 @@ class Proyecciones(models.Model):
     _description = 'Proyecciones'
 
     name = fields.Char(string='Name', required=True)
-    sentencia_id = fields.Many2one('ctm_sentencias.sentencia', string='Sentencia')
+    sentencia_id = fields.Many2one('ctm.sentencias', string='Sentencia')
     retencion_total = fields.Float(string='Retención Total')
     intermediacion = fields.Float(string='Intermediación')
     estructuracion = fields.Float(string='Estructuración')
