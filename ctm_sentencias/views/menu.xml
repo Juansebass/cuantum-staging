@@ -35,9 +35,9 @@
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias"  web_icon="ctm_sentencias,static/description/icon.png" />
     <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
-    <menuitem id="menu_ctm_proyecciones" sequence="3" name="Proyecciones" parent="menu_sentencias_main" action="action_ctm_proyecciones"/>
+    <menuitem id="menu_ctm_proyecciones" sequence="2" name="Proyecciones" parent="menu_sentencias_main" action="action_ctm_proyecciones"/>
     <menuitem id="menu_carga_sentencias_main" sequence="1" name="Carga Sentencias" parent="menu_sentencias_main"/>
-    <menuitem id="menu_liquidaciones_main" sequence="2" name="Liquidaciones" parent="menu_sentencias_main"/>
+    <menuitem id="menu_liquidaciones_main" sequence="3" name="Liquidaciones" parent="menu_sentencias_main"/>
     <menuitem id="menu_configuraciones" sequence="10" name="Configuraciones" parent="menu_sentencias_main"/>
 
     <!-- Menus de tercer nivel-->
