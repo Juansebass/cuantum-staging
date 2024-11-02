@@ -31,7 +31,6 @@
                         <field name="fecha_cuenta_cobro"/>
                         <field name="fecha_liquidar"/>
                         <field name="fecha_vencimiento" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
-                        <field name="fecha_compra" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                         <field name="valor_giro" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                         <field name="comision" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                         <field name="valor_condena"/>
@@ -49,7 +48,7 @@
                             <group string="Fechas a Liquidar">
                                 <field name="fecha_liquidar_neutral" required="1"/>
                                 <field name="fecha_liquidar_optimista" required="1"/>
-                                <field name="fecha_liquidar_compra" required="1"/>
+                                <field name="fecha_compra" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                                 <field name="fecha_liquidar_acido" required="1"/>
                             </group>
                         </page>

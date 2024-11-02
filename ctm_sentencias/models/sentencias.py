@@ -41,7 +41,6 @@ class Sentencias(models.Model):
     vendedor  = fields.Char('Vendedor')
     nemotecnico = fields.Char('Nemotecnico')
     fecha_vencimiento = fields.Date('Fecha de Vencimiento')
-    fecha_compra = fields.Date('Fecha de Compra')
     valor_giro = fields.Float('Valor Giro')
     comision = fields.Float('Comisión')
     valor_contable_ayer = fields.Float('Valor Contable Ayer')
@@ -56,10 +55,11 @@ class Sentencias(models.Model):
     descuento_diluido = fields.Float('Descuento Diluido')
     comision_gestion_cuantum = fields.Float('Comisión Gestión Cuantum')
 
-    #Fechas
+   
+    # Poner regla cada nueva fecha debe ser mayor a las anteriores
     fecha_liquidar_neutral = fields.Date('Fecha a Liquidar Neutral')
     fecha_liquidar_optimista = fields.Date('Fecha a Liquidar Optimista')
-    fecha_liquidar_compra = fields.Date('Fecha a Liquidar Compra')
+    fecha_compra = fields.Date('Fecha de Compra')
     fecha_liquidar_acido = fields.Date('Fecha a Liquidar Ácido')
 
     state = fields.Selection(

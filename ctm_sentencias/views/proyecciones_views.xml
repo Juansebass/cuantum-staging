@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_ctm_proyecciones_form" model="ir.ui.view">
+        <field name="name">ctm.proyecciones.form</field>
+        <field name="model">ctm.proyecciones</field>
+        <field name="arch" type="xml">
+            <form string="Proyecciones">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sentencia_id"/>
+                        <field name="retencion_total"/>
+                        <field name="intermediacion"/>
+                        <field name="estructuracion"/>
+                        <field name="valor_descuento_diluido"/>
+                        <field name="valor_compra_beneficiario"/>
+                        <field name="total_descuentos"/>
+                        <field name="porcentaje_total_descuentos"/>
+                        
+                    </group>
+                    <group string="TIR">
+                        <field name="tir_optimista"/>
+                        <field name="tir_neutral"/>
+                        <field name="tir_acido"/>
+                        <field name="tir_compra"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ctm_proyecciones_tree" model="ir.ui.view">
+        <field name="name">ctm.proyecciones.tree</field>
+        <field name="model">ctm.proyecciones</field>
+        <field name="arch" type="xml">
+            <tree string="Proyecciones">
+                <field name="name"/>
+                <field name="sentencia_id"/>
+                <field name="retencion_total"/>
+                <field name="intermediacion"/>
+                <field name="estructuracion"/>
+                <field name="valor_descuento_diluido"/>
+                <field name="valor_compra_beneficiario"/>
+                <field name="total_descuentos"/>
+                <field name="porcentaje_total_descuentos"/>
+                <field name="tir_optimista"/>
+                <field name="tir_neutral"/>
+                <field name="tir_acido"/>
+                <field name="tir_compra"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

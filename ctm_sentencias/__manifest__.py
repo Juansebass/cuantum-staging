@@ -19,6 +19,7 @@
         'views/create_sentencias_views.xml',
         'views/sentencias_views.xml',
         'views/liquidacion_simulacion_views.xml',
+        'views/proyecciones_views.xml',
         'wizards/simulation_wizard_view.xml',
         ],
     'installable': True,
