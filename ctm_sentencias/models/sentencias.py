@@ -83,3 +83,14 @@ class Sentencias(models.Model):
                'sentencia_id': record.id,
            })
             proyeccion_id.calcular_proyeccion()
+
+    def action_view_proyecciones(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Proyecciones',
+            'view_mode': 'tree',
+            'res_model': 'ctm.proyecciones',
+            'domain': [('sentencia_id', '=', self.id)],
+            'context': "{'create': False, 'delete': False}",
+        }

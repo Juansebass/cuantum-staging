@@ -7,8 +7,14 @@
             <form string="">
                 <header>
                     <button name="generar_proyeccion" type="object" string="Generar Proyección"/>
+                    
+                    <button name="action_view_proyecciones"
+                            type="object"
+                            string="Proyecciones"
+                            class="oe_stat_button"
+                            icon="fa-calculator"
+                    />
                     <field name="state" widget="statusbar" />
-                    <button name="%(model_ctm_proyecciones_view_tree)d" type="action" string="Proyecciones" icon="fa-folder-open"/>
                 </header>
                 <sheet>
                     <group name="izquierda">
