@@ -73,6 +73,13 @@ class Sentencias(models.Model):
         default='negociacion',
         required=True
     )
+    proyeccion_ids = fields.One2many('ctm.proyecciones', 'sentencia_id', string='Proyecciones')
 
     def generar_proyeccion(self):
-        pass
+        for record in self:
+            record.proyeccion_ids.unlink()
+            proyeccion_id = self.env['ctm.proyecciones'].create({
+               'name': f"Proyección Sentencia - {record.name}",
+               'sentencia_id': record.id,
+           })
+            proyeccion_id.calcular_proyeccion()

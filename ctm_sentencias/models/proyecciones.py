@@ -18,3 +18,6 @@ class Proyecciones(models.Model):
     tir_neutral = fields.Float(string='TIR Neutral')
     tir_acido = fields.Float(string='TIR Ácido')
     tir_compra = fields.Float(string='TIR Compra')
+
+    def calcular_proyeccion(self):
+        pass
