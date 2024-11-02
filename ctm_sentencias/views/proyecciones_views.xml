@@ -6,8 +6,11 @@
         <field name="arch" type="xml">
             <form string="Proyecciones">
                 <sheet>
+                    <header>
+                        <button name="calcular_proyeccion" type="object" string="Calcular Proyección"/>
+                    </header>
                     <group>
-                        <field name="name"/>
+                        <field name="name"  readonly="1"/>
                         <field name="sentencia_id"/>
                         <field name="retencion_total"/>
                         <field name="intermediacion"/>
@@ -34,7 +37,7 @@
         <field name="model">ctm.proyecciones</field>
         <field name="arch" type="xml">
             <tree string="Proyecciones" create="false">
-                <field name="name" optional="show"/>
+                <field name="name" optional="show" readonly="1"/>
                 <field name="sentencia_id" optional="show"/>
                 <field name="retencion_total" optional="hide"/>
                 <field name="intermediacion" optional="hide"/>
