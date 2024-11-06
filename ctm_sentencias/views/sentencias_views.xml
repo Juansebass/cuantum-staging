@@ -46,10 +46,10 @@
                     <notebook>
                         <page string="Datos Compraventa">
                             <group string="Descuentos">
-                                <field name="retenciton_total" required="1"/>
+                                <field name="retenciton_total" widget="percentage" required="1"/>
                                 <field name="estrucuturacion" required="1"/>
                                 <field name="intermediacion" required="1"/>
-                                <field name="descuento_diluido" required="1"/>
+                                <field name="descuento_diluido" widget="percentage" required="1"/>
                                 <field name="comision_gestion_cuantum" required="1"/>
                             </group>
                             <group string="Fechas a Liquidar">

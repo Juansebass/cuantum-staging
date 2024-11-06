@@ -18,7 +18,7 @@
                         <field name="valor_descuento_diluido"/>
                         <field name="valor_compra_beneficiario"/>
                         <field name="total_descuentos"/>
-                        <field name="porcentaje_total_descuentos"/>
+                        <field name="porcentaje_total_descuentos" widget="percentage"/>
                         
                     </group>
                     <group string="TIR">

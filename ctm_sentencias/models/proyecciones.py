@@ -15,6 +15,7 @@ class Proyecciones(models.Model):
     estructuracion = fields.Float(string='Estructuración')
     valor_descuento_diluido = fields.Float(string='Valor Descuento Diluido')
     valor_compra_beneficiario = fields.Float(string='Valor Compra Beneficiario')
+    valor_venta_inversionista = fields.Float(string='Valor Venta Inversionista')
     total_descuentos = fields.Float(string='Total Descuentos')
     porcentaje_total_descuentos = fields.Float(string='Porcentaje Total Descuentos')
     tir_optimista = fields.Float(string='TIR Optimista')
@@ -35,6 +36,15 @@ class Proyecciones(models.Model):
         for record in self:
             record.liquidacion_inicial_ids.unlink()
             record.generar_liquidacion_inicial()
+            # Resultados
+            record.retencion_total = record.sentencia_id.retencion_total * record.resultado
+            record.estructuracion = record.sentencia_id.estructuracion
+            record.intermediacion = record.sentencia_id.intermediacion * record.resultado
+            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion
+            record.porcentaje_total_descuentos = record.resultado / record.total_descuentos
+            record.valor_compra_beneficiario = record.resultado - record.total_descuentos
+            record.valor_descuento_diluido = record.valor_compra_beneficiario * record.sentencia_id.descuento_diluido
+            record.valor_venta_inversionista = record.valor_compra_beneficiario * (1 - record.sentencia_id.descuento_diluido)
     
     def generar_liquidacion_inicial(self):
         for record in self:
