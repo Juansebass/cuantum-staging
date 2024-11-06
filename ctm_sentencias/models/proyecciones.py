@@ -39,7 +39,7 @@ class Proyecciones(models.Model):
             record.liquidacion_inicial_ids.unlink()
             record.generar_liquidacion_inicial()
             # Resultados
-            record.retencion_total = record.sentencia_id.retencion_total * record.resultado
+            record.retencion_total = record.sentencia_id.retencion_total * record.total_intereses
             record.estructuracion = record.sentencia_id.estructuracion
             record.intermediacion = record.sentencia_id.intermediacion * record.resultado
             record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion
