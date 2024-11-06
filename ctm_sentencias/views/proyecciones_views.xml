@@ -42,6 +42,21 @@
                                 </tree>
                             </field>
                         </page>
+                        <page name="proyeccion_venta" string="Proyección para Venta">
+                            <field name="liquidacion_final_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="fecha_inicial"/>
+                                    <field name="fecha_final"/>
+                                    <field name="tasa"/>
+                                    <field name="interes"/>
+                                    <field name="descuento_diluido"/>
+                                    <field name="rendimientos_totales"/>
+                                    <field name="valor_antes_cdg"/>
+                                    <field name="valor_comision_gestion"/>
+                                    <field name="valor_esperado"/>
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>

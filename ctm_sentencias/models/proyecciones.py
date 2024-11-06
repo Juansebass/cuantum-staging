@@ -148,3 +148,18 @@ class LiquidacionInicial(models.Model):
     fecha = fields.Date('Fecha', required=1)
     tasa = fields.Float('Tasa', digits=(10, 6))
     interes = fields.Float('Interés')
+
+class ProyeccionVenta(models.Model):
+    _name = 'ctm.proyeccion_venta'
+    _description = 'Proyección Venta'
+
+    proyeccion_id = fields.Many2one('ctm.proyecciones', string='Proyección')
+    fecha_inicial = fields.Date('Fecha Inicial')
+    fecha_final = fields.Date('Fecha Final')
+    tasa = fields.Float('Tasa', digits=(10, 6))
+    interes = fields.Float('Interés')
+    descuento_diluido = fields.Float('Descuento Diluido')
+    rendimientos_totales = fields.Float('Rendimientos Totales')
+    valor_antes_cdg = fields.Float('Valor Antes CDG')
+    valor_comision_gestion = fields.Float('Valor Comisión Gestión')
+    valor_esperado = fields.Float('Valor Esperado')
