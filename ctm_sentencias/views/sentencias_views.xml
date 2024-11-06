@@ -55,7 +55,7 @@
                             <group string="Fechas a Liquidar">
                                 <field name="fecha_liquidar_neutral" required="1"/>
                                 <field name="fecha_liquidar_optimista" required="1"/>
-                                <field name="fecha_compra" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
+                                <field name="fecha_compra"/>
                                 <field name="fecha_liquidar_acido" required="1"/>
                             </group>
                         </page>

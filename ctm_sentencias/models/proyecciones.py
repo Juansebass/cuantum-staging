@@ -21,7 +21,14 @@ class Proyecciones(models.Model):
     tir_neutral = fields.Float(string='TIR Neutral')
     tir_acido = fields.Float(string='TIR Ácido')
     tir_compra = fields.Float(string='TIR Compra')
+    # Liquidaciones Iniciales	
     liquidacion_inicial_ids = fields.One2many('ctm.liquidacion_inicial', 'proyeccion_id', string='Liquidaciones Iniciales')
+    valor_condena = fields.Float(string='Valor Condena', readonly=True)
+    total_intereses = fields.Float(string='Total Intereses', readonly=True)
+    resultado = fields.Float(string='Resultado', readonly=True)
+
+
+    # TODO Las proyecciones y acciones solo son visibles para sentencias de statum csf
 
 
     def calcular_proyeccion(self):
@@ -36,9 +43,9 @@ class Proyecciones(models.Model):
             fecha_periodo_cero = None
             fecha_cuenta_cobro = record.sentencia_id.fecha_cuenta_cobro
             fecha_liquidar = record.sentencia_id.fecha_liquidar
-            valor_condena = record.sentencia_id.valor_condena
-            resultado = valor_condena
-            total_intereses = 0
+            record.valor_condena = record.sentencia_id.valor_condena
+            record.resultado = record.valor_condena
+            record.total_intereses = 0
             if  codigo == "CPACA":
                 fecha_periodo_cero = fecha_ejecutoria + relativedelta(months=+3)
 
@@ -94,7 +101,7 @@ class Proyecciones(models.Model):
                         tasa = 0
                 if cont > 0:
                     dias = (fecha - fecha_anterior).days
-                    interes = round(((1 + (tasa/100)) ** (1/365) - 1), 6) * dias * valor_condena
+                    interes = round(((1 + (tasa/100)) ** (1/365) - 1), 6) * dias * record.valor_condena
 
                 self.env['ctm.liquidacion_inicial'].create({
                     'proyeccion_id': self.id,
@@ -102,10 +109,11 @@ class Proyecciones(models.Model):
                     'tasa': tasa,
                     'interes': interes,
                 })
-                resultado += interes
-                total_intereses += interes
+                record.resultado += interes
+                record.total_intereses += interes
                 fecha_anterior = fecha
                 cont += 1
+            record.resultado += record.sentencia_id.costas
 
     def last_day_of_month(self, date):
         _, last_day = calendar.monthrange(date.year, date.month)
