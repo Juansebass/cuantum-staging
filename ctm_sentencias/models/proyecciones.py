@@ -27,6 +27,8 @@ class Proyecciones(models.Model):
     valor_condena = fields.Float(string='Valor Condena', readonly=True)
     total_intereses = fields.Float(string='Total Intereses', readonly=True)
     resultado = fields.Float(string='Resultado', readonly=True)
+    # Proyecciones de Venta
+    proyeccion_venta_ids = fields.One2many('ctm.proyeccion_venta', 'proyeccion_id', string='Proyecciones de Venta')
 
 
     # TODO Las proyecciones y acciones solo son visibles para sentencias de statum csf

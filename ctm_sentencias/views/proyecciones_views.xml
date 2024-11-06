@@ -43,7 +43,7 @@
                             </field>
                         </page>
                         <page name="proyeccion_venta" string="Proyección para Venta">
-                            <field name="liquidacion_final_ids" readonly="1">
+                            <field name="proyeccion_venta_ids" readonly="1">
                                 <tree editable="bottom">
                                     <field name="fecha_inicial"/>
                                     <field name="fecha_final"/>
