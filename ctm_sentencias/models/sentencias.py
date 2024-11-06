@@ -50,7 +50,7 @@ class Sentencias(models.Model):
 
     #Descuentos
     retencion_total = fields.Float('Retención Total')
-    estrucuturacion = fields.Float('Estructuración')
+    estructuracion = fields.Float('Estructuración')
     intermediacion = fields.Float('Intermediación')
     descuento_diluido = fields.Float('Descuento Diluido')
     comision_gestion_cuantum = fields.Float('Comisión Gestión Cuantum')

@@ -47,7 +47,7 @@
                         <page string="Datos Compraventa">
                             <group string="Descuentos">
                                 <field name="retencion_total" widget="percentage" required="1"/>
-                                <field name="estrucuturacion" required="1"/>
+                                <field name="estructuracion" required="1"/>
                                 <field name="intermediacion" required="1"/>
                                 <field name="descuento_diluido" widget="percentage" required="1"/>
                                 <field name="comision_gestion_cuantum" required="1"/>
