@@ -43,7 +43,7 @@ class Proyecciones(models.Model):
             record.estructuracion = record.sentencia_id.estructuracion
             record.intermediacion = record.sentencia_id.intermediacion * record.resultado
             record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion
-            record.porcentaje_total_descuentos = record.resultado / record.total_descuentos
+            record.porcentaje_total_descuentos = record.total_descuentos / record.resultado
             record.valor_compra_beneficiario = record.resultado - record.total_descuentos
             record.valor_descuento_diluido = record.valor_compra_beneficiario * record.sentencia_id.descuento_diluido
             record.valor_venta_inversionista = record.valor_compra_beneficiario * (1 - record.sentencia_id.descuento_diluido)
