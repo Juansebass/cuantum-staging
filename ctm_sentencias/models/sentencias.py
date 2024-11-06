@@ -89,7 +89,7 @@ class Sentencias(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': 'Proyecciones',
-            'view_mode': 'tree',
+            'view_mode': 'tree,form',
             'res_model': 'ctm.proyecciones',
             'domain': [('sentencia_id', '=', self.id)],
             'context': "{'create': False, 'delete': False, 'open': True}",
