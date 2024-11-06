@@ -46,7 +46,7 @@
                     <notebook>
                         <page string="Datos Compraventa">
                             <group string="Descuentos">
-                                <field name="retenciton_total" widget="percentage" required="1"/>
+                                <field name="retencion_total" widget="percentage" required="1"/>
                                 <field name="estrucuturacion" required="1"/>
                                 <field name="intermediacion" required="1"/>
                                 <field name="descuento_diluido" widget="percentage" required="1"/>
