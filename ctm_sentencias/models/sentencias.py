@@ -49,7 +49,7 @@ class Sentencias(models.Model):
 
 
     #Descuentos
-    retenciton_total = fields.Float('Retención Total')
+    retencion_total = fields.Float('Retención Total')
     estrucuturacion = fields.Float('Estructuración')
     intermediacion = fields.Float('Intermediación')
     descuento_diluido = fields.Float('Descuento Diluido')
