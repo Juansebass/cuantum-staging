@@ -13,6 +13,7 @@ class Proyecciones(models.Model):
     retencion_total = fields.Float(string='Retención Total')
     intermediacion = fields.Float(string='Intermediación')
     estructuracion = fields.Float(string='Estructuración')
+    ingreso_anticipado_cuantum  = fields.Float('Ingreso Anticipado Cuantum')
     valor_descuento_diluido = fields.Float(string='Valor Descuento Diluido')
     valor_compra_beneficiario = fields.Float(string='Valor Compra Beneficiario')
     valor_venta_inversionista = fields.Float(string='Valor Venta Inversionista')
@@ -42,11 +43,12 @@ class Proyecciones(models.Model):
             record.retencion_total = record.sentencia_id.retencion_total * record.total_intereses
             record.estructuracion = record.sentencia_id.estructuracion
             record.intermediacion = record.sentencia_id.intermediacion * record.resultado
-            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion
             record.porcentaje_total_descuentos = record.total_descuentos / record.resultado
             record.valor_compra_beneficiario = record.resultado - record.total_descuentos
             record.valor_descuento_diluido = record.valor_compra_beneficiario * record.sentencia_id.descuento_diluido
             record.valor_venta_inversionista = record.valor_compra_beneficiario * (1 - record.sentencia_id.descuento_diluido)
+            record.ingreso_anticipado_cuantum = record.sentencia_id.ingreso_anticipado_cuantum * record.resultado
+            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion + record.ingreso_anticipado_cuantum + record.valor_descuento_diluido
     
     def generar_liquidacion_inicial(self):
         for record in self:

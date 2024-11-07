@@ -15,6 +15,7 @@
                         <field name="retencion_total"/>
                         <field name="intermediacion"/>
                         <field name="estructuracion"/>
+                        <field name="ingreso_anticipado_cuantum"/>
                         <field name="valor_descuento_diluido"/>
                         <field name="valor_compra_beneficiario"/>
                         <field name="total_descuentos"/>

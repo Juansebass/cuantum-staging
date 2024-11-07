@@ -54,6 +54,7 @@ class Sentencias(models.Model):
     intermediacion = fields.Float('Intermediación')
     descuento_diluido = fields.Float('Descuento Diluido')
     comision_gestion_cuantum = fields.Float('Comisión Gestión Cuantum')
+    ingreso_anticipado_cuantum  = fields.Float('Ingreso Anticipado Cuantum')
 
    
     # Poner regla cada nueva fecha debe ser mayor a las anteriores

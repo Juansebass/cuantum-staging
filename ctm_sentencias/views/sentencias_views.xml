@@ -50,7 +50,8 @@
                                 <field name="estructuracion" required="1"/>
                                 <field name="intermediacion" widget="percentage" required="1"/>
                                 <field name="descuento_diluido" widget="percentage" required="1"/>
-                                <field name="comision_gestion_cuantum" required="1"/>
+                                <field name="ingreso_anticipado_cuantum" widget="percentage" required="1"/>
+                                <field name="comision_gestion_cuantum" widget="percentage" required="1"/>
                             </group>
                             <group string="Fechas a Liquidar">
                                 <field name="fecha_liquidar_neutral" required="1"/>
