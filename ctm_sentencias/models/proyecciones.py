@@ -53,6 +53,8 @@ class Proyecciones(models.Model):
             record.valor_descuento_diluido = record.valor_compra_beneficiario * record.sentencia_id.descuento_diluido
             record.valor_venta_inversionista = record.valor_compra_beneficiario * (1 - record.sentencia_id.descuento_diluido)
             record.ingreso_anticipado_cuantum = record.sentencia_id.ingreso_anticipado_cuantum * record.resultado
+
+            record.generar_proyeccion_venta()
     
     def generar_liquidacion_inicial(self):
         for record in self:
@@ -147,6 +149,28 @@ class Proyecciones(models.Model):
 
         return last_days
 
+    def generar_proyeccion_venta(self):
+        for record in self:
+            record.proyeccion_venta_ids.unlink()
+            fecha_inicial = record.sentencia_id.fecha_compra
+            fecha_acido = record.sentencia_id.fecha_liquidar_acido
+            fecha_neutral = record.sentencia_id.fecha_liquidar_neutral
+            fecha_optimista = record.sentencia_id.fecha_liquidar_optimista
+
+            fechas_generacion = [fecha_inicial, fecha_acido, fecha_neutral, fecha_optimista]
+            fechas = []
+            for fecha in fechas_generacion:
+                fechas.append((fecha, record.last_day_of_month(fecha)))
+
+            for fecha in fechas:
+                self.env['ctm.proyeccion_venta'].create(
+                    {
+                        'proyeccion_id': record.id,
+                        'fecha_inicial': fecha[0],
+                        'fecha_final': fecha[1],
+                    }
+                )
+          
 
 class LiquidacionInicial(models.Model):
     _name = 'ctm.liquidacion_inicial'
