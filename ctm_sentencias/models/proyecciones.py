@@ -152,12 +152,12 @@ class Proyecciones(models.Model):
     def generar_proyeccion_venta(self):
         for record in self:
             record.proyeccion_venta_ids.unlink()
-            fecha_inicial = record.sentencia_id.fecha_compra
+            fecha_liquidar= record.sentencia_id.fecha_liquidar
             fecha_acido = record.sentencia_id.fecha_liquidar_acido
             fecha_neutral = record.sentencia_id.fecha_liquidar_neutral
             fecha_optimista = record.sentencia_id.fecha_liquidar_optimista
 
-            fechas_generacion = [fecha_inicial, fecha_acido, fecha_neutral, fecha_optimista]
+            fechas_generacion = [fecha_liquidar, fecha_acido, fecha_neutral, fecha_optimista]
             fechas = []
             for fecha in fechas_generacion:
                 fechas.append((fecha, record.last_day_of_month(fecha)))
