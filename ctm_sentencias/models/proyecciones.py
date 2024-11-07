@@ -45,7 +45,7 @@ class Proyecciones(models.Model):
             record.estructuracion = record.sentencia_id.estructuracion
             record.intermediacion = record.sentencia_id.intermediacion * record.resultado
 
-            porcentaje_descuentos_parciales = record.sentemcia_id.descuento_diluido + record.sentencia_id.ingreso_anticipado_cuantum
+            porcentaje_descuentos_parciales = record.sentencia_id.descuento_diluido + record.sentencia_id.ingreso_anticipado_cuantum
             descuento_parcial = record.resultado * porcentaje_descuentos_parciales
             record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion  + descuento_parcial
             record.porcentaje_total_descuentos = record.total_descuentos / record.resultado
