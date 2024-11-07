@@ -40,15 +40,19 @@ class Proyecciones(models.Model):
             record.liquidacion_inicial_ids.unlink()
             record.generar_liquidacion_inicial()
             # Resultados
+            
             record.retencion_total = record.sentencia_id.retencion_total * record.total_intereses
             record.estructuracion = record.sentencia_id.estructuracion
             record.intermediacion = record.sentencia_id.intermediacion * record.resultado
+
+            porcentaje_descuentos_parciales = record.sentemcia_id.descuento_diluido + record.sentencia_id.ingreso_anticipado_cuantum
+            descuento_parcial = record.resultado * porcentaje_descuentos_parciales
+            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion  + descuento_parcial
             record.porcentaje_total_descuentos = record.total_descuentos / record.resultado
             record.valor_compra_beneficiario = record.resultado - record.total_descuentos
             record.valor_descuento_diluido = record.valor_compra_beneficiario * record.sentencia_id.descuento_diluido
             record.valor_venta_inversionista = record.valor_compra_beneficiario * (1 - record.sentencia_id.descuento_diluido)
             record.ingreso_anticipado_cuantum = record.sentencia_id.ingreso_anticipado_cuantum * record.resultado
-            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion + record.ingreso_anticipado_cuantum + record.valor_descuento_diluido
     
     def generar_liquidacion_inicial(self):
         for record in self:
