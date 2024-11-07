@@ -166,6 +166,8 @@ class Proyecciones(models.Model):
                     fecha_incial = fecha_final + relativedelta(days=+1)
                     fecha_final = record.last_day_of_month(fecha_incial)
                     fechas.append((fecha_incial, fecha_final))
+                fecha_final = fecha_validacion
+                fechas.append((fecha_incial, fecha_final))
 
             for fecha in fechas:
                 self.env['ctm.proyeccion_venta'].create(
