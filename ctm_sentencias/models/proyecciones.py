@@ -162,7 +162,6 @@ class Proyecciones(models.Model):
             fecha_liquidar_fin = record.last_day_of_month(fecha_liquidar)
             fechas = [(fecha_liquidar, fecha_liquidar_fin)]
             fecha_final = fecha_liquidar_fin
-            row = 0
             for fecha_validacion in fechas_generacion:
                 while fecha_validacion > fecha_final:
                     fecha_incial = fecha_final + relativedelta(days=+1)
@@ -171,7 +170,8 @@ class Proyecciones(models.Model):
                 fecha_final = fecha_validacion
                 fechas.pop(-1)
                 fechas.append((fecha_incial, fecha_final))
-
+            row = 0
+            cash_flows = []
             for fecha in fechas:
                  #Buscando tasas
                 tasa_conf = self.env['ctm.tasas'].search(
@@ -209,7 +209,6 @@ class Proyecciones(models.Model):
                     }
                 )
                 #Generando TIR
-                cash_flows = []
                 if row == 0:
                     cash_flows.append((-valor_esperado, fecha[0]))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_optimista:
