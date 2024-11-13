@@ -173,14 +173,14 @@ class Proyecciones(models.Model):
             for fecha in fechas:
                  #Buscando tasas
                 tasa_conf = self.env['ctm.tasas'].search(
-                [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1)
+                [('fecha_inicio', '<=', fecha[0]), ('fecha_final', '>=', fecha[0])], limit=1)
                 if not tasa_conf:
                     raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
                 self.env['ctm.proyeccion_venta'].create(
                     {
                         'proyeccion_id': record.id,
-                        'fecha_inicial': fecha[0].date,
-                        'fecha_final': fecha[1].date,
+                        'fecha_inicial': fecha[0],
+                        'fecha_final': fecha[1],
                         'tasa': tasa_conf.usura,
                     }
                 )
