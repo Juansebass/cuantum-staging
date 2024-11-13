@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import calendar
 from odoo.exceptions import ValidationError
+import scipy.optimize as opt
 
 class Proyecciones(models.Model):
     _name = 'ctm.proyecciones'
