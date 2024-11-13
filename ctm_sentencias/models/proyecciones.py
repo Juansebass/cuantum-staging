@@ -188,6 +188,7 @@ class Proyecciones(models.Model):
                         'tasa': tasa_conf.usura,
                         'interes': interes,
                         'descuento_diluido': descuento_diluido,
+                        'rendimientos_totales': interes + descuento_diluido,
                     }
                 )
           
