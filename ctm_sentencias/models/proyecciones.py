@@ -215,8 +215,26 @@ class Proyecciones(models.Model):
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_optimista = record._generar_tir(cash_flows)
+                        cash_flows.pop(-1)
                     except Exception as e:
                         raise ValidationError('Error al calcular la TIR Optimista {0} con cashflow {1}'.format(e, cash_flows))
+                if fecha[1] == record.sentencia_id.fecha_liquidar_neutral:
+                    cash_flows.append((valor_esperado, fecha[1]))
+                    try:
+                        record.tir_neutral = record._generar_tir(cash_flows)
+                        cash_flows.pop(-1)
+                    except Exception as e:
+                        raise ValidationError('Error al calcular la TIR Neutral {0} con cashflow {1}'.format(e, cash_flows))
+                if fecha[1] == record.sentencia_id.fecha_liquidar_acido:
+                    cash_flows.append((valor_esperado, fecha[1]))
+                    try:
+                        record.tir_acido = record._generar_tir(cash_flows)
+                        cash_flows.pop(-1)
+                    except Exception as e:
+                        raise ValidationError('Error al calcular la TIR Ácido {0} con cashflow {1}'.format(e, cash_flows))
+                
+                #Para tir de compra
+                cash_flows = [(-record.valor_condena, record.sentencia_id.fecha_ejecutoria), (record.resultado, record.sentencia_id.fecha_liquidar)]
                 row += 1
 
     def _generar_tir(self, cash_flows):
