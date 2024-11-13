@@ -214,11 +214,10 @@ class Proyecciones(models.Model):
                     cash_flows.append((-valor_esperado, fecha[0]))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_optimista:
                     cash_flows.append((valor_esperado, fecha[1]))
-                    record.tir_optimista = record._generar_tir(cash_flows)
-
-
-
-
+                    try:
+                        record.tir_optimista = record._generar_tir(cash_flows)
+                    except Exception as e:
+                        raise ValidationError('Error al calcular la TIR Optimista {0} con cashflow {1}'.format(e, cash_flows))
                 row += 1
 
     def _generar_tir(self, cash_flows):
