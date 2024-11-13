@@ -232,10 +232,15 @@ class Proyecciones(models.Model):
                         cash_flows.pop(-1)
                     except Exception as e:
                         raise ValidationError('Error al calcular la TIR Ácido {0} con cashflow {1}'.format(e, cash_flows))
-                
-                #Para tir de compra
-                cash_flows = [(-record.valor_condena, record.sentencia_id.fecha_ejecutoria), (record.resultado, record.sentencia_id.fecha_liquidar)]
                 row += 1
+                
+            #Para tir de compra
+            cash_flows = [(-record.valor_condena, record.sentencia_id.fecha_ejecutoria), (record.resultado, record.sentencia_id.fecha_liquidar)]
+            try:
+                record.tir_compra = record._generar_tir(cash_flows)
+            except Exception as e:
+                raise ValidationError('Error al calcular la TIR de Compra {0} con cashflow {1}'.format(e, cash_flows))
+                
 
     def _generar_tir(self, cash_flows):
         tir = 0
