@@ -192,6 +192,7 @@ class Proyecciones(models.Model):
                 else:
                     valor_antes_cdg = valor_antes_cdg + rendimientos_totales
                 valor_comision_gestion = valor_antes_cdg * ((1 + record.sentencia_id.comision_gestion_cuantum) ** (1/365) - 1) * (fecha[1] - fecha[0]).days
+                valor_esperado = valor_antes_cdg - valor_comision_gestion
                 self.env['ctm.proyeccion_venta'].create(
                     {
                         'proyeccion_id': record.id,
@@ -203,11 +204,52 @@ class Proyecciones(models.Model):
                         'rendimientos_totales': rendimientos_totales,
                         'valor_antes_cdg': valor_antes_cdg,
                         'valor_comision_gestion': valor_comision_gestion,
-                        'valor_esperado': valor_antes_cdg - valor_comision_gestion
+                        'valor_esperado': valor_esperado
                     }
                 )
+                #Generando TIR
+                cash_flows = []
+                if row == 0:
+                    cash_flows.append((-valor_esperado, fecha[0]))
+                if fecha[1] == record.sentencia_id.fecha_liquidar_optimista:
+                    cash_flows.append((valor_esperado, fecha[1]))
+                    record.tir_optimista = record._generar_tir(cash_flows)
+
+
+
+
                 row += 1
-          
+
+    def _generar_tir(self, cash_flows):
+        tir = 0
+        #cash_flows = [(-record.valor_condena, record.fecha_ejecutoria), (record.resultado, record.fecha_liquidar)]
+        dates = [cf[1] for cf in cash_flows]
+        amounts = [cf[0] for cf in cash_flows]
+
+        def npv(rate):
+            # Start with the first date as the base
+            base_date = dates[0]
+            total_npv = 0
+
+            if rate <= -1:
+                return float('inf')  # Return a high value to indicate invalid IRR
+
+            for i, date in enumerate(dates):
+                # Calculate the time difference in days
+                days_difference = (date - base_date).days
+
+                # Discount factor
+                discount_factor = (1 + rate) ** (days_difference / 365.0)
+
+                # Contribution to NPV
+                total_npv += amounts[i] / discount_factor
+
+            return total_npv
+
+        initial_guess = 0.1
+        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
+        tir = irr * 100
+        return tir     
 
 class LiquidacionInicial(models.Model):
     _name = 'ctm.liquidacion_inicial'
