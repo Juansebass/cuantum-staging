@@ -161,6 +161,7 @@ class Proyecciones(models.Model):
             fecha_liquidar_fin = record.last_day_of_month(fecha_liquidar)
             fechas = [(fecha_liquidar, fecha_liquidar_fin)]
             fecha_final = fecha_liquidar_fin
+            row = 0
             for fecha_validacion in fechas_generacion:
                 while fecha_validacion > fecha_final:
                     fecha_incial = fecha_final + relativedelta(days=+1)
@@ -185,6 +186,11 @@ class Proyecciones(models.Model):
                     descuento_diluido = (record.valor_descuento_diluido / days_neutral) * days_period
                 else:
                     descuento_diluido = 0
+                rendimientos_totales = interes + descuento_diluido
+                if row == 0:
+                    valor_antes_cdg = record.valor_venta_inversionista + rendimientos_totales
+                else:
+                    valor_antes_cdg = valor_antes_cdg + rendimientos_totales
                 self.env['ctm.proyeccion_venta'].create(
                     {
                         'proyeccion_id': record.id,
@@ -193,9 +199,11 @@ class Proyecciones(models.Model):
                         'tasa': tasa_conf.usura,
                         'interes': interes,
                         'descuento_diluido': descuento_diluido,
-                        'rendimientos_totales': interes + descuento_diluido,
+                        'rendimientos_totales': rendimientos_totales,
+                        'valor_antes_cdg': valor_antes_cdg,
                     }
                 )
+                row += 1
           
 
 class LiquidacionInicial(models.Model):
