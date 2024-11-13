@@ -176,7 +176,8 @@ class Proyecciones(models.Model):
                 [('fecha_inicio', '<=', fecha[0]), ('fecha_final', '>=', fecha[0])], limit=1)
                 if not tasa_conf:
                     raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
-                interes = record.valor_condena * ((1 + tasa_conf.usura) ** (1/365) - 1) * (fecha[1] - fecha[0]).days
+                tasa = tasa_conf.usura / 100
+                interes = record.valor_condena * ((1 + tasa) ** (1/365) - 1) * (fecha[1] - fecha[0]).days
                 days_neutral = (record.sentencia_id.fecha_liquidar_neutral - record.sentencia_id.fecha_compra).days
                 days_period = (fecha[1] - fecha[0]).days
                 descuento_diluido = (record.valor_descuento_diluido / days_neutral) * days_period
