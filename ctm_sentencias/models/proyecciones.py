@@ -179,8 +179,8 @@ class Proyecciones(models.Model):
                 self.env['ctm.proyeccion_venta'].create(
                     {
                         'proyeccion_id': record.id,
-                        'fecha_inicial': fecha[0],
-                        'fecha_final': fecha[1],
+                        'fecha_inicial': fecha[0].date,
+                        'fecha_final': fecha[1].date,
                         'tasa': tasa_conf.usura,
                     }
                 )
