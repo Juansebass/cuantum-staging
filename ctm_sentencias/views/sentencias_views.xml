@@ -54,8 +54,8 @@
                                 <field name="comision_gestion_cuantum" widget="percentage" required="1"/>
                             </group>
                             <group string="Fechas a Liquidar">
-                                <field name="fecha_liquidar_neutral" required="1"/>
                                 <field name="fecha_liquidar_optimista" required="1"/>
+                                <field name="fecha_liquidar_neutral" required="1"/>
                                 <field name="fecha_liquidar_acido" required="1"/>
                             </group>
                         </page>

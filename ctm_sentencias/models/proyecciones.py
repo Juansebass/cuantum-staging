@@ -158,7 +158,7 @@ class Proyecciones(models.Model):
             fecha_neutral = record.sentencia_id.fecha_liquidar_neutral
             fecha_optimista = record.sentencia_id.fecha_liquidar_optimista
 
-            fechas_generacion = [fecha_acido, fecha_neutral, fecha_optimista]
+            fechas_generacion = [fecha_optimista, fecha_neutral, fecha_acido]
             fecha_liquidar_fin = record.last_day_of_month(fecha_liquidar)
             fechas = [(fecha_liquidar, fecha_liquidar_fin)]
             fecha_final = fecha_liquidar_fin
