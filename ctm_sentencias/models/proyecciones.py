@@ -162,6 +162,7 @@ class Proyecciones(models.Model):
             fecha_liquidar_fin = record.last_day_of_month(fecha_liquidar)
             fechas = [(fecha_liquidar, fecha_liquidar_fin)]
             fecha_final = fecha_liquidar_fin
+            fecha_incial = None
             for fecha_validacion in fechas_generacion:
                 while fecha_validacion > fecha_final:
                     fecha_incial = fecha_final + relativedelta(days=+1)
