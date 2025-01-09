@@ -241,7 +241,6 @@ class Proyecciones(models.Model):
                 record.tir_compra = record._generar_tir(cash_flows)
             except Exception:
                 raise ValidationError('Error al calcular la TIR de Compra con flujo de caja {0}'.format(cash_flows))
-                
 
     def _generar_tir(self, cash_flows):
         tir = 0

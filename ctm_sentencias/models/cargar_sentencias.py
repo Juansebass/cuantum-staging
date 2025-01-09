@@ -230,4 +230,4 @@ class CargarSentencias(models.Model):
             .replace('.', '')
             .replace(',', '.')
             .replace('-', '')
-        )
+        ) / 100
