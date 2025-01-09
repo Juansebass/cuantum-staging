@@ -160,10 +160,16 @@ class CargarSentencias(models.Model):
                             "valor_giro": formated_valor_giro,
                             "comision": formated_comision,
                             "costas": costas,
-                            "retencion_total": retencion_total,
+                            "retencion_total": self._format_percent(
+                                retencion_total
+                            ),
                             "estructuracion": formated_estructuracion,
-                            "intermediacion": intermediacion,
-                            "descuento_diluido": descuento_diluido,
+                            "intermediacion": self._format_percent(
+                                intermediacion
+                            ),
+                            "descuento_diluido": self._format_percent(
+                                descuento_diluido
+                            ),
                             "comision_gestion_cuantum":
                                 self._format_percent(comision_gestion_cuantum),
                             "ingreso_anticipado_cuantum":
@@ -213,7 +219,7 @@ class CargarSentencias(models.Model):
         )
 
     def _format_percent(self, percent):
-        return (
+        return float(
             percent.replace('%', '')
             .replace(' ', '')
             .replace('.', '')
