@@ -109,35 +109,54 @@ class CargarSentencias(models.Model):
                                 pagador))
                     elif len(pagador) == 0:
                         raise ValidationError(
-                            "El CSV no se procesara porque no se encuentra pagador o no está vinculado".format(
-                                pagador))
+                            "El CSV no se procesara porque no se encuentra pagador "
+                            "o no está vinculado".format(pagador))
 
                     titulo_existente = self.env['ctm.sentencias'].search(
                             [('name', '=', titulo)], limit=1)
 
                     if len(titulo_existente) > 0:
-                        vals["fecha_liquidar"] = datetime.strptime(fecha_liquidar, '%d/%m/%Y')
+                        vals["fecha_liquidar"] = datetime.strptime(
+                            fecha_liquidar, '%d/%m/%Y')
                         titulo_existente.sudo().write(vals)
                     else:
-                        formated_valor_condena = valor_condena.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
-                        formated_valor_giro = valor_giro.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
-                        formated_comision = comision.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
-                        formated_estructuracion = estructuracion.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
+                        formated_valor_condena = self._format_money(
+                            valor_condena
+                        )
+                        formated_valor_giro = self._format_money(
+                            valor_giro
+                        )
+                        formated_comision = self._format_money(
+                            comision
+                        )
+                        formated_estructuracion = self._format_money(
+                            estructuracion
+                        )
                         vals = {
                             "name": titulo,
                             "emisor": emisor.id,
                             "pagador": pagador.id,
                             "codigo": codigo,
                             "statum": statum,
-                            "fecha_ejecutoria": datetime.strptime(fecha_ejecutoria, '%d/%m/%Y'),
-                            "fecha_cuenta_cobro": datetime.strptime(fecha_cuenta_cobro, '%d/%m/%Y'),
-                            "fecha_liquidar": datetime.strptime(fecha_liquidar, '%d/%m/%Y'),
+                            "fecha_ejecutoria": datetime.strptime(
+                                fecha_ejecutoria, '%d/%m/%Y'
+                            ),
+                            "fecha_cuenta_cobro": datetime.strptime(
+                                fecha_cuenta_cobro, '%d/%m/%Y'
+                            ),
+                            "fecha_liquidar": datetime.strptime(
+                                fecha_liquidar, '%d/%m/%Y'
+                            ),
                             "valor_condena": formated_valor_condena,
                             "nit_fcp_statum": nit_fcp_statum,
                             "vendedor": vendedor,
                             "nemotecnico": nemotecnico,
-                            "fecha_vencimiento": datetime.strptime(fecha_vencimiento, '%d/%m/%Y') if fecha_vencimiento else None,
-                            "fecha_compra": datetime.strptime(fecha_compra, '%d/%m/%Y') if fecha_compra else None,
+                            "fecha_vencimiento": datetime.strptime(
+                                fecha_vencimiento, '%d/%m/%Y'
+                            ) if fecha_vencimiento else None,
+                            "fecha_compra": datetime.strptime(
+                                fecha_compra, '%d/%m/%Y'
+                            ) if fecha_compra else None,
                             "valor_giro": formated_valor_giro,
                             "comision": formated_comision,
                             "costas": costas,
@@ -159,17 +178,20 @@ class CargarSentencias(models.Model):
                                 fecha_liquidar_acido, '%d/%m/%Y'
                             ) if fecha_liquidar_acido else None
                         }
-                        new_record = self.env['ctm.sentencias'].sudo().create(vals)
-                        _procesados += "{0};{1};{2};{3}\n".format(titulo, emisor.name, pagador.name, new_record.id)
+                        new_record = self.env['ctm.sentencias'].sudo().create(
+                            vals)
+                        _procesados += "{0};{1};{2};{3}\n".format(
+                            titulo, emisor.name, pagador.name, new_record.id)
                 except Exception as e:
                     raise ValidationError(
-                        "El CSV no se procesara por el siguente error {0}, contenido de linea: {1}.".format(
-                            e, line))
+                        "El CSV no se procesara por el siguente error {0}, "
+                        "contenido de linea: {1}.".format(e, line))
             else:
                 raise ValidationError(
-                    "El CSV no se procesara por estar mal formado en la linea {0}, contenido de linea: {1}. Se necesitan al menos 8 columnas. {2}".format(
-                        i, line, lista))
-
+                        "El CSV no se procesara por estar mal formado en la linea {0}, "
+                        "contenido de linea: {1}. Se necesitan al menos 8 columnas. "
+                        "{2}".format(i, line, lista)
+                    )
 
         self.clientes_creados = _procesados
         self.not_processed_content = _noprocesados
@@ -177,4 +199,11 @@ class CargarSentencias(models.Model):
         self.fch_procesado = datetime.today()
         self.state = 'processed'
 
-
+    def _format_money(self, money):
+        return (
+            money.replace('$', '')
+            .replace(' ', '')
+            .replace('.', '')
+            .replace(',', '.')
+            .replace('-', '')
+        )
