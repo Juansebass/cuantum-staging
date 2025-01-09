@@ -67,7 +67,7 @@ class CargarSentencias(models.Model):
                     fecha_ejecutoria = lista[5]
                     fecha_cuenta_cobro = lista[6]
                     fecha_liquidar = lista[7]
-                    valor_condena = lista[8]
+                    valor_condena = lista[8] 
                     nit_fcp_statum = lista[9]
                     vendedor = lista[10]
                     nemotecnico = lista[11]
@@ -165,9 +165,11 @@ class CargarSentencias(models.Model):
                             "intermediacion": intermediacion,
                             "descuento_diluido": descuento_diluido,
                             "comision_gestion_cuantum":
-                                comision_gestion_cuantum,
+                                self._format_percent(comision_gestion_cuantum),
                             "ingreso_anticipado_cuantum":
-                                ingreso_anticipado_cuantum,
+                                self._format_percent(
+                                    ingreso_anticipado_cuantum
+                                ),
                             "fecha_liquidar_neutral": datetime.strptime(
                                 fecha_liquidar_neutral, '%d/%m/%Y'
                             ) if fecha_liquidar_neutral else None,
@@ -188,8 +190,10 @@ class CargarSentencias(models.Model):
                         "contenido de linea: {1}.".format(e, line))
             else:
                 raise ValidationError(
-                        "El CSV no se procesara por estar mal formado en la linea {0}, "
-                        "contenido de linea: {1}. Se necesitan al menos 8 columnas. "
+                        "El CSV no se procesara"
+                        "mal formado en la linea {0}, "
+                        "contenido de linea: {1}. "
+                        "Se necesitan al menos 8 columnas. "
                         "{2}".format(i, line, lista)
                     )
 
@@ -202,6 +206,15 @@ class CargarSentencias(models.Model):
     def _format_money(self, money):
         return (
             money.replace('$', '')
+            .replace(' ', '')
+            .replace('.', '')
+            .replace(',', '.')
+            .replace('-', '')
+        )
+
+    def _format_percent(self, percent):
+        return (
+            percent.replace('%', '')
             .replace(' ', '')
             .replace('.', '')
             .replace(',', '.')
