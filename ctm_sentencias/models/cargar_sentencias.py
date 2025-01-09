@@ -67,7 +67,7 @@ class CargarSentencias(models.Model):
                     fecha_ejecutoria = lista[5]
                     fecha_cuenta_cobro = lista[6]
                     fecha_liquidar = lista[7]
-                    valor_condena = lista[8] 
+                    valor_condena = lista[8]
                     nit_fcp_statum = lista[9]
                     vendedor = lista[10]
                     nemotecnico = lista[11]
@@ -99,10 +99,14 @@ class CargarSentencias(models.Model):
                             "El nombre {0} lo tienen dos o mas clientes".format(emisor))
                     elif len(emisor) == 0:
                         raise ValidationError(
-                            "El CSV no se procesara porque no se encuentra emisor o no está vinculado".format(
-                                emisor))
+                            "El CSV no se procesara porque no se encuentra emisor o no está vinculado {0}".format(
+                                emisor)
+                        )
                     pagador = self.env['res.partner'].search(
-                        [(self.client_match, '=', pagador), ('act_in', '=', 'activo')])
+                        [
+                            (self.client_match, '=', pagador),
+                            ('act_in', '=', 'activo')
+                        ])
                     if len(emisor) > 1:
                         raise ValidationError(
                             "El CSV no se procesara por pagador con nombre repetido en sistema. El nombre {0} lo tienen dos o mas clientes".format(
@@ -110,10 +114,11 @@ class CargarSentencias(models.Model):
                     elif len(pagador) == 0:
                         raise ValidationError(
                             "El CSV no se procesara porque no se encuentra pagador "
-                            "o no está vinculado".format(pagador))
+                            "o no está vinculado {0}".format(pagador)
+                        )
 
                     titulo_existente = self.env['ctm.sentencias'].search(
-                            [('name', '=', titulo)], limit=1)
+                        [('name', '=', titulo)], limit=1)
 
                     if len(titulo_existente) > 0:
                         vals["fecha_liquidar"] = datetime.strptime(
@@ -175,7 +180,7 @@ class CargarSentencias(models.Model):
                             "ingreso_anticipado_cuantum":
                                 self._format_percent(
                                     ingreso_anticipado_cuantum
-                                ),
+                            ),
                             "fecha_liquidar_neutral": datetime.strptime(
                                 fecha_liquidar_neutral, '%d/%m/%Y'
                             ) if fecha_liquidar_neutral else None,
@@ -196,12 +201,12 @@ class CargarSentencias(models.Model):
                         "contenido de linea: {1}.".format(e, line))
             else:
                 raise ValidationError(
-                        "El CSV no se procesara"
-                        "mal formado en la linea {0}, "
-                        "contenido de linea: {1}. "
-                        "Se necesitan al menos 8 columnas. "
-                        "{2}".format(i, line, lista)
-                    )
+                    "El CSV no se procesara"
+                    "mal formado en la linea {0}, "
+                    "contenido de linea: {1}. "
+                    "Se necesitan al menos 8 columnas. "
+                    "{2}".format(i, line, lista)
+                )
 
         self.clientes_creados = _procesados
         self.not_processed_content = _noprocesados

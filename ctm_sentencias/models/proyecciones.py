@@ -209,7 +209,7 @@ class Proyecciones(models.Model):
                         'valor_esperado': valor_esperado
                     }
                 )
-                #Generando TIR
+                # Generando TIR
                 if row == 0:
                     cash_flows.append((-valor_esperado, fecha[0]))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_optimista:
@@ -217,30 +217,30 @@ class Proyecciones(models.Model):
                     try:
                         record.tir_optimista = record._generar_tir(cash_flows)
                         cash_flows.pop(-1)
-                    except Exception as e:
-                        raise ValidationError('Error al calcular la TIR Optimista {0} con cashflow {1}'.format(e, cash_flows))
+                    except Exception:
+                        raise ValidationError('Error al calcular la TIR Optimista con flujo de caja {0}'.format(cash_flows))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_neutral:
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_neutral = record._generar_tir(cash_flows)
                         cash_flows.pop(-1)
-                    except Exception as e:
-                        raise ValidationError('Error al calcular la TIR Neutral {0} con cashflow {1}'.format(e, cash_flows))
+                    except Exception:
+                        raise ValidationError('Error al calcular la TIR Neutral con flujo de caja {0}'.format(cash_flows))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_acido:
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_acido = record._generar_tir(cash_flows)
                         cash_flows.pop(-1)
-                    except Exception as e:
-                        raise ValidationError('Error al calcular la TIR Ácido {0} con cashflow {1}'.format(e, cash_flows))
+                    except Exception:
+                        raise ValidationError('Error al calcular la TIR Ácido con flujo de caja {0}'.format(cash_flows))
                 row += 1
-                
-            #Para tir de compra
+
+            # Para tir de compra
             cash_flows = [(-record.valor_condena, record.sentencia_id.fecha_ejecutoria), (record.resultado, record.sentencia_id.fecha_liquidar)]
             try:
                 record.tir_compra = record._generar_tir(cash_flows)
-            except Exception as e:
-                raise ValidationError('Error al calcular la TIR de Compra {0} con cashflow {1}'.format(e, cash_flows))
+            except Exception:
+                raise ValidationError('Error al calcular la TIR de Compra con flujo de caja {0}'.format(cash_flows))
                 
 
     def _generar_tir(self, cash_flows):
