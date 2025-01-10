@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_cargue_compras" model="ir.actions.act_window">
+        <field name="name">Cargue de Compras</field>
+        <field name="res_model">ctm.cargar_compras</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="menu_control_movimientos_main" name="Control de Movimientos"  web_icon="ctm_control_movimientos,static/description/GENERAL.png" />
+
+    <menuitem id="menu_entradas" sequence="1" name="Entradas" parent="menu_control_movimientos_main">
+        <menuitem id="menu_cargue_compras" name="Cargue de Compras"  action="action_cargue_compras"/>
+    </menuitem>
+</odoo>

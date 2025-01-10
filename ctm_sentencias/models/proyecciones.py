@@ -1,9 +1,10 @@
 from odoo import models, fields
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import calendar
 from odoo.exceptions import ValidationError
 import scipy.optimize as opt
+
 
 class Proyecciones(models.Model):
     _name = 'ctm.proyecciones'
@@ -14,7 +15,7 @@ class Proyecciones(models.Model):
     retencion_total = fields.Float(string='Retención Total')
     intermediacion = fields.Float(string='Intermediación')
     estructuracion = fields.Float(string='Estructuración')
-    ingreso_anticipado_cuantum  = fields.Float('Ingreso Anticipado Cuantum')
+    ingreso_anticipado_cuantum = fields.Float('Ingreso Anticipado Cuantum')
     valor_descuento_diluido = fields.Float(string='Valor Descuento Diluido')
     valor_compra_beneficiario = fields.Float(string='Valor Compra Beneficiario')
     valor_venta_inversionista = fields.Float(string='Valor Venta Inversionista')
@@ -24,7 +25,7 @@ class Proyecciones(models.Model):
     tir_neutral = fields.Float(string='TIR Neutral')
     tir_acido = fields.Float(string='TIR Ácido')
     tir_compra = fields.Float(string='TIR Compra')
-    # Liquidaciones Iniciales	
+    # Liquidaciones Iniciales
     liquidacion_inicial_ids = fields.One2many('ctm.liquidacion_inicial', 'proyeccion_id', string='Liquidaciones Iniciales')
     valor_condena = fields.Float(string='Valor Condena', readonly=True)
     total_intereses = fields.Float(string='Total Intereses', readonly=True)
@@ -32,23 +33,21 @@ class Proyecciones(models.Model):
     # Proyecciones de Venta
     proyeccion_venta_ids = fields.One2many('ctm.proyeccion_venta', 'proyeccion_id', string='Proyecciones de Venta')
 
-
     # TODO Las proyecciones y acciones solo son visibles para sentencias de statum csf
-
 
     def calcular_proyeccion(self):
         for record in self:
             record.liquidacion_inicial_ids.unlink()
             record.generar_liquidacion_inicial()
             # Resultados
-            
+
             record.retencion_total = record.sentencia_id.retencion_total * record.total_intereses
             record.estructuracion = record.sentencia_id.estructuracion
             record.intermediacion = record.sentencia_id.intermediacion * record.resultado
 
             porcentaje_descuentos_parciales = record.sentencia_id.descuento_diluido + record.sentencia_id.ingreso_anticipado_cuantum
             descuento_parcial = record.resultado * porcentaje_descuentos_parciales
-            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion  + descuento_parcial
+            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion + descuento_parcial
             record.porcentaje_total_descuentos = record.total_descuentos / record.resultado
             record.valor_compra_beneficiario = record.resultado - record.total_descuentos
             record.valor_descuento_diluido = record.valor_compra_beneficiario * record.sentencia_id.descuento_diluido
@@ -56,7 +55,7 @@ class Proyecciones(models.Model):
             record.ingreso_anticipado_cuantum = record.sentencia_id.ingreso_anticipado_cuantum * record.resultado
 
             record.generar_proyeccion_venta()
-    
+
     def generar_liquidacion_inicial(self):
         for record in self:
             codigo = record.sentencia_id.codigo
@@ -67,7 +66,7 @@ class Proyecciones(models.Model):
             record.valor_condena = record.sentencia_id.valor_condena
             record.resultado = record.valor_condena
             record.total_intereses = 0
-            if  codigo == "CPACA":
+            if codigo == "CPACA":
                 fecha_periodo_cero = fecha_ejecutoria + relativedelta(months=+3)
 
             else:
@@ -89,17 +88,18 @@ class Proyecciones(models.Model):
 
             cont = 0
             fecha_anterior = None
-            for fecha in  unique_fechas_periodos:
+            for fecha in unique_fechas_periodos:
                 tasa = 0
                 interes = 0
-                #Buscando tasas
+                # Buscando tasas
                 tasa_conf = self.env['ctm.tasas'].search(
-                [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1)
+                    [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1
+                )
 
                 if not tasa_conf:
                     raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
 
-                #Todos los ajustes para CPACA
+                # Todos los ajustes para CPACA
                 if codigo == "CPACA":
                     if fecha <= fecha_periodo_diez:
                         tasa = tasa_conf.dtf
@@ -107,22 +107,22 @@ class Proyecciones(models.Model):
                         tasa = tasa_conf.usura
 
                     if (
-                            fecha <= fecha_cuenta_cobro and
-                            fecha > fecha_periodo_cero and
-                            fecha_cuenta_cobro >=  fecha_periodo_cero
+                            fecha <= fecha_cuenta_cobro
+                            and fecha > fecha_periodo_cero
+                            and fecha_cuenta_cobro >= fecha_periodo_cero
                     ):
                         tasa = 0
                 if codigo == "CCA":
                     tasa = tasa_conf.usura
                     if (
-                            fecha <= fecha_cuenta_cobro and
-                            fecha > fecha_periodo_cero and
-                            fecha_cuenta_cobro >= fecha_periodo_cero
+                            fecha <= fecha_cuenta_cobro
+                            and fecha > fecha_periodo_cero
+                            and fecha_cuenta_cobro >= fecha_periodo_cero
                     ):
                         tasa = 0
                 if cont > 0:
                     dias = (fecha - fecha_anterior).days
-                    interes = round(((1 + (tasa/100)) ** (1/365) - 1), 6) * dias * record.valor_condena
+                    interes = round(((1 + (tasa / 100)) ** (1 / 365) - 1), 6) * dias * record.valor_condena
 
                 self.env['ctm.liquidacion_inicial'].create({
                     'proyeccion_id': self.id,
@@ -140,7 +140,7 @@ class Proyecciones(models.Model):
         _, last_day = calendar.monthrange(date.year, date.month)
         return datetime(date.year, date.month, last_day).date()
 
-    def generate_last_days(self,start_date, end_date):
+    def generate_last_days(self, start_date, end_date):
         current_date = start_date
         last_days = []
 
@@ -153,7 +153,7 @@ class Proyecciones(models.Model):
     def generar_proyeccion_venta(self):
         for record in self:
             record.proyeccion_venta_ids.unlink()
-            fecha_liquidar= record.sentencia_id.fecha_liquidar
+            fecha_liquidar = record.sentencia_id.fecha_liquidar
             fecha_acido = record.sentencia_id.fecha_liquidar_acido
             fecha_neutral = record.sentencia_id.fecha_liquidar_neutral
             fecha_optimista = record.sentencia_id.fecha_liquidar_optimista
@@ -174,13 +174,14 @@ class Proyecciones(models.Model):
             row = 0
             cash_flows = []
             for fecha in fechas:
-                 #Buscando tasas
+                # Buscando tasas
                 tasa_conf = self.env['ctm.tasas'].search(
-                [('fecha_inicio', '<=', fecha[0]), ('fecha_final', '>=', fecha[0])], limit=1)
+                    [('fecha_inicio', '<=', fecha[0]), ('fecha_final', '>=', fecha[0])], limit=1
+                )
                 if not tasa_conf:
                     raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
                 tasa = tasa_conf.usura / 100
-                interes = record.valor_condena * ((1 + tasa) ** (1/365) - 1) * (fecha[1] - fecha[0]).days
+                interes = record.valor_condena * ((1 + tasa) ** (1 / 365) - 1) * (fecha[1] - fecha[0]).days
 
                 if fecha[1] <= record.sentencia_id.fecha_liquidar_neutral:
                     days_neutral = (record.sentencia_id.fecha_liquidar_neutral - record.sentencia_id.fecha_liquidar).days
@@ -193,7 +194,7 @@ class Proyecciones(models.Model):
                     valor_antes_cdg = record.valor_venta_inversionista + rendimientos_totales
                 else:
                     valor_antes_cdg = valor_antes_cdg + rendimientos_totales
-                valor_comision_gestion = valor_antes_cdg * ((1 + record.sentencia_id.comision_gestion_cuantum) ** (1/365) - 1) * (fecha[1] - fecha[0]).days
+                valor_comision_gestion = valor_antes_cdg * ((1 + record.sentencia_id.comision_gestion_cuantum) ** (1 / 365) - 1) * (fecha[1] - fecha[0]).days
                 valor_esperado = valor_antes_cdg - valor_comision_gestion
                 self.env['ctm.proyeccion_venta'].create(
                     {
@@ -244,7 +245,7 @@ class Proyecciones(models.Model):
 
     def _generar_tir(self, cash_flows):
         tir = 0
-        #cash_flows = [(-record.valor_condena, record.fecha_ejecutoria), (record.resultado, record.fecha_liquidar)]
+        # cash_flows = [(-record.valor_condena, record.fecha_ejecutoria), (record.resultado, record.fecha_liquidar)]
         dates = [cf[1] for cf in cash_flows]
         amounts = [cf[0] for cf in cash_flows]
 
@@ -268,10 +269,10 @@ class Proyecciones(models.Model):
 
             return total_npv
 
-        initial_guess = 0.1
         irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
         tir = irr * 100
-        return tir     
+        return tir
+
 
 class LiquidacionInicial(models.Model):
     _name = 'ctm.liquidacion_inicial'
@@ -281,6 +282,7 @@ class LiquidacionInicial(models.Model):
     fecha = fields.Date('Fecha', required=1)
     tasa = fields.Float('Tasa', digits=(10, 6))
     interes = fields.Float('Interés')
+
 
 class ProyeccionVenta(models.Model):
     _name = 'ctm.proyeccion_venta'
