@@ -3,7 +3,7 @@
     'name': 'Control de Movimientos',
     'category': 'Account',
     'summary': 'Modulo de Control de Movimientos Cuantum',
-    'version': '0.0.1',
+    'version': '0.0.2',
     'description': """ """,
     'author': 'Juan Sebastian Correa Acevedo',
     'license': '',
