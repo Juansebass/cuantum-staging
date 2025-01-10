@@ -12,4 +12,4 @@ class Compras(models.Model):
     investment_type_id = fields.Many2one('ati.investment_type', string='Tipo de Inversion', required=True)
     gestor_id = fields.Many2one('ati.gestor', string='Gestor', required=True)
     flujo = fields.Float(string='Flujo', required=True)
-    cdg = fields.Flujo(string='CDG', required=True)
+    cdg = fields.Float(string='CDG', required=True)
