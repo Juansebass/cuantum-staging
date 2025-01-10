@@ -13,6 +13,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/menu.xml',
+        'views/compras.xml',
     ],
     'installable': True,
     'application': True,
