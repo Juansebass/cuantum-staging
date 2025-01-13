@@ -10,7 +10,7 @@ class CargarMovimientos(models.Model):
 
     name = fields.Char(string='Nombre', required=True)
     fecha = fields.Date(string='Fecha', required=True)
-    responsable_id = fields.Many2one('res.partner', string='Responsable', required=True)
+    responsable_id = fields.Many2one('res.partner', string='Responsable')
     tipo = fields.Selection([
         ('compra', 'Compra'),
         ('aplicación', 'Aplicación')
@@ -18,8 +18,8 @@ class CargarMovimientos(models.Model):
     client_file = fields.Binary(string='Archivo', required=True)
     delimiter = fields.Selection([
         (';', ';'),
-        (',', ',')
-    ], string='Delimitador', required=True)
+        (',', ',')  
+    ], string='Delimitador', required=True, default=';')
     skip_first_line = fields.Boolean('Saltar primera linea', default=True)
     state = fields.Selection([
         ('pendiente', 'Pendiente'),
@@ -38,6 +38,8 @@ class CargarMovimientos(models.Model):
         lines = self.file_content.replace('\n', '')
         lines = lines.split('\r')
 
+        self.responsable_id = self.env.user.partner_id.id
+
         if self.skip_first_line:
             lines = lines[1:]
 
@@ -49,10 +51,10 @@ class CargarMovimientos(models.Model):
                     raise ValidationError(f'Cliente {line[0]} no encontrado')
                 fecha = datetime.strptime(line[1], '%d/%m/%Y')
                 valor = self._format_money(line[2])
-                inversion = self.env['ati.investment.type'].search([('name', '=', line[3])])
+                inversion = self.env['ati.investment.type'].search([('code', '=', line[3])])
                 if not inversion:
                     raise ValidationError(f'Inversión {line[3]} no encontrada')
-                gestor = self.env['ati.gestor'].search([('name', '=', line[4])])
+                gestor = self.env['ati.gestor'].search([('code', '=', line[4])])
                 if not gestor:
                     raise ValidationError(f'Gestor {line[4]} no encontrado')
                 flujo = self._format_percent(line[5])
