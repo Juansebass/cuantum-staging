@@ -22,7 +22,7 @@ class CargarMovimientos(models.Model):
         ('pendiente', 'Pendiente'),
         ('cargado', 'Cargado')
     ], string='Estado', required=True)
-    contenido = fields.Text(string='file_content', required=True)
+    file_content = fields.Text(string='Contenido', required=True)
 
     def cargar_movimientos(self):
         pass
