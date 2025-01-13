@@ -23,3 +23,6 @@ class CargarMovimientos(models.Model):
         ('cargado', 'Cargado')
     ], string='Estado', required=True)
     contenido = fields.Text(string='file_content', required=True)
+
+    def cargar_movimientos(self):
+        pass

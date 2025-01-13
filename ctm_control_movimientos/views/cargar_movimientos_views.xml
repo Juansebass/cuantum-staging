@@ -15,7 +15,7 @@
         <field name="arch" type="xml">
             <form string="Cargar Movimientos">
                 <header>
-					<button name="btn_cargar" type="object" string="Cargar" states="pendiente" />
+					<button name="cargar_movimientos" type="object" string="Cargar Movimientos" states="pendiente" />
 					<field name="state" widget="statusbar" />
 				</header>
                 <sheet>
