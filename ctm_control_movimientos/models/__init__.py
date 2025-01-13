@@ -1,1 +1,1 @@
-from . import cargar_compras
+from . import compras
