@@ -9,7 +9,7 @@ class Compras(models.Model):
     partner_id = fields.Many2one('res.partner', string='Cliente', required=True)
     fecha = fields.Date(string='Fecha', required=True)
     valor = fields.Float(string='Valor', required=True)
-    investment_type_id = fields.Many2one('ati.investment_type', string='Tipo de Inversion', required=True)
+    investment_type_id = fields.Many2one('ati.investment.type', string='Tipo de Inversion', required=True)
     gestor_id = fields.Many2one('ati.gestor', string='Gestor', required=True)
     flujo = fields.Float(string='Flujo', required=True)
     cdg = fields.Float(string='CDG', required=True)
