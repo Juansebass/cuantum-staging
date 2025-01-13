@@ -24,7 +24,7 @@ class CargarMovimientos(models.Model):
     state = fields.Selection([
         ('pendiente', 'Pendiente'),
         ('cargado', 'Cargado')
-    ], string='Estado', required=True)
+    ], string='Estado', required=True, default='pendiente')
     file_content = fields.Text(string='Contenido', required=True)
 
     def cargar_movimientos(self):
