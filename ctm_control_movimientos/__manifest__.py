@@ -8,7 +8,7 @@
     'author': 'Juan Sebastian Correa Acevedo',
     'license': '',
     'depends': [
-        'base', 'contacts', 'portal',
+        'base', 'contacts', 'portal', 'ati_titulos',
     ],
     'data': [
         'security/ir.model.access.csv',
