@@ -34,7 +34,7 @@
                     </group>
                     <notebook>
 						<page string="Contenido" >
-							<field name="file_content" readonly="1"/>
+							
 						</page>
 					</notebook>
                 </sheet>
