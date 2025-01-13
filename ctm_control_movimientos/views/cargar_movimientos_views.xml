@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_tree_ctm_cargar_movimientos" model="ir.ui.view">
+        <field name="name">ctm.cargar_movimientos.tree</field>
+        <field name="model">ctm.cargar_movimientos</field>
+        <field name="arch" type="xml">
+            <tree string="Cargar Movimientos">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_form_ctm_cargar_movimientos" model="ir.ui.view">
+        <field name="name">ctm.cargar_movimientos.form</field>
+        <field name="model">ctm.cargar_movimientos</field>
+        <field name="arch" type="xml">
+            <form string="Cargar Movimientos">
+                <header>
+					<button name="btn_cargar" type="object" string="Cargar" states="pendiente" />
+					<field name="state" widget="statusbar" />
+				</header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="fecha" />
+                            <field name="tipo" />
+                            <field name="client_file" widget="binary"/>
+                        </group>
+                        <group>
+                            <field name="delimiter" />
+                            <field name="skip_first_line" />
+                            <field name="responsable_id" readonly='1'/>
+                        </group>
+                    </group>
+                    <notebook>
+						<page string="Contenido" >
+							<field name="file_content" readonly="1"/>
+						</page>
+					</notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

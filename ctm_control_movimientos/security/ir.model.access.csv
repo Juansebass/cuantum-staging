@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_ctm_compras_user,ctm.compras.user,model_ctm_compras,base.group_user,1,1,1,1
+access_ctm_cargar_movimientos_user,ctm.cargar_movimientos.user,model_ctm_cargar_movimientos,base.group_user,1,1,1,1
