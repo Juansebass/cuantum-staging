@@ -18,7 +18,7 @@ class CargarMovimientos(models.Model):
     client_file = fields.Binary(string='Archivo', required=True)
     delimiter = fields.Selection([
         (';', ';'),
-        (',', ',')  
+        (',', ',')
     ], string='Delimitador', required=True, default=';')
     skip_first_line = fields.Boolean('Saltar primera linea', default=True)
     state = fields.Selection([
@@ -71,6 +71,20 @@ class CargarMovimientos(models.Model):
                         'cdg': cdg
                     }
                     self.env['ctm.compras'].create(vals)
+                if self.tipo == 'aplicación':
+                    otros = self._format_money(line[7])
+                    vals = {
+                        'name': line[0],
+                        'partner_id': cliente.id,
+                        'fecha': fecha,
+                        'valor': valor,
+                        'investment_type_id': inversion.id,
+                        'gestor_id': gestor.id,
+                        'flujo': flujo,
+                        'cdg': cdg,
+                        'otros': otros
+                    }
+                    self.env['ctm.aplicaciones'].create(vals)
             except Exception as e:
                 raise ValidationError(f'Error en la linea {i + 1}: {e}. Contenido: {line}')
 
