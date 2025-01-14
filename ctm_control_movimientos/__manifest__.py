@@ -14,6 +14,7 @@
         'security/ir.model.access.csv',
         'views/menu.xml',
         'views/compras.xml',
+        'views/aplicaciones.xml',
         'views/cargar_movimientos_views.xml',
     ],
     'installable': True,
