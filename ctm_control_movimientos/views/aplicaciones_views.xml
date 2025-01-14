@@ -1,0 +1,43 @@
+<odoo>
+    <record id="view_ctm_aplicaciones_tree" model="ir.ui.view">
+        <field name="name">ctm.aplicaciones.tree</field>
+        <field name="model">ctm.aplicaciones</field>
+        <field name="arch" type="xml">
+            <tree string="Aplicaciones">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="fecha"/>
+                <field name="investment_type_id"/>
+                <field name="gestor_id"/>
+                <field name="valor"/>
+                <field name="flujo"/>
+                <field name="cdg"/>
+                <field name="otros"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ctm_aplicaciones_form" model="ir.ui.view">
+        <field name="name">ctm.aplicaciones.form</field>
+        <field name="model">ctm.aplicaciones</field>
+        <field name="arch" type="xml">
+            <form string="Aplicaciones">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="fecha"/>
+                        <field name="investment_type_id"/>
+                        <field name="gestor_id"/>
+                    </group>
+                    <group>
+                        <field name="valor"/>
+                        <field name="flujo"/>
+                        <field name="cdg"/>
+                        <field name="otros"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>   
+</odoo>

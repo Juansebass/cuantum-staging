@@ -7,6 +7,12 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record id="action_aplicaciones" model="ir.actions.act_window">
+        <field name="name">Aplicaciones</field>
+        <field name="res_model">ctm.aplicaciones</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <record id="action_cargar_movimientos" model="ir.actions.act_window">
         <field name="name">Cargar Movimientos</field>
         <field name="res_model">ctm.cargar_movimientos</field>
@@ -18,6 +24,7 @@
 
     <menuitem id="menu_entradas" sequence="1" name="Entradas" parent="menu_control_movimientos_main">
         <menuitem id="menu_compras" name="Compras"  action="action_compras"/>
+        <menuitem id="menu_aplicaciones" name="Aplicaciones" action="action_aplicaciones"/>
         <menuitem id="menu_cargar_movimientos" name="Cargar Movimientos"  action="action_cargar_movimientos"/>
     </menuitem>
 </odoo>
