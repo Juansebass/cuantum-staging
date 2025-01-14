@@ -46,22 +46,23 @@ class CargarMovimientos(models.Model):
         for i, line in enumerate(lines):
             try:
                 line = line.split(self.delimiter)
-                cliente = self.env['res.partner'].search([('name', '=', line[0])])
-                if not cliente:
-                    raise ValidationError(f'Cliente {line[0]} no encontrado')
                 fecha = datetime.strptime(line[1], '%d/%m/%Y')
-                valor = self._format_money(line[2])
-                inversion = self.env['ati.investment.type'].search([('code', '=', line[3])])
+                cliente = self.env['res.partner'].search([('vat', '=', line[2])])
+                if not cliente:
+                    raise ValidationError(f'Cliente {line[2]} no encontrado')
+                valor = self._format_money(line[3])
+                inversion = self.env['ati.investment.type'].search([('code', '=', line[4])])
                 if not inversion:
-                    raise ValidationError(f'Inversión {line[3]} no encontrada')
-                gestor = self.env['ati.gestor'].search([('code', '=', line[4])])
+                    raise ValidationError(f'Inversión {line[4]} no encontrada')
+                gestor = self.env['ati.gestor'].search([('code', '=', line[5])])
                 if not gestor:
-                    raise ValidationError(f'Gestor {line[4]} no encontrado')
-                flujo = self._format_percent(line[5])
-                cdg = self._format_percent(line[6])
+                    raise ValidationError(f'Gestor {line[5]} no encontrado')
+                flujo = self._format_percent(line[6])
+                cdg = self._format_percent(line[7])
                 if self.tipo == 'compra':
                     vals = {
                         'name': line[0],
+                        'fecha': fecha,
                         'partner_id': cliente.id,
                         'fecha': fecha,
                         'valor': valor,
@@ -72,7 +73,7 @@ class CargarMovimientos(models.Model):
                     }
                     self.env['ctm.compras'].create(vals)
                 if self.tipo == 'aplicación':
-                    otros = self._format_money(line[7])
+                    otros = self._format_money(line[8])
                     vals = {
                         'name': line[0],
                         'partner_id': cliente.id,
