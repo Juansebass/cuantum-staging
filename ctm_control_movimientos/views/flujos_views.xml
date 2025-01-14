@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_ctm_flujos_tree" model="ir.ui.view">
+        <field name="name">ctm.flujos.tree</field>
+        <field name="model">ctm.flujos</field>
+        <field name="arch" type="xml">
+            <tree string="Flujos">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="flujo"/>
+                <field name="cdg"/>
+                <field name="aplicacion_id"/>
+                <field name="compra_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ctm_flujos_form" model="ir.ui.view">
+        <field name="name">ctm.flujos.form</field>
+        <field name="model">ctm.flujos</field>
+        <field name="arch" type="xml">
+            <form string="Flujos">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="flujo" readonly="1"/>
+                        <field name="cdg" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="aplicacion_id" attrs="{'invisible': [('aplicacion_id', '=', False)]}" readonly="1"/>
+                        <field name="compra_id" attrs="{'invisible': [('compra_id', '=', False)]}" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

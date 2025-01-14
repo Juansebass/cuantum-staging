@@ -27,4 +27,6 @@
         <menuitem id="menu_aplicaciones" name="Aplicaciones" action="action_aplicaciones" sequence="2"/>
         <menuitem id="menu_cargar_movimientos" name="Cargar Movimientos"  action="action_cargar_movimientos" sequence="3"/>
     </menuitem>
+
+    <menuitem id="menu_flujos" sequence="2" name="Flujos" parent="menu_control_movimientos_main" action="action_flujos"/>
 </odoo>

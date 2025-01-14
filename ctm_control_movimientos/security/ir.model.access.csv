@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_ctm_compras_user,ctm.compras.user,model_ctm_compras,base.group_user,1,1,1,1
 access_ctm_cargar_movimientos_user,ctm.cargar_movimientos.user,model_ctm_cargar_movimientos,base.group_user,1,1,1,1
 access_ctm_aplicaciones_user,ctm.aplicaciones.user,model_ctm_aplicaciones,base.group_user,1,1,1,1
+access_ctm_flujos_user,ctm.flujos.user,model_ctm_flujos,base.group_user,1,1,1,1
