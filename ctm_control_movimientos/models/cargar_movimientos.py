@@ -25,7 +25,7 @@ class CargarMovimientos(models.Model):
         ('pendiente', 'Pendiente'),
         ('cargado', 'Cargado')
     ], string='Estado', required=True, default='pendiente')
-    file_content = fields.Text(string='Contenido', required=True)
+    file_content = fields.Text(string='Contenido')
 
     def cargar_movimientos(self):
         self.ensure_one()
