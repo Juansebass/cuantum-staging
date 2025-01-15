@@ -8,8 +8,7 @@
                 <field name="partner_id"/>
                 <field name="flujo"/>
                 <field name="cdg"/>
-                <field name="aplicacion_id"/>
-                <field name="compra_id"/>
+                <field name="tipo"/>
             </tree>
         </field>
     </record>
@@ -22,6 +21,7 @@
                 <sheet>
                     <group>
                         <field name="name" readonly="1"/>
+                        <field name="tipo" readonly="1"/>
                         <field name="partner_id" readonly="1"/>
                         <field name="flujo" readonly="1"/>
                         <field name="cdg" readonly="1"/>

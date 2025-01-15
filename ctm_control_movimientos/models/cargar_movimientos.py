@@ -71,7 +71,8 @@ class CargarMovimientos(models.Model):
                         'flujo': flujo,
                         'cdg': cdg
                     }
-                    self.env['ctm.compras'].create(vals)
+                    compra_id = self.env['ctm.compras'].create(vals)
+                    compra_id.procesar_movimiento()
                 if self.tipo == 'aplicación':
                     otros = self._format_money(line[8])
                     vals = {
