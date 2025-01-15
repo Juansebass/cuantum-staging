@@ -16,7 +16,7 @@ class Compras(models.Model):
 
     def procesar_movimiento(self):
         for record in self:
-            name = f'{self.partner_id.name} - {self.fecha} - {self.investment_type_id.code} - {self.gestor_id.code} - {self.flujo}% - {self.cdg}%'
+            name = f'{self.partner_id.name} - {self.investment_type_id.code} - {self.gestor_id.code} - {self.flujo * 100}% - {self.cdg * 100}%'
             record.crear_flujo(name)
 
     def crear_flujo(self, name):
