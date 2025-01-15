@@ -392,7 +392,3 @@ class LiquidacionesResumen(models.Model):
     fecha = fields.Date('Fecha', required=1)
     tasa = fields.Float('Tasa', digits=(10, 6))
     interes = fields.Float('Interés')
-
-
-
-

@@ -30,6 +30,26 @@
                         <field name="aplicacion_id" attrs="{'invisible': [('aplicacion_id', '=', False)]}" readonly="1"/>
                         <field name="compra_id" attrs="{'invisible': [('compra_id', '=', False)]}" readonly="1"/>
                     </group>
+                    <notebook>
+                        <page name="movimientos_flujo" string="Movimientos Flujo">
+                            <field name="movimientos_flujo_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="fecha_inicial" optional="show"/>
+                                    <field name="fecha_final" optional="show"/>
+                                    <field name="compra" optional="show"/>
+                                    <field name="rendimiento" optional="show"/>
+                                    <field name="rendimiento_acumulado" optional="show"/>
+                                    <field name="cdg" optional="show"/>
+                                    <field name="cdg_acumulado" optional="show"/>
+                                    <field name="pago_otros_conceptos" optional="show"/>
+                                    <field name="pago_cdg" optional="show"/>
+                                    <field name="pago_rendimientos" optional="show"/>
+                                    <field name="pago_capital" optional="show"/>
+                                    <field name="valor_activo" optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
