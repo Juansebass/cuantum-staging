@@ -9,6 +9,7 @@ class Flujos(models.Model):
     partner_id = fields.Many2one('res.partner', string='Cliente', required=True)
     flujo = fields.Float(string='Flujo', required=True)
     cdg = fields.Float(string='CDG', required=True)
+    movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
 
 
 class MovimientosFlujos(models.Model):
@@ -30,7 +31,6 @@ class MovimientosFlujos(models.Model):
     valor_activo = fields.Float('Valor Activo', required=1)
     aplicacion_id = fields.Many2one('ctm.aplicaciones', string='Aplicación')
     compra_id = fields.Many2one('ctm.compras', string='Compra')
-    movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
     tipo = fields.Selection(
         [
             ('compra', 'Compra'),
