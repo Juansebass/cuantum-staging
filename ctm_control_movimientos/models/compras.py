@@ -51,7 +51,7 @@ class Compras(models.Model):
 
     def actualizar_flujo(self, flujo_id):
         self.ensure_one()
-        past_movimiento_id = self.flujo_id.movimientos_flujo_ids.search([], order='fecha_final desc', limit=1)
+        past_movimiento_id = flujo_id.movimientos_flujo_ids.search([], order='fecha_final desc', limit=1)
         fecha_inicial = past_movimiento_id.fecha_final
         fecha_final = self.fecha
         past_valor_activo = past_movimiento_id.valor_activo
