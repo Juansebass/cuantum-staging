@@ -23,8 +23,8 @@
                         <field name="name" readonly="1"/>
                         <field name="tipo" readonly="1"/>
                         <field name="partner_id" readonly="1"/>
-                        <field name="flujo" readonly="1"/>
-                        <field name="cdg" readonly="1"/>
+                        <field name="flujo" widget="percentage" readonly="1"/>
+                        <field name="cdg" widget="percentage" readonly="1"/>
                     </group>
                     <group>
                         <field name="aplicacion_id" attrs="{'invisible': [('aplicacion_id', '=', False)]}" readonly="1"/>

@@ -31,8 +31,8 @@
                     </group>
                     <group>
                         <field name="valor"/>
-                        <field name="flujo"/>
-                        <field name="cdg"/>
+                        <field name="flujo" widget="percentage"/>
+                        <field name="cdg" widget="percentage"/>
                     </group>
                     
                 </sheet>
