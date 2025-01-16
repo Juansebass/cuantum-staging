@@ -9,22 +9,13 @@ class Flujos(models.Model):
     partner_id = fields.Many2one('res.partner', string='Cliente', required=True)
     flujo = fields.Float(string='Flujo', required=True)
     cdg = fields.Float(string='CDG', required=True)
-    tipo = fields.Selection(
-        [
-            ('compra', 'Compra'),
-            ('aplicación', 'Aplicación')
-        ], string='Tipo', required=True, default='compra'
-    )
-    aplicacion_id = fields.Many2one('ctm.aplicaciones', string='Aplicación')
-    compra_id = fields.Many2one('ctm.compras', string='Compra')
-    movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
 
 
 class MovimientosFlujos(models.Model):
     _name = 'ctm.movimientos_flujos'
     _description = 'Movimientos Flujos'
 
-    flujo_id = fields.Many2one('ctm.flujos', string='Flujo', required=True)
+    flujo_id = fields.Many2one('ctm.flujos', string='Flujo', required=True, ondelete='cascade')
     fecha_inicial = fields.Date('Fecha Inicial', required=1)
     fecha_final = fields.Date('Fecha Final', required=1)
     compra = fields.Float('Compra', required=1)
@@ -37,3 +28,12 @@ class MovimientosFlujos(models.Model):
     pago_rendimientos = fields.Float('Pago Rendimientos', required=1)
     pago_capital = fields.Float('Pago Capital', required=1)
     valor_activo = fields.Float('Valor Activo', required=1)
+    aplicacion_id = fields.Many2one('ctm.aplicaciones', string='Aplicación')
+    compra_id = fields.Many2one('ctm.compras', string='Compra')
+    movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
+    tipo = fields.Selection(
+        [
+            ('compra', 'Compra'),
+            ('aplicación', 'Aplicación')
+        ], string='Tipo', required=True, default='compra'
+    )

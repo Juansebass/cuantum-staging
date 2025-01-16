@@ -10,8 +10,8 @@
                 <field name="investment_type_id"/>
                 <field name="gestor_id"/>
                 <field name="valor"/>
-                <field name="flujo"/>
-                <field name="cdg"/>
+                <field name="flujo" widget="percentage"/>
+                <field name="cdg" widget="percentage"/>
             </tree>
         </field>
     </record>
