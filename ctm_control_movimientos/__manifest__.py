@@ -17,6 +17,7 @@
         'views/aplicaciones_views.xml',
         'views/cargar_movimientos_views.xml',
         'views/flujos_views.xml',
+        'wizards/cerrar_movimientos_flujos_views.xml',
     ],
     'installable': True,
     'application': True,

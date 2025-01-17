@@ -11,6 +11,25 @@ class Flujos(models.Model):
     cdg = fields.Float(string='CDG', required=True)
     movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
 
+    def button_cerrar_movimientos_flujos(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'ctm.cerrar_movimientos_flujos.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_date': fields.Date.today(),
+                'active_ids': self.ids,
+            },
+        }
+
+    def cerrar_movimientos_flujos(self, date):
+        for record in self:
+            movimientos_abiertos = record.movimientos_flujo_ids.filtered(lambda x: x.state == 'abierto')
+            for movimiento in movimientos_abiertos:
+                if movimiento.fecha_final <= date:
+                    movimiento.state = 'cerrado'
+
 
 class MovimientosFlujos(models.Model):
     _name = 'ctm.movimientos_flujos'
@@ -36,4 +55,10 @@ class MovimientosFlujos(models.Model):
             ('compra', 'Compra'),
             ('aplicación', 'Aplicación')
         ], string='Tipo', required=True, default='compra'
+    )
+    state = fields.Selection(
+        [
+            ('abierto', 'Abierto'),
+            ('cerrado', 'Cerrado')
+        ], string='Estado', required=True, default='abierto', index=True
     )

@@ -17,6 +17,9 @@
         <field name="model">ctm.flujos</field>
         <field name="arch" type="xml">
             <form string="Flujos">
+                <header>
+					<button name="button_cerrar_movimientos_flujos" type="object" string="Cerrar Movimientos Flujo"/>
+				</header>
                 <sheet>
                     <group>
                         <field name="name" readonly="1"/>
@@ -41,6 +44,7 @@
                                     <field name="pago_rendimientos" optional="show"/>
                                     <field name="pago_capital" optional="show"/>
                                     <field name="valor_activo" optional="show"/>
+                                    <field name="state" optional="show"/>
                                 </tree>
                             </field>
                         </page>
