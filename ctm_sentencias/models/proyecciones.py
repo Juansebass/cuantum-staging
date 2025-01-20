@@ -173,6 +173,10 @@ class Proyecciones(models.Model):
                 fechas.append((fecha_incial, fecha_final))
             row = 0
             cash_flows = []
+
+            if fecha_liquidar_fin == fecha_optimista:
+                raise ValidationError('La fecha de liquidación optimista no puede ser igual a la fecha de liquidación')
+
             for fecha in fechas:
                 # Buscando tasas
                 tasa_conf = self.env['ctm.tasas'].search(
