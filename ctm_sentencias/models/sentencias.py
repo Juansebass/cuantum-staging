@@ -1,11 +1,8 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields
 from odoo.exceptions import ValidationError
-import base64
-import io
-import xlsxwriter
-from datetime import datetime
+
 
 class Sentencias(models.Model):
     _name = 'ctm.sentencias'
@@ -47,16 +44,13 @@ class Sentencias(models.Model):
     precio = fields.Float('Precio', required=1)
     costas = fields.Float('Costas')
 
-
-    #Descuentos
+    #  Descuentos
     retencion_total = fields.Float('Retención Total')
     estructuracion = fields.Float('Estructuración')
     intermediacion = fields.Float('Intermediación')
     descuento_diluido = fields.Float('Descuento Diluido')
     comision_gestion_cuantum = fields.Float('Comisión Gestión Cuantum')
-    ingreso_anticipado_cuantum  = fields.Float('Ingreso Anticipado Cuantum')
-
-   
+    ingreso_anticipado_cuantum = fields.Float('Ingreso Anticipado Cuantum')
     # Poner regla cada nueva fecha debe ser mayor a las anteriores
     fecha_liquidar_neutral = fields.Date('Fecha a Liquidar Neutral')
     fecha_liquidar_optimista = fields.Date('Fecha a Liquidar Optimista')
@@ -76,13 +70,19 @@ class Sentencias(models.Model):
     )
     proyeccion_ids = fields.One2many('ctm.proyecciones', 'sentencia_id', string='Proyecciones')
 
+    def create(self, vals):
+        res = super(Sentencias, self).create(vals)
+        if res.statum != 'CSF' and not res.nit_fcp_statum:
+            raise ValidationError('Debe ingresar el NIT FCP STATUM')
+        return res
+
     def generar_proyeccion(self):
         for record in self:
             record.proyeccion_ids.unlink()
             proyeccion_id = self.env['ctm.proyecciones'].create({
-               'name': f"Proyección Sentencia - {record.name}",
-               'sentencia_id': record.id,
-           })
+                'name': f"Proyección Sentencia - {record.name}",
+                'sentencia_id': record.id,
+            })
             proyeccion_id.calcular_proyeccion()
 
     def action_view_proyecciones(self):
