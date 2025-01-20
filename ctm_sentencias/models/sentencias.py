@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 
@@ -70,6 +70,7 @@ class Sentencias(models.Model):
     )
     proyeccion_ids = fields.One2many('ctm.proyecciones', 'sentencia_id', string='Proyecciones')
 
+    @api.model
     def create(self, vals):
         res = super(Sentencias, self).create(vals)
         if res.statum != 'CSF' and not res.nit_fcp_statum:
