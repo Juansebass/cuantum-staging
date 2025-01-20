@@ -76,6 +76,12 @@ class Sentencias(models.Model):
         if res.statum != 'CSF' and not res.nit_fcp_statum:
             raise ValidationError('Debe ingresar el NIT FCP STATUM')
         return res
+    
+    def write(self, vals):
+        res = super(Sentencias, self).write(vals)
+        if self.statum != 'CSF' and not self.nit_fcp_statum:
+            raise ValidationError('Debe ingresar el NIT FCP STATUM')
+        return res
 
     def generar_proyeccion(self):
         for record in self:
