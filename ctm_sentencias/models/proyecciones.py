@@ -37,8 +37,8 @@ class Proyecciones(models.Model):
 
     def calcular_proyeccion(self):
         for record in self:
-            if record.sentencia_id.fecha_liquidar <= record.sentencia_id.fecha_liquidar_optimista:
-                raise ValidationError('La fecha de liquidación no puede ser menor o igual a la fecha de liquidación optimista')
+            if record.sentencia_id.fecha_liquidar_optimista <= record.sentencia_id.fecha_liquidar:
+                raise ValidationError('La fecha optimista no puede ser menor o igual a la fecha de liquidación')
 
             record.liquidacion_inicial_ids.unlink()
             record.generar_liquidacion_inicial()
