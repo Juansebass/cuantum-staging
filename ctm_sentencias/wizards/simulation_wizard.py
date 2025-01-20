@@ -1,5 +1,5 @@
-from odoo import models, fields, api
-from datetime import datetime
+from odoo import models, fields
+
 
 class SimulationWizard(models.TransientModel):
     _name = 'simulation.wizard'
@@ -14,4 +14,3 @@ class SimulationWizard(models.TransientModel):
             for rec in records:
                 rec.fecha_liquidar = self.date
                 rec.generar_simulacion()
-

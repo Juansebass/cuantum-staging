@@ -10,6 +10,12 @@ class Flujos(models.Model):
     flujo = fields.Float(string='Flujo', required=True)
     cdg = fields.Float(string='CDG', required=True)
     movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
+    fecha_cierre = fields.Date('Fecha')
+    rendimiento_cierre = fields.Float('Rendimiento de Cierre')
+    rendimiento_acumulado_cierre = fields.Float('Rendimiento Acumulado de Cierre')
+    cdg_cierre = fields.Float('CDG de Cierre')
+    cdg_acumulado_cierre = fields.Float('CDG Acumulado de Cierre')
+    valor_activo_cierre = fields.Float('Valor Activo de Cierre')
 
     def button_cerrar_movimientos_flujos(self):
         return {

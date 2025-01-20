@@ -13,8 +13,8 @@ class Sentencias(models.Model):
     _inherit = []
 
     name = fields.Char('Nombre', required=1)
-    emisor = fields.Many2one('res.partner','Emisor',required=1)
-    pagador = fields.Many2one('res.partner','Pagador',required=1)
+    emisor = fields.Many2one('res.partner', 'Emisor', required=1)
+    pagador = fields.Many2one('res.partner', 'Pagador', required=1)
     codigo = fields.Char('Código', required=1)
     statum = fields.Selection(
         string='Statum',
@@ -37,8 +37,8 @@ class Sentencias(models.Model):
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
     fecha_liquidar = fields.Date('Fecha a Liquidar', required=1)
     valor_condena = fields.Float('Valor Condena', required=1)
-    nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)', required=1)
-    vendedor  = fields.Char('Vendedor')
+    nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)')
+    vendedor = fields.Char('Vendedor')
     nemotecnico = fields.Char('Nemotecnico')
     fecha_vencimiento = fields.Date('Fecha de Vencimiento')
     valor_giro = fields.Float('Valor Giro')
