@@ -38,7 +38,7 @@
     </record>
     <record id="action_crear_valoraciones_6_4" model="ir.actions.act_window">
         <field name="name">Crear Valoraciones 6.4</field>
-        <field name="res_model">ctm.crear_valoraciones_6_4</field>
+        <field name="res_model">ctm.crear_valoracion_6_4</field>
         <field name="view_mode">tree,form</field>
     </record>
 
