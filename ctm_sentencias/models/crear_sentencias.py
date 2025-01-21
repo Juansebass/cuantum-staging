@@ -50,8 +50,7 @@ class CrearSentencias(models.Model):
         content = self.file_content.replace('\n', '')
         lines = content.split('\r')
 
-
-        for detalle  in self.crear_sentencias_ids:
+        for detalle in self.crear_sentencias_ids:
             detalle.unlink()
 
         for i,line in enumerate(lines):
@@ -69,7 +68,6 @@ class CrearSentencias(models.Model):
                 'crear_sentencias_id': self.id,
                 'sentencia': sentencia.id,
             })
-
 
     @api.model
     def create(self, var):

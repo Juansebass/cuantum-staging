@@ -36,6 +36,11 @@
         <field name="res_model">ctm.valoracion_6_4</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_crear_valoraciones_6_4" model="ir.actions.act_window">
+        <field name="name">Crear Valoraciones 6.4</field>
+        <field name="res_model">ctm.crear_valoraciones_6_4</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias"  web_icon="ctm_sentencias,static/description/icon.png" />
@@ -45,6 +50,7 @@
     <menuitem id="menu_liquidaciones_main" sequence="3" name="Liquidaciones" parent="menu_sentencias_main"/>
     <menuitem id="menu_6_4_main" sequence="4" name="6.4" parent="menu_sentencias_main">
         <menuitem id="menu_6_4_view" name="6.4" action="action_view_6_4"/>
+        <menuitem id="menu_crear_valoraciones_6_4" name="Crear Valoraciones 6.4" action="action_crear_valoraciones_6_4"/>
     </menuitem>
 
     <menuitem id="menu_configuraciones" sequence="10" name="Configuraciones" parent="menu_sentencias_main"/>
