@@ -7,7 +7,6 @@
             <form string="">
                 <header>
                     <button name="generar_proyeccion" type="object" string="Generar Proyección" attrs="{'invisible': [('statum', '!=', 'CSF')]}"/>
-                    
                     <button name="action_view_proyecciones"
                             type="object"
                             string="Proyecciones"

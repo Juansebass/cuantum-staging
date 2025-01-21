@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo import models, fields, api   # type: ignore
+from odoo.exceptions import ValidationError  # type: ignore
 
 
 class Sentencias(models.Model):

@@ -8,8 +8,8 @@
     'author': 'Juan Sebastian Correa Acevedo',
     'license': '',
     'depends': [
-        'base','contacts', 'portal',
-        ],
+        'base', 'contacts', 'portal',
+    ],
     'data': [
         'security/ir.model.access.csv',
         'views/menu.xml',
@@ -20,8 +20,9 @@
         'views/sentencias_views.xml',
         'views/liquidacion_simulacion_views.xml',
         'views/proyecciones_views.xml',
+        'views/valoracion_6_4_views.xml',
         'wizards/simulation_wizard_view.xml',
-        ],
+    ],
     'installable': True,
     'application': True,
     'auto_install': False

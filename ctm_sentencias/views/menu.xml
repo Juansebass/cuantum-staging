@@ -31,6 +31,11 @@
         <field name="res_model">ctm.proyecciones</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_view_6_4" model="ir.actions.act_window">
+        <field name="name">64</field>
+        <field name="res_model">ctm.valoracion_6_4</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias"  web_icon="ctm_sentencias,static/description/icon.png" />
@@ -38,6 +43,10 @@
     <menuitem id="menu_ctm_proyecciones" sequence="2" name="Proyecciones" parent="menu_sentencias_main" action="action_ctm_proyecciones"/>
     <menuitem id="menu_carga_sentencias_main" sequence="1" name="Carga Sentencias" parent="menu_sentencias_main"/>
     <menuitem id="menu_liquidaciones_main" sequence="3" name="Liquidaciones" parent="menu_sentencias_main"/>
+    <menuitem id="menu_6_4_main" sequence="4" name="6.4" parent="menu_sentencias_main">
+        <menuitem id="menu_6_4_view" name="6.4" action="action_view_6_4"/>
+    <menuitem/>
+
     <menuitem id="menu_configuraciones" sequence="10" name="Configuraciones" parent="menu_sentencias_main"/>
 
     <!-- Menus de tercer nivel-->

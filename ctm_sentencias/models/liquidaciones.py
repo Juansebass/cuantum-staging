@@ -10,6 +10,7 @@ from dateutil.relativedelta import relativedelta
 import calendar
 import scipy.optimize as opt
 
+
 class Liquidaciones(models.Model):
     _name = 'ctm.liquidaciones'
     _description = "Liquidaciones Cuantum"
@@ -173,7 +174,7 @@ class Liquidaciones(models.Model):
                     tasa = 0
             if cont > 0:
                 dias = (fecha - fecha_anterior).days
-                interes = round(((1 + (tasa/100)) ** (1/365) - 1), 6) * dias * self.valor_condena
+                interes = round(((1 + (tasa / 100)) ** (1 / 365) - 1), 6) * dias * self.valor_condena
 
             self.env['ctm.liquidaciones_resumen'].create({
                 'liquidacion_id': self.id,
@@ -190,7 +191,7 @@ class Liquidaciones(models.Model):
         _, last_day = calendar.monthrange(date.year, date.month)
         return datetime(date.year, date.month, last_day).date()
 
-    def generate_last_days(self,start_date, end_date):
+    def generate_last_days(self, start_date, end_date):
         current_date = start_date
         last_days = []
 
@@ -200,11 +201,9 @@ class Liquidaciones(models.Model):
 
         return last_days
 
-
-
     def set_borrador_liquidacion(self):
         for rec in self:
-            if self.env.user.id in [8,2,10, 108]:
+            if self.env.user.id in [8, 2, 10, 108]:
                 rec.state = 'draft'
             else:
                 raise ValidationError('Usted no tiene permisos para realizar esta acción')
@@ -222,7 +221,7 @@ class Liquidaciones(models.Model):
 
     def generar_simulacion(self):
         for rec in self:
-            #Validando que no exista una simulación con la misma fecha a liquidar
+            #  Validando que no exista una simulación con la misma fecha a liquidar
             if len(rec.simulacion_ids.filtered(lambda x: x.fecha_liquidar == rec.fecha_liquidar)) > 0:
                 raise ValidationError('Ya existe una simulación para la fecha {0}, de la liquidación {1}'.format(rec.fecha_liquidar, rec.name))
             self.generar_liquidacion()
@@ -255,7 +254,7 @@ class Liquidaciones(models.Model):
 
         if len(set(fechas)) > 1:
             raise ValidationError('Todos los registros deben tener la misma fecha de liquidación')
-        
+
         contenido_txt = ""
         for rec in self:
             fecha = rec.fecha_liquidar.strftime('%Y%m%d')
@@ -296,6 +295,7 @@ class Liquidaciones(models.Model):
             'url': f'/web/content/{attachment.id}?download=true',
             'target': 'new',
         }
+
     def create_excel(self):
         fechas = self.mapped('fecha_liquidar')
 
@@ -307,9 +307,9 @@ class Liquidaciones(models.Model):
         worksheet = workbook.add_worksheet()
 
         headers = [
-            'Fecha', 'NIT FCP STATUM', 'Descripción', 'Demandante', 'Vendedor', 'ID Especie', 
-            'Nemotecnico', 'Fecha Cuenta Cobro', 'Fecha Emisión', 'Fecha Vencimiento', 
-            'NIT Emisor', 'Nombre Emisor', 'Fecha Compra', 'Nominal', 'Valor Giro', 
+            'Fecha', 'NIT FCP STATUM', 'Descripción', 'Demandante', 'Vendedor', 'ID Especie',
+            'Nemotecnico', 'Fecha Cuenta Cobro', 'Fecha Emisión', 'Fecha Vencimiento',
+            'NIT Emisor', 'Nombre Emisor', 'Fecha Compra', 'Nominal', 'Valor Giro',
             'Comisión', 'Valor Contable Actual', 'Valor Contable Ayer', 'Precio'
         ]
 
@@ -368,7 +368,6 @@ class Liquidaciones(models.Model):
             'url': f'/web/content/{attachment.id}?download=true',
             'target': 'new',
         }
-    
 
     def generate_simulations(self):
         return {
@@ -381,7 +380,7 @@ class Liquidaciones(models.Model):
                 'active_ids': self.ids,
             },
         }
-    
+
 
 class LiquidacionesResumen(models.Model):
     _name = 'ctm.liquidaciones_resumen'

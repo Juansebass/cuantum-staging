@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="model_ctm_valoracion_6_4_view_tree" model="ir.ui.view">
+        <field name="name">ctm.valoracion_6_4.view.tree</field>
+        <field name="model">ctm.valoracion_6_4</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="fecha_liquidar" />
+                <field name="statum"/>
+                <field name="emisor" />
+                <field name="pagador" />
+                <field name="valor_condena" />
+                <field name="total_intereses" />
+                <field name="resultado" />
+                <field name="tir_sentencia_bruta" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="model_ctm_valoracion_6_4_view_form" model="ir.ui.view">
+        <field name="name">ctm.valoracion_6_4.view.form</field>
+        <field name="model">ctm.valoracion_6_4</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="cliente">
+                        <group name="izquierda">
+                            <field name="sentencia" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
+                            <field name="emisor" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"
+                                   options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
+                                            "no_create":True, "no_open":True}'
+                            />
+                            <field name="pagador" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"
+                                   options='{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
+                                            "no_create":True, "no_open":True}'
+                            />
+                            <field name="codigo" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
+
+                        </group>
+                        <group name="derecha">
+                            <field name="fecha_ejecutoria" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
+                            <field name="fecha_cuenta_cobro" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
+                            <field name="fecha_liquidar"/>
+                            <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
+                            <field name="total_intereses" readonly="1"/>
+                            <field name="valor_contable_ayer" readonly="1"/>
+                            <field name="precio" readonly="1"/>
+                            <field name="resultado" readonly="1"/>
+                            <field name="tir_sentencia_bruta" readonly="1"/>
+                            <field name="responsible" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="valoracion_64_resumen" string="Resumen">
+                            <field name="valoraciones_resumen_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="fecha"/>
+                                    <field name="tasa"/>
+                                    <field name="interes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
