@@ -22,13 +22,13 @@ class Valoracion64(models.Model):
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro')
     fecha_liquidar = fields.Date('Fecha a Liquidar')
     valor_condena = fields.Float('Valor Condena')
-    resultado = fields.Float('Resultado')
+    resultado = fields.Float('Resultado a Fecha de Vencimiento')
     total_intereses = fields.Float('Total Intereses')
     valoraciones_resumen_ids = fields.One2many('ctm.valoracion_6_4_resumen', 'valoracion_6_4_id', 'Resumen Valoración 6.4')
     responsible = fields.Many2one('res.partner', 'Responsable')
     state = fields.Selection(selection=[('draft', 'Borrador'), ('liquidated', 'Liquidado')], string='Estado', default='draft')
     simulacion_ids = fields.One2many('ctm.valoracion_6_4_simulacion', 'valoracion_6_4_id')
-    tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
+    tir_compra_6_4 = fields.Float('TIR Compra 6.4')
 
     nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)', related='sentencia.nit_fcp_statum')
     statum = fields.Selection(string='Statum', related='sentencia.statum')
@@ -52,8 +52,10 @@ class Valoracion64(models.Model):
         self.valor_condena = self.sentencia.valor_condena
         self.resultado = self.valor_condena
         self.total_intereses = 0
+        self.valor_giro = self.sentencia.valor_giro
 
         self._generar_valoraciones_resumen()
+        self._genera_tir_compra_6_4()
 
     def _generar_valoraciones_resumen(self):
         self.valoraciones_resumen_ids.unlink()
@@ -129,6 +131,9 @@ class Valoracion64(models.Model):
             self.total_intereses += interes
             fecha_anterior = fecha
             cont += 1
+
+    def _genera_tir_compra_6_4(self):
+        pass
 
     def last_day_of_month(self, date):
         _, last_day = calendar.monthrange(date.year, date.month)

@@ -75,6 +75,21 @@ class Sentencias(models.Model):
         res = super(Sentencias, self).create(vals)
         if res.statum != 'CSF' and not res.nit_fcp_statum:
             raise ValidationError('Debe ingresar el NIT FCP STATUM')
+        if self.statum != 'CSF':
+            if not self.nit_fcp_statum:
+                raise ValidationError('Debe ingresar el NIT FCP STATUM')
+            if not self.vendedor:
+                raise ValidationError('Debe ingresar el Vendedor')
+            if not self.nemotecnico:
+                raise ValidationError('Debe ingresar el Nemotecnico')
+            if not self.fecha_vencimiento:
+                raise ValidationError('Debe ingresar la Fecha de Vencimiento')
+            if not self.valor_giro:
+                raise ValidationError('Debe ingresar el Valor Giro')
+            if not self.comision:
+                raise ValidationError('Debe ingresar la Comisión')
+            if not self.fecha_compra:
+                raise ValidationError('Debe ingresar la Fecha de Compra')
         return res
 
     def write(self, vals):
@@ -92,6 +107,8 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar el Valor Giro')
             if not self.comision:
                 raise ValidationError('Debe ingresar la Comisión')
+            if not self.fecha_compra:
+                raise ValidationError('Debe ingresar la Fecha de Compra')
         return res
 
     def generar_proyeccion(self):
