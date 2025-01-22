@@ -41,6 +41,7 @@ class Valoracion64(models.Model):
     comision = fields.Float('Comisión', related='sentencia.comision')
     valor_contable_ayer = fields.Float('Valor Contable Ayer')
     precio = fields.Float('Precio', digits=(16, 7))
+    valor_actual_6_4 = fields.Float('Valor Actual 6.4')
 
     def generar_valoracion(self):
         self.emisor = self.sentencia.emisor
@@ -57,6 +58,8 @@ class Valoracion64(models.Model):
 
         self._generar_valoraciones_resumen()
         self._genera_tir_compra_6_4()
+
+        self.valor_actual_6_4 = self.resultado / ((1 + self.tir_compra_6_4) ** ((self.fecha_compra - self.fecha_liquidar).days / 365))
 
     def _generar_valoraciones_resumen(self):
         self.valoraciones_resumen_ids.unlink()

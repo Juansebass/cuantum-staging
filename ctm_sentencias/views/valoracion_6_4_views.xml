@@ -57,6 +57,7 @@
                             <field name="fecha_compra"/>
                             <field name="fecha_liquidar"/>
                             <field name="fecha_vencimiento"/>
+                            <field name="valor_actual_6_4" readonly="1"/>
                             <field name="valor_giro" readonly="1"/>
                             <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
                             <field name="total_intereses" readonly="1"/>
