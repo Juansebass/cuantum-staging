@@ -36,6 +36,7 @@
                     <group name="derecha">
                         <field name="fecha_ejecutoria"/>
                         <field name="fecha_cuenta_cobro"/>
+                        <field name="fecha_compra"/>
                         <field name="fecha_liquidar"/>
                         <field name="fecha_vencimiento" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                         <field name="valor_giro" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>

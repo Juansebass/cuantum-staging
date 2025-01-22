@@ -1,5 +1,5 @@
-from odoo import models, fields
-from odoo.exceptions import ValidationError
+from odoo import models, fields  # type: ignore
+from odoo.exceptions import ValidationError  # type: ignore
 import base64
 from datetime import datetime
 
