@@ -6,6 +6,7 @@ import base64
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
 import calendar
+import scipy.optimize as opt  # type: ignore
 
 
 class Valoracion64(models.Model):
@@ -133,7 +134,34 @@ class Valoracion64(models.Model):
             cont += 1
 
     def _genera_tir_compra_6_4(self):
-        pass
+        for record in self:
+            self.tir_compra_6_4 = 0
+            cash_flows = [(-record.valor_giro, record.fecha_compra), (record.resultado, record.fecha_vencimiento)]
+            dates = [cf[1] for cf in cash_flows]
+            amounts = [cf[0] for cf in cash_flows]
+
+            def npv(rate):
+                # Start with the first date as the base
+                base_date = dates[0]
+                total_npv = 0
+
+                if rate <= -1:
+                    return float('inf')  # Return a high value to indicate invalid IRR
+
+                for i, date in enumerate(dates):
+                    # Calculate the time difference in days
+                    days_difference = (date - base_date).days
+
+                    # Discount factor
+                    discount_factor = (1 + rate) ** (days_difference / 365.0)
+
+                    # Contribution to NPV
+                    total_npv += amounts[i] / discount_factor
+
+                return total_npv
+
+        irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
+        self.tir_compra_6_4 = irr * 100
 
     def last_day_of_month(self, date):
         _, last_day = calendar.monthrange(date.year, date.month)

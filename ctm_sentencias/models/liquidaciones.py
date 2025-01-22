@@ -1,14 +1,14 @@
  # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo import models, fields, api  # type: ignore
+from odoo.exceptions import ValidationError  # type: ignore
 import base64
 import io
-import xlsxwriter
+import xlsxwriter  # type: ignore
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import calendar
-import scipy.optimize as opt
+import scipy.optimize as opt  # type: ignore
 
 
 class Liquidaciones(models.Model):
@@ -27,15 +27,15 @@ class Liquidaciones(models.Model):
     valor_condena = fields.Float('Valor Condena')
     resultado = fields.Float('Resultado')
     total_intereses = fields.Float('Total Intereses')
-    liquidaciones_resumen_ids = fields.One2many('ctm.liquidaciones_resumen','liquidacion_id','Resumen Liquidación Sentencia')
+    liquidaciones_resumen_ids = fields.One2many('ctm.liquidaciones_resumen', 'liquidacion_id', 'Resumen Liquidación Sentencia')
     responsible = fields.Many2one('res.partner', 'Responsable')
-    state = fields.Selection(selection=[('draft','Borrador'), ('liquidated','Liquidado')], string='Estado', default='draft')
+    state = fields.Selection(selection=[('draft', 'Borrador'), ('liquidated', 'Liquidado')], string='Estado', default='draft')
     simulacion_ids = fields.One2many('liquidacion.simulacion', 'liquidacion_id')
     tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
 
     nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)', related='sentencia.nit_fcp_statum')
     statum = fields.Selection(string='Statum', related='sentencia.statum')
-    vendedor  = fields.Char('Vendedor', related='sentencia.vendedor')
+    vendedor = fields.Char('Vendedor', related='sentencia.vendedor')
     nemotecnico = fields.Char('Nemotecnico', related='sentencia.nemotecnico')
     fecha_vencimiento = fields.Date('Fecha de Vencimiento', related='sentencia.fecha_vencimiento')
     fecha_compra = fields.Date('Fecha de Compra', related='sentencia.fecha_compra')
@@ -62,7 +62,7 @@ class Liquidaciones(models.Model):
         self.resultado = self.valor_condena
         self.total_intereses = 0
 
-        #Generando resumen
+        #  Generando resumen
         self._generar_resumen_liquidacion()
         self._generar_tir_sentencia_bruta()
 
@@ -79,7 +79,7 @@ class Liquidaciones(models.Model):
 
         self.state = 'liquidated'
         self.responsible = self.env.user.partner_id
-    
+
     def _generar_tir_sentencia_bruta(self):
         for record in self:
             self.tir_sentencia_bruta = 0
@@ -107,10 +107,8 @@ class Liquidaciones(models.Model):
 
                 return total_npv
 
-            initial_guess = 0.1
             irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
             self.tir_sentencia_bruta = irr * 100
-
 
     def _generar_resumen_liquidacion(self):
         self.liquidaciones_resumen_ids.unlink()
@@ -136,21 +134,20 @@ class Liquidaciones(models.Model):
         if unique_fechas_periodos[-1].month == unique_fechas_periodos[-2].month:
             unique_fechas_periodos.pop(-1)
 
-
-
         cont = 0
         fecha_anterior = None
-        for fecha in  unique_fechas_periodos:
+        for fecha in unique_fechas_periodos:
             tasa = 0
             interes = 0
-            #Buscando tasas
+            # Buscando tasas
             tasa_conf = self.env['ctm.tasas'].search(
-            [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1)
+                [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1
+            )
 
             if not tasa_conf:
                 raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
 
-            #Todos los ajustes para CPACA
+            # Todos los ajustes para CPACA
             if self.codigo == "CPACA":
                 if fecha <= fecha_periodo_diez:
                     tasa = tasa_conf.dtf
@@ -158,9 +155,9 @@ class Liquidaciones(models.Model):
                     tasa = tasa_conf.usura
 
                 if (
-                        fecha <= self.fecha_cuenta_cobro and
-                        fecha > fecha_periodo_cero and
-                        self.fecha_cuenta_cobro >=  fecha_periodo_cero
+                        fecha <= self.fecha_cuenta_cobro
+                        and fecha > fecha_periodo_cero and
+                        self.fecha_cuenta_cobro >= fecha_periodo_cero
                 ):
                     tasa = 0
             if self.codigo == "CCA":
