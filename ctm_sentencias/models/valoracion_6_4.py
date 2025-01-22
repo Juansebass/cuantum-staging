@@ -3,6 +3,9 @@
 from odoo import models, fields, api  # type: ignore
 from odoo.exceptions import ValidationError  # type: ignore
 import base64
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
+import calendar
 
 
 class Valoracion64(models.Model):
@@ -39,7 +42,107 @@ class Valoracion64(models.Model):
     precio = fields.Float('Precio', digits=(16, 7))
 
     def generar_valoracion(self):
-        pass
+        self.emisor = self.sentencia.emisor
+        self.pagador = self.sentencia.pagador
+        self.codigo = self.sentencia.codigo
+        self.fecha_ejecutoria = self.sentencia.fecha_ejecutoria
+        self.fecha_cuenta_cobro = self.sentencia.fecha_cuenta_cobro
+        self.fecha_vencimiento = self.sentencia.fecha_vencimiento
+        self.fecha_liquidar = self.fecha_liquidar if self.fecha_liquidar else self.sentencia.fecha_liquidar
+        self.valor_condena = self.sentencia.valor_condena
+        self.resultado = self.valor_condena
+        self.total_intereses = 0
+
+        self._generar_valoraciones_resumen()
+
+    def _generar_valoraciones_resumen(self):
+        self.valoraciones_resumen_ids.unlink()
+
+        if self.codigo == "CPACA":
+            fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+3)
+
+        else:
+            fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+6)
+
+        fechas_base = [
+            self.fecha_ejecutoria,
+            fecha_periodo_cero,
+            self.fecha_cuenta_cobro,
+            self.fecha_liquidar,
+            self.fecha_vencimiento
+        ]
+
+        if self.codigo == "CPACA":
+            fecha_periodo_diez = self.fecha_ejecutoria + relativedelta(months=+10)
+            fechas_base.append(fecha_periodo_diez)
+
+        fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_vencimiento)
+        fechas_periodos += fechas_base
+        unique_fechas_periodos = sorted(list(set(fechas_periodos)))
+        if unique_fechas_periodos[-1].month == unique_fechas_periodos[-2].month:
+            unique_fechas_periodos.pop(-1)
+
+        cont = 0
+        fecha_anterior = None
+        for fecha in unique_fechas_periodos:
+            tasa = 0
+            interes = 0
+            #  Buscando tasas
+            tasa_conf = self.env['ctm.tasas'].search(
+                [('fecha_inicio', '<=', fecha), ('fecha_final', '>=', fecha)], limit=1
+            )
+            if not tasa_conf:
+                raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
+
+            # Todos los ajustes para CPACA
+            if self.codigo == "CPACA":
+                if fecha <= fecha_periodo_diez:
+                    tasa = tasa_conf.dtf
+                else:
+                    tasa = tasa_conf.usura
+
+                if (
+                        fecha <= self.fecha_cuenta_cobro
+                        and fecha > fecha_periodo_cero
+                        and self.fecha_cuenta_cobro >= fecha_periodo_cero
+                ):
+                    tasa = 0
+            if self.codigo == "CCA":
+                tasa = tasa_conf.usura
+                if (
+                        fecha <= self.fecha_cuenta_cobro
+                        and fecha > fecha_periodo_cero
+                        and self.fecha_cuenta_cobro >= fecha_periodo_cero
+                ):
+                    tasa = 0
+            if cont > 0:
+                dias = (fecha - fecha_anterior).days
+                interes = round(((1 + (tasa / 100)) ** (1 / 365) - 1), 6) * dias * self.valor_condena
+
+            self.env['ctm.valoracion_6_4_resumen'].create({
+                'valoracion_6_4_id': self.id,
+                'fecha': fecha,
+                'tasa': tasa,
+                'interes': interes,
+            })
+            self.resultado += interes
+            self.total_intereses += interes
+            fecha_anterior = fecha
+            cont += 1
+
+    def last_day_of_month(self, date):
+        _, last_day = calendar.monthrange(date.year, date.month)
+        return datetime(date.year, date.month, last_day).date()
+
+    def generate_last_days(self, start_date, end_date):
+        current_date = start_date
+        last_days = []
+
+        while current_date < end_date:
+            last_days.append(self.last_day_of_month(current_date))
+            current_date = self.last_day_of_month(current_date) + relativedelta(days=+1)
+
+        return last_days
 
 
 class Valoracion64Resumen(models.Model):

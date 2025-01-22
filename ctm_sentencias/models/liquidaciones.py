@@ -51,8 +51,7 @@ class Liquidaciones(models.Model):
         #     existe_liquidacion[1].unlink()
         #     raise ValidationError("Ya existe una liquidación para esta sentencia")
 
-
-        #Llenando campos informativos
+        #  Llenando campos informativos
         self.emisor = self.sentencia.emisor
         self.pagador = self.sentencia.pagador
         self.codigo = self.sentencia.codigo
@@ -115,13 +114,13 @@ class Liquidaciones(models.Model):
 
     def _generar_resumen_liquidacion(self):
         self.liquidaciones_resumen_ids.unlink()
-        if  self.codigo == "CPACA":
+        if self.codigo == "CPACA":
             fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+3)
 
         else:
             fecha_periodo_cero = self.fecha_ejecutoria + relativedelta(months=+6)
 
-        fechas_base =[
+        fechas_base = [
             self.fecha_ejecutoria,
             fecha_periodo_cero,
             self.fecha_cuenta_cobro,
