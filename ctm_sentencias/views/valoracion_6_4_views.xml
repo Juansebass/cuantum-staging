@@ -29,6 +29,14 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
+                    <button name="set_borrador_valoracion" type="object" string="Pasar a borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="generar_simulacion" type="object" string="Generar Simulación" attrs="{'invisible': [('state', 'not in', ['amortizado'])]}"/>
+                    <button name="action_view_simulaciones"
+                            type="object"
+                            string="Simulaciones"
+                            class="oe_stat_button"
+                            icon="fa-calculator"
+                    />
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -135,5 +143,23 @@
         </field>
     </record>
 
+    <record id="liquidacion_simulacion_view_tree" model="ir.ui.view">
+        <field name="name">ctm.valoracion_simulacion.tree</field>
+        <field name="model">ctm.valoracion_simulacion</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="fecha_compra"/>
+                <field name="fecha_vencimiento"/>
+                <field name="fecha_liquidar"/>
+                <field name="valor_condena"/>
+                <field name="total_intereses"/>
+                <field name="valor_giro"/>
+                <field name="resultado"/>
+                <field name="valor_actual_6_4"/>
+                <field name="tir_compra_6_4"/>
+            </tree>
+        </field>
+    </record>
 
 </odoo>

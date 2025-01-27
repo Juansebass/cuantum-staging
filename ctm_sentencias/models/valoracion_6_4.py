@@ -27,8 +27,7 @@ class Valoracion64(models.Model):
     total_intereses = fields.Float('Total Intereses')
     valoraciones_resumen_ids = fields.One2many('ctm.valoracion_6_4_resumen', 'valoracion_6_4_id', 'Resumen Valoración 6.4')
     responsible = fields.Many2one('res.partner', 'Responsable')
-    state = fields.Selection(selection=[('draft', 'Borrador'), ('liquidated', 'Liquidado')], string='Estado', default='draft')
-    simulacion_ids = fields.One2many('ctm.valoracion_6_4_simulacion', 'valoracion_6_4_id')
+    state = fields.Selection(selection=[('draft', 'Borrador'), ('amortizado', 'Amortizado')], string='Estado', default='draft')
     tir_compra_6_4 = fields.Float('TIR Compra 6.4')
 
     nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)', related='sentencia.nit_fcp_statum')
@@ -42,6 +41,7 @@ class Valoracion64(models.Model):
     valor_contable_ayer = fields.Float('Valor Contable Ayer')
     precio = fields.Float('Precio', digits=(16, 7))
     valor_actual_6_4 = fields.Float('Valor Actual 6.4')
+    simulacion_ids = fields.One2many('ctm.valoracion_simulacion', 'valoracion_6_4_id')
 
     def generar_valoracion(self):
         self.emisor = self.sentencia.emisor
@@ -61,6 +61,9 @@ class Valoracion64(models.Model):
 
         self.valor_actual_6_4 = self.resultado / ((1 + self.tir_compra_6_4 * 0.01) ** ((self.fecha_liquidar - self.fecha_compra).days / 365))
         self.precio = (self.valor_actual_6_4 / self.valor_giro) * 100
+
+        self.state = 'amortizado'
+        self.responsible = self.env.user.partner_id
 
     def _generar_valoraciones_resumen(self):
         self.valoraciones_resumen_ids.unlink()
@@ -181,6 +184,45 @@ class Valoracion64(models.Model):
 
         return last_days
 
+    def set_borrador_valoracion(self):
+        for rec in self:
+            if self.env.user.id in [8, 2, 10, 108]:
+                rec.state = 'draft'
+            else:
+                raise ValidationError('Usted no tiene permisos para realizar esta acción')
+
+    def generar_simulacion(self):
+        for rec in self:
+            #  Validando que no exista una simulación con la misma fecha a liquidar
+            if len(rec.simulacion_ids.filtered(lambda x: x.fecha_liquidar == rec.fecha_liquidar)) > 0:
+                raise ValidationError('Ya existe una simulación para la fecha {0}, de la valoración {1}'.format(rec.fecha_liquidar, rec.name))
+            self.generar_liquidacion()
+            self.env['ctm.valoracion_simulacion'].create({
+                'name': str(len(self.simulacion_ids) + 1),
+                'valoracion_6_4_id': rec.id,
+                'fecha_compra': rec.fecha_compra,
+                'fecha_vencimiento': rec.fecha_vencimiento,
+                'fecha_liquidar': rec.fecha_liquidar,
+                'valor_condena': rec.valor_condena,
+                'total_intereses': rec.total_intereses,
+                'valor_giro': rec.valor_giro,
+                'resultado': rec.resultado,
+                'valor_actual_6_4': rec.valor_actual_6_4,
+                'tir_compra_6_4': rec.tir_compra_6_4,
+            })
+
+    def action_view_simulaciones(self):
+        self.ensure_one()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Simulaciones',
+            'view_mode': 'tree',
+            'res_model': 'ctm.valoracion_simulacion',
+            'domain': [('valoracion_6_4_id', '=', self.id)],
+            'context': "{'create': False, 'delete': False}",
+        }
+
 
 class Valoracion64Resumen(models.Model):
     _name = 'ctm.valoracion_6_4_resumen'
@@ -191,21 +233,6 @@ class Valoracion64Resumen(models.Model):
     fecha = fields.Date('Fecha', required=1)
     tasa = fields.Float('Tasa', digits=(10, 6))
     interes = fields.Float('Interés')
-
-
-class Valoracion64Simulacion(models.Model):
-    _name = 'ctm.valoracion_6_4_simulacion'
-    _description = 'Valoración 6.4 Simulación'
-
-    name = fields.Char('Nombre', required=True)
-    valoracion_6_4_id = fields.Many2one('ctm.valoracion_6_4', 'Valoración 6.4', required=True, ondelete='cascade')
-    fecha_ejecutoria = fields.Date('Fecha de Ejecutoría')
-    fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro')
-    fecha_liquidar = fields.Date('Fecha a Liquidar')
-    valor_condena = fields.Float('Valor Condena')
-    total_intereses = fields.Float('Total Intereses')
-    resultado = fields.Float('Resultado')
-    tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
 
 
 class CrearValoracion64(models.Model):
@@ -284,3 +311,21 @@ class DetalleValoracion64(models.Model):
 
     valoracion_6_4_id = fields.Many2one('ctm.crear_valoracion_6_4', 'Valoración 6.4', ondelete='cascade')
     sentencia = fields.Many2one('ctm.sentencias', 'Sentencia', required=1)
+
+
+class ValoracionSimulacion(models.Model):
+    _name = 'ctm.valoracion_simulacion'
+    _description = "Valoración Simulación"
+    _inherit = []
+
+    name = fields.Char('Nombre', required=True)
+    valoracion_6_4_id = fields.Many2one('ctm.valoracion_6_4', 'Valoración 6.4', required=True, ondelete='cascade')
+    fecha_compra = fields.Date('Fecha de Compra')
+    fecha_vencimiento = fields.Date('Fecha de Vencimiento')
+    fecha_liquidar = fields.Date('Fecha a Liquidar')
+    valor_condena = fields.Float('Valor Condena')
+    total_intereses = fields.Float('Total Intereses')
+    valor_giro = fields.Float('Valor Giro')
+    resultado = fields.Float('Resultado a Fecha de Vencimiento')
+    valor_actual_6_4 = fields.Float('Valor Actual 6.4')
+    tir_compra_6_4 = fields.Float('TIR Compra 6.4')
