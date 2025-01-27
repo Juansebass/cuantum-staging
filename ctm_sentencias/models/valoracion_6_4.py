@@ -60,6 +60,7 @@ class Valoracion64(models.Model):
         self._genera_tir_compra_6_4()
 
         self.valor_actual_6_4 = self.resultado / ((1 + self.tir_compra_6_4 * 0.01) ** ((self.fecha_liquidar - self.fecha_compra).days / 365))
+        self.precio = (self.valor_actual_6_4 / self.valor_giro) * 100
 
     def _generar_valoraciones_resumen(self):
         self.valoraciones_resumen_ids.unlink()

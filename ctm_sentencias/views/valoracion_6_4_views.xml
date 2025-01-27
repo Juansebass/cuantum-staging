@@ -49,14 +49,13 @@
                                             "no_create":True, "no_open":True}'
                             />
                             <field name="codigo" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
-
-                        </group>
-                        <group name="derecha">
                             <field name="fecha_ejecutoria" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
                             <field name="fecha_cuenta_cobro" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>
                             <field name="fecha_compra"/>
                             <field name="fecha_liquidar"/>
                             <field name="fecha_vencimiento"/>
+                        </group>
+                        <group name="derecha">
                             <field name="valor_actual_6_4" readonly="1"/>
                             <field name="valor_giro" readonly="1"/>
                             <field name="valor_condena" attrs="{'readonly': [('state', 'in', ['liquidated', 'draft'])]}"/>

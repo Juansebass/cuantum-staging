@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+#  -*- coding: utf-8 -*-
 
 from odoo import models, fields, api  # type: ignore
 from odoo.exceptions import ValidationError  # type: ignore
@@ -156,16 +156,16 @@ class Liquidaciones(models.Model):
 
                 if (
                         fecha <= self.fecha_cuenta_cobro
-                        and fecha > fecha_periodo_cero and
-                        self.fecha_cuenta_cobro >= fecha_periodo_cero
+                        and fecha > fecha_periodo_cero
+                        and self.fecha_cuenta_cobro >= fecha_periodo_cero
                 ):
                     tasa = 0
             if self.codigo == "CCA":
                 tasa = tasa_conf.usura
                 if (
-                        fecha <= self.fecha_cuenta_cobro and
-                        fecha > fecha_periodo_cero and
-                        self.fecha_cuenta_cobro >= fecha_periodo_cero
+                        fecha <= self.fecha_cuenta_cobro
+                        and fecha > fecha_periodo_cero
+                        and self.fecha_cuenta_cobro >= fecha_periodo_cero
                 ):
                     tasa = 0
             if cont > 0:
@@ -337,9 +337,9 @@ class Liquidaciones(models.Model):
             precio = round(rec.precio, 7)
 
             data = [
-                fecha, nit_fcp_statum, descripcion, demandante, vendedor, id_especie, 
-                nemotecnico, fecha_cuenta_cobro, fecha_emision, fecha_vencimiento, 
-                nit_emisor, nombre_emisor, fecha_compra, nominal, valor_giro, 
+                fecha, nit_fcp_statum, descripcion, demandante, vendedor, id_especie,
+                nemotecnico, fecha_cuenta_cobro, fecha_emision, fecha_vencimiento,
+                nit_emisor, nombre_emisor, fecha_compra, nominal, valor_giro,
                 comision, valor_contable_actual, valor_contable_ayer, precio
             ]
 
