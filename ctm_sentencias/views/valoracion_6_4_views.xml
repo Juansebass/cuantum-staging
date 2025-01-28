@@ -91,6 +91,45 @@
         </field>
     </record>
 
+    <record id="create_valoracion_6_4_txt_action" model="ir.actions.server">
+        <field name="name">Crear TXT</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ctm_valoracion_6_4"/>
+        <field name="binding_model_id" ref="model_ctm_valoracion_6_4" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.create_txt()
+        </field>
+    </record>
+
+    <record id="create_valoracion_6_4_excel_action" model="ir.actions.server">
+        <field name="name">Crear Excel</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ctm_valoracion_6_4"/>
+        <field name="binding_model_id" ref="model_ctm_valoracion_6_4" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.create_excel()
+        </field>
+    </record>
+
+    <record id="generate_valoracion_6_4_simulations_action" model="ir.actions.server">
+        <field name="name">Generar Simulaciones</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ctm_valoracion_6_4"/>
+        <field name="binding_model_id" ref="model_ctm_valoracion_6_4" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.generate_simulations()
+        </field>
+    </record>
+
     <record id="model_crear_valoracion_6_4_view_form" model="ir.ui.view">
         <field name="name">ctm.crear.valoracion_6_4.view.form</field>
         <field name="model">ctm.crear_valoracion_6_4</field>

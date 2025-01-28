@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_valoracion_6_4_simulation_wizard_form" model="ir.ui.view">
+        <field name="name">valoracion.6.4.simulation.wizard.form</field>
+        <field name="model">ctm.valoracion_6_4_simulation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Simulation Wizard">
+                <group>
+                    <field name="date"/>
+                </group>
+                <footer>
+                    <button string="Generar Simulaciones" type="object" name="action_generate_simulations" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_valoracion_6_4_simulation_wizard" model="ir.actions.act_window">
+        <field name="name">Simulation Wizard</field>
+        <field name="res_model">ctm.valoracion_6_4_simulation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
