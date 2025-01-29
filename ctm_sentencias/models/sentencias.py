@@ -39,7 +39,7 @@ class Sentencias(models.Model):
     nemotecnico = fields.Char('Nemotecnico')
     fecha_vencimiento = fields.Date('Fecha de Vencimiento')
     valor_giro = fields.Float('Valor Giro')
-    comision = fields.Float('Comisión')
+    comision = fields.Float('Comisión', default=0.0)
     valor_contable_ayer = fields.Float('Valor Contable Ayer')
     precio = fields.Float('Precio', required=1)
     costas = fields.Float('Costas')
