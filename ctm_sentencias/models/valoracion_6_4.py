@@ -198,7 +198,7 @@ class Valoracion64(models.Model):
             #  Validando que no exista una simulación con la misma fecha a liquidar
             if len(rec.simulacion_ids.filtered(lambda x: x.fecha_liquidar == rec.fecha_liquidar)) > 0:
                 raise ValidationError('Ya existe una simulación para la fecha {0}, de la valoración {1}'.format(rec.fecha_liquidar, rec.name))
-            self.generar_liquidacion()
+            self.generar_valoracion()
             self.env['ctm.valoracion_simulacion'].create({
                 'name': str(len(self.simulacion_ids) + 1),
                 'valoracion_6_4_id': rec.id,
