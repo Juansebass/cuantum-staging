@@ -73,8 +73,6 @@ class Sentencias(models.Model):
     @api.model
     def create(self, vals):
         res = super(Sentencias, self).create(vals)
-        if res.statum != 'CSF' and not res.nit_fcp_statum:
-            raise ValidationError('Debe ingresar el NIT FCP STATUM')
         if self.statum != 'CSF':
             if not self.nit_fcp_statum:
                 raise ValidationError('Debe ingresar el NIT FCP STATUM')
