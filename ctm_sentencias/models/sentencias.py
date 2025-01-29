@@ -73,73 +73,78 @@ class Sentencias(models.Model):
     @api.model
     def create(self, vals):
         res = super(Sentencias, self).create(vals)
-        if self.statum != 'CSF':
-            if not self.vendedor:
+
+        if res.statum != 'CSF':
+            if not res.nit_fcp_statum:
+                raise ValidationError('Debe ingresar el NIT FCP STATUM')
+            if not res.vendedor:
                 raise ValidationError('Debe ingresar el Vendedor')
-            if not self.nemotecnico:
+            if not res.nemotecnico:
                 raise ValidationError('Debe ingresar el Nemotecnico')
-            if not self.fecha_vencimiento:
+            if not res.fecha_vencimiento:
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
-            if not self.valor_giro:
+            if not res.valor_giro:
                 raise ValidationError('Debe ingresar el Valor Giro')
-            if not self.comision:
+            if not res.comision:
                 raise ValidationError('Debe ingresar la Comisión')
-            if not self.fecha_compra:
+            if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif self.statum == 'CSF':
-            if not self.retencion_total:
+        elif res.statum == 'CSF':
+            if not res.retencion_total:
                 raise ValidationError('Debe ingresar la Retención Total')
-            if not self.estructuracion:
+            if not res.estructuracion:
                 raise ValidationError('Debe ingresar la Estructuración')
-            if not self.intermediacion:
+            if not res.intermediacion:
                 raise ValidationError('Debe ingresar la Intermediación')
-            if not self.descuento_diluido:
+            if not res.descuento_diluido:
                 raise ValidationError('Debe ingresar el Descuento Diluido')
-            if not self.comision_gestion_cuantum:
+            if not res.comision_gestion_cuantum:
                 raise ValidationError('Debe ingresar la Comisión Gestión Cuantum')
-            if not self.ingreso_anticipado_cuantum:
+            if not res.ingreso_anticipado_cuantum:
                 raise ValidationError('Debe ingresar el Ingreso Anticipado Cuantum')
-            if not self.fecha_liquidar_neutral:
+            if not res.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
-            if not self.fecha_liquidar_optimista:
+            if not res.fecha_liquidar_optimista:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Optimista')
-            if not self.fecha_liquidar_acido:
+            if not res.fecha_liquidar_acido:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Ácido')
         return res
 
     def write(self, vals):
         res = super(Sentencias, self).write(vals)
-        if self.statum != 'CSF':
-            if not self.vendedor:
+        if res.statum != 'CSF':
+            if not res.nit_fcp_statum:
+                raise ValidationError('Debe ingresar el NIT FCP STATUM')
+            if not res.vendedor:
                 raise ValidationError('Debe ingresar el Vendedor')
-            if not self.nemotecnico:
+            if not res.nemotecnico:
                 raise ValidationError('Debe ingresar el Nemotecnico')
-            if not self.fecha_vencimiento:
+            if not res.fecha_vencimiento:
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
-            if not self.valor_giro:
+            if not res.valor_giro:
                 raise ValidationError('Debe ingresar el Valor Giro')
-            if not self.comision:
+            if not res.comision:
                 raise ValidationError('Debe ingresar la Comisión')
-            if not self.fecha_compra:
+            if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif self.statum == 'CSF':
-            if not self.retencion_total:
+        elif res.statum == 'CSF':
+            if not res.retencion_total:
                 raise ValidationError('Debe ingresar la Retención Total')
-            if not self.estructuracion:
+            if not res.estructuracion:
                 raise ValidationError('Debe ingresar la Estructuración')
-            if not self.intermediacion:
+            if not res.intermediacion:
                 raise ValidationError('Debe ingresar la Intermediación')
-            if not self.descuento_diluido:
+            if not res.descuento_diluido:
                 raise ValidationError('Debe ingresar el Descuento Diluido')
-            if not self.comision_gestion_cuantum:
+            if not res.comision_gestion_cuantum:
                 raise ValidationError('Debe ingresar la Comisión Gestión Cuantum')
-            if not self.ingreso_anticipado_cuantum:
+            if not res.ingreso_anticipado_cuantum:
                 raise ValidationError('Debe ingresar el Ingreso Anticipado Cuantum')
-            if not self.fecha_liquidar_neutral:
+            if not res.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
-            if not self.fecha_liquidar_optimista:
+            if not res.fecha_liquidar_optimista:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Optimista')
-            if not self.fecha_liquidar_acido:
+            if not res.fecha_liquidar_acido:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Ácido')
         return res
 
