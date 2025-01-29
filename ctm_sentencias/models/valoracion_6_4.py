@@ -348,7 +348,7 @@ class Valoracion64(models.Model):
     def generate_simulations(self):
         return {
             'type': 'ir.actions.act_window',
-            'res_model': 'simulation.wizard',
+            'res_model': 'ctm.valoracion_6_4_simulation.wizard',
             'view_mode': 'form',
             'target': 'new',
             'context': {
