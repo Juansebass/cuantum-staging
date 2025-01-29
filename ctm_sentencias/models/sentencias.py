@@ -83,10 +83,6 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar el Nemotecnico')
             if not res.fecha_vencimiento:
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
-            if not res.valor_giro:
-                raise ValidationError('Debe ingresar el Valor Giro')
-            if not res.comision:
-                raise ValidationError('Debe ingresar la Comisión')
             if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
         elif res.statum == 'CSF':
@@ -121,10 +117,6 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar el Nemotecnico')
             if not res.fecha_vencimiento:
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
-            if not res.valor_giro:
-                raise ValidationError('Debe ingresar el Valor Giro')
-            if not res.comision:
-                raise ValidationError('Debe ingresar la Comisión')
             if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
         elif res.statum == 'CSF':
