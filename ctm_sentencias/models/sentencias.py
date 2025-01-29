@@ -74,8 +74,6 @@ class Sentencias(models.Model):
     def create(self, vals):
         res = super(Sentencias, self).create(vals)
         if self.statum != 'CSF':
-            if not vals.get('nit_fcp_statum', self.nit_fcp_statum):
-                raise ValidationError('Debe ingresar el NIT FCP STATUM')
             if not self.vendedor:
                 raise ValidationError('Debe ingresar el Vendedor')
             if not self.nemotecnico:
@@ -112,8 +110,6 @@ class Sentencias(models.Model):
     def write(self, vals):
         res = super(Sentencias, self).write(vals)
         if self.statum != 'CSF':
-            if not vals.get('nit_fcp_statum', self.nit_fcp_statum):
-                raise ValidationError('Debe ingresar el NIT FCP STATUM')
             if not self.vendedor:
                 raise ValidationError('Debe ingresar el Vendedor')
             if not self.nemotecnico:
