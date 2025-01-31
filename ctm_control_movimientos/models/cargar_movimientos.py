@@ -1,5 +1,5 @@
-from odoo import models, fields
-from odoo.exceptions import ValidationError
+from odoo import models, fields  # type: ignore
+from odoo.exceptions import ValidationError  # type: ignore
 import base64
 from datetime import datetime
 
@@ -86,7 +86,8 @@ class CargarMovimientos(models.Model):
                         'cdg': cdg,
                         'otros': otros
                     }
-                    self.env['ctm.aplicaciones'].create(vals)
+                    aplicacion_id = self.env['ctm.aplicaciones'].create(vals)
+                    aplicacion_id.procesar_movimiento()
             except Exception as e:
                 raise ValidationError(f'Error en la linea {i + 1}: {e}. Contenido: {line}')
 
