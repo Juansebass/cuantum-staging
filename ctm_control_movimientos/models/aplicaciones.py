@@ -41,8 +41,8 @@ class Aplicaciones(models.Model):
         pago_capital = self.valor - pago_otros_conceptos - pago_cdg - pago_rendimientos
         self.env['ctm.movimientos_flujos'].create({
             'flujo_id': flujo_id.id,
-            'tipo': 'compra',
-            'compra_id': self.id,
+            'tipo': 'aplicación',
+            'aplicacion_id': self.id,
             'fecha_inicial': fecha_inicial,
             'fecha_final': fecha_final,
             'compra': self.valor,
