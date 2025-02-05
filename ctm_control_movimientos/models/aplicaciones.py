@@ -27,6 +27,9 @@ class Aplicaciones(models.Model):
 
     def actualizar_flujo(self, flujo_id):
         self.ensure_one()
+        first_movimiento_id = flujo_id.movimientos_flujo_ids.search([], order='fecha_final asc', limit=1)  # TODO VALIDAR
+        if first_movimiento_id.fecha_inicial > self.fecha:
+            raise ValidationError('La fecha de cargue es anterior a la fecha de creación del flujo')
         past_movimiento_id = flujo_id.movimientos_flujo_ids.search([], order='fecha_final desc', limit=1)  # TODO VALIDAR
         fecha_inicial = past_movimiento_id.fecha_final
         fecha_final = self.fecha
