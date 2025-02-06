@@ -399,7 +399,7 @@ class CrearValoracion64(models.Model):
                     })
                     created_valoracion.generar_valoracion()
                 except Exception as e:
-                    raise ValidationError('error {0}. para sentencia {1}'.format(e, valoracion.sentencia.id))
+                    raise ValidationError('error {0}. para sentencia {1}'.format(e, valoracion.sentencia.name))
 
         self.status = 'creados'
 

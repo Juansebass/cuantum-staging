@@ -108,35 +108,35 @@ class Sentencias(models.Model):
 
     def write(self, vals):
         res = super(Sentencias, self).write(vals)
-        if res.statum != 'CSF':
-            if not res.nit_fcp_statum:
+        if self.statum != 'CSF':
+            if not self.nit_fcp_statum:
                 raise ValidationError('Debe ingresar el NIT FCP STATUM')
-            if not res.vendedor:
+            if not self.vendedor:
                 raise ValidationError('Debe ingresar el Vendedor')
-            if not res.nemotecnico:
+            if not self.nemotecnico:
                 raise ValidationError('Debe ingresar el Nemotecnico')
-            if not res.fecha_vencimiento:
+            if not self.fecha_vencimiento:
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
-            if not res.fecha_compra:
+            if not self.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif res.statum == 'CSF':
-            if not res.retencion_total:
+        elif self.statum == 'CSF':
+            if not self.retencion_total:
                 raise ValidationError('Debe ingresar la Retención Total')
-            if not res.estructuracion:
+            if not self.estructuracion:
                 raise ValidationError('Debe ingresar la Estructuración')
-            if not res.intermediacion:
+            if not self.intermediacion:
                 raise ValidationError('Debe ingresar la Intermediación')
-            if not res.descuento_diluido:
+            if not self.descuento_diluido:
                 raise ValidationError('Debe ingresar el Descuento Diluido')
-            if not res.comision_gestion_cuantum:
+            if not self.comision_gestion_cuantum:
                 raise ValidationError('Debe ingresar la Comisión Gestión Cuantum')
-            if not res.ingreso_anticipado_cuantum:
+            if not self.ingreso_anticipado_cuantum:
                 raise ValidationError('Debe ingresar el Ingreso Anticipado Cuantum')
-            if not res.fecha_liquidar_neutral:
+            if not self.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
-            if not res.fecha_liquidar_optimista:
+            if not self.fecha_liquidar_optimista:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Optimista')
-            if not res.fecha_liquidar_acido:
+            if not self.fecha_liquidar_acido:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Ácido')
         return res
 
