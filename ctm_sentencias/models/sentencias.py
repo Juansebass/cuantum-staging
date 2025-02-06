@@ -86,18 +86,6 @@ class Sentencias(models.Model):
             if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
         elif res.statum == 'CSF':
-            if not res.retencion_total:
-                raise ValidationError('Debe ingresar la Retención Total')
-            if not res.estructuracion:
-                raise ValidationError('Debe ingresar la Estructuración')
-            if not res.intermediacion:
-                raise ValidationError('Debe ingresar la Intermediación')
-            if not res.descuento_diluido:
-                raise ValidationError('Debe ingresar el Descuento Diluido')
-            if not res.comision_gestion_cuantum:
-                raise ValidationError('Debe ingresar la Comisión Gestión Cuantum')
-            if not res.ingreso_anticipado_cuantum:
-                raise ValidationError('Debe ingresar el Ingreso Anticipado Cuantum')
             if not res.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
             if not res.fecha_liquidar_optimista:
@@ -120,18 +108,6 @@ class Sentencias(models.Model):
             if not self.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
         elif self.statum == 'CSF':
-            if not self.retencion_total:
-                raise ValidationError('Debe ingresar la Retención Total')
-            if not self.estructuracion:
-                raise ValidationError('Debe ingresar la Estructuración')
-            if not self.intermediacion:
-                raise ValidationError('Debe ingresar la Intermediación')
-            if not self.descuento_diluido:
-                raise ValidationError('Debe ingresar el Descuento Diluido')
-            if not self.comision_gestion_cuantum:
-                raise ValidationError('Debe ingresar la Comisión Gestión Cuantum')
-            if not self.ingreso_anticipado_cuantum:
-                raise ValidationError('Debe ingresar el Ingreso Anticipado Cuantum')
             if not self.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
             if not self.fecha_liquidar_optimista:
