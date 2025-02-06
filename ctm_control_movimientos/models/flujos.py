@@ -70,11 +70,11 @@ class Flujos(models.Model):
                 rendimiento = (((1 + self.flujo) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
                 rendimiento_acumulado = past_movimiento_id.rendimiento + rendimiento
                 cdg = (((1 + self.cdg) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
-                pago_otros_conceptos = self.valor if self.valor > self.otros else self.otros
+                pago_otros_conceptos = flujo.aplicacion_id.valor if flujo.aplicacion_id.valor > flujo.aplicacion_id.otros else flujo.aplicacion_id.otros
                 cdg_acumulado = past_movimiento_id.cdg + cdg
                 pago_cdg = cdg_acumulado if self.valor - pago_otros_conceptos > cdg_acumulado else self.valor - pago_otros_conceptos
-                pago_rendimientos = rendimiento_acumulado if self.valor - pago_otros_conceptos - pago_cdg > rendimiento_acumulado else self.valor - pago_otros_conceptos - pago_cdg
-                pago_capital = self.valor - pago_otros_conceptos - pago_cdg - pago_rendimientos
+                pago_rendimientos = rendimiento_acumulado if flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg > rendimiento_acumulado else flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg
+                pago_capital = flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg - pago_rendimientos
                 flujo.write({
                     'fecha_inicial': fecha_inicial,
                     'fecha_final': fecha_final,
