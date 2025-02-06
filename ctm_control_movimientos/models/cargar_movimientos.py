@@ -44,52 +44,52 @@ class CargarMovimientos(models.Model):
             lines = lines[1:]
 
         for i, line in enumerate(lines):
-            try:
-                line = line.split(self.delimiter)
-                fecha = datetime.strptime(line[1], '%d/%m/%Y')
-                cliente = self.env['res.partner'].search([('vat', '=', line[2])])
-                if not cliente:
-                    raise ValidationError(f'Cliente {line[2]} no encontrado')
-                valor = self._format_money(line[3])
-                inversion = self.env['ati.investment.type'].search([('code', '=', line[4])])
-                if not inversion:
-                    raise ValidationError(f'Inversión {line[4]} no encontrada')
-                gestor = self.env['ati.gestor'].search([('code', '=', line[5])])
-                if not gestor:
-                    raise ValidationError(f'Gestor {line[5]} no encontrado')
-                flujo = self._format_percent(line[6])
-                cdg = self._format_percent(line[7])
-                if self.tipo == 'compra':
-                    vals = {
-                        'name': line[0],
-                        'fecha': fecha,
-                        'partner_id': cliente.id,
-                        'fecha': fecha,
-                        'valor': valor,
-                        'investment_type_id': inversion.id,
-                        'gestor_id': gestor.id,
-                        'flujo': flujo,
-                        'cdg': cdg
-                    }
-                    compra_id = self.env['ctm.compras'].create(vals)
-                    compra_id.procesar_movimiento()
-                if self.tipo == 'aplicación':
-                    otros = self._format_money(line[8])
-                    vals = {
-                        'name': line[0],
-                        'partner_id': cliente.id,
-                        'fecha': fecha,
-                        'valor': valor,
-                        'investment_type_id': inversion.id,
-                        'gestor_id': gestor.id,
-                        'flujo': flujo,
-                        'cdg': cdg,
-                        'otros': otros
-                    }
-                    aplicacion_id = self.env['ctm.aplicaciones'].create(vals)
-                    aplicacion_id.procesar_movimiento()
-            except Exception as e:
-                raise ValidationError(f'Error en la linea {i + 1}: {e}. Contenido: {line}')
+            # try:
+            line = line.split(self.delimiter)
+            fecha = datetime.strptime(line[1], '%d/%m/%Y')
+            cliente = self.env['res.partner'].search([('vat', '=', line[2])])
+            if not cliente:
+                raise ValidationError(f'Cliente {line[2]} no encontrado')
+            valor = self._format_money(line[3])
+            inversion = self.env['ati.investment.type'].search([('code', '=', line[4])])
+            if not inversion:
+                raise ValidationError(f'Inversión {line[4]} no encontrada')
+            gestor = self.env['ati.gestor'].search([('code', '=', line[5])])
+            if not gestor:
+                raise ValidationError(f'Gestor {line[5]} no encontrado')
+            flujo = self._format_percent(line[6])
+            cdg = self._format_percent(line[7])
+            if self.tipo == 'compra':
+                vals = {
+                    'name': line[0],
+                    'fecha': fecha,
+                    'partner_id': cliente.id,
+                    'fecha': fecha,
+                    'valor': valor,
+                    'investment_type_id': inversion.id,
+                    'gestor_id': gestor.id,
+                    'flujo': flujo,
+                    'cdg': cdg
+                }
+                compra_id = self.env['ctm.compras'].create(vals)
+                compra_id.procesar_movimiento()
+            if self.tipo == 'aplicación':
+                otros = self._format_money(line[8])
+                vals = {
+                    'name': line[0],
+                    'partner_id': cliente.id,
+                    'fecha': fecha,
+                    'valor': valor,
+                    'investment_type_id': inversion.id,
+                    'gestor_id': gestor.id,
+                    'flujo': flujo,
+                    'cdg': cdg,
+                    'otros': otros
+                }
+                aplicacion_id = self.env['ctm.aplicaciones'].create(vals)
+                aplicacion_id.procesar_movimiento()
+            # except Exception as e:
+            #     raise ValidationError(f'Error en la linea {i + 1}: {e}. Contenido: {line}')
 
     def _format_money(self, money):
         return (
