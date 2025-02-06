@@ -43,7 +43,7 @@ class Flujos(models.Model):
             if flujo.tipo == 'compra':
                 past_movimiento_id = self.movimientos_flujo_ids.search([], order='fecha_final desc', limit=1)  # TODO VALIDAR
                 fecha_inicial = past_movimiento_id.fecha_final
-                fecha_final = self.fecha
+                fecha_final = flujo.compra_id.fecha
                 past_valor_activo = past_movimiento_id.valor_activo
                 rendimiento = (((1 + self.flujo) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
                 rendimiento_acumulado = past_movimiento_id.rendimiento + rendimiento
