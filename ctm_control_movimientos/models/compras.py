@@ -79,3 +79,4 @@ class Compras(models.Model):
             'pago_capital': 0,  # Acá siempre es compras
             'valor_activo': past_movimiento_id.valor_activo + self.valor + rendimiento_acumulado,
         })
+        flujo_id.recalcular_flujo()

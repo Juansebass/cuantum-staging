@@ -36,6 +36,60 @@ class Flujos(models.Model):
                 if movimiento.fecha_final <= date:
                     movimiento.state = 'cerrado'
 
+    def recalcular_flujo(self):
+        flujos = self.movimientos_flujo_ids.sorted(key=lambda x: x.fecha_final, reverse=False)
+        flujos = flujos[1:]
+        for flujo in flujos:
+            if flujo.tipo == 'compra':
+                past_movimiento_id = self.movimientos_flujo_ids.search([], order='fecha_final desc', limit=1)  # TODO VALIDAR
+                fecha_inicial = past_movimiento_id.fecha_final
+                fecha_final = self.fecha
+                past_valor_activo = past_movimiento_id.valor_activo
+                rendimiento = (((1 + self.flujo) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
+                rendimiento_acumulado = past_movimiento_id.rendimiento + rendimiento
+                cdg = (((1 + self.cdg) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
+                flujo.write({
+                    'fecha_inicial': fecha_inicial,
+                    'fecha_final': fecha_final,
+                    'compra': flujo.compra_id.valor,
+                    'rendimiento': rendimiento,
+                    'pago_rendimientos': 0,  # Acá siempre es compras
+                    'rendimiento_acumulado': rendimiento_acumulado,
+                    'cdg': cdg,
+                    'pago_cdg': 0,  # Acá siempre es compras
+                    'cdg_acumulado': past_movimiento_id.cdg + cdg,
+                    'pago_otros_conceptos': 0,  # Acá siempre es compras
+                    'pago_capital': 0,  # Acá siempre es compras
+                    'valor_activo': past_movimiento_id.valor_activo + flujo.compra_id.valor + rendimiento_acumulado,
+                })
+            elif flujo.tipo == 'aplicación':
+                past_movimiento_id = self.movimientos_flujo_ids.search([], order='fecha_final desc', limit=1)  # TODO VALIDAR
+                fecha_inicial = past_movimiento_id.fecha_final
+                fecha_final = flujo.aplicacion_id.fecha
+                past_valor_activo = past_movimiento_id.valor_activo
+                rendimiento = (((1 + self.flujo) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
+                rendimiento_acumulado = past_movimiento_id.rendimiento + rendimiento
+                cdg = (((1 + self.cdg) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
+                pago_otros_conceptos = self.valor if self.valor > self.otros else self.otros
+                cdg_acumulado = past_movimiento_id.cdg + cdg
+                pago_cdg = cdg_acumulado if self.valor - pago_otros_conceptos > cdg_acumulado else self.valor - pago_otros_conceptos
+                pago_rendimientos = rendimiento_acumulado if self.valor - pago_otros_conceptos - pago_cdg > rendimiento_acumulado else self.valor - pago_otros_conceptos - pago_cdg
+                pago_capital = self.valor - pago_otros_conceptos - pago_cdg - pago_rendimientos
+                flujo.write({
+                    'fecha_inicial': fecha_inicial,
+                    'fecha_final': fecha_final,
+                    'compra': flujo.aplicacion_id.valor,
+                    'rendimiento': rendimiento,
+                    'pago_rendimientos': pago_rendimientos,
+                    'rendimiento_acumulado': rendimiento_acumulado,
+                    'cdg': cdg,
+                    'pago_cdg': pago_cdg,
+                    'cdg_acumulado': cdg_acumulado,
+                    'pago_otros_conceptos': pago_otros_conceptos,
+                    'pago_capital': pago_capital if pago_capital > 0 else 0,
+                    'valor_activo': past_movimiento_id.valor_activo + flujo.aplicacion_id.valor + rendimiento_acumulado,
+                })
+
 
 class MovimientosFlujos(models.Model):
     _name = 'ctm.movimientos_flujos'

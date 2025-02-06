@@ -59,3 +59,4 @@ class Aplicaciones(models.Model):
             'pago_capital': pago_capital if pago_capital > 0 else 0,
             'valor_activo': past_movimiento_id.valor_activo + self.valor + rendimiento_acumulado,
         })
+        flujo_id.recalcular_flujo()
