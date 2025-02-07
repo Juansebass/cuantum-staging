@@ -137,6 +137,9 @@ class CargarSentencias(models.Model):
                         formated_estructuracion = self._format_money(
                             estructuracion
                         )
+                        formated_costas = self._format_money(
+                            costas
+                        )
                         vals = {
                             "name": titulo,
                             "emisor": emisor.id,
@@ -164,7 +167,7 @@ class CargarSentencias(models.Model):
                             ) if fecha_compra else None,
                             "valor_giro": formated_valor_giro,
                             "comision": formated_comision,
-                            "costas": costas,
+                            "costas": formated_costas,
                             "retencion_total": self._format_percent(
                                 retencion_total
                             ),
