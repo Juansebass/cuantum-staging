@@ -39,7 +39,7 @@ class Flujos(models.Model):
     def recalcular_flujo(self):
         flujos = self.movimientos_flujo_ids.sorted(key=lambda x: x.fecha_final, reverse=False)
         flujos = flujos[1:]
-        for flujo, i in enumerate(flujos, start=1):
+        for i, flujo in enumerate(flujos, start=1):
             if flujo.tipo == 'compra':
                 past_movimiento_id = flujos[i - 1]
                 fecha_inicial = past_movimiento_id.fecha_final
