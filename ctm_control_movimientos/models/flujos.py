@@ -38,10 +38,11 @@ class Flujos(models.Model):
 
     def recalcular_flujo(self):
         flujos = self.movimientos_flujo_ids.sorted(key=lambda x: x.fecha_final, reverse=False)
+        flujos_completed = flujos
         flujos = flujos[1:]
         for i, flujo in enumerate(flujos, start=1):
             if flujo.tipo == 'compra':
-                past_movimiento_id = flujos[i - 1]
+                past_movimiento_id = flujos_completed[i - 1]
                 fecha_inicial = past_movimiento_id.fecha_final
                 fecha_final = flujo.compra_id.fecha
                 past_valor_activo = past_movimiento_id.valor_activo
@@ -63,7 +64,7 @@ class Flujos(models.Model):
                     'valor_activo': past_movimiento_id.valor_activo + flujo.compra_id.valor + rendimiento_acumulado,
                 })
             elif flujo.tipo == 'aplicación':
-                past_movimiento_id = flujos[i - 1]
+                past_movimiento_id = flujos_completed[i - 1]
                 fecha_inicial = past_movimiento_id.fecha_final
                 fecha_final = flujo.aplicacion_id.fecha
                 past_valor_activo = past_movimiento_id.valor_activo
