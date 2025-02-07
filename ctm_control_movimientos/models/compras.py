@@ -38,7 +38,7 @@ class Compras(models.Model):
             'compra_id': self.id,
             'fecha_inicial': self.fecha,
             'fecha_final': self.fecha,
-            'compra': 0,
+            'compra': self.valor,
             'rendimiento': 0,
             'rendimiento_acumulado': 0,
             'cdg': 0,
