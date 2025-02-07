@@ -49,10 +49,17 @@ class Flujos(models.Model):
                 rendimiento = (((1 + self.flujo) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
                 rendimiento_acumulado = past_movimiento_id.rendimiento + rendimiento
                 cdg = (((1 + self.cdg) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
+                compra = flujo.compra_id.valor
+                pago_otros_conceptos = 0
+                pago_cdg = 0
+                pago_rendimientos = 0
+                pago_capital = 0
+                valor_activo = past_movimiento_id.valor_activo + compra + rendimiento - pago_otros_conceptos - pago_cdg - pago_rendimientos - pago_capital
+
                 flujo.write({
                     'fecha_inicial': fecha_inicial,
                     'fecha_final': fecha_final,
-                    'compra': flujo.compra_id.valor,
+                    'compra': compra,
                     'rendimiento': rendimiento,
                     'pago_rendimientos': 0,  # Acá siempre es compras
                     'rendimiento_acumulado': rendimiento_acumulado,
@@ -61,7 +68,7 @@ class Flujos(models.Model):
                     'cdg_acumulado': past_movimiento_id.cdg + cdg,
                     'pago_otros_conceptos': 0,  # Acá siempre es compras
                     'pago_capital': 0,  # Acá siempre es compras
-                    'valor_activo': past_movimiento_id.valor_activo + flujo.compra_id.valor + rendimiento_acumulado,
+                    'valor_activo': valor_activo,
                 })
             elif flujo.tipo == 'aplicación':
                 past_movimiento_id = flujos_completed[i - 1]
@@ -76,6 +83,8 @@ class Flujos(models.Model):
                 pago_cdg = cdg_acumulado if flujo.aplicacion_id.valor - pago_otros_conceptos > cdg_acumulado else flujo.aplicacion_id.valor - pago_otros_conceptos
                 pago_rendimientos = rendimiento_acumulado if flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg > rendimiento_acumulado else flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg
                 pago_capital = flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg - pago_rendimientos
+                compra = 0
+                valor_activo = past_movimiento_id.valor_activo + compra + rendimiento - pago_otros_conceptos - pago_cdg - pago_rendimientos - pago_capital
                 flujo.write({
                     'fecha_inicial': fecha_inicial,
                     'fecha_final': fecha_final,
@@ -88,7 +97,7 @@ class Flujos(models.Model):
                     'cdg_acumulado': cdg_acumulado,
                     'pago_otros_conceptos': pago_otros_conceptos,
                     'pago_capital': pago_capital if pago_capital > 0 else 0,
-                    'valor_activo': past_movimiento_id.valor_activo + flujo.aplicacion_id.valor + rendimiento_acumulado,
+                    'valor_activo': valor_activo,
                 })
 
 
