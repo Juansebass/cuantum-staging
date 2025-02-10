@@ -50,6 +50,7 @@ class Flujos(models.Model):
                     raise ValueError('La fecha de la compra es menor a la fecha final del último flujo cerrado')
             elif first_flujo_abierto.tipo == 'aplicación':
                 _logger.info(f'first_flujo_abierto.aplicacion_id.fecha: {first_flujo_abierto.aplicacion_id.fecha}')
+                _logger.info(f'last_flujo_cerrado.fecha_final: {last_flujo_cerrado.fecha_final}')
                 if first_flujo_abierto.aplicacion_id.fecha < last_flujo_cerrado.fecha_final:
                     raise ValueError('La fecha de la aplicación es menor a la fecha final del último flujo cerrado')
             flujos = last_flujo_cerrado + flujos
