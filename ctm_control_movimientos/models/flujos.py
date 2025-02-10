@@ -37,7 +37,10 @@ class Flujos(models.Model):
                     movimiento.state = 'cerrado'
 
     def recalcular_flujo(self):
-        flujos = self.movimientos_flujo_ids.sorted(key=lambda x: x.fecha_final, reverse=False)
+        last_flujo_cerrado = self.movimientos_flujo_ids.filtered(lambda x: x.state == 'cerrado').sorted(key=lambda x: x.fecha_final, reverse=False)[:1]
+        flujos = self.movimientos_flujo_ids.filtered(lambda x: x.state == 'abierto').sorted(key=lambda x: x.fecha_final, reverse=False)
+        if last_flujo_cerrado:
+            flujos = last_flujo_cerrado + flujos
         flujos_completed = flujos
         flujos = flujos[1:]
         for i, flujo in enumerate(flujos, start=1):
