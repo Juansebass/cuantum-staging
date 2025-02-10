@@ -1,4 +1,7 @@
 from odoo import models, fields  # type: ignore
+import logging  # type: ignore
+
+_logger = logging.getLogger(__name__)
 
 
 class Flujos(models.Model):
@@ -39,12 +42,14 @@ class Flujos(models.Model):
     def recalcular_flujo(self):
         last_flujo_cerrado = self.movimientos_flujo_ids.filtered(lambda x: x.state == 'cerrado').sorted(key=lambda x: x.fecha_final, reverse=False)[:1]
         flujos = self.movimientos_flujo_ids.filtered(lambda x: x.state == 'abierto').sorted(key=lambda x: x.fecha_final, reverse=False)
+        _logger.info(f'last_flujo_cerrado: {last_flujo_cerrado}')
         if last_flujo_cerrado:
             first_flujo_abierto = flujos[0]
             if first_flujo_abierto.tipo == 'compra':
-                if first_flujo_abierto.cpmpra_id.fecha < last_flujo_cerrado.fecha_final:
+                if first_flujo_abierto.compra_id.fecha < last_flujo_cerrado.fecha_final:
                     raise ValueError('La fecha de la compra es menor a la fecha final del último flujo cerrado')
             elif first_flujo_abierto.tipo == 'aplicación':
+                _logger.info(f'first_flujo_abierto.aplicacion_id.fecha: {first_flujo_abierto.aplicacion_id.fecha}')
                 if first_flujo_abierto.aplicacion_id.fecha < last_flujo_cerrado.fecha_final:
                     raise ValueError('La fecha de la aplicación es menor a la fecha final del último flujo cerrado')
             flujos = last_flujo_cerrado + flujos
