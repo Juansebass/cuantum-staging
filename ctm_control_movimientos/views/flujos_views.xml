@@ -58,13 +58,12 @@
         <field name="name">ctm.flujos.dashboard</field>
         <field name="model">ctm.flujos</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="partner_id">
+            <kanban default_group_by="partner_id" class="o_res_partner_kanban" group_create="false">
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_card">
-                            <field name="partner_id"/>
-                            <div>
-                                <strong><field name="name"/></strong>
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_card">
+                                <field name="partner_id"/>
                             </div>
                         </div>
                     </t>
