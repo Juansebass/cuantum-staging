@@ -64,6 +64,9 @@
                         <div t-attf-class="oe_kanban_global_click">
                             <div class="oe_kanban_card">
                                 <field name="partner_id"/>
+                                <a type="action" name="view_ctm_flujos_tree" context="{'default_partner_id': record.partner_id.raw_value}">
+                                    <field name="name"/>
+                                </a>
                             </div>
                         </div>
                     </t>
