@@ -23,7 +23,6 @@
         <field name="name">Flujos</field>
         <field name="res_model">ctm.flujos</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="context">{'search_default_partner_id': active_id}</field>
     </record>
 
     <menuitem id="menu_control_movimientos_main" name="Control de Movimientos"  web_icon="ctm_control_movimientos,static/description/GENERAL.png" />
