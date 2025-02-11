@@ -22,7 +22,7 @@
     <record id="action_flujos" model="ir.actions.act_window">
         <field name="name">Flujos</field>
         <field name="res_model">ctm.flujos</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
     </record>
 
     <menuitem id="menu_control_movimientos_main" name="Control de Movimientos"  web_icon="ctm_control_movimientos,static/description/GENERAL.png" />
