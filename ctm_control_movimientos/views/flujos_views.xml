@@ -8,6 +8,7 @@
                 <field name="partner_id"/>
                 <field name="flujo" widget="percentage"/>
                 <field name="cdg" widget="percentage"/>
+                <filter string="Cliente" name="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
             </tree>
         </field>
     </record>
@@ -58,18 +59,14 @@
         <field name="name">ctm.flujos.dashboard</field>
         <field name="model">ctm.flujos</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="partner_id" class="o_res_partner_kanban" group_create="false">
+            <kanban default_group_by="partner_id">
+                <field name="partner_id"/>
                 <templates>
-                    <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_global_click">
-                            <div class="oe_kanban_card">
-                                <field name="partner_id"/>
-                                <a type="action" name="view_ctm_flujos_tree" context="{'default_partner_id': record.partner_id.raw_value}">
-                                    <field name="name"/>
-                                </a>
-                            </div>
+                    <div class="oe_kanban_global_click">
+                        <div class="o_kanban_record_title" t-attf-context="{'search_default_partner_id': {{ partner_id.id }}}">
+                            <strong><field name="partner_id"/></strong>
                         </div>
-                    </t>
+                    </div>
                 </templates>
             </kanban>
         </field>
