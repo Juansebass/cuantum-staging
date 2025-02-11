@@ -12,6 +12,17 @@
         </field>
     </record>
 
+    <record id="view_ctm_flujos_filter" model="ir.ui.view">
+        <field name="name">ctm.flujos.filter</field>
+        <field name="model">ctm.flujos</field>
+        <field name="arch" type="xml">
+            <search string="Flujos">
+                <field name="partner_id"/>
+                <filter name="group_partner_id" string="Cliente" context="{'group_by':'partner_id'}"/>
+            </search>
+        </field>
+    </record>
+
     <record id="view_ctm_flujos_form" model="ir.ui.view">
         <field name="name">ctm.flujos.form</field>
         <field name="model">ctm.flujos</field>
@@ -51,23 +62,6 @@
                     </notebook>
                 </sheet>
             </form>
-        </field>
-    </record>
-
-    <record id="view_ctm_flujos_dashboard" model="ir.ui.view">
-        <field name="name">ctm.flujos.dashboard</field>
-        <field name="model">ctm.flujos</field>
-        <field name="arch" type="xml">
-            <kanban default_group_by="partner_id">
-                <field name="partner_id"/>
-                <templates>
-                    <div class="oe_kanban_global_click">
-                        <div class="o_kanban_record_title" t-attf-context="{'search_default_partner_id': {{ partner_id.id }}}">
-                            <strong><field name="partner_id"/></strong>
-                        </div>
-                    </div>
-                </templates>
-            </kanban>
         </field>
     </record>
 </odoo>
