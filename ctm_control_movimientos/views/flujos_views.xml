@@ -8,7 +8,6 @@
                 <field name="partner_id"/>
                 <field name="flujo" widget="percentage"/>
                 <field name="cdg" widget="percentage"/>
-                <filter string="Cliente" name="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
             </tree>
         </field>
     </record>
