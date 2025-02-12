@@ -9,7 +9,6 @@ class CargarMovimientos(models.Model):
     _description = 'Cargar Movimientos'
 
     name = fields.Char(string='Nombre', required=True)
-    fecha = fields.Date(string='Fecha', required=True)
     responsable_id = fields.Many2one('res.partner', string='Responsable')
     tipo = fields.Selection([
         ('compra', 'Compra'),
