@@ -19,6 +19,8 @@ class Flujos(models.Model):
     cdg_cierre = fields.Float('CDG de Cierre')
     cdg_acumulado_cierre = fields.Float('CDG Acumulado de Cierre')
     valor_activo_cierre = fields.Float('Valor Activo de Cierre')
+    investment_type_id = fields.Many2one('ati.investment.type', string='Tipo de Inversion')
+    gestor_id = fields.Many2one('ati.gestor', string='Gestor')
 
     def button_cerrar_movimientos_flujos(self):
         return {

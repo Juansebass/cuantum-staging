@@ -19,8 +19,8 @@
             <search string="Flujos">
                 <group expand="0" string="Group By">
                     <filter name="group_partner_id" string="Cliente" context="{'group_by':'partner_id'}"/>
-                    <filter string="Gestor" name="group_gestor_inversion" domain="[]" context="{'group_by': 'manager'}"/>
-                    <filter string="Inversion" name="group_gestor_inversion" domain="[]" context="{'group_by': 'investment_type'}"/>
+                    <filter string="Gestor" name="group_gestor_inversion" domain="[]" context="{'group_by': 'gestor_id'}"/>
+                    <filter string="Inversion" name="group_gestor_inversion" domain="[]" context="{'group_by': 'investment_type_id'}"/>
                 </group>
             </search>
         </field>

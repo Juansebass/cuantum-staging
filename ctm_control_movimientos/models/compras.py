@@ -31,6 +31,8 @@ class Compras(models.Model):
             'partner_id': self.partner_id.id,
             'flujo': self.flujo,
             'cdg': self.cdg,
+            'gestor_id': self.gestor_id.id,
+            'investment_type_id': self.investment_type_id.id,
         })
         self.env['ctm.movimientos_flujos'].create({
             'flujo_id': flujo_id.id,
