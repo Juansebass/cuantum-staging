@@ -1,6 +1,5 @@
- # -*- coding: utf-8 -*-
+#  -*- coding: utf-8 -*-
 
-from email.policy import default
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import base64
@@ -8,20 +7,21 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 import calendar
 import logging
-from io import BytesIO ## for Python 3
+from io import BytesIO
 from dateutil.relativedelta import relativedelta
 import scipy.optimize as opt
 
 
 logger = logging.getLogger(__name__)
 
+
 class Extracto(models.Model):
     _name = 'ati.extracto'
     _description = "Extracto"
-    _inherit = ['portal.mixin', 'mail.thread','mail.activity.mixin']
+    _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
 
     name = fields.Char('Nombre')
-    company_id = fields.Many2one('res.company', string='Company',  default=lambda self: self.env.company)
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
 
     #para recursos
     valor_anterior_recursos_csf = fields.Float('Valor Anterior')
