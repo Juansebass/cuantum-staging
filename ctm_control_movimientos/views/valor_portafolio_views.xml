@@ -33,11 +33,10 @@
                 <notebook>
                     <page string="Clientes" >
                         <tree string="Clientes" editable="bottom" >
-                            <field name="cliente_ids" />
+                            <field name="cliente_ids"/>
                         </tree>
                     </page>
                 </notebook>
-                </field>
             </form>
         </field>
     </record>
