@@ -39,6 +39,28 @@
                             </tree>
                         </field>
                     </page>
+                    <page string="Informe Clientes" >
+                        <field name="informe_cliente_ids">
+                            <tree string="Informe Clientes" editable="bottom" >
+                                <field name="partner_id" />
+                                <field name="freelance_id" />
+                                <field name="factoring_csf" />
+                                <field name="libranzas_csf" />
+                                <field name="sentencias_csf" />
+                                <field name="mutuo_csf" />
+                                <field name="rpr_csf" />
+                                <field name="libranzas_fcl" />
+                                <field name="rpr_fcl" />
+                                <field name="statum_fcl" />
+                                <field name="sentencias_fcl" />
+                                <field name="s1_fcl" />
+                                <field name="s2_fcl" />
+                                <field name="rpr_fcl" />
+                                <field name="total" />
+                                
+                            </tree>
+                        </field>
+                    </page>
                 </notebook>
             </form>
         </field>
