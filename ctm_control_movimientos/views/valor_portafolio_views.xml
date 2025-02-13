@@ -33,9 +33,11 @@
                 </sheet>
                 <notebook>
                     <page string="Clientes" >
-                        <tree string="Clientes" editable="bottom" >
-                            <field name="cliente_ids"/>
-                        </tree>
+                        <field name="cliente_ids">
+                            <tree string="Clientes" editable="bottom" >
+                                <field name="partner_id" />
+                            </tree>
+                        </field>
                     </page>
                 </notebook>
             </form>
