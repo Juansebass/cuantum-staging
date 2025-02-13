@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
-                    <button name="crear_valor_portafolio" type="object" string="Crear Valor Portafolio" attrs="{'invisible': [('state', 'in', ['draft'])]}"/>
+                    <button name="crear_valor_portafolio" type="object" string="Crear Valor Portafolio" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>

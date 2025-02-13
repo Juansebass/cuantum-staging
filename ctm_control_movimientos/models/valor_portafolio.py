@@ -7,7 +7,7 @@ class ValorPortafolio(models.Model):
     _name = 'ctm.valor_portafolio'
     _description = 'Valor Portafolio'
 
-    name = fields.Char(string='Nombre', required=True)
+    name = fields.Char(string='Nombre')
     fecha_corte = fields.Date(string='Fecha de Corte', required=True)
     client_file = fields.Binary('Archivo')
     file_content = fields.Text('Texto archivo')
