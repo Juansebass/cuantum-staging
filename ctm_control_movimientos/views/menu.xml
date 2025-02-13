@@ -26,6 +26,12 @@
         <field name="context">{'search_default_group_partner_id': 1, 'search_default_group_gestor_inversion': 1}</field>
     </record>
 
+    <record id="action_valor_portafolio" model="ir.actions.act_window">
+        <field name="name">Valor Portafolio</field>
+        <field name="res_model">ctm.valor_portafolio</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <menuitem id="menu_control_movimientos_main" name="Control de Movimientos"  web_icon="ctm_control_movimientos,static/description/GENERAL.png" />
 
     <menuitem id="menu_entradas" sequence="1" name="Entradas" parent="menu_control_movimientos_main">
@@ -35,4 +41,8 @@
     </menuitem>
 
     <menuitem id="menu_flujos" sequence="2" name="Flujos" parent="menu_control_movimientos_main" action="action_flujos"/>
+
+    <menuitem id="menu_informes" sequence="3" name="Informes" parent="menu_control_movimientos_main">
+        <menuitem id="menu_valor_portafolio" name="Valor Portafolio"  action="action_valor_portafolio" sequence="1"/>
+    </menuitem>
 </odoo>

@@ -5,3 +5,5 @@ access_ctm_aplicaciones_user,ctm.aplicaciones.user,model_ctm_aplicaciones,base.g
 access_ctm_flujos_user,ctm.flujos.user,model_ctm_flujos,base.group_user,1,1,1,1
 access_ctm_movimientos_flujos_user,ctm.movimientos_flujos.user,model_ctm_movimientos_flujos,base.group_user,1,1,1,1
 access_ctm_cerrar_movimientos_flujos_wizard_user,ctm.cerrar_movimientos_flujos.wizard.user,model_ctm_cerrar_movimientos_flujos_wizard,base.group_user,1,1,1,1
+access_ctm_valor_portafolio_user,ctm.valor_portafolio.user,model_ctm_valor_portafolio,base.group_user,1,1,1,1
+access_ctm_valor_portafolio_clientes_user,ctm.valor_portafolio_clientes.user,model_ctm_valor_portafolio_clientes,base.group_user,1,1,1,1
