@@ -51,11 +51,9 @@
                                 <field name="rpr_csf" />
                                 <field name="libranzas_fcl" />
                                 <field name="rpr_fcl" />
-                                <field name="statum_fcl" />
-                                <field name="sentencias_fcl" />
-                                <field name="s1_fcl" />
-                                <field name="s2_fcl" />
-                                <field name="rpr_fcl" />
+                                <field name="s1_fcp" />
+                                <field name="s2_fcp" />
+                                <field name="rpr_fcp" />
                                 <field name="total" />
                                 
                             </tree>
