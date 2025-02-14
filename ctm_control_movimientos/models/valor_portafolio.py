@@ -66,7 +66,7 @@ class ValorPortafolio(models.Model):
             })
             movimientos_flujos = self.env['ctm.movimientos_flujos'].search([
                 ('partner_id', '=', cliente.partner_id.id),
-                ('fecha_final', '==', self.fecha_corte),
+                ('fecha_final', '=', self.fecha_corte),
             ])
             csf = movimientos_flujos.filtered(lambda x: x.gestor_id.code == 'CUANTUM')
             fcl = movimientos_flujos.filtered(lambda x: x.gestor_id.code == 'FCL')
