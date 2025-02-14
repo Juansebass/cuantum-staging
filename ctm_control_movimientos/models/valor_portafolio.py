@@ -71,21 +71,21 @@ class ValorPortafolio(models.Model):
             csf = movimientos_flujos.filtered(lambda x: x.gestor_id.code == 'CUANTUM')
             fcl = movimientos_flujos.filtered(lambda x: x.gestor_id.code == 'FCL')
             fcp = movimientos_flujos.filtered(lambda x: x.gestor_id.code == 'FCP')
-            rpr_csf = cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date <= self.fecha_corte)
+            rpr_csf = cliente.partner_id.recursos_recompra_csf_ids.filtered(lambda x: x.date <= self.fecha_corte)
             rpr_csf_total = 0
             for recurso in rpr_csf:
                 if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                     rpr_csf_total += recurso.value
                 else:
                     rpr_csf_total -= recurso.value
-            rpr_fcl = cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date <= self.fecha_corte)
+            rpr_fcl = cliente.partner_id.recursos_recompra_fcl_ids.filtered(lambda x: x.date <= self.fecha_corte)
             rpr_fcl_total = 0
             for recurso in rpr_fcl:
                 if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
                     rpr_fcl_total += recurso.value
                 else:
                     rpr_fcl_total -= recurso.value
-            rpr_fcp = cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date <= self.fecha_corte)
+            rpr_fcp = cliente.partner_id.recursos_recompra_fcp_ids.filtered(lambda x: x.date <= self.fecha_corte)
             rpr_fcp_total = 0
             for recurso in rpr_fcp:
                 if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
