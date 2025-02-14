@@ -62,7 +62,7 @@ class ValorPortafolio(models.Model):
             informe_cliente = self.env['ctm.valor_portafolio_informe_clientes'].create({
                 'valor_portafolio_id': self.id,
                 'partner_id': cliente.partner_id.id,
-                'freelance_id': cliente.partner_id.freelance_id.id
+                'freelance_id': cliente.partner_id.freelance.id
             })
             movimientos_flujos = self.env['ctm.movimientos_flujos'].search([
                 ('partner_id', '=', cliente.partner_id.id),
