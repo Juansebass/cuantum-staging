@@ -124,6 +124,9 @@ class MovimientosFlujos(models.Model):
     _description = 'Movimientos Flujos'
 
     flujo_id = fields.Many2one('ctm.flujos', string='Flujo', required=True, ondelete='cascade')
+    partner_id = fields.Many2one('res.partner', string='Cliente', related='flujo_id.partner_id', store=True)
+    investment_type_id = fields.Many2one('ati.investment.type', string='Tipo de Inversion', related='flujo_id.investment_type_id', store=True)
+    gestor_id = fields.Many2one('ati.gestor', string='Gestor', related='flujo_id.gestor_id', store=True)
     fecha_inicial = fields.Date('Fecha Inicial', required=1)
     fecha_final = fields.Date('Fecha Final', required=1)
     compra = fields.Float('Compra', required=1)
