@@ -1,6 +1,8 @@
 from odoo import models, fields, api  # type: ignore
 from odoo.exceptions import ValidationError  # type: ignore
 import base64
+import io
+import xlsxwriter  # type: ignore
 
 
 class ValorPortafolio(models.Model):
@@ -21,6 +23,10 @@ class ValorPortafolio(models.Model):
     skip_first_line = fields.Boolean('Saltar primera linea', default=True)
     cliente_ids = fields.One2many('ctm.valor_portafolio_clientes', 'valor_portafolio_id', 'Clientes')
     informe_cliente_ids = fields.One2many('ctm.valor_portafolio_informe_clientes', 'valor_portafolio_id', 'Informe Clientes')
+    xls_output = fields.Binary(
+        string='Descargar',
+        readonly=True,
+    )
 
     @api.model
     def create(self, var):
@@ -104,6 +110,61 @@ class ValorPortafolio(models.Model):
             informe_cliente.s2_fcp = sum(fcp.filtered(lambda x: x.investment_type_id.code == 'S2').mapped('valor_activo'))
             informe_cliente.rpr_fcp = rpr_fcp_total
             informe_cliente.total = informe_cliente.factoring_csf + informe_cliente.libranzas_csf + informe_cliente.sentencias_csf + informe_cliente.mutuo_csf + informe_cliente.rpr_csf + informe_cliente.libranzas_fcl + informe_cliente.rpr_fcl + informe_cliente.s1_fcp + informe_cliente.s2_fcp + informe_cliente.rpr_fcp
+        self.state = 'processed'
+
+    def action_exportar_xls(self):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet('Valor Portafolio')
+        money = workbook.add_format({'num_format': '$#,##0'})
+        row = 0
+
+        worksheet.write(row, 0, 'Cliente')
+        worksheet.write(row, 1, 'Freelance')
+        worksheet.write(row, 2, 'Factoring CSF')
+        worksheet.write(row, 3, 'Libranzas CSF')
+        worksheet.write(row, 4, 'Sentencias CSF')
+        worksheet.write(row, 5, 'Mutuo CSF')
+        worksheet.write(row, 6, 'RPR CSF')
+        worksheet.write(row, 7, 'Libranzas FCL')
+        worksheet.write(row, 8, 'RPR FCL')
+        worksheet.write(row, 9, 'S1 FCP')
+        worksheet.write(row, 10, 'S2 FCP')
+        worksheet.write(row, 11, 'RPR FCP')
+        worksheet.write(row, 12, 'Total')
+
+        row += 1
+
+        for informe_cliente in self.informe_cliente_ids:
+            worksheet.write(row, 0, informe_cliente.partner_id.name)
+            worksheet.write(row, 1, informe_cliente.freelance_id.name)
+            worksheet.write(row, 2, informe_cliente.factoring_csf, money)
+            worksheet.write(row, 3, informe_cliente.libranzas_csf, money)
+            worksheet.write(row, 4, informe_cliente.sentencias_csf, money)
+            worksheet.write(row, 5, informe_cliente.mutuo_csf, money)
+            worksheet.write(row, 6, informe_cliente.rpr_csf, money)
+            worksheet.write(row, 7, informe_cliente.libranzas_fcl, money)
+            worksheet.write(row, 8, informe_cliente.rpr_fcl, money)
+            worksheet.write(row, 9, informe_cliente.s1_fcp, money)
+            worksheet.write(row, 10, informe_cliente.s2_fcp, money)
+            worksheet.write(row, 11, informe_cliente.rpr_fcp, money)
+            worksheet.write(row, 12, informe_cliente.total, money)
+            row += 1
+
+        workbook.close()
+        output.seek(0)
+        self.xls_output = base64.b64encode(output.read())
+        output.close()
+
+        return {
+            'context': self.env.context,
+            'name': 'Valor Protafolio',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'ctm.valor_portafolio',
+            'res_id': self.id,
+            'type': 'ir.actions.act_window',
+        }
 
 
 class ValorPortafolioClientes(models.Model):

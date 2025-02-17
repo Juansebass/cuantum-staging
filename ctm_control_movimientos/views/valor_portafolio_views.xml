@@ -7,6 +7,7 @@
             <form string="">
                 <header>
                     <button name="crear_valor_portafolio" type="object" string="Crear Valor Portafolio" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                    <button name="action_exportar_xls" type="object" string="Exportar Excel" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -19,6 +20,11 @@
                         <group name="izquierda">
                             <field name="fecha_corte" />
                             <field name="responsable" readonly="1"/>
+                            <group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                            <group>
+                                <field name="xls_output"/>
+                            </group>
+                        </group>
                         </group>
                         <group name="derecha">
                             <field name="client_file" widget="binary"/>
