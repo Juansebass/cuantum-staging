@@ -10,14 +10,7 @@ class CausacionesPagos(models.Model):
     _description = 'Causaciones Pagos'
 
     name = fields.Char(string='Nombre')
-    tipo_busqueda = fields.Selection(
-        selection=[('fecha_unica', 'Fecha Única'), ('rango_fechas', 'Rango de Fechas')],
-        string='Tipo de Búsqueda',
-        default='fecha_unica'
-    )
-    fecha_unica = fields.Date(string='Fecha Única')
-    fecha_inicio = fields.Date(string='Fecha Inicio')
-    fecha_final = fields.Date(string='Fecha Final')
+    fecha_unica = fields.Date(string='Fecha Única', required=True)
     gestor_id = fields.Many2one('ati.gestor', 'Gestor', required=True)
     investment_type_id = fields.Many2one('ati.investment.type', 'Tipo de Inversión', required=True)
 
@@ -41,10 +34,7 @@ class CausacionesPagos(models.Model):
     @api.model
     def create(self, var):
         res = super(CausacionesPagos, self).create(var)
-        if res.tipo_busqueda == 'fecha_unica':
-            res.name = f'{res.fecha_unica.strftime("%Y-%m-%d")} - {res.gestor_id.name} - {res.investment_type_id.name}'
-        else:
-            res.name = f'{res.fecha_inicio.strftime("%Y-%m-%d")} - {res.fecha_final.strftime("%Y-%m-%d")} - {res.gestor_id.name} - {res.investment_type_id.name}'
+        res.name = f'{res.fecha_unica.strftime("%Y-%m-%d")} - {res.gestor_id.name} - {res.investment_type_id.name}'
         return res
 
     def action_cargar_clientes(self):
@@ -75,10 +65,73 @@ class CausacionesPagos(models.Model):
             })
 
     def crear_causaciones_pagos(self):
-        pass
+        self.ensure_one()
+        self.informe_cliente_ids.unlink()
+        if self.tipo_busqueda == 'fecha_unica' and not self.fecha_unica:
+            raise ValidationError('Debe ingresar la fecha única')
+
+        for cliente in self.cliente_ids:
+            informe_cliente = self.env['ctm.causaciones_pagos_informe'].create({
+                'causaciones_pagos_id': self.id,
+                'partner_id': cliente.partner_id.id,
+            })
+            movimientos_flujos = self.env['ctm.movimientos_flujos'].search([
+                ('partner_id', '=', cliente.partner_id.id),
+                ('fecha_final', '=', self.fecha_corte),
+                ('gestor_id', '=', self.gestor_id.id),
+                ('investment_type_id', '=', self.investment_type_id.id),
+                ('fecha_final', '=', self.fecha_unica),
+            ])
+            informe_cliente.cdg_acumulado = sum(movimientos_flujos.mapped('cdg_acumulado'))
+            informe_cliente.rendimiento_acumulado = sum(movimientos_flujos.mapped('rendimiento_acumulado'))
+            informe_cliente.pago_otros_conceptos = sum(movimientos_flujos.mapped('pago_otros_conceptos'))
+            informe_cliente.pago_capital = sum(movimientos_flujos.mapped('pago_capital'))
+            informe_cliente.pago_rendimientos = sum(movimientos_flujos.mapped('pago_rendimientos'))
+            informe_cliente.pago_cdg = sum(movimientos_flujos.mapped('pago_cdg'))
+            informe_cliente.total_pagos = informe_cliente.pago_otros_conceptos + informe_cliente.pago_capital + informe_cliente.pago_rendimientos + informe_cliente.pago_cdg
 
     def action_exportar_xls(self):
-        pass
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet('Causaciones y Pagos')
+        money = workbook.add_format({'num_format': '$#,##0'})
+        row = 0
+
+        worksheet.write(row, 0, 'Cliente')
+        worksheet.write(row, 1, 'CDG Acumulada')
+        worksheet.write(row, 2, 'Rendimiento Acumulado')
+        worksheet.write(row, 3, 'Pago Otros Conceptos')
+        worksheet.write(row, 4, 'Pago Capital')
+        worksheet.write(row, 5, 'Pago Rendimientos')
+        worksheet.write(row, 6, 'Pago CDG')
+        worksheet.write(row, 7, 'Total Pagos')
+        row += 1
+
+        for informe in self.informe_cliente_ids:
+            worksheet.write(row, 0, informe.partner_id.name)
+            worksheet.write(row, 1, informe.cdg_acumulado, money)
+            worksheet.write(row, 2, informe.rendimiento_acumulado, money)
+            worksheet.write(row, 3, informe.pago_otros_conceptos, money)
+            worksheet.write(row, 4, informe.pago_capital, money)
+            worksheet.write(row, 5, informe.pago_rendimientos, money)
+            worksheet.write(row, 6, informe.pago_cdg, money)
+            worksheet.write(row, 7, informe.total_pagos, money)
+            row += 1
+
+        workbook.close()
+        output.seek(0)
+        self.xls_output = base64.b64encode(output.read())
+        output.close()
+
+        return {
+            'context': self.env.context,
+            'name': 'Causaciones y Pagos',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'ctm.causaciones_pagos',
+            'res_id': self.id,
+            'type': 'ir.actions.act_window',
+        }
 
 
 class CausacionesPagosClientes(models.Model):

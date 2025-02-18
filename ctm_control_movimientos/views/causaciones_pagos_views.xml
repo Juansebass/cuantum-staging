@@ -19,10 +19,7 @@
                     </div>
                     <group name="Usuario">
                         <group name="izquierda">
-                            <field name="tipo_busqueda"/>
                             <field name="fecha_unica"/>
-                            <field name="fecha_inicio"/>
-                            <field name="fecha_final"/>
                             <field name="gestor_id"/>
                             <field name="investment_type_id"/>
                             <field name="responsable" readonly="1"/>
