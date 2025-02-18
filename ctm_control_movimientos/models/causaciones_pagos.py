@@ -42,9 +42,9 @@ class CausacionesPagos(models.Model):
     def create(self, var):
         res = super(CausacionesPagos, self).create(var)
         if res.tipo_busqueda == 'fecha_unica':
-            res.name = f'{res.fecha_unica.strftime('%Y-%m-%d')} - {res.gestor_id.name} - {res.investment_type_id.name}'
+            res.name = f'{res.fecha_unica.strftime("%Y-%m-%d")} - {res.gestor_id.name} - {res.investment_type_id.name}'
         else:
-            res.name = f'{res.fecha_inicio.strftime('%Y-%m-%d')} - {res.fecha_final.strftime('%Y-%m-%d')} - {res.gestor_id.name} - {res.investment_type_id.name}'
+            res.name = f'{res.fecha_inicio.strftime("%Y-%m-%d")} - {res.fecha_final.strftime("%Y-%m-%d")} - {res.gestor_id.name} - {res.investment_type_id.name}'
         return res
 
     def action_cargar_clientes(self):
