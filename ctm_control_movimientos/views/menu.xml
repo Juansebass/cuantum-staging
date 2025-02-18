@@ -32,6 +32,12 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record id="action_causaciones_pagos" model="ir.actions.act_window">
+        <field name="name">Causaciones y Pagos</field>
+        <field name="res_model">ctm.causaciones_pagos</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <menuitem id="menu_control_movimientos_main" name="Control de Movimientos"  web_icon="ctm_control_movimientos,static/description/GENERAL.png" />
 
     <menuitem id="menu_entradas" sequence="1" name="Entradas" parent="menu_control_movimientos_main">
@@ -44,5 +50,6 @@
 
     <menuitem id="menu_informes" sequence="3" name="Informes" parent="menu_control_movimientos_main">
         <menuitem id="menu_valor_portafolio" name="Valor Portafolio"  action="action_valor_portafolio" sequence="1"/>
+        <menuitem id="menu_causaciones_pagos" name="Causaciones y Pagos"  action="action_causaciones_pagos" sequence="2"/>
     </menuitem>
 </odoo>

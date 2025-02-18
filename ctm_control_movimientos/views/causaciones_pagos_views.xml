@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="model_ctm_causaciones_pagos_view_form" model="ir.ui.view">
+        <field name="name">ctm.causaciones_pagos.view.form</field>
+        <field name="model">ctm.causaciones_pagos</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="crear_causaciones_pagos" type="object" string="Crear Causaciones Pagos" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                    <button name="action_exportar_xls" type="object" string="Exportar Excel" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h3 style="display: flex;"><field name="name" readonly="1" class="oe_inline"/></h3>
+                        </div>
+                    </div>
+                    <group name="Usuario">
+                        <group name="izquierda">
+                            <field name="tipo_busqueda"/>
+                            <field name="fecha_unica"/>
+                            <field name="fecha_inicio"/>
+                            <field name="fecha_final"/>
+                            <field name="gestor_id"/>
+                            <field name="investment_type_id"/>
+                            <field name="responsable" readonly="1"/>
+                        </group>
+                        <group name="derecha">
+                            <field name="client_file" widget="binary"/>
+                            <field name="delimiter" />
+                            <field name="skip_first_line" />
+                            <button name='action_cargar_clientes' type="object"
+                                            string="Cargar Clientes"
+                                            class="oe_stat_button"
+                                            icon="fa-refresh"/>
+                        </group>
+                        <group string="Archivo Excel" attrs="{'invisible': [('xls_output', '=', False)]}">
+                            <group>
+                                <field name="xls_output"/>
+                            </group>
+                        </group>
+                    </group>
+                </sheet>
+                <notebook>
+                    <page string="Clientes" >
+                        <field name="cliente_ids">
+                            <tree string="Clientes" editable="bottom" >
+                                <field name="partner_id" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Informe Causaciones y Pagos" >
+                        <field name="informe_cliente_ids">
+                            <tree string="Informe Causaciones y Pagos" editable="bottom" >
+                                <field name="partner_id" />
+                                <field name="cdg_acumulada" />
+                                <field name="rendimiento_acumulado" />
+                                <field name="pago_otros_conceptos" />
+                                <field name="pago_capital" />
+                                <field name="pago_rendimientos" />
+                                <field name="pago_cdg" />
+                                <field name="total_pagos" />
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+                            
+
+    <record id="model_ctm_causaciones_pagos_view_tree" model="ir.ui.view">
+        <field name="name">ctm.causaciones_pagos.view.tree</field>
+        <field name="model">ctm.causaciones_pagos</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+</odoo>

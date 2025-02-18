@@ -18,6 +18,7 @@
         'views/cargar_movimientos_views.xml',
         'views/flujos_views.xml',
         'views/valor_portafolio_views.xml',
+        'views/causaciones_pagos_views.xml',
         'wizards/cerrar_movimiento_flujo_wizard_views.xml',
     ],
     'installable': True,
