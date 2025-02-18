@@ -86,6 +86,10 @@ class CausacionesPagos(models.Model):
             informe_cliente.pago_rendimientos = sum(movimientos_flujos.mapped('pago_rendimientos'))
             informe_cliente.pago_cdg = sum(movimientos_flujos.mapped('pago_cdg'))
             informe_cliente.total_pagos = informe_cliente.pago_otros_conceptos + informe_cliente.pago_capital + informe_cliente.pago_rendimientos + informe_cliente.pago_cdg
+        self.state = 'processed'
+
+    def action_draft(self):
+        self.state = 'draft'
 
     def action_exportar_xls(self):
         output = io.BytesIO()
