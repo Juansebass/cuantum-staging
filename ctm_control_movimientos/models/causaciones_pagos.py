@@ -75,7 +75,6 @@ class CausacionesPagos(models.Model):
             })
             movimientos_flujos = self.env['ctm.movimientos_flujos'].search([
                 ('partner_id', '=', cliente.partner_id.id),
-                ('fecha_final', '=', self.fecha_corte),
                 ('gestor_id', '=', self.gestor_id.id),
                 ('investment_type_id', '=', self.investment_type_id.id),
                 ('fecha_final', '=', self.fecha_unica),
