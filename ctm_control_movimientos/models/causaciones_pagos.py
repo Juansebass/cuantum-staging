@@ -18,8 +18,8 @@ class CausacionesPagos(models.Model):
     fecha_unica = fields.Date(string='Fecha Única')
     fecha_inicio = fields.Date(string='Fecha Inicio')
     fecha_final = fields.Date(string='Fecha Final')
-    gestor_id = fields.Many2one('ctm.gestor', 'Gestor', required=True)
-    investment_type_id = fields.Many2one('ctm.investment_type', 'Tipo de Inversión', required=True)
+    gestor_id = fields.Many2one('ati.gestor', 'Gestor', required=True)
+    investment_type_id = fields.Many2one('ati.investment.type', 'Tipo de Inversión', required=True)
 
     client_file = fields.Binary('Archivo')
     file_content = fields.Text('Texto archivo')
