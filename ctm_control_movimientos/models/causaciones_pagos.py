@@ -37,6 +37,13 @@ class CausacionesPagos(models.Model):
         res.name = f'{res.fecha_unica.strftime("%Y-%m-%d")} - {res.gestor_id.name} - {res.investment_type_id.name}'
         return res
 
+    @api.model
+    def write(self, var):
+        res = super(CausacionesPagos, self).write(var)
+        for record in self:
+            record.name = f'{record.fecha_unica.strftime("%Y-%m-%d")} - {record.gestor_id.name} - {record.investment_type_id.name}'
+        return res
+
     def action_cargar_clientes(self):
         self.ensure_one()
         if not self.delimiter:
