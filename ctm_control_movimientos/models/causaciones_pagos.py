@@ -79,7 +79,7 @@ class CausacionesPagos(models.Model):
                 ('investment_type_id', '=', self.investment_type_id.id),
                 ('fecha_final', '=', self.fecha_unica),
             ])
-            informe_cliente.cdg_acumulado = sum(movimientos_flujos.mapped('cdg_acumulado'))
+            informe_cliente.cdg_acumulada = sum(movimientos_flujos.mapped('cdg_acumulado'))
             informe_cliente.rendimiento_acumulado = sum(movimientos_flujos.mapped('rendimiento_acumulado'))
             informe_cliente.pago_otros_conceptos = sum(movimientos_flujos.mapped('pago_otros_conceptos'))
             informe_cliente.pago_capital = sum(movimientos_flujos.mapped('pago_capital'))
