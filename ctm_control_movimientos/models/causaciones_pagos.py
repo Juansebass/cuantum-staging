@@ -79,6 +79,7 @@ class CausacionesPagos(models.Model):
                 ('investment_type_id', '=', self.investment_type_id.id),
                 ('fecha_final', '=', self.fecha_unica),
             ])
+            informe_cliente.compras = sum(movimientos_flujos.mapped('compra'))
             informe_cliente.cdg_acumulada = sum(movimientos_flujos.mapped('cdg_acumulado'))
             informe_cliente.rendimiento_acumulado = sum(movimientos_flujos.mapped('rendimiento_acumulado'))
             informe_cliente.pago_otros_conceptos = sum(movimientos_flujos.mapped('pago_otros_conceptos'))
@@ -99,24 +100,26 @@ class CausacionesPagos(models.Model):
         row = 0
 
         worksheet.write(row, 0, 'Cliente')
-        worksheet.write(row, 1, 'CDG Acumulada')
-        worksheet.write(row, 2, 'Rendimiento Acumulado')
-        worksheet.write(row, 3, 'Pago Otros Conceptos')
-        worksheet.write(row, 4, 'Pago Capital')
-        worksheet.write(row, 5, 'Pago Rendimientos')
-        worksheet.write(row, 6, 'Pago CDG')
-        worksheet.write(row, 7, 'Total Pagos')
+        worksheet.write(row, 1, 'Compras')
+        worksheet.write(row, 2, 'CDG Acumulada')
+        worksheet.write(row, 3, 'Rendimiento Acumulado')
+        worksheet.write(row, 4, 'Pago Otros Conceptos')
+        worksheet.write(row, 5, 'Pago Capital')
+        worksheet.write(row, 6, 'Pago Rendimientos')
+        worksheet.write(row, 7, 'Pago CDG')
+        worksheet.write(row, 8, 'Total Pagos')
         row += 1
 
         for informe in self.informe_cliente_ids:
             worksheet.write(row, 0, informe.partner_id.name)
-            worksheet.write(row, 1, informe.cdg_acumulado, money)
-            worksheet.write(row, 2, informe.rendimiento_acumulado, money)
-            worksheet.write(row, 3, informe.pago_otros_conceptos, money)
-            worksheet.write(row, 4, informe.pago_capital, money)
-            worksheet.write(row, 5, informe.pago_rendimientos, money)
-            worksheet.write(row, 6, informe.pago_cdg, money)
-            worksheet.write(row, 7, informe.total_pagos, money)
+            worksheet.write(row, 1, informe.compras, money)
+            worksheet.write(row, 2, informe.cdg_acumulado, money)
+            worksheet.write(row, 3, informe.rendimiento_acumulado, money)
+            worksheet.write(row, 4, informe.pago_otros_conceptos, money)
+            worksheet.write(row, 5, informe.pago_capital, money)
+            worksheet.write(row, 6, informe.pago_rendimientos, money)
+            worksheet.write(row, 7, informe.pago_cdg, money)
+            worksheet.write(row, 8, informe.total_pagos, money)
             row += 1
 
         workbook.close()
@@ -149,6 +152,7 @@ class CausacionesPagosInforme(models.Model):
 
     causaciones_pagos_id = fields.Many2one('ctm.causaciones_pagos', 'Causaciones y Pagos')
     partner_id = fields.Many2one('res.partner', 'Cliente')
+    compras = fields.Float('Compras')
     cdg_acumulada = fields.Float('CDG Acumulada')
     rendimiento_acumulado = fields.Float('Rendimiento Acumulado')
     pago_otros_conceptos = fields.Float('Pago Otros Conceptos')
