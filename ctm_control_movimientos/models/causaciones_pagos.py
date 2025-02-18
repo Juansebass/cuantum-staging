@@ -67,8 +67,6 @@ class CausacionesPagos(models.Model):
     def crear_causaciones_pagos(self):
         self.ensure_one()
         self.informe_cliente_ids.unlink()
-        if self.tipo_busqueda == 'fecha_unica' and not self.fecha_unica:
-            raise ValidationError('Debe ingresar la fecha única')
 
         for cliente in self.cliente_ids:
             informe_cliente = self.env['ctm.causaciones_pagos_informe'].create({
