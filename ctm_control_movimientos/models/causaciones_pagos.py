@@ -40,7 +40,7 @@ class CausacionesPagos(models.Model):
     @api.model
     def write(self, var):
         res = super(CausacionesPagos, self).write(var)
-        res.name = f'{res.fecha_unica.strftime("%Y-%m-%d")} - {res.gestor_id.name} - {res.investment_type_id.name}'
+        res.name = f'{self.fecha_unica.strftime("%Y-%m-%d")} - {self.gestor_id.name} - {self.investment_type_id.name}'
         return res
 
     def action_cargar_clientes(self):
