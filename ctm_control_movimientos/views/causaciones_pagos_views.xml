@@ -9,7 +9,7 @@
                 <header>
                     <button name="crear_causaciones_pagos" type="object" string="Crear Causaciones Pagos" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
                     <button name="action_exportar_xls" type="object" string="Exportar Excel" attrs="{'invisible': [('state', '=', 'draft')]}"/>
-                    <button name="action_draft" type="object" string="Pasar a Borrador" attrs="{'invisible': [('state', '=', 'processed')]}"/>
+                    <button name="action_draft" type="object" string="Pasar a Borrador" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
