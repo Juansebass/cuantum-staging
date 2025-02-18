@@ -77,6 +77,9 @@ class CausacionesPagos(models.Model):
     def crear_causaciones_pagos(self):
         pass
 
+    def action_exportar_xls(self):
+        pass
+
 
 class CausacionesPagosClientes(models.Model):
     _name = 'ctm.causaciones_pagos_clientes'
