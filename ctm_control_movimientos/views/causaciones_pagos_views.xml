@@ -53,6 +53,7 @@
                         <field name="informe_cliente_ids">
                             <tree string="Informe Causaciones y Pagos" editable="bottom" >
                                 <field name="partner_id" />
+                                <field name="compras" />
                                 <field name="cdg_acumulada" />
                                 <field name="rendimiento_acumulado" />
                                 <field name="pago_otros_conceptos" />
