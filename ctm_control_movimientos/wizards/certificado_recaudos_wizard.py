@@ -21,6 +21,8 @@ class CertificadoRecaudosWizard(models.TransientModel):
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
             # Add files to the zip file
             zip_file.writestr('example.txt', 'This is an example file content.')
+            zip_file.writestr('example2.txt', 'This is the second example file content.')
+            zip_file.writestr('example3.txt', 'This is the third example file content.')
 
         zip_buffer.seek(0)
         zip_file_content = zip_buffer.read()
