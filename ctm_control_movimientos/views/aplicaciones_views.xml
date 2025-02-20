@@ -36,6 +36,11 @@
                         <field name="cdg" widget="percentage"/>
                         <field name="otros"/>
                     </group>
+                    <group>
+                        <field name="emisor_id"/>
+                        <field name="pagador_id"/>
+                        <field name="titulo_id"/>
+                    </group>
                 </sheet>
             </form>
         </field>

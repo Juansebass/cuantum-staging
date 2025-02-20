@@ -20,6 +20,7 @@
         'views/valor_portafolio_views.xml',
         'views/causaciones_pagos_views.xml',
         'wizards/cerrar_movimiento_flujo_wizard_views.xml',
+        'wizards/cartificado_recaudos_wizard_views.xml',
     ],
     'installable': True,
     'application': True,

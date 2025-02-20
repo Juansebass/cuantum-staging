@@ -34,7 +34,11 @@
                         <field name="flujo" widget="percentage"/>
                         <field name="cdg" widget="percentage"/>
                     </group>
-                    
+                    <group>
+                        <field name="emisor_id"/>
+                        <field name="pagador_id"/>
+                        <field name="titulo_id"/>
+                    </group>
                 </sheet>
             </form>
         </field>

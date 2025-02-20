@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="view_certificado_recaudos_wizard_form" model="ir.ui.view">
+            <field name="name">certificado.recaudos.wizard.form</field>
+            <field name="model">ctm.certificado_recaudos.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Certificado de Recaudos">
+                    <group>
+                        <field name="date"/>
+                        <field name="gestor_id"/>
+                        <field name="investment_type_id"/>
+                    </group>
+                    <footer>
+                        <button string="Generar Certificado de Recaudos" type="object" name="generate_zip" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_certificado_recaudos_wizard" model="ir.actions.act_window">
+            <field name="name">Certificado de Recaudos</field>
+            <field name="res_model">ctm.certificado_recaudos.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
