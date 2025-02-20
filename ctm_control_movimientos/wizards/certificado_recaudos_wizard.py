@@ -23,11 +23,21 @@ class CertificadoRecaudosWizard(models.TransientModel):
             zip_file.writestr('example.txt', 'This is an example file content.')
 
         zip_buffer.seek(0)
-        self.zip_file = base64.b64encode(zip_buffer.read())
+        zip_file_content = zip_buffer.read()
+        self.zip_file = base64.b64encode(zip_file_content)
         self.zip_filename = 'example.zip'
+
+        attachment = self.env['ir.attachment'].create({
+            'name': self.zip_filename,
+            'type': 'binary',
+            'datas': self.zip_file,
+            'res_model': self._name,
+            'res_id': self.id,
+            'mimetype': 'application/zip'
+        })
 
         return {
             'type': 'ir.actions.act_url',
-            'url': f'/web/content/{self.id}/zip_file/{self.zip_filename}',
+            'url': f'/web/content/{attachment.id}?download=true',
             'target': 'self',
         }
