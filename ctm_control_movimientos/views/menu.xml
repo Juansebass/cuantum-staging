@@ -40,7 +40,7 @@
 
     <record id="action_certificados_recaudo" model="ir.actions.act_window">
         <field name="name">Generar Certificados de Recaudo</field>
-        <field name="res_model">ctm.certificados_recaudo_wizard</field>
+        <field name="res_model">ctm.certificado_recaudos.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
