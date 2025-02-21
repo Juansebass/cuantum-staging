@@ -22,7 +22,7 @@ class CertificadoRecaudosWizard(models.TransientModel):
             ('investment_type_id', '=', self.investment_type_id.id),
         ])
 
-        pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos')._render_qweb_pdf(movimientos_flujos.ids)
+        pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos').render_qweb_pdf(movimientos_flujos.ids)
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
 
