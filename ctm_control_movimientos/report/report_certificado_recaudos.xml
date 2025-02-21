@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="certificado_recaudos_template">
+    <record id="action_report_certificado_recaudos" model="ir.actions.report">
+        <field name="name">Certificado de Recaudos</field>
+        <field name="model">ctm.movimientos_flujos</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ctm_control_movimientos.ctm_certificado_recaudos</field>
+        <field name="binding_model_id" ref="ctm_control_movimientos.model_ctm_movimientos_flujos" />
+        <field name="binding_type">report</field>
+    </record>
+    <template id="ctm_certificado_recaudos">
         <t t-call="web.external_layout">
             <div class="page">
                 <h2>Certificado de Recaudos</h2>
