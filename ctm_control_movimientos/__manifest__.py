@@ -21,6 +21,7 @@
         'views/causaciones_pagos_views.xml',
         'wizards/cerrar_movimiento_flujo_wizard_views.xml',
         'wizards/certificado_recaudos_wizard_views.xml',
+        'report/report_certificado_recaudos.xml',
     ],
     'installable': True,
     'application': True,

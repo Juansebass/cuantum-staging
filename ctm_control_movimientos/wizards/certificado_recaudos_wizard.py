@@ -16,10 +16,16 @@ class CertificadoRecaudosWizard(models.TransientModel):
     zip_filename = fields.Char(string='ZIP Filename')
 
     def generate_zip(self):
-        # Create in-memory zip file
+        movimientos_flujos = self.env['ctm.movimientos_flujos'].search([
+            ('fecha_final', '=', self.date),
+            ('gestor_id', '=', self.gestor_id.id),
+            ('investment_type_id', '=', self.investment_type_id.id),
+        ])
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-            # Add files to the zip file
+            for movimiento_flujo in movimientos_flujos:
+                pdf_content, _ = self.env.ref('ctm_control_movimientos.certificado_recaudos_template')._render_qweb_pdf(movimiento_flujo.ids)
+                zip_file.writestr(f'{movimiento_flujo.partner_id.name}.pdf', pdf_content)
             zip_file.writestr('example.txt', 'This is an example file content.')
             zip_file.writestr('example2.txt', 'This is the second example file content.')
             zip_file.writestr('example3.txt', 'This is the third example file content.')
