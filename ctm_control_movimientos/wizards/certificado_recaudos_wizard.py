@@ -31,7 +31,6 @@ class CertificadoRecaudosWizard(models.TransientModel):
             for movimiento_flujo in movimientos_flujos:
                 pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos')._render_qweb_pdf(movimiento_flujo.ids)
                 zip_file.writestr(f'{movimiento_flujo.name}.pdf', pdf_content)
-            zip_file.writestr('test.pdf', pdf_content)
             zip_file.writestr('example.txt', 'This is an example file content.')
             zip_file.writestr('example2.txt', 'This is the second example file content.')
             zip_file.writestr('example3.txt', 'This is the third example file content.')
