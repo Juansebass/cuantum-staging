@@ -24,6 +24,7 @@ class CertificadoRecaudosWizard(models.TransientModel):
             ('gestor_id', '=', self.gestor_id.id),
             ('investment_type_id', '=', self.investment_type_id.id),
         ])
+        _logger.info(f'movimientos_flujos: {movimientos_flujos}')
         _logger.info(f'movimientos_flujos: {movimientos_flujos.ids}')
         pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos')._render_qweb_pdf(movimientos_flujos.ids)
         zip_buffer = io.BytesIO()
