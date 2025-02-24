@@ -26,10 +26,11 @@ class CertificadoRecaudosWizard(models.TransientModel):
         ])
         _logger.info(f'movimientos_flujos: {movimientos_flujos}')
         _logger.info(f'movimientos_flujos: {movimientos_flujos.ids}')
-        pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos')._render_qweb_pdf(movimientos_flujos.ids)
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-
+            for movimiento_flujo in movimientos_flujos:
+                pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos')._render_qweb_pdf(movimiento_flujo.ids)
+                zip_file.writestr(f'{movimiento_flujo.name}.pdf', pdf_content)
             zip_file.writestr('test.pdf', pdf_content)
             zip_file.writestr('example.txt', 'This is an example file content.')
             zip_file.writestr('example2.txt', 'This is the second example file content.')
