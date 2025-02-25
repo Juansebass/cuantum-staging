@@ -17,7 +17,7 @@ class Aplicaciones(models.Model):
     otros = fields.Float(string='Otros', required=True)
     emisor_id = fields.Many2one('res.partner', string='Emisor', required=True)
     pagador_id = fields.Many2one('res.partner', string='Pagador', required=True)
-    titulo_id = fields.Many2one('ati.titulo', string='Título', required=True)
+    titulo_id = fields.Char(string='Título', required=True)
 
     def procesar_movimiento(self):
         for record in self:

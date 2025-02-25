@@ -64,9 +64,6 @@ class CargarMovimientos(models.Model):
             pagador = self.env['res.partner'].search([('name', '=', line[10])])
             if not pagador:
                 raise ValidationError(f'Pagador {line[10]} no encontrado')
-            titulo = self.env['ati.titulo'].search([('name', '=', line[11])])
-            if not titulo:
-                raise ValidationError(f'Título {line[11]} no encontrado')
             if self.tipo == 'compra':
                 vals = {
                     'name': line[0],
@@ -80,7 +77,7 @@ class CargarMovimientos(models.Model):
                     'cdg': cdg,
                     'emisor_id': emisor.id,
                     'pagador_id': pagador.id,
-                    'titulo_id': titulo
+                    'titulo_id': line[11]
                 }
                 compra_id = self.env['ctm.compras'].create(vals)
                 compra_id.procesar_movimiento()
@@ -98,7 +95,7 @@ class CargarMovimientos(models.Model):
                     'otros': otros,
                     'emisor_id': emisor.id,
                     'pagador_id': pagador.id,
-                    'titulo_id': titulo
+                    'titulo_id': line[11]
                 }
                 aplicacion_id = self.env['ctm.aplicaciones'].create(vals)
                 aplicacion_id.procesar_movimiento()
