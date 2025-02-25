@@ -40,21 +40,24 @@
                                 <td style="border: 0.5px solid;">
                                     <t t-if="doc.tipo = 'compra'"/>
                                         <t t-esc="doc.compra_id.emisor_id.name"/>
-                                    <t t-else="doc.tipo = 'aplicación'"/>
+                                    </t>
+                                    <t t-if="doc.tipo = 'aplicación'"/>
                                         <t t-esc="doc.aplicacion_id.emisor_id.name"/>
                                     </t>
                                 </td>
                                 <td style="border: 0.5px solid;">
                                     <t t-if="doc.tipo = 'compra'"/>
                                         <t t-esc="doc.compra_id.pagador_id.name"/>
-                                    <t t-else="doc.tipo = 'aplicación'"/>
+                                    </t>
+                                    <t t-if="doc.tipo = 'aplicación'"/>
                                         <t t-esc="doc.aplicacion_id.pagador_id.name"/>
                                     </t>
                                 </td>
                                 <td style="border: 0.5px solid;">
                                     <t t-if="doc.tipo = 'compra'"/>
                                         <t t-esc="doc.compra_id.titulo_id.name"/>
-                                    <t t-else="doc.tipo = 'aplicación'"/>
+                                    </t>
+                                    <t t-if="doc.tipo = 'aplicación'"/>
                                         <t t-esc="doc.aplicacion_id.titulo_id.name"/>
                                     </t>
                                 </td>
