@@ -60,13 +60,13 @@ class CargarMovimientos(models.Model):
             cdg = self._format_percent(line[7])
             emisor = self.env['res.partner'].search([('name', '=', line[9])])
             if not emisor:
-                raise ValidationError(f'Emisor {line[8]} no encontrado')
+                raise ValidationError(f'Emisor {line[9]} no encontrado')
             pagador = self.env['res.partner'].search([('name', '=', line[10])])
             if not pagador:
-                raise ValidationError(f'Pagador {line[9]} no encontrado')
+                raise ValidationError(f'Pagador {line[10]} no encontrado')
             titulo = self.env['ati.titulo'].search([('name', '=', line[11])])
             if not titulo:
-                raise ValidationError(f'Título {line[10]} no encontrado')
+                raise ValidationError(f'Título {line[11]} no encontrado')
             if self.tipo == 'compra':
                 vals = {
                     'name': line[0],
