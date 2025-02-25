@@ -21,7 +21,7 @@
                             </tr>
                             <tr>
                                 <th style="border: 0.5px solid;">Fecha</th>
-                                <th style="border: 0.5px solid;"><t t-esc="docs[0].fecha_final.date"/></th>
+                                <th style="border: 0.5px solid;"><t t-esc="docs[0].fecha_final"/></th>
                                 <th style="border: 0.5px solid;" COLSPAN="5"></th>
                             </tr>
                             <tr>
