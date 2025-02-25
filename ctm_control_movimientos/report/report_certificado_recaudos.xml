@@ -12,14 +12,67 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h2>Certificado de Recaudos</h2>
-                    <t t-foreach="docs" t-as="doc">
-                        <div>
-                            <p>CLiente: <t t-esc="doc.partner_id.name"/></p>
-                            <!-- Add more content as needed -->
-                        </div>
-                        <br/>
-                    </t>
+                    <table  style="border-collapse: collapse; border: 0.5px solid;width: 100%;">
+                        <thead class="text-center" style="background-color: #619f11">
+                            <tr>
+                                <th style="border: 0.5px solid; width:35%;">Movimientos de Aplicación de Recaudo</th>
+                                <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].gestor_id.name"/> - <t t-esc="docs[0].investment_type_id.name"/></th>
+                                <th style="border: 0.5px solid; width:35%;" COLSPAN="5"></th>
+                            </tr>
+                            <tr>
+                                <th style="border: 0.5px solid;">Fecha</th>
+                                <th style="border: 0.5px solid;"><t t-esc="docs[0].fecha_final.date"/></th>
+                                <th style="border: 0.5px solid;" COLSPAN="5"></th>
+                            </tr>
+                            <tr>
+                                <th style="border: 0.5px solid;">Inversionista</th>
+                                <th style="border: 0.5px solid;">Emisor</th>
+                                <th style="border: 0.5px solid;">Pagador</th>
+                                <th style="border: 0.5px solid;"># Título</th>
+                                <th style="border: 0.5px solid;">Rendimientos</th>
+                                <th style="border: 0.5px solid;">Capital</th>
+                                <th style="border: 0.5px solid;">Total de Aplicación de Recaudo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="doc">
+                                <td style="border: 0.5px solid;"><t t-esc="doc.partner_id.name"/></td>
+                                <td style="border: 0.5px solid;">
+                                    <t t-if="doc.tipo = 'compra'"/>
+                                        <t t-esc="doc.compra_id.emisor_id.name"/>
+                                    <t t-else="doc.tipo = 'aplicación'"/>
+                                        <t t-esc="doc.aplicacion_id.emisor_id.name"/>
+                                    </t>
+                                </td>
+                                <td style="border: 0.5px solid;">
+                                    <t t-if="doc.tipo = 'compra'"/>
+                                        <t t-esc="doc.compra_id.pagador_id.name"/>
+                                    <t t-else="doc.tipo = 'aplicación'"/>
+                                        <t t-esc="doc.aplicacion_id.pagador_id.name"/>
+                                    </t>
+                                </td>
+                                <td style="border: 0.5px solid;">
+                                    <t t-if="doc.tipo = 'compra'"/>
+                                        <t t-esc="doc.compra_id.titulo_id.name"/>
+                                    <t t-else="doc.tipo = 'aplicación'"/>
+                                        <t t-esc="doc.aplicacion_id.titulo_id.name"/>
+                                    </t>
+                                </td>
+                                <td style="border: 0.5px solid;"><t t-esc="doc.pago_rendimientos"/></td>
+                                <td style="border: 0.5px solid;"><t t-esc="doc.pago_capital"/></td>
+                                <td style="border: 0.5px solid;"><t t-esc="doc.pago_rendimientos + doc.pago_capital"/></td>
+                            </tr>
+                            <tr t-foreach="docs" t-as="doc">
+                                <td style="border: 0.5px solid;"></td>
+                                <td style="border: 0.5px solid;"></td>
+                                <td style="border: 0.5px solid;"></td>
+                                <td style="border: 0.5px solid;">TOTAL</td>
+                                <td style="border: 0.5px solid;">0</td>
+                                <td style="border: 0.5px solid;">0</td>
+                                <td style="border: 0.5px solid;">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </t>
         </t>
