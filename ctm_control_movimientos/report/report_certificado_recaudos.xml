@@ -55,10 +55,10 @@
                                 </td>
                                 <td style="border: 0.5px solid;">
                                     <t t-if="doc.tipo == 'compra'">
-                                        <t t-esc="doc.compra_id.titulo_id.name"/>
+                                        <t t-esc="doc.compra_id.titulo_id"/>
                                     </t>
                                     <t t-if="doc.tipo == 'aplicación'">
-                                        <t t-esc="doc.aplicacion_id.titulo_id.name"/>
+                                        <t t-esc="doc.aplicacion_id.titulo_id"/>
                                     </t>
                                 </td>
                                 <td style="border: 0.5px solid;"><t t-esc="doc.pago_rendimientos"/></td>
