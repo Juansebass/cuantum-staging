@@ -38,7 +38,7 @@
                             <tr t-foreach="docs" t-as="doc">
                                 <td style="border: 0.5px solid;"><t t-esc="doc.partner_id.name"/></td>
                                 <td style="border: 0.5px solid;">
-                                    <t t-if="doc.tipo = 'compra'">
+                                    <t t-if="doc.tipo == 'compra'">
                                         <t t-esc="doc.compra_id.emisor_id.name"/>
                                     </t>
                                     <t t-if="doc.tipo == 'aplicación'">
