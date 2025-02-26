@@ -38,7 +38,7 @@
                     <group>
                         <field name="name" readonly="1"/>
                         <field name="partner_id" readonly="1"/>
-                        <field name="flujo" widget="percentage" readonly="1"/>
+                        <field name="flujo" widget="percentage"/>
                         <field name="cdg" widget="percentage" readonly="1"/>
                         <field name="cambio_tasa"/>
                     </group>
