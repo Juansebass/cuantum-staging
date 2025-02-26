@@ -10,7 +10,7 @@ class Flujos(models.Model):
 
     name = fields.Char(string='Nombre', required=True)
     partner_id = fields.Many2one('res.partner', string='Cliente', required=True)
-    flujo = fields.Float(string='Flujo', required=True)
+    flujo = fields.Float(string='Flujo')
     cdg = fields.Float(string='CDG', required=True)
     movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
     fecha_cierre = fields.Date('Fecha')
@@ -21,6 +21,14 @@ class Flujos(models.Model):
     valor_activo_cierre = fields.Float('Valor Activo de Cierre')
     investment_type_id = fields.Many2one('ati.investment.type', string='Tipo de Inversion')
     gestor_id = fields.Many2one('ati.gestor', string='Gestor')
+    cambio_tasa = fields.Boolean('Cambio de Tasa', default=False)
+
+    def write(self, vals):
+        if 'flujo' in vals:
+            for record in self:
+                if not record.cambio_tasa:
+                    raise ValueError('No se puede modificar el valor de flujo')
+        return super(Flujos, self).write(vals)
 
     def button_cerrar_movimientos_flujos(self):
         return {

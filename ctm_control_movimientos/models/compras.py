@@ -20,7 +20,7 @@ class Compras(models.Model):
 
     def procesar_movimiento(self):
         for record in self:
-            name = f'{self.partner_id.name} - {self.investment_type_id.code} - {self.gestor_id.code} - {self.flujo * 100}% - {self.cdg * 100}%'
+            name = f'{self.partner_id.name} - {self.investment_type_id.code} - {self.gestor_id.code}'
             flujo_id = self.env['ctm.flujos'].search([('name', '=', name)])
             if flujo_id:
                 record.actualizar_flujo(flujo_id)
