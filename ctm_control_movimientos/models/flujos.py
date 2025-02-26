@@ -25,11 +25,11 @@ class Flujos(models.Model):
     cambio_tasa = fields.Boolean('Cambio de Tasa', default=False)
 
     def write(self, vals):
+        res = super(Flujos, self).write(vals)
         if 'flujo' in vals:
-            for record in self:
-                if not record.cambio_tasa:
-                    raise ValidationError('No se puede modificar el valor de flujo')
-        return super(Flujos, self).write(vals)
+            if not res.cambio_tasa:
+                raise ValidationError('No se puede modificar el valor del flujo')
+        return res
 
     def button_cerrar_movimientos_flujos(self):
         return {
