@@ -1,4 +1,5 @@
 from odoo import models, fields  # type: ignore
+from odoo.exceptions import ValidationError  # type: ignore
 import logging  # type: ignore
 
 _logger = logging.getLogger(__name__)
@@ -27,7 +28,7 @@ class Flujos(models.Model):
         if 'flujo' in vals:
             for record in self:
                 if not record.cambio_tasa:
-                    raise ValueError('No se puede modificar el valor de flujo')
+                    raise ValidationError('No se puede modificar el valor de flujo')
         return super(Flujos, self).write(vals)
 
     def button_cerrar_movimientos_flujos(self):
