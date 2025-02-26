@@ -74,7 +74,7 @@ class Flujos(models.Model):
                 fecha_final = flujo.compra_id.fecha
                 past_valor_activo = past_movimiento_id.valor_activo
                 rendimiento = (((1 + self.flujo) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
-                rendimiento_acumulado = past_movimiento_id.rendimiento + rendimiento
+                rendimiento_acumulado = past_movimiento_id.rendimiento_acumulado + rendimiento - past_movimiento_id.pago_rendimientos
                 cdg = (((1 + self.cdg) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
                 compra = flujo.compra_id.valor
                 pago_otros_conceptos = 0
@@ -103,7 +103,7 @@ class Flujos(models.Model):
                 fecha_final = flujo.aplicacion_id.fecha
                 past_valor_activo = past_movimiento_id.valor_activo
                 rendimiento = (((1 + self.flujo) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
-                rendimiento_acumulado = past_movimiento_id.rendimiento + rendimiento
+                rendimiento_acumulado = past_movimiento_id.rendimiento_acumulado + rendimiento - past_movimiento_id.pago_rendimientos
                 cdg = (((1 + self.cdg) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
                 pago_otros_conceptos = flujo.aplicacion_id.valor if flujo.aplicacion_id.valor < flujo.aplicacion_id.otros else flujo.aplicacion_id.otros
                 cdg_acumulado = past_movimiento_id.cdg + cdg
@@ -112,6 +112,8 @@ class Flujos(models.Model):
                 pago_capital = flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg - pago_rendimientos
                 compra = 0
                 valor_activo = past_movimiento_id.valor_activo + compra + rendimiento - pago_otros_conceptos - pago_cdg - pago_rendimientos - pago_capital
+                if valor_activo < 0:
+                    raise ValidationError(f'El valor activo no puede ser negativo en el flujo {self.name}, fecha inicial {fecha_inicial}, fecha final {fecha_final}')
                 flujo.write({
                     'fecha_inicial': fecha_inicial,
                     'fecha_final': fecha_final,
