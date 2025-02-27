@@ -15,17 +15,21 @@
                     <table  style="border-collapse: collapse; border: 0.5px solid;width: 100%;">
                         <thead class="text-center" style="background-color: #619f11">
                             <tr>
+                                <th style="border: 0.5px solid; width:35%;">Inversionista</th>
+                                <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].partner_id.name"/></th>
+                                <th style="border: 0.5px solid; width:35%;" COLSPAN="4"></th>
+                            </tr>
+                            <tr>
                                 <th style="border: 0.5px solid; width:35%;">Movimientos de Aplicación de Recaudo</th>
                                 <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].gestor_id.name"/> - <t t-esc="docs[0].investment_type_id.name"/></th>
-                                <th style="border: 0.5px solid; width:35%;" COLSPAN="5"></th>
+                                <th style="border: 0.5px solid; width:35%;" COLSPAN="4"></th>
                             </tr>
                             <tr>
                                 <th style="border: 0.5px solid;">Fecha</th>
                                 <th style="border: 0.5px solid;"><t t-esc="docs[0].fecha_final"/></th>
-                                <th style="border: 0.5px solid;" COLSPAN="5"></th>
+                                <th style="border: 0.5px solid;" COLSPAN="4"></th>
                             </tr>
                             <tr>
-                                <th style="border: 0.5px solid;">Inversionista</th>
                                 <th style="border: 0.5px solid;">Emisor</th>
                                 <th style="border: 0.5px solid;">Pagador</th>
                                 <th style="border: 0.5px solid;"># Título</th>
@@ -36,7 +40,6 @@
                         </thead>
                         <tbody>
                             <tr t-foreach="docs" t-as="doc">
-                                <td style="border: 0.5px solid;"><t t-esc="doc.partner_id.name"/></td>
                                 <td style="border: 0.5px solid;">
                                     <t t-if="doc.tipo == 'compra'">
                                         <t t-esc="doc.compra_id.emisor_id.name"/>
@@ -61,11 +64,11 @@
                                         <t t-esc="doc.aplicacion_id.titulo_id"/>
                                     </t>
                                 </td>
-                                <td style="border: 0.5px solid;"><t t-esc="doc.pago_rendimientos"/></td>
-                                <td style="border: 0.5px solid;"><t t-esc="doc.pago_capital"/></td>
-                                <td style="border: 0.5px solid;"><t t-esc="doc.pago_rendimientos + doc.pago_capital"/></td>
+                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-field="doc.pago_rendimientos"/></td>
+                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-field="doc.pago_capital"/></td>
+                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-esc="doc.pago_rendimientos + doc.pago_capital"/></td>
                             </tr>
-                            <tr t-foreach="docs" t-as="doc">
+                            <tr>
                                 <td style="border: 0.5px solid;"></td>
                                 <td style="border: 0.5px solid;"></td>
                                 <td style="border: 0.5px solid;"></td>
