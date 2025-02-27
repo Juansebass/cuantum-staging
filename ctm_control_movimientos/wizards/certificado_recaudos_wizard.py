@@ -26,14 +26,19 @@ class CertificadoRecaudosWizard(models.TransientModel):
         ])
         _logger.info(f'movimientos_flujos: {movimientos_flujos}')
         _logger.info(f'movimientos_flujos: {movimientos_flujos.ids}')
+
+        grouped_movimientos = {}
+        for movimiento in movimientos_flujos:
+            partner_id = movimiento.partner_id.id
+            if partner_id not in grouped_movimientos:
+                grouped_movimientos[partner_id] = self.env['ctm.movimientos_flujos']
+            grouped_movimientos[partner_id] |= movimiento
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-            for movimiento_flujo in movimientos_flujos:
-                pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos')._render_qweb_pdf(movimiento_flujo.ids)
-                zip_file.writestr(f'{movimiento_flujo.partner_id.name}.pdf', pdf_content)
-            zip_file.writestr('example.txt', 'This is an example file content.')
-            zip_file.writestr('example2.txt', 'This is the second example file content.')
-            zip_file.writestr('example3.txt', 'This is the third example file content.')
+            for partner_id, movimientos in grouped_movimientos.items():
+                partner_name = movimientos[0].partner_id.name
+                pdf_content, _ = self.env.ref('ctm_control_movimientos.action_report_certificado_recaudos')._render_qweb_pdf(movimientos.ids)
+                zip_file.writestr(f'{partner_name}.pdf', pdf_content)
 
         zip_buffer.seek(0)
         zip_file_content = zip_buffer.read()
