@@ -64,9 +64,9 @@
                                         <t t-esc="doc.aplicacion_id.titulo_id"/>
                                     </t>
                                 </td>
-                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-field="doc.pago_rendimientos"/></td>
-                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-field="doc.pago_capital"/></td>
-                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" t-esc="doc.pago_rendimientos + doc.pago_capital"/></td>
+                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" t-field="doc.pago_rendimientos"/></td>
+                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" t-field="doc.pago_capital"/></td>
+                                <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" t-esc="doc.pago_rendimientos + doc.pago_capital"/></td>
                             </tr>
                             <tr>
                                 <td style="border: 0.5px solid;"></td>
