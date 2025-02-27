@@ -33,6 +33,7 @@
             <form string="Flujos">
                 <header>
                     <button name="button_cerrar_movimientos_flujos" type="object" string="Cerrar Movimientos Flujo"/>
+                    <button name="recalcular_flujo" type="object" string="Recalcular FLujos" attrs="{'invisible': [('cambio_tasa', '=', False)]}"/>
                 </header>
                 <sheet>
                     <group>
