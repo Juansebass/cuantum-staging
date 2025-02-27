@@ -15,14 +15,14 @@
                     <table  style="border-collapse: collapse; border: 0.5px solid;width: 100%;">
                         <thead class="text-center" style="background-color: #619f11">
                             <tr>
-                                <th style="border: 0.5px solid; width:35%;">Inversionista</th>
+                                <th style="border: 0.5px solid; width:30%;">Inversionista</th>
                                 <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].partner_id.name"/></th>
-                                <th style="border: 0.5px solid; width:35%;" COLSPAN="4"></th>
+                                <th style="border: 0.5px solid;" COLSPAN="4"></th>
                             </tr>
                             <tr>
-                                <th style="border: 0.5px solid; width:35%;">Movimientos de Aplicación de Recaudo</th>
-                                <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].gestor_id.name"/> - <t t-esc="docs[0].investment_type_id.name"/></th>
-                                <th style="border: 0.5px solid; width:35%;" COLSPAN="4"></th>
+                                <th style="border: 0.5px solid;">Movimientos de Aplicación de Recaudo</th>
+                                <th style="border: 0.5px solid;"><t t-esc="docs[0].gestor_id.name"/> - <t t-esc="docs[0].investment_type_id.name"/></th>
+                                <th style="border: 0.5px solid;" COLSPAN="4"></th>
                             </tr>
                             <tr>
                                 <th style="border: 0.5px solid;">Fecha</th>
@@ -32,10 +32,10 @@
                             <tr>
                                 <th style="border: 0.5px solid;">Emisor</th>
                                 <th style="border: 0.5px solid;">Pagador</th>
-                                <th style="border: 0.5px solid;"># Título</th>
-                                <th style="border: 0.5px solid;">Rendimientos</th>
-                                <th style="border: 0.5px solid;">Capital</th>
-                                <th style="border: 0.5px solid;">Total de Aplicación de Recaudo</th>
+                                <th style="border: 0.5px solid; width:10%;"># Título</th>
+                                <th style="border: 0.5px solid; width:13%;">Rendimientos</th>
+                                <th style="border: 0.5px solid; width:13%;">Capital</th>
+                                <th style="border: 0.5px solid; width:13%;">Total de Aplicación de Recaudo</th>
                             </tr>
                         </thead>
                         <tbody>
