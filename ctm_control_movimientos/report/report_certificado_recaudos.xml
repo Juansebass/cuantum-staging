@@ -41,12 +41,12 @@
                             <tr>
                                 <th style="border: 0.5px solid;">Movimientos de Aplicación de Recaudo</th>
                                 <th style="border: 0.5px solid;"><t t-esc="docs[0].gestor_id.name"/> - <t t-esc="docs[0].investment_type_id.name"/></th>
-                                <th style="border: 0.5px solid;" COLSPAN="4"></th>
+                                <th style="border: 0.5px solid;"></th>
                             </tr>
                             <tr>
                                 <th style="border: 0.5px solid;">Fecha</th>
                                 <th style="border: 0.5px solid;"><t t-esc="docs[0].fecha_final"/></th>
-                                <th style="border: 0.5px solid;" COLSPAN="4"></th>
+                                <th style="border: 0.5px solid;"></th>
                             </tr>
                             <tr>
                                 <th style="border: 0.5px solid;">Emisor</th>
