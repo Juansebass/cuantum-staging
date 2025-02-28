@@ -89,10 +89,10 @@
                             <tr>
                                 <td style="border: 0.5px solid;"></td>
                                 <td style="border: 0.5px solid;"></td>
-                                <td style="border: 0.5px solid;" class="text-right">TOTAL</td>
-                                <td style="border: 0.5px solid;" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="sum(doc.pago_rendimientos for doc in docs)"/></td>
-                                <td style="border: 0.5px solid;" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="sum(doc.pago_capital for doc in docs)"/></td>
-                                <td style="border: 0.5px solid;" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="sum(doc.pago_rendimientos + doc.pago_capital for doc in docs)"/></td>
+                                <td style="border: 0.5px solid; background-color:rgb(214, 214, 214);" class="text-right">TOTAL</td>
+                                <td style="border: 0.5px solid; background-color:rgb(214, 214, 214);" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="sum(doc.pago_rendimientos for doc in docs)"/></td>
+                                <td style="border: 0.5px solid; background-color:rgb(214, 214, 214);" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="sum(doc.pago_capital for doc in docs)"/></td>
+                                <td style="border: 0.5px solid; background-color:rgb(214, 214, 214);" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="sum(doc.pago_rendimientos + doc.pago_capital for doc in docs)"/></td>
                             </tr>
                         </tbody>
                     </table>
