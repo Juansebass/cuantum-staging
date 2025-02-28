@@ -35,7 +35,7 @@
                             <tr>
                                 <th style="border: 0.5px solid; width:30%;">Inversionista</th>
                                 <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].partner_id.name"/></th>
-                                <th style="border: 0.5px solid;" COLSPAN="4" ROWSPAN="3" style="background-color:withe;">
+                                <th style="border: 0.5px solid; background-color:withe;" COLSPAN="4" ROWSPAN="3">
                                     <img t-att-src="'data:image/png;base64,%s' % res_company.logo" style="width: 100%;"/>
                                 </th>
                             </tr>
