@@ -13,7 +13,7 @@
             <t t-call="web.external_layout">
                 <div class="page">
                     <table  style="border-collapse: collapse; border: 0.5px solid;width: 100%;">
-                        <thead class="text-center" style="background-color: #619f11">
+                        <thead class="text-center" style="background-color: #619f11; color: white;">
                             <tr>
                                 <th style="border: 0.5px solid; width:30%;">Inversionista</th>
                                 <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].partner_id.name"/></th>
