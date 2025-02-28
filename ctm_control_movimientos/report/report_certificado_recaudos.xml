@@ -41,12 +41,10 @@
                             <tr>
                                 <th style="border: 0.5px solid;">Movimientos de Aplicación de Recaudo</th>
                                 <th style="border: 0.5px solid;"><t t-esc="docs[0].gestor_id.name"/> - <t t-esc="docs[0].investment_type_id.name"/></th>
-                                <th style="border: 0.5px solid;"></th>
                             </tr>
                             <tr>
                                 <th style="border: 0.5px solid;">Fecha</th>
                                 <th style="border: 0.5px solid;"><t t-esc="docs[0].fecha_final"/></th>
-                                <th style="border: 0.5px solid;"></th>
                             </tr>
                             <tr>
                                 <th style="border: 0.5px solid;">Emisor</th>
@@ -88,7 +86,6 @@
                                 <td style="border: 0.5px solid;"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="doc.pago_rendimientos + doc.pago_capital"/></td>
                             </tr>
                             <tr>
-                                <td style="border: 0.5px solid;"></td>
                                 <td style="border: 0.5px solid;"></td>
                                 <td style="border: 0.5px solid;"></td>
                                 <td style="border: 0.5px solid;">TOTAL</td>
