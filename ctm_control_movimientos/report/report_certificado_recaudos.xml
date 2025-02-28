@@ -10,8 +10,8 @@
         <field name="orientation">Portrait</field>
         <field name="margin_top">10</field>
         <field name="margin_bottom">16</field>
-        <field name="margin_left">9</field>
-        <field name="margin_right">9</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
         <field name="header_line" eval="False"/>
         <field name="header_spacing">30</field>
         <field name="dpi">90</field>
@@ -33,7 +33,7 @@
                     <table  style="border-collapse: collapse; border: 0.5px solid;width: 100%;">
                         <thead class="text-center" style="background-color: #619f11; color: white;">
                             <tr>
-                                <th style="border: 0.5px solid; width:30%;">Inversionista</th>
+                                <th style="border: 0.5px solid; width:20%;">Inversionista</th>
                                 <th style="border: 0.5px solid; width:30%;"><t t-esc="docs[0].partner_id.name"/></th>
                                 <th style="border: 0.5px solid; background-color:white;" colspan="4" rowspan="3">
                                     <img src='/ctm_control_movimientos/static/images/icon_report.png' style="width: 100%;"/>
@@ -50,10 +50,10 @@
                             <tr>
                                 <th style="border: 0.5px solid;">Emisor</th>
                                 <th style="border: 0.5px solid;">Pagador</th>
-                                <th style="border: 0.5px solid; width:10%;"># Título</th>
-                                <th style="border: 0.5px solid; width:13%;">Rendimientos</th>
-                                <th style="border: 0.5px solid; width:13%;">Capital</th>
-                                <th style="border: 0.5px solid; width:13%;">Total de Aplicación de Recaudo</th>
+                                <th style="border: 0.5px solid; width:11%;"># Título</th>
+                                <th style="border: 0.5px solid; width:16%;">Rendimientos</th>
+                                <th style="border: 0.5px solid; width:16%;">Capital</th>
+                                <th style="border: 0.5px solid; width:16%;">Total de Aplicación de Recaudo</th>
                             </tr>
                         </thead>
                         <tbody>
