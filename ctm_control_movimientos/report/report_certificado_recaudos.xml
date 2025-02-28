@@ -34,7 +34,7 @@
                         <thead class="text-center" style="background-color: #619f11; color: white;">
                             <tr>
                                 <th style="border: 0.5px solid; width:20%; vertical-align: middle;">Inversionista</th>
-                                <th style="border: 0.5px solid; width:30%; vertical-align: middle;"><t t-esc="docs[0].partner_id.name"/></th>
+                                <th style="border: 0.5px solid; width:20%; vertical-align: middle;"><t t-esc="docs[0].partner_id.name"/></th>
                                 <th style="border: 0.5px solid; background-color:white; vertical-align: middle;" colspan="4" rowspan="3">
                                     <img src='/ctm_control_movimientos/static/images/icon_report.png' style="width: 100%;"/>
                                 </th>
@@ -51,9 +51,9 @@
                                 <th style="border: 0.5px solid; vertical-align: middle;">Emisor</th>
                                 <th style="border: 0.5px solid; vertical-align: middle;">Pagador</th>
                                 <th style="border: 0.5px solid; width:8%; vertical-align: middle;"># Título</th>
-                                <th style="border: 0.5px solid; width:16%; vertical-align: middle;">Rendimientos</th>
-                                <th style="border: 0.5px solid; width:16%; vertical-align: middle;">Capital</th>
-                                <th style="border: 0.5px solid; width:19%; vertical-align: middle;">Total de Aplicación de Recaudo</th>
+                                <th style="border: 0.5px solid; width:11%; vertical-align: middle;">Rendimientos</th>
+                                <th style="border: 0.5px solid; width:11%; vertical-align: middle;">Capital</th>
+                                <th style="border: 0.5px solid; width:23%; vertical-align: middle;">Total de Aplicación de Recaudo</th>
                             </tr>
                         </thead>
                         <tbody>
