@@ -14,6 +14,7 @@ class Flujos(models.Model):
     flujo = fields.Float(string='Flujo')
     cdg = fields.Float(string='CDG', required=True)
     movimientos_flujo_ids = fields.One2many('ctm.movimientos_flujos', 'flujo_id', string='Movimientos Flujos')
+    resumen_movimientos_flujo_ids = fields.One2many('ctm.resumen_movimientos_flujos', 'flujo_id', string='Resumen Movimientos Flujos')
     fecha_cierre = fields.Date('Fecha')
     rendimiento_cierre = fields.Float('Rendimiento de Cierre')
     rendimiento_acumulado_cierre = fields.Float('Rendimiento Acumulado de Cierre')
@@ -52,6 +53,10 @@ class Flujos(models.Model):
             for movimiento in movimientos_abiertos:
                 if movimiento.fecha_final <= date:
                     movimiento.state = 'cerrado'
+            resumen_movimientos_abiertos = record.resumen_movimientos_flujo_ids.filtered(lambda x: x.state == 'abierto')
+            for resumen in resumen_movimientos_abiertos:
+                if resumen.fecha_final <= date:
+                    resumen.state = 'cerrado'
 
     def recalcular_flujo(self):
         last_flujo_cerrado = self.movimientos_flujo_ids.filtered(lambda x: x.state == 'cerrado').sorted(key=lambda x: x.fecha_final, reverse=True)[:1]
@@ -131,10 +136,100 @@ class Flujos(models.Model):
                     'pago_capital': pago_capital if pago_capital > 0 else 0,
                     'valor_activo': valor_activo,
                 })
+        self.recalcular_resumen_flujo()
+
+    def recalcular_resumen_flujo(self):
+        self.resumen_movimientos_flujo_ids.filtered(lambda x: x.state == 'abierto').unlink()
+        flujos = self.movimientos_flujo_ids.filtered(lambda x: x.state == 'abierto').sorted(key=lambda x: x.fecha_final, reverse=False)
+        resumen_dict = {}
+        for flujo in flujos:
+            key = (flujo.fecha_final, flujo.tipo)
+            if key not in resumen_dict:
+                resumen_dict[key] = {
+                    'fecha_inicial': flujo.fecha_inicial,
+                    'fecha_final': flujo.fecha_final,
+                    'compra': 0,
+                    'rendimiento': 0,
+                    'rendimiento_acumulado': 0,
+                    'cdg': 0,
+                    'cdg_acumulado': 0,
+                    'pago_otros_conceptos': 0,
+                    'pago_cdg': 0,
+                    'pago_rendimientos': 0,
+                    'pago_capital': 0,
+                    'valor_activo': 0,
+                    'tipo': flujo.tipo,
+                    'state': 'abierto'
+                }
+            resumen_dict[key]['compra'] += flujo.compra
+            resumen_dict[key]['rendimiento'] += flujo.rendimiento
+            resumen_dict[key]['rendimiento_acumulado'] += flujo.rendimiento_acumulado
+            resumen_dict[key]['cdg'] += flujo.cdg
+            resumen_dict[key]['cdg_acumulado'] += flujo.cdg_acumulado
+            resumen_dict[key]['pago_otros_conceptos'] += flujo.pago_otros_conceptos
+            resumen_dict[key]['pago_cdg'] += flujo.pago_cdg
+            resumen_dict[key]['pago_rendimientos'] += flujo.pago_rendimientos
+            resumen_dict[key]['pago_capital'] += flujo.pago_capital
+            resumen_dict[key]['valor_activo'] += flujo.valor_activo
+
+        for resumen in resumen_dict.values():
+            self.env['ctm.resumen_movimientos_flujos'].create({
+                'flujo_id': self.id,
+                'fecha_inicial': resumen['fecha_inicial'],
+                'fecha_final': resumen['fecha_final'],
+                'compra': resumen['compra'],
+                'rendimiento': resumen['rendimiento'],
+                'rendimiento_acumulado': resumen['rendimiento_acumulado'],
+                'cdg': resumen['cdg'],
+                'cdg_acumulado': resumen['cdg_acumulado'],
+                'pago_otros_conceptos': resumen['pago_otros_conceptos'],
+                'pago_cdg': resumen['pago_cdg'],
+                'pago_rendimientos': resumen['pago_rendimientos'],
+                'pago_capital': resumen['pago_capital'],
+                'valor_activo': resumen['valor_activo'],
+                'tipo': resumen['tipo'],
+                'state': resumen['state'],
+            })
 
 
 class MovimientosFlujos(models.Model):
     _name = 'ctm.movimientos_flujos'
+    _description = 'Movimientos Flujos'
+
+    flujo_id = fields.Many2one('ctm.flujos', string='Flujo', required=True, ondelete='cascade')
+    partner_id = fields.Many2one('res.partner', string='Cliente', related='flujo_id.partner_id', store=True)
+    investment_type_id = fields.Many2one('ati.investment.type', string='Tipo de Inversion', related='flujo_id.investment_type_id', store=True)
+    gestor_id = fields.Many2one('ati.gestor', string='Gestor', related='flujo_id.gestor_id', store=True)
+    fecha_inicial = fields.Date('Fecha Inicial', required=1)
+    fecha_final = fields.Date('Fecha Final', required=1)
+    compra = fields.Float('Compra', required=1)
+    rendimiento = fields.Float('Rendimiento', required=1)
+    rendimiento_acumulado = fields.Float('Rendimiento Acumulado', required=1)
+    cdg = fields.Float('CDG', required=1)
+    cdg_acumulado = fields.Float('CDG Acumulado', required=1)
+    pago_otros_conceptos = fields.Float('Pago Otros Conceptos', required=1)
+    pago_cdg = fields.Float('Pago CDG', required=1)
+    pago_rendimientos = fields.Float('Pago Rendimientos', required=1)
+    pago_capital = fields.Float('Pago Capital', required=1)
+    valor_activo = fields.Float('Valor Activo', required=1)
+    aplicacion_id = fields.Many2one('ctm.aplicaciones', string='Aplicación')
+    compra_id = fields.Many2one('ctm.compras', string='Compra')
+    tipo = fields.Selection(
+        [
+            ('compra', 'Compra'),
+            ('aplicación', 'Aplicación')
+        ], string='Tipo', required=True, default='compra'
+    )
+    state = fields.Selection(
+        [
+            ('abierto', 'Abierto'),
+            ('cerrado', 'Cerrado')
+        ], string='Estado', required=True, default='abierto', index=True
+    )
+
+
+class ResumenMovimientosFlujos(models.Model):
+    _name = 'ctm.resumen_movimientos_flujos'
     _description = 'Movimientos Flujos'
 
     flujo_id = fields.Many2one('ctm.flujos', string='Flujo', required=True, ondelete='cascade')

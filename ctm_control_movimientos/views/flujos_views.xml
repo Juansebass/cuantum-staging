@@ -64,6 +64,26 @@
                                 </tree>
                             </field>
                         </page>
+                        <page name="resumen_movimientos_flujo" string="Resumen Movimientos Flujo">
+                            <field name="resumen_movimientos_flujo_ids" readonly="1">
+                                <tree editable="bottom" default_order="fecha_final asc">
+                                    <field name="fecha_inicial" optional="show"/>
+                                    <field name="fecha_final" optional="show"/>
+                                    <field name="tipo"/>
+                                    <field name="compra" optional="show"/>
+                                    <field name="rendimiento" optional="show"/>
+                                    <field name="rendimiento_acumulado" optional="show"/>
+                                    <field name="cdg" optional="show"/>
+                                    <field name="cdg_acumulado" optional="show"/>
+                                    <field name="pago_otros_conceptos" optional="show"/>
+                                    <field name="pago_cdg" optional="show"/>
+                                    <field name="pago_rendimientos" optional="show"/>
+                                    <field name="pago_capital" optional="show"/>
+                                    <field name="valor_activo" optional="show"/>
+                                    <field name="state" optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
