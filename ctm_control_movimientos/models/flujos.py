@@ -100,7 +100,7 @@ class Flujos(models.Model):
                     'rendimiento_acumulado': rendimiento_acumulado,
                     'cdg': cdg,
                     'pago_cdg': 0,  # Acá siempre es compras
-                    'cdg_acumulado': past_movimiento_id.cdg + cdg,
+                    'cdg_acumulado': past_movimiento_id.cdg_acumulado + cdg,
                     'pago_otros_conceptos': 0,  # Acá siempre es compras
                     'pago_capital': 0,  # Acá siempre es compras
                     'valor_activo': valor_activo,
@@ -114,7 +114,7 @@ class Flujos(models.Model):
                 rendimiento_acumulado = past_movimiento_id.rendimiento_acumulado + rendimiento - past_movimiento_id.pago_rendimientos
                 cdg = (((1 + self.cdg) ** (1 / 365)) - 1) * (fecha_final - fecha_inicial).days * past_valor_activo
                 pago_otros_conceptos = flujo.aplicacion_id.valor if flujo.aplicacion_id.valor < flujo.aplicacion_id.otros else flujo.aplicacion_id.otros
-                cdg_acumulado = past_movimiento_id.cdg + cdg
+                cdg_acumulado = past_movimiento_id.cdg_acumulado + cdg - past_movimiento_id.pago_cdg
                 pago_cdg = cdg_acumulado if flujo.aplicacion_id.valor - pago_otros_conceptos > cdg_acumulado else flujo.aplicacion_id.valor - pago_otros_conceptos
                 pago_rendimientos = rendimiento_acumulado if flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg > rendimiento_acumulado else flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg
                 pago_capital = flujo.aplicacion_id.valor - pago_otros_conceptos - pago_cdg - pago_rendimientos
