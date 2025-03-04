@@ -141,9 +141,9 @@ class ValorPortafolio(models.Model):
         worksheet.write(row, 10, 'S2 FCP')
         worksheet.write(row, 11, 'RPR FCP')
         worksheet.write(row, 12, 'Total')
-        worksheet.write(row, 13, 'CSF Factoring')
-        worksheet.write(row, 14, 'CSF Sentencias')
-        worksheet.write(row, 15, 'FCL Libranzas')
+        worksheet.write(row, 13, 'Ofertas CSF Factoring')
+        worksheet.write(row, 14, 'Ofertas CSF Sentencias')
+        worksheet.write(row, 15, 'Ofertas FCL Libranzas')
 
         row += 1
 
@@ -208,6 +208,6 @@ class ValorPortafolioInformeClientes(models.Model):
     s2_fcp = fields.Float('S2 FCP')
     rpr_fcp = fields.Float('RPR FCP')
     total = fields.Float('Total')
-    csf_factoring = fields.Float('CSF Factoring')
-    csf_sentencias = fields.Float('CSF Sentencias')
-    fcl_libranzas = fields.Float('FCL Libranzas')
+    csf_factoring = fields.Float('Ofertas CSF Factoring')
+    csf_sentencias = fields.Float('Ofertas CSF Sentencias')
+    fcl_libranzas = fields.Float('Ofertas FCL Libranzas')
