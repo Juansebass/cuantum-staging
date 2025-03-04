@@ -110,6 +110,15 @@ class ValorPortafolio(models.Model):
             informe_cliente.s2_fcp = sum(fcp.filtered(lambda x: x.investment_type_id.code == 'S2').mapped('valor_activo'))
             informe_cliente.rpr_fcp = rpr_fcp_total
             informe_cliente.total = informe_cliente.factoring_csf + informe_cliente.libranzas_csf + informe_cliente.sentencias_csf + informe_cliente.mutuo_csf + informe_cliente.rpr_csf + informe_cliente.libranzas_fcl + informe_cliente.rpr_fcl + informe_cliente.s1_fcp + informe_cliente.s2_fcp + informe_cliente.rpr_fcp
+
+            sales = self.env['sale.order'].search([
+                ('partner_id', '=', cliente.partner_id.id),
+                ('state', 'in', ['sale']),
+            ])
+
+            informe_cliente.csf_factoring = sum(sales.filtered(lambda x: x.tipo_producto_ofertar.code == 'FAC' and x.gestor_ofertar.code == 'CUANTUM').mapped('amount_total'))
+            informe_cliente.csf_sentencias = sum(sales.filtered(lambda x: x.tipo_producto_ofertar.code == 'SEN' and x.gestor_ofertar.code == 'CUANTUM').mapped('amount_total'))
+            informe_cliente.fcl_libranzas = sum(sales.filtered(lambda x: x.tipo_producto_ofertar.code == 'LIB' and x.gestor_ofertar.code == 'FCL').mapped('amount_total'))
         self.state = 'processed'
 
     def action_exportar_xls(self):
@@ -132,6 +141,9 @@ class ValorPortafolio(models.Model):
         worksheet.write(row, 10, 'S2 FCP')
         worksheet.write(row, 11, 'RPR FCP')
         worksheet.write(row, 12, 'Total')
+        worksheet.write(row, 13, 'CSF Factoring')
+        worksheet.write(row, 14, 'CSF Sentencias')
+        worksheet.write(row, 15, 'FCL Libranzas')
 
         row += 1
 
@@ -149,6 +161,9 @@ class ValorPortafolio(models.Model):
             worksheet.write(row, 10, informe_cliente.s2_fcp, money)
             worksheet.write(row, 11, informe_cliente.rpr_fcp, money)
             worksheet.write(row, 12, informe_cliente.total, money)
+            worksheet.write(row, 13, informe_cliente.factoring_csf + informe_cliente.sentencias_csf, money)
+            worksheet.write(row, 14, informe_cliente.libranzas_fcl, money)
+            worksheet.write(row, 15, informe_cliente.libranzas_fcl, money)
             row += 1
 
         workbook.close()
@@ -193,3 +208,6 @@ class ValorPortafolioInformeClientes(models.Model):
     s2_fcp = fields.Float('S2 FCP')
     rpr_fcp = fields.Float('RPR FCP')
     total = fields.Float('Total')
+    csf_factoring = fields.Float('CSF Factoring')
+    csf_sentencias = fields.Float('CSF Sentencias')
+    fcl_libranzas = fields.Float('FCL Libranzas')

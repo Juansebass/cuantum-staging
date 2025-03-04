@@ -61,7 +61,9 @@
                                 <field name="s2_fcp" />
                                 <field name="rpr_fcp" />
                                 <field name="total" />
-                                
+                                <field name="csf_factoring" />
+                                <field name="csf_sentencias" />
+                                <field name="fcl_libranzas" />
                             </tree>
                         </field>
                     </page>
