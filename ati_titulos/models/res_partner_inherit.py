@@ -179,7 +179,7 @@ class ResPartner(models.Model):
                 else:
                     move.saldo = previous_saldo + move.value
                 previous_saldo = move.saldo
-            last_move_closed = rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'cerrado').sorted(key=lambda x: x.date, reverse=True)
+            last_move_closed = rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'cerrado')
             previous_saldo = last_move_closed[-1].saldo if last_move_closed else 0
             for move in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto'):
                 if move.movement_type.code in ['COMPRA', 'RETIRO']:
