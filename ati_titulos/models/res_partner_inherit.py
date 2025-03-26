@@ -190,10 +190,8 @@ class ResPartner(models.Model):
 
             last_move_closed = rec.recursos_recompra_csf_ids.filtered(
                 lambda x: x.estado == 'cerrado'
-            ).sorted(
-                key=lambda x: x.date, reverse=True
             )
-            previous_saldo = last_move_closed[0].saldo if last_move_closed else 0
+            previous_saldo = last_move_closed[-1].saldo if last_move_closed else 0
             previous_date = (
                 last_move_closed[-1].date if last_move_closed else None
             )
