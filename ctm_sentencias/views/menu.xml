@@ -44,9 +44,12 @@
 
     <!-- Menu y Menus principales -->
     <menuitem id="menu_sentencias_main" name="Sentencias"  web_icon="ctm_sentencias,static/description/icon.png" />
-    <menuitem id="menu_sentencias" sequence="1" name="Sentencias" parent="menu_sentencias_main" action="action_open_sentencia"/>
+    <menuitem id="menu_sentencias_root" sequence="1" name="Sentencias" parent="menu_sentencias_main">
+        <menuitem id="menu_sentencias" sequence="1" name="Sentencias" action="action_open_sentencia"/>
+        <menuitem id="menu_carga_sentencias" sequence="2" name="Cargar Sentencias" action="action_cargar_sentencias"/>
+    </menuitem>
+    
     <menuitem id="menu_ctm_proyecciones" sequence="2" name="Proyecciones" parent="menu_sentencias_main" action="action_ctm_proyecciones"/>
-    <menuitem id="menu_carga_sentencias_main" sequence="1" name="Carga Sentencias" parent="menu_sentencias_main"/>
     <menuitem id="menu_liquidaciones_main" sequence="3" name="Liquidaciones" parent="menu_sentencias_main"/>
     <menuitem id="menu_6_4_main" sequence="4" name="6.4" parent="menu_sentencias_main">
         <menuitem id="menu_6_4_view" name="6.4" action="action_view_6_4"/>
@@ -57,7 +60,6 @@
 
     <!-- Menus de tercer nivel-->
     <menuitem id="menu_tasas" name="Tasas" parent="menu_configuraciones" action="action_open_tasas"/>
-    <menuitem id="menu_carga_sentencias" name="Cargar Sentencias" parent="menu_carga_sentencias_main" action="action_cargar_sentencias"/>
     <menuitem id="menu_liquidaciones" name="Liquidaciones" parent="menu_liquidaciones_main" action="action_open_liquidaciones"/>
     <menuitem id="menu_crear_sentencias" name="Crear Liquidaciones" parent="menu_liquidaciones_main" action="action_crear_sentencias"/>
 </odoo>

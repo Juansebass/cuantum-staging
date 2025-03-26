@@ -22,6 +22,7 @@ from . import recurso_recompra_fcp
 from . import import_recursos_fcl
 from . import import_recursos_csf
 from . import import_recursos_fcp
+from . import import_tasas_rpr
 from . import import_titulo_oferta
 from . import titulo_oferta
 from . import rendimientos_administracion

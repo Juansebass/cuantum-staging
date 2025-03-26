@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="view_cerrar_movimientos_rpr_wizard_form" model="ir.ui.view">
+            <field name="name">cerrar.movimientos.rpr.wizard.form</field>
+            <field name="model">ctm.cerrar_movimientos_rpr.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Cerrar Movimientos RPR">
+                    <group>
+                        <field name="date"/>
+                    </group>
+                    <footer>
+                        <button string="Cerrar Movimientos RPR" type="object" name="button_cerrar_movimientos_rpr_wizard" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_cerrar_movimientos_rpr_wizard" model="ir.actions.act_window">
+            <field name="name">Cerrar Movimientos RPR</field>
+            <field name="res_model">ctm.cerrar_movimientos_rpr.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

@@ -5,10 +5,25 @@ from odoo.exceptions import ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 
+
 class ResPartner(models.Model):
     _inherit = "res.partner"
     tasa_rendimiento_fcl = fields.Float('Tasa Rendimiento')
     tasa_rendimiento_csf = fields.Float('Tasa Rendimiento')
+
+    def create(self, vals):
+        res = super(ResPartner, self).create(vals)
+        if (res.vinculado or res.emisor) and not res.pagador:
+            if not res.user_id:
+                raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio."))
+        return res
+
+    def write(self, vals):
+        res = super(ResPartner, self).write(vals)
+        if (self.vinculado or self.emisor) and not self.pagador:
+            if not self.user_id:
+                raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio."))
+        return res
 
     # Sobreescribimos esta funcion para que no se envie el vat a los contactos hijos de una empresa, esta funcion es del core de odoo en /odoo/addons/base/models/res_partner.py
     def _commercial_sync_from_company(self):
@@ -147,3 +162,85 @@ class ResPartner(models.Model):
                     lead.sudo().stage_id = _stage
             else:
                 raise ValidationError("No puede aprobar oportunidades si los siguientes campos no fueron validados: Vinculado, Documentacion enviada, Documentacion completa, Busqueda en listas")
+
+    def button_recalcular_rpr(self):
+        for rec in self:
+            last_move_closed = rec.recursos_recompra_fcp_ids.filtered(
+                lambda x: x.estado == 'cerrado'
+            ).sorted(key=lambda x: x.date, reverse=True)
+            previous_saldo = (
+                last_move_closed[0].saldo if last_move_closed else 0
+            )
+            for move in rec.recursos_recompra_fcp_ids.filtered(
+                lambda x: x.estado == 'abierto'
+            ):
+                if move.movement_type.code in ['COMPRA', 'RETIRO']:
+                    move.saldo = previous_saldo - move.value
+                else:
+                    move.saldo = previous_saldo + move.value
+                previous_saldo = move.saldo
+            last_move_closed = rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'cerrado').sorted(key=lambda x: x.date, reverse=True)
+            previous_saldo = last_move_closed[0].saldo if last_move_closed else 0
+            for move in rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto'):
+                if move.movement_type.code in ['COMPRA', 'RETIRO']:
+                    move.saldo = previous_saldo - move.value
+                else:
+                    move.saldo = previous_saldo + move.value
+                previous_saldo = move.saldo
+
+            last_move_closed = rec.recursos_recompra_csf_ids.filtered(
+                lambda x: x.estado == 'cerrado'
+            ).sorted(
+                key=lambda x: x.date, reverse=True
+            )
+            previous_saldo = last_move_closed[0].saldo if last_move_closed else 0
+            previous_date = (
+                last_move_closed[0].date if last_move_closed else None
+            )
+            for move in rec.recursos_recompra_csf_ids.filtered(
+                lambda x: x.estado == 'abierto'
+            ):
+                if move.movement_type.code in ['COMPRA', 'RETIRO']:
+                    move.saldo = previous_saldo - move.value
+                else:
+                    move.saldo = previous_saldo + move.value
+                previous_saldo = move.saldo
+                if previous_date:
+                    move.calculo_rendimiento = previous_saldo * (
+                        (1 + rec.tasa_rendimiento_csf) ** (1 / 365) - 1
+                    ) * (move.date - previous_date).days
+                previous_date = move.date
+
+    def button_cerrar_rpr(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'ctm.cerrar_movimientos_rpr.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_date': fields.Date.today(),
+                'active_ids': self.ids,
+            },
+        }
+
+    def cerrar_movimientos_rpr(self, date):
+        for rec in self:
+            rec.recursos_recompra_fcp_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
+            rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
+            total_rendimiento_csf = 0
+            last_saldo_csf = 0
+            for move in rec.recursos_recompra_csf_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date):
+                move.estado = 'cerrado'
+                total_rendimiento_csf += move.calculo_rendimiento
+                last_saldo_csf = move.saldo
+            if rec.tasa_rendimiento_csf > 0:
+                self.env['ati.recurso.recompra.csf'].create({
+                    'date': date,
+                    'value': total_rendimiento_csf,
+                    'movement_type': self.env['ati.movement.type'].search(
+                        [('code', '=', 'RENDIMIENTO')], limit=1
+                    ).id,
+                    'buyer': rec.id,
+                    'estado': 'cerrado',
+                    'saldo': total_rendimiento_csf + last_saldo_csf
+                })

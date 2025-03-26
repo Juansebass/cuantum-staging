@@ -187,6 +187,11 @@
                             </field>
 
                         </page>
+                        <page name="configuracion" string="Configuración">
+                            <group>
+                                <field name="activar_generar_tir" />
+                            </group>
+                        </page>     
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">

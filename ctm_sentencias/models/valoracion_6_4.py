@@ -4,7 +4,7 @@ from odoo import models, fields, api  # type: ignore
 from odoo.exceptions import ValidationError  # type: ignore
 import base64
 from dateutil.relativedelta import relativedelta
-from datetime import datetime
+from datetime import datetime, timedelta
 import calendar
 import scipy.optimize as opt  # type: ignore
 import xlsxwriter  # type: ignore
@@ -63,7 +63,14 @@ class Valoracion64(models.Model):
 
         self.valor_actual_6_4 = self.resultado / ((1 + self.tir_compra_6_4 * 0.01) ** ((self.fecha_liquidar - self.fecha_compra).days / 365))
         self.precio = (self.valor_actual_6_4 / self.valor_giro) * 100
-
+        fecha_anterior = self.fecha_liquidar - timedelta(days=1)
+        simulacion_anterior = self.simulacion_ids.filtered(lambda x: x.fecha_liquidar == fecha_anterior)
+        if len(self.simulacion_ids) == 0:
+            self.valor_contable_ayer = 0
+        else:
+            if len(simulacion_anterior) == 0 and self.state == 'amortizado':
+                raise ValidationError("No existe simulación para la fecha anterior para la liquidación {0}".format(self.name))
+            self.valor_contable_ayer = simulacion_anterior[0].valor_actual_6_4
         self.state = 'amortizado'
         self.responsible = self.env.user.partner_id
 
@@ -222,7 +229,7 @@ class Valoracion64(models.Model):
             'view_mode': 'tree',
             'res_model': 'ctm.valoracion_simulacion',
             'domain': [('valoracion_6_4_id', '=', self.id)],
-            'context': "{'create': False, 'delete': False}",
+            'context': "{'create': False}",
         }
 
     def create_txt(self):
@@ -251,7 +258,7 @@ class Valoracion64(models.Model):
             nominal = round(rec.valor_condena, 2)
             valor_giro = round(rec.valor_giro, 2) if rec.valor_giro else 0
             comision = round(rec.comision, 2) if rec.comision else 0
-            valor_contable_actual = round(rec.resultado, 2)
+            valor_contable_actual = round(rec.valor_actual_6_4, 2)
             valor_contable_ayer = round(rec.valor_contable_ayer, 2) if rec.valor_contable_ayer else 0
             precio = round(rec.precio, 7)
             contenido_txt += f"{fecha};{nit_fcp_statum};{descripcion};{demandante};{vendedor};{id_especie};{nemotecnico};{fecha_cuenta_cobro};{fecha_emision};{fecha_vencimiento};{nit_emisor};{nombre_emisor};{fecha_compra};{nominal};{valor_giro};{comision};{valor_contable_actual};{valor_contable_ayer};{precio:0.7f}\n"
@@ -312,7 +319,7 @@ class Valoracion64(models.Model):
             nominal = round(rec.valor_condena, 2)
             valor_giro = round(rec.valor_giro, 2) if rec.valor_giro else 0
             comision = round(rec.comision, 2) if rec.comision else 0
-            valor_contable_actual = round(rec.resultado, 2)
+            valor_contable_actual = round(rec.valor_actual_6_4, 2)
             valor_contable_ayer = round(rec.valor_contable_ayer, 2) if rec.valor_contable_ayer else 0
             precio = round(rec.precio, 7)
 

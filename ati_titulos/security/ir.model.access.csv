@@ -49,3 +49,6 @@ access_cuantum_sale_com_comprador,cuantum_sale_com_comprador,sale.model_sale_ord
 access_cuantum_res_partner_com_comprador,cuantum_res_partner_com_comprador,base.model_res_partner,ati_titulos.group_cuatum_com_comprador,1,0,1,0
 
 access_eliminar_rpr_user,eliminar.rpr.user,model_eliminar_rpr,base.group_user,1,1,1,1
+
+access_import_tasas_rpr_user,import.tasas.rpr.user,model_import_tasas_rpr,base.group_user,1,1,1,1
+access_ctm_cerrar_movimientos_rpr_wizard_user,ctm.cerrar.movimientos.rpr.wizard.user,model_ctm_cerrar_movimientos_rpr_wizard,base.group_user,1,1,1,1

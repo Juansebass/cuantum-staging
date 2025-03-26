@@ -18,15 +18,24 @@
                         <field name="ingreso_anticipado_cuantum"/>
                         <field name="valor_descuento_diluido"/>
                         <field name="valor_compra_beneficiario"/>
+                        <field name="valor_venta_inversionista"/>
                         <field name="total_descuentos"/>
                         <field name="porcentaje_total_descuentos" widget="percentage"/>
-                        
+                        <field name="total_descuentos_gastos"/>
+                        <field name="porcentaje_total_descuentos_gastos" widget="percentage"/>
                     </group>
                     <group string="TIR">
                         <field name="tir_optimista"/>
                         <field name="tir_neutral"/>
                         <field name="tir_acido"/>
                         <field name="tir_compra"/>
+                    </group>
+
+                    <group string="Valor Esperado">
+                        <field name="valor_esperado_optimista"/>
+                        <field name="valor_esperado_neutral"/>
+                        <field name="valor_esperado_acido"/>
+                        <field name="valor_esperado_compra"/>
                     </group>
                     <notebook>
                         <page name="liquidacion_inicial" string="Liquidación Inicial">
@@ -40,6 +49,8 @@
                                     <field name="fecha"/>
                                     <field name="tasa"/>
                                     <field name="interes"/>
+                                    <field name="interes_acumulado"/>
+                                    <field name="resultado"/>
                                 </tree>
                             </field>
                         </page>
@@ -76,8 +87,11 @@
                 <field name="estructuracion" optional="hide"/>
                 <field name="valor_descuento_diluido" optional="hide"/>
                 <field name="valor_compra_beneficiario" optional="hide"/>
+                <field name="valor_venta_inversionista" optional="hide"/>
                 <field name="total_descuentos" optional="hide"/>
                 <field name="porcentaje_total_descuentos" optional="hide"/>
+                <field name="total_descuentos_gastos" optional="hide"/>
+                <field name="porcentaje_total_descuentos_gastos" optional="hide"/>
                 <field name="tir_optimista" optional="hide"/>
                 <field name="tir_neutral" optional="hide"/>
                 <field name="tir_acido" optional="hide"/>

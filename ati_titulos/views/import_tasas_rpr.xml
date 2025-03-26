@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record model="ir.ui.view" id="import_tasas_rpr_view_form">
+		<field name="name">import.tasas.rpr.view.form</field>
+		<field name="model">import.tasas.rpr</field>
+		<field name="arch" type="xml">
+			<form string="Importar Tasas RPR">
+				<header>
+					<button name="btn_process" type="object" string="Procesar Tasas RPR" states="draft" />
+					<field name="state" widget="statusbar" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="client_file" widget="binary"/>
+						</group>
+						<group>
+							<field name="delimiter" />
+							<field name="skip_first_line" />
+							<field name="client_match" />
+							<field name="responsable" readonly='1'/>
+                			<field name="fch_procesado" readonly='1'/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Contenido" >
+							<field name="file_content" readonly="1"/>
+						</page>
+						<page string="No procesados">
+							<field name="not_processed_content" readonly="1"/>
+						</page>
+                        <page string="Recursos Cargados">
+                                <field name="recursos_cargados" readonly="1"/>
+                        </page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="import_tasas_rpr_tree">
+		<field name="name">import.tasas.rpr.view.tree</field>
+		<field name="model">import.tasas.rpr</field>
+		<field name="arch" type="xml">
+		<tree string="Import CSF">
+			<field name="name" />
+			<field name="state" />
+			<field name="responsable" />
+            <field name="fch_procesado" />
+		</tree>
+		</field>
+	</record>
+
+</odoo>

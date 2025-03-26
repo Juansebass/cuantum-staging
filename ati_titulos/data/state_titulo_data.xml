@@ -17,6 +17,6 @@
         <field name="name">No opera</field>
     </record>
     <record id="ext_state_fallecido" model="ati.state.titulo">
-        <field name="name">Falllecido</field>
+        <field name="name">Fallecido</field>
     </record>
 </odoo>

@@ -120,80 +120,77 @@ class CargarSentencias(models.Model):
                     titulo_existente = self.env['ctm.sentencias'].search(
                         [('name', '=', titulo)], limit=1)
 
+                    formated_valor_condena = self._format_money(
+                        valor_condena
+                    )
+                    formated_valor_giro = self._format_money(
+                        valor_giro
+                    )
+                    formated_comision = self._format_money(
+                        comision
+                    )
+                    formated_estructuracion = self._format_money(
+                        estructuracion
+                    )
+                    vals = {
+                        "name": titulo,
+                        "emisor": emisor.id,
+                        "pagador": pagador.id,
+                        "codigo": codigo,
+                        "statum": statum,
+                        "fecha_ejecutoria": datetime.strptime(
+                            fecha_ejecutoria, '%d/%m/%Y'
+                        ),
+                        "fecha_cuenta_cobro": datetime.strptime(
+                            fecha_cuenta_cobro, '%d/%m/%Y'
+                        ),
+                        "fecha_liquidar": datetime.strptime(
+                            fecha_liquidar, '%d/%m/%Y'
+                        ),
+                        "valor_condena": formated_valor_condena,
+                        "nit_fcp_statum": nit_fcp_statum,
+                        "vendedor": vendedor,
+                        "nemotecnico": nemotecnico,
+                        "fecha_vencimiento": datetime.strptime(
+                            fecha_vencimiento, '%d/%m/%Y'
+                        ) if fecha_vencimiento else None,
+                        "fecha_compra": datetime.strptime(
+                            fecha_compra, '%d/%m/%Y'
+                        ) if fecha_compra else None,
+                        "valor_giro": formated_valor_giro,
+                        "comision": formated_comision,
+                        "costas": costas,
+                        "retencion_total": self._format_percent(
+                            retencion_total
+                        ),
+                        "estructuracion": formated_estructuracion,
+                        "intermediacion": self._format_percent(
+                            intermediacion
+                        ),
+                        "descuento_diluido": self._format_percent(
+                            descuento_diluido
+                        ),
+                        "comision_gestion_cuantum":
+                            self._format_percent(comision_gestion_cuantum),
+                        "ingreso_anticipado_cuantum":
+                            self._format_percent(
+                                ingreso_anticipado_cuantum
+                        ),
+                        "fecha_liquidar_neutral": datetime.strptime(
+                            fecha_liquidar_neutral, '%d/%m/%Y'
+                        ) if fecha_liquidar_neutral else None,
+                        "fecha_liquidar_optimista": datetime.strptime(
+                            fecha_liquidar_optimista, '%d/%m/%Y'
+                        ) if fecha_liquidar_optimista else None,
+                        "fecha_liquidar_acido": datetime.strptime(
+                            fecha_liquidar_acido, '%d/%m/%Y'
+                        ) if fecha_liquidar_acido else None
+                    }
                     if len(titulo_existente) > 0:
-                        vals["fecha_liquidar"] = datetime.strptime(
-                            fecha_liquidar, '%d/%m/%Y')
                         titulo_existente.sudo().write(vals)
+                        _procesados += "{0};{1};{2};{3}\n".format(
+                            titulo, emisor.name, pagador.name, titulo_existente.id)
                     else:
-                        formated_valor_condena = self._format_money(
-                            valor_condena
-                        )
-                        formated_valor_giro = self._format_money(
-                            valor_giro
-                        )
-                        formated_comision = self._format_money(
-                            comision
-                        )
-                        formated_estructuracion = self._format_money(
-                            estructuracion
-                        )
-                        formated_costas = self._format_money(
-                            costas
-                        )
-                        vals = {
-                            "name": titulo,
-                            "emisor": emisor.id,
-                            "pagador": pagador.id,
-                            "codigo": codigo,
-                            "statum": statum,
-                            "fecha_ejecutoria": datetime.strptime(
-                                fecha_ejecutoria, '%d/%m/%Y'
-                            ),
-                            "fecha_cuenta_cobro": datetime.strptime(
-                                fecha_cuenta_cobro, '%d/%m/%Y'
-                            ),
-                            "fecha_liquidar": datetime.strptime(
-                                fecha_liquidar, '%d/%m/%Y'
-                            ),
-                            "valor_condena": formated_valor_condena,
-                            "nit_fcp_statum": nit_fcp_statum,
-                            "vendedor": vendedor,
-                            "nemotecnico": nemotecnico,
-                            "fecha_vencimiento": datetime.strptime(
-                                fecha_vencimiento, '%d/%m/%Y'
-                            ) if fecha_vencimiento else None,
-                            "fecha_compra": datetime.strptime(
-                                fecha_compra, '%d/%m/%Y'
-                            ) if fecha_compra else None,
-                            "valor_giro": formated_valor_giro,
-                            "comision": formated_comision,
-                            "costas": formated_costas,
-                            "retencion_total": self._format_percent(
-                                retencion_total
-                            ),
-                            "estructuracion": formated_estructuracion,
-                            "intermediacion": self._format_percent(
-                                intermediacion
-                            ),
-                            "descuento_diluido": self._format_percent(
-                                descuento_diluido
-                            ),
-                            "comision_gestion_cuantum":
-                                self._format_percent(comision_gestion_cuantum),
-                            "ingreso_anticipado_cuantum":
-                                self._format_percent(
-                                    ingreso_anticipado_cuantum
-                            ),
-                            "fecha_liquidar_neutral": datetime.strptime(
-                                fecha_liquidar_neutral, '%d/%m/%Y'
-                            ) if fecha_liquidar_neutral else None,
-                            "fecha_liquidar_optimista": datetime.strptime(
-                                fecha_liquidar_optimista, '%d/%m/%Y'
-                            ) if fecha_liquidar_optimista else None,
-                            "fecha_liquidar_acido": datetime.strptime(
-                                fecha_liquidar_acido, '%d/%m/%Y'
-                            ) if fecha_liquidar_acido else None
-                        }
                         new_record = self.env['ctm.sentencias'].sudo().create(
                             vals)
                         _procesados += "{0};{1};{2};{3}\n".format(

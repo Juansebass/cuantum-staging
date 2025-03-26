@@ -20,11 +20,17 @@ class Proyecciones(models.Model):
     valor_compra_beneficiario = fields.Float(string='Valor Compra Beneficiario')
     valor_venta_inversionista = fields.Float(string='Valor Venta Inversionista')
     total_descuentos = fields.Float(string='Total Descuentos')
+    total_descuentos_gastos = fields.Float(string='Total Descuentos Gastos')
     porcentaje_total_descuentos = fields.Float(string='Porcentaje Total Descuentos')
+    porcentaje_total_descuentos_gastos = fields.Float(string='Porcentaje Total Descuentos Gastos')
     tir_optimista = fields.Float(string='TIR Optimista')
     tir_neutral = fields.Float(string='TIR Neutral')
     tir_acido = fields.Float(string='TIR Ácido')
     tir_compra = fields.Float(string='TIR Compra')
+    valor_esperado_optimista = fields.Float(string='Valor Esperado Optimista')
+    valor_esperado_neutral = fields.Float(string='Valor Esperado Neutral')
+    valor_esperado_acido = fields.Float(string='Valor Esperado Ácido')
+    valor_esperado_compra = fields.Float(string='Valor Esperado Compra')
     # Liquidaciones Iniciales
     liquidacion_inicial_ids = fields.One2many('ctm.liquidacion_inicial', 'proyeccion_id', string='Liquidaciones Iniciales')
     valor_condena = fields.Float(string='Valor Condena', readonly=True)
@@ -44,18 +50,48 @@ class Proyecciones(models.Model):
             record.generar_liquidacion_inicial()
             # Resultados
 
-            record.retencion_total = record.sentencia_id.retencion_total * record.total_intereses
+            record.retencion_total = (
+                record.sentencia_id.retencion_total * record.total_intereses
+            )
             record.estructuracion = record.sentencia_id.estructuracion
-            record.intermediacion = record.sentencia_id.intermediacion * record.resultado
+            record.intermediacion = (
+                record.sentencia_id.intermediacion * record.resultado
+            )
+            record.valor_descuento_diluido = (
+                record.resultado * record.sentencia_id.descuento_diluido
+            )
+            record.ingreso_anticipado_cuantum = (
+                record.sentencia_id.ingreso_anticipado_cuantum *
+                record.resultado
+            )
+            record.total_descuentos = (
+                record.retencion_total +
+                record.estructuracion +
+                record.intermediacion +
+                record.ingreso_anticipado_cuantum +
+                record.valor_descuento_diluido
+            )
+            record.porcentaje_total_descuentos = (
+                record.total_descuentos / record.resultado
+            )
+            record.total_descuentos_gastos = (
+                record.retencion_total +
+                record.estructuracion +
+                record.intermediacion +
+                record.ingreso_anticipado_cuantum
+            )
+            record.porcentaje_total_descuentos_gastos = (
+                record.total_descuentos_gastos / record.resultado
+            )
+            record.valor_compra_beneficiario = (
+                record.resultado - record.total_descuentos
+            )
 
-            porcentaje_descuentos_parciales = record.sentencia_id.descuento_diluido + record.sentencia_id.ingreso_anticipado_cuantum
-            descuento_parcial = record.resultado * porcentaje_descuentos_parciales
-            record.total_descuentos = record.retencion_total + record.estructuracion + record.intermediacion + descuento_parcial
-            record.porcentaje_total_descuentos = record.total_descuentos / record.resultado
-            record.valor_compra_beneficiario = record.resultado - record.total_descuentos
-            record.valor_descuento_diluido = record.valor_compra_beneficiario * record.sentencia_id.descuento_diluido
-            record.valor_venta_inversionista = record.valor_compra_beneficiario * (1 - record.sentencia_id.descuento_diluido)
-            record.ingreso_anticipado_cuantum = record.sentencia_id.ingreso_anticipado_cuantum * record.resultado
+            record.valor_venta_inversionista = (
+                record.resultado -
+                record.total_descuentos +
+                record.total_descuentos_gastos
+            )
 
             record.generar_proyeccion_venta()
 
@@ -70,7 +106,8 @@ class Proyecciones(models.Model):
             record.resultado = record.valor_condena
             record.total_intereses = 0
             if codigo == "CPACA":
-                fecha_periodo_cero = fecha_ejecutoria + relativedelta(months=+3)
+                fecha_periodo_cero = fecha_ejecutoria + \
+                    relativedelta(months=+3)
 
             else:
                 fecha_periodo_cero = fecha_ejecutoria + relativedelta(months=+6)
@@ -127,7 +164,7 @@ class Proyecciones(models.Model):
                     dias = (fecha - fecha_anterior).days
                     interes = round(((1 + (tasa / 100)) ** (1 / 365) - 1), 6) * dias * record.valor_condena
 
-                self.env['ctm.liquidacion_inicial'].create({
+                liquidacion_inicial = self.env['ctm.liquidacion_inicial'].create({
                     'proyeccion_id': self.id,
                     'fecha': fecha,
                     'tasa': tasa,
@@ -137,6 +174,9 @@ class Proyecciones(models.Model):
                 record.total_intereses += interes
                 fecha_anterior = fecha
                 cont += 1
+
+                liquidacion_inicial.interes_acumulado = record.total_intereses
+                liquidacion_inicial.resultado = liquidacion_inicial.interes_acumulado + record.valor_condena
             record.resultado += record.sentencia_id.costas
 
     def last_day_of_month(self, date):
@@ -198,7 +238,7 @@ class Proyecciones(models.Model):
                     descuento_diluido = 0
                 rendimientos_totales = interes + descuento_diluido
                 if row == 0:
-                    valor_antes_cdg = record.valor_venta_inversionista + rendimientos_totales
+                    valor_antes_cdg = record.valor_venta_inversionista
                 else:
                     valor_antes_cdg = valor_antes_cdg + rendimientos_totales
                 valor_comision_gestion = valor_antes_cdg * ((1 + record.sentencia_id.comision_gestion_cuantum) ** (1 / 365) - 1) * (fecha[1] - fecha[0]).days
@@ -224,6 +264,7 @@ class Proyecciones(models.Model):
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_optimista = record._generar_tir(cash_flows)
+                        record.valor_esperado_optimista = valor_esperado
                         cash_flows.pop(-1)
                     except Exception:
                         raise ValidationError('Error al calcular la TIR Optimista con flujo de caja {0}'.format(cash_flows))
@@ -231,6 +272,7 @@ class Proyecciones(models.Model):
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_neutral = record._generar_tir(cash_flows)
+                        record.valor_esperado_neutral = valor_esperado
                         cash_flows.pop(-1)
                     except Exception:
                         raise ValidationError('Error al calcular la TIR Neutral con flujo de caja {0}'.format(cash_flows))
@@ -238,6 +280,7 @@ class Proyecciones(models.Model):
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_acido = record._generar_tir(cash_flows)
+                        record.valor_esperado_acido = valor_esperado
                         cash_flows.pop(-1)
                     except Exception:
                         raise ValidationError('Error al calcular la TIR Ácido con flujo de caja {0}'.format(cash_flows))
@@ -247,6 +290,7 @@ class Proyecciones(models.Model):
             cash_flows = [(-record.valor_condena, record.sentencia_id.fecha_ejecutoria), (record.resultado, record.sentencia_id.fecha_liquidar)]
             try:
                 record.tir_compra = record._generar_tir(cash_flows)
+                record.valor_esperado_compra = record.resultado
             except Exception:
                 raise ValidationError('Error al calcular la TIR de Compra con flujo de caja {0}'.format(cash_flows))
 
@@ -289,6 +333,8 @@ class LiquidacionInicial(models.Model):
     fecha = fields.Date('Fecha', required=1)
     tasa = fields.Float('Tasa', digits=(10, 6))
     interes = fields.Float('Interés')
+    interes_acumulado = fields.Float('Interés Acumulado')
+    resultado = fields.Float('Resultado')
 
 
 class ProyeccionVenta(models.Model):

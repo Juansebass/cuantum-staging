@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>    
+<odoo>
+
+
+    <record id="view_partner_property_tree" model="ir.ui.view">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="act_in" optional="show"/>
+                <field name="vinculado" optional="show"/>
+                <field name="num_encargo" optional="show"/>
+                <field name="emisor" optional="show"/>
+                <field name="pagador" optional="show"/>
+                <field name="rep_legal" optional="hide"/>
+                <field name="cuantum_contact" optional="hide"/>
+                <field name="freelance" optional="hide"/>
+            </field>
+        </field>
+    </record>
     <record id="view_partner_property_form" model="ir.ui.view">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
@@ -34,14 +53,18 @@
                     </group>
                 </page>
                 <page name="recursos_recompra" string="Recursos de Recompra">
+                    <button name="button_recalcular_rpr" type="object" string="Recalcular RPR"/>
+                    <button name="button_cerrar_rpr" type="object" string="Cerrar RPR"/>
                     <h3 style="text-align: center;">Fideicomiso Cuantum P (FCP)</h3>
                     <field name="recursos_recompra_fcp_ids">
-                        <tree string="Recursos de Recompra" editable="bottom">
-                            <field name="name" />
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
                             <field name="date" />
                             <field name="investment_type" />
                             <field name="movement_type" />
                             <field name="value" />
+                            <field name="saldo" />
+                            <field name="calculo_rendimiento" />
+                            <field name="estado" />
                         </tree>
                     </field>
                     <group name="totales_fcp" string="Totales FCP">
@@ -66,12 +89,14 @@
 
                     <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
                     <field name="recursos_recompra_fcl_ids">
-                        <tree string="Recursos de Recompra" editable="bottom">
-                            <field name="name" />
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
                             <field name="date" />
                             <field name="investment_type" />
                             <field name="movement_type" />
                             <field name="value" />
+                            <field name="saldo" />
+                            <field name="calculo_rendimiento" />
+                            <field name="estado" />
                         </tree>
                     </field>
                     <group name="general_fcl" string="GENERAL FCL">
@@ -101,12 +126,14 @@
 
                     <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
                     <field name="recursos_recompra_csf_ids">
-                        <tree string="Recursos de Recompra" editable="bottom">
-                            <field name="name" />
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
                             <field name="date" />
                             <field name="investment_type" />
                             <field name="movement_type" />
                             <field name="value" />
+                            <field name="saldo" />
+                            <field name="calculo_rendimiento" />
+                            <field name="estado" />
                         </tree>
                     </field>
                     <group name="general_csf" string="GENERAL CSF">

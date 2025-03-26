@@ -62,7 +62,6 @@ class Sentencias(models.Model):
         selection=[
             ('negociacion', 'Negociación'),
             ('proyeccion', 'Proyección'),
-            ('en_venta', 'En Venta'),
             ('venta_completa', 'Venta Completa'),
         ],
         default='negociacion',
@@ -124,6 +123,7 @@ class Sentencias(models.Model):
                 'sentencia_id': record.id,
             })
             proyeccion_id.calcular_proyeccion()
+            record.write({'state': 'proyeccion'})
 
     def action_view_proyecciones(self):
         self.ensure_one()
@@ -135,3 +135,10 @@ class Sentencias(models.Model):
             'domain': [('sentencia_id', '=', self.id)],
             'context': "{'create': False, 'delete': False, 'open': True}",
         }
+
+    def vendida(self):
+        self.write({'state': 'venta_completa'})
+
+    def generar_proyecciones(self):
+        for record in self:
+            record.generar_proyeccion()

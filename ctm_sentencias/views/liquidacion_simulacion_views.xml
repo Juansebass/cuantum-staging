@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record id="liquidacion_simulacion_view_tree" model="ir.ui.view">
-        <field name="name">liquidacion.simulacion.tree</field>
+    <record id="simulacion_view_tree" model="ir.ui.view">
+        <field name="name">simulacion.tree</field>
         <field name="model">liquidacion.simulacion</field>
         <field name="arch" type="xml">
             <tree>

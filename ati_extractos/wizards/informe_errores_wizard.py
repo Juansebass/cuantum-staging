@@ -47,8 +47,10 @@ class InformeErroresWizard(models.TransientModel):
         row += 1
         for extracto in extractos:
             worksheet.write(row, 0, extracto.cliente.name)
-            worksheet.write(row, 1, extracto.message_product_validation)
-            row += 1
+            for line in extracto.message_product_validation.split('\n'):
+                worksheet.write(row, 1, line)
+                row += 1
+            row -= 1
 
         workbook.close()
         output.seek(0)

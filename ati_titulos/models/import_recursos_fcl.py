@@ -21,10 +21,12 @@ class ImportRecursosFCL(models.Model):
     def btn_process(self):
         _procesados = ""
         _noprocesados = ""
-        vals={}    
+        vals = {}
         self.ensure_one()
         if not self.client_match:
-            raise ValidationError('Debe seleccionar metodo de busqueda de clientes')
+            raise ValidationError(
+                'Debe seleccionar metodo de busqueda de clientes'
+            )
         if not self.delimiter:
             raise ValidationError('Debe ingresar el delimitador')
         if not self.client_file:
@@ -46,7 +48,7 @@ class ImportRecursosFCL(models.Model):
 
         self.file_content = base64.decodebytes(self.client_file)
         lines = self.file_content.split('\n')
-        for i,line in enumerate(lines):
+        for i, line in enumerate(lines):
             if self.skip_first_line and i == 0:
                 continue
             lista = line.split(self.delimiter)
@@ -61,7 +63,7 @@ class ImportRecursosFCL(models.Model):
 
                 vals.clear()
 
-                client = self.env['res.partner'].search([(self.client_match,'=',documento)])
+                client = self.env['res.partner'].search([(self.client_match, '=', documento)])
                 if len(client) > 1:
                     raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, tienes mas de un cliente con el mismo documento, contenido de linea: {1}".format(i, line))
                 if len(client) > 0:
@@ -77,7 +79,7 @@ class ImportRecursosFCL(models.Model):
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la primera columna que refiere al la fecha esta vacia, contenido de linea: {1}".format(i, line))
                     
                     if valores != '':
-                        valores = valores.replace('$','').replace(' ', '').replace('.', '').replace(',', '.').replace('-','')
+                        valores = valores.replace('$', '').replace(' ', '').replace('.', '').replace(',', '.')
                         vals['value'] = valores
                     else:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, la segunda columna que refiere al valor esta vacia, contenido de linea: {1}".format(i, line))

@@ -126,6 +126,8 @@ class Liquidaciones(models.Model):
         ]
         if self.codigo == "CPACA":
             fecha_periodo_diez = self.fecha_ejecutoria + relativedelta(months=+10)
+            if fecha_periodo_diez > self.fecha_liquidar:
+                fecha_periodo_diez = self.fecha_liquidar
             fechas_base.append(fecha_periodo_diez)
 
         fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
@@ -242,7 +244,7 @@ class Liquidaciones(models.Model):
             'view_mode': 'tree',
             'res_model': 'liquidacion.simulacion',
             'domain': [('liquidacion_id', '=', self.id)],
-            'context': "{'create': False, 'delete': False}",
+            'context': "{'create': False}",
         }
 
     def create_txt(self):

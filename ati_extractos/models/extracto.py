@@ -1,6 +1,4 @@
-#  -*- coding: utf-8 -*-
-
-from odoo import models, fields, api
+from odoo import models, fields, api  # type: ignore
 from odoo.exceptions import ValidationError
 import base64
 import matplotlib.pyplot as plt
@@ -21,19 +19,29 @@ class Extracto(models.Model):
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
 
     name = fields.Char('Nombre')
-    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
+    company_id = fields.Many2one(
+        'res.company', string='Company', default=lambda self: self.env.company
+    )
 
-    #para recursos
+    # para recursos
     valor_anterior_recursos_csf = fields.Float('Valor Anterior')
     valor_actual_recursos_csf = fields.Float('Valor Actual')
 
     valor_anterior_recursos_fcl = fields.Float('Valor Anterior')
     valor_actual_recursos_fcl = fields.Float('Valor Actual')
     tir_ids = fields.One2many('ati.tir', 'extracto_id', 'TIR')
-    tir_gestor_ids = fields.One2many('ati.tir.gestor', 'extracto_id', 'TIR Gestor')
-    recursos_csf = fields.One2many('ati.extracto.recompra.csf', 'extracto_id', 'Recuros de recompra CSF')
-    recursos_fcl = fields.One2many('ati.extracto.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL')
-    recursos_fcp = fields.One2many('ati.extracto.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP')
+    tir_gestor_ids = fields.One2many(
+        'ati.tir.gestor', 'extracto_id', 'TIR Gestor'
+    )
+    recursos_csf = fields.One2many(
+        'ati.extracto.recompra.csf', 'extracto_id', 'Recuros de recompra CSF'
+    )
+    recursos_fcl = fields.One2many(
+        'ati.extracto.recompra.fcl', 'extracto_id', 'Recuros de recompra FCL'
+    )
+    recursos_fcp = fields.One2many(
+        'ati.extracto.recompra.fcp', 'extracto_id', 'Recuros de recompra FCP'
+    )
     valor_anterior_recursos_fcp = fields.Float('Valor Anterior')
     valor_actual_recursos_fcp = fields.Float('Valor Actual')
 
@@ -42,11 +50,11 @@ class Extracto(models.Model):
     total_FCP = fields.Float('Valor Total')
     show_alert = fields.Boolean('Alerta')
 
-    cliente = fields.Many2one('res.partner','Cliente',required=1)
-    responsible = fields.Many2one('res.partner','Responsable')
-    email_cliente = fields.Char('Email',related='cliente.email')
-    month = fields.Char('Mes de Periodo',required=1)
-    year = fields.Char('Año de Periodo',required=1)
+    cliente = fields.Many2one('res.partner', 'Cliente', required=1)
+    responsible = fields.Many2one('res.partner', 'Responsable')
+    email_cliente = fields.Char('Email', related='cliente.email')
+    month = fields.Char('Mes de Periodo', required=1)
+    year = fields.Char('Año de Periodo', required=1)
     pie_composicion_portafolio = fields.Binary('Composicion Portafolio')
     pie_inversiones_fondo = fields.Binary('Inversiones por fondo')
     pie_rpr_fondo = fields.Binary('RPR por fondo')
@@ -55,20 +63,21 @@ class Extracto(models.Model):
     show_alert_product_validation = fields.Boolean('Alerta')
     message_product_validation = fields.Char()
 
-    #Campos para resumen de inversiones
-    resumen_inversion_ids = fields.One2many('ati.extracto.resumen_inversion','extracto_id','Resumen Inversiones Fideicomiso Cuantum Libranzas')
+    # Campos para resumen de inversiones
+    resumen_inversion_ids = fields.One2many('ati.extracto.resumen_inversion', 'extracto_id', 'Resumen Inversiones Fideicomiso Cuantum Libranzas')
 
-    detalle_movimiento_ids = fields.One2many('ati.extracto.detalle_movimiento','extracto_id','Detalle de Movimientos')
+    detalle_movimiento_ids = fields.One2many('ati.extracto.detalle_movimiento', 'extracto_id', 'Detalle de Movimientos')
 
-    detalle_titulos_ids = fields.One2many('ati.extracto.detalle_titulos','extracto_id','Detalle de Titulos')
+    detalle_titulos_ids = fields.One2many('ati.extracto.detalle_titulos', 'extracto_id', 'Detalle de Titulos')
 
-    estado_portafolios_ids = fields.One2many('ati.extracto.estado_portafolios','extracto_id','Estados de Portafolios')
+    estado_portafolios_ids = fields.One2many('ati.extracto.estado_portafolios', 'extracto_id', 'Estados de Portafolios')
 
     state = fields.Selection(selection=[('draft','Borrador'),('processed','Procesado'),('validated','Validado'),('send','Enviado')],string='Estado',default='draft')
 
     valor_actual_total_resumen = fields.Float('Valor Total Actual Resumen')
     valor_anterior_total_resumen = fields.Float('Valor Total Anterior Resumen')
     valor_rendimiento_causado = fields.Float('Valor Total Rendimiento Causado')
+    valor_administracion_resumen = fields.Float('Valor Total Administracion Resumen')
     tir_mensual = fields.Float('TIR Mensual', digits=(3, 3))
     tir_trimestral = fields.Float('TIR Trimestral', digits=(3, 3))
     tir_semestral = fields.Float('TIR Semestral', digits=(3, 3))
@@ -113,7 +122,7 @@ class Extracto(models.Model):
     fcp_sii_trimestral = fields.Float('FCP SII Trimestral', digits=(3, 3))
     fcp_sii_semestral = fields.Float('FCP SII Semestral', digits=(3, 3))
     fcp_sii_anual = fields.Float('FCP SII Anual', digits=(3, 3))
-
+    activar_generar_tir = fields.Boolean('Activar Generar TIR', default=True)
 
     # _compute_access_url _get_report_base_filename son utilizadas para generar el extracto desde el portal
     def _compute_access_url(self):
@@ -449,6 +458,7 @@ class Extracto(models.Model):
         self.valor_anterior_total_resumen = total_valor_anterior
         self.valor_actual_total_resumen = total_valor_actual
         self.valor_rendimiento_causado = total_rendimiento_causado
+        self.valor_administracion_resumen = total_administracion
 
         #######################
         #TOTALES
@@ -488,7 +498,6 @@ class Extracto(models.Model):
         self.recursos_csf = [
             (0, 0,
              {
-                'name': x.name,
                 'date': x.date,
                 'value': x.value,
                 'investment_type': x.investment_type.id,
@@ -507,7 +516,6 @@ class Extracto(models.Model):
         self.recursos_fcl = [
             (0, 0,
              {
-                'name': x.name,
                 'date': x.date,
                 'value': x.value,
                 'investment_type': x.investment_type.id,
@@ -526,7 +534,6 @@ class Extracto(models.Model):
         self.recursos_fcp = [
             (0, 0,
              {
-                'name': x.name,
                 'date': x.date,
                 'value': x.value,
                 'investment_type': x.investment_type.id,
@@ -917,9 +924,9 @@ class Extracto(models.Model):
         #     self._generar_tir()
         # except Exception as e:
         #     raise ValidationError('No sepuede generar extracto {}'.format(self.name))
-
-        if not (self.month == '01' and self.year== '2023'):
-            self._generar_tir()
+        if self.activar_generar_tir:
+            if not (self.month == '01' and self.year== '2023'):
+                self._generar_tir()
         #Cambiamos estado
         self.state = 'processed'
 
@@ -1139,6 +1146,10 @@ class Extracto(models.Model):
                         lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
                     )
                 ]
+                logger.error('flows FCP Trimestral')
+                to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
+                logger.error('S2')
+                logger.error(to_print)
                 self.fcp_sii_trimestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_trimestral = 0
@@ -1218,6 +1229,10 @@ class Extracto(models.Model):
                         lambda x: x.gestor_id.code == 'FCP' and x.tipo_id.code == 'S2'
                     )
                 ]
+                logger.error('flows FCP Trimestral')
+                to_print = [(x[0], x[1].strftime('%Y-%m-%d')) for x in cash_flows]
+                logger.error('S2')
+                logger.error(to_print)
                 self.fcp_sii_semestral = self.calculate_tir_function(cash_flows) if len(cash_flows) > 0 else 0
         else:
             self.fcl_lib_semestral = 0
@@ -1635,6 +1650,7 @@ class Extracto(models.Model):
                     valor_validado = (
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
+
                     validation = line.valor_actual != valor_validado
                     if validation:
                         self.message_product_validation += 'Validación de totales para gestor FCL producto Libranzas no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
@@ -1666,11 +1682,35 @@ class Extracto(models.Model):
                     validation = line.valor_actual != valor_validado
                     if validation:
                         self.message_product_validation += 'Validación de totales para gestor FCP producto Statum II no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
-
+        
+        
+        valor_validado = self.valor_anterior_total_resumen + self.valor_rendimiento_causado - self.valor_administracion_resumen
+        valor_validado = round(self.validacion_detalle_movimientos(valor_validado), 2)
+        validation = valor_validado != round(self.valor_actual_total_resumen, 2)
+        if validation:
+            self.message_product_validation += 'Validación de totales no es correcta. Actual={0} Validado={1} \n'.format(round(self.valor_actual_total_resumen, 2), valor_validado)
 
         if len(self.message_product_validation) > 0:
             self.show_alert_product_validation = True
 
+
+    def validacion_detalle_movimientos(self, value):
+        for line in self.recursos_csf:
+            if line.movement_type.name == 'Adición':
+                value += line.value
+            if line.movement_type.name == 'Retiro':
+                value -= line.value
+        for line in self.recursos_fcl:
+            if line.movement_type.name == 'Adición':
+                value += line.value
+            if line.movement_type.name == 'Retiro':
+                value -= line.value
+        for line in self.recursos_fcp:
+            if line.movement_type.name == 'Adición':
+                value += line.value
+            if line.movement_type.name == 'Retiro':
+                value -= line.value
+        return value
 
 
     def validacion_informes_clientes(self):

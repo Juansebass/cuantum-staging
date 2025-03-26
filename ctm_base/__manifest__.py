@@ -10,7 +10,7 @@
     'depends': [
         'contacts',
         'board',
-    ],
+        ],
     'data': [
         'security/cuantum_security.xml',
         'views/contact_views.xml',

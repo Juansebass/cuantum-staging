@@ -12,7 +12,6 @@ import io
 _logger = logging.getLogger(__name__)
 
 
-
 class ImportRecursosCSF(models.Model):
     _name = 'import.recursos.csf'
     _order = "fch_procesado desc"
