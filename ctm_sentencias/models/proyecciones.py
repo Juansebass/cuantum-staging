@@ -219,7 +219,8 @@ class Proyecciones(models.Model):
 
             if fecha_liquidar_fin == fecha_optimista:
                 raise ValidationError('La fecha de liquidación optimista no puede ser igual a la fecha de liquidación')
-
+            
+            valor_esperado = 0
             for fecha in fechas:
                 # Buscando tasas
                 tasa_conf = self.env['ctm.tasas'].search(
@@ -240,7 +241,7 @@ class Proyecciones(models.Model):
                 if row == 0:
                     valor_antes_cdg = record.valor_venta_inversionista
                 else:
-                    valor_antes_cdg = valor_antes_cdg + rendimientos_totales
+                    valor_antes_cdg = valor_esperado + rendimientos_totales
                 valor_comision_gestion = valor_antes_cdg * ((1 + record.sentencia_id.comision_gestion_cuantum) ** (1 / 365) - 1) * (fecha[1] - fecha[0]).days
                 valor_esperado = valor_antes_cdg - valor_comision_gestion
                 self.env['ctm.proyeccion_venta'].create(
