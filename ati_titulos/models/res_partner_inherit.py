@@ -205,7 +205,7 @@ class ResPartner(models.Model):
                 previous_saldo = move.saldo
                 if previous_date:
                     move.calculo_rendimiento = previous_saldo * (
-                        ((1 + rec.tasa_rendimiento_csf) ** (1 / 365)) - 1
+                        ((1 + (rec.tasa_rendimiento_csf) / 100) ** (1 / 365)) - 1
                     ) * (move.date - previous_date).days
                 previous_date = move.date
 
