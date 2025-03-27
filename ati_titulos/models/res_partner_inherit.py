@@ -208,7 +208,7 @@ class ResPartner(models.Model):
                     _logger.error(move.date)
                     _logger.error(previous_date)
                     _logger.error(previous_saldo)
-                    _logger.error(move.tasa_rendimiento_csf)
+                    _logger.error(rec.tasa_rendimiento_csf)
                     move.calculo_rendimiento = previous_saldo * (
                         ((1 + (rec.tasa_rendimiento_csf) / 100) ** (1 / 365)) - 1
                     ) * (move.date - previous_date).days
