@@ -203,8 +203,13 @@ class ResPartner(models.Model):
                 else:
                     move.saldo = previous_saldo + move.value
                 if previous_date:
+                    _logger.warning('*********** Calculo de rendimiento')
+                    _logger.warning('*********** previous_saldo: %s', previous_saldo)
+                    _logger.warning('*********** previous_date: %s', previous_date)
+                    _logger.warning('*********** move.date: %s', move.date)
+
                     move.calculo_rendimiento = previous_saldo * (
-                        ((1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365)) - 1
+                        (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
                     ) * (move.date - previous_date).days
                 previous_date = move.date
                 previous_saldo = move.saldo
