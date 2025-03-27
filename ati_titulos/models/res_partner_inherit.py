@@ -202,17 +202,12 @@ class ResPartner(models.Model):
                     move.saldo = previous_saldo - move.value
                 else:
                     move.saldo = previous_saldo + move.value
-                previous_saldo = move.saldo
                 if previous_date:
-                    _logger.error('Calculo de rendimiento')
-                    _logger.error(move.date)
-                    _logger.error(previous_date)
-                    _logger.error(previous_saldo)
-                    _logger.error(rec.tasa_rendimiento_csf)
                     move.calculo_rendimiento = previous_saldo * (
                         ((1 + (rec.tasa_rendimiento_csf) / 100) ** (1 / 365)) - 1
                     ) * (move.date - previous_date).days
                 previous_date = move.date
+                previous_saldo = move.saldo
 
     def button_cerrar_rpr(self):
         return {
