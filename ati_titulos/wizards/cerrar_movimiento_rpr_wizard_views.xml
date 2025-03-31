@@ -7,6 +7,8 @@
                 <form string="Cerrar Movimientos RPR">
                     <group>
                         <field name="date"/>
+                        <field name="gestor_id"/>
+                        
                     </group>
                     <footer>
                         <button string="Cerrar Movimientos RPR" type="object" name="button_cerrar_movimientos_rpr_wizard" class="btn-primary"/>

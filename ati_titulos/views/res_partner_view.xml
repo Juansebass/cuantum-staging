@@ -55,18 +55,7 @@
                 <page name="recursos_recompra" string="Recursos de Recompra">
                     <button name="button_recalcular_rpr" type="object" string="Recalcular RPR"/>
                     <button name="button_cerrar_rpr" type="object" string="Cerrar RPR"/>
-                    <h3 style="text-align: center;">Fideicomiso Cuantum P (FCP)</h3>
-                    <field name="recursos_recompra_fcp_ids">
-                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
-                            <field name="date" />
-                            <field name="investment_type" />
-                            <field name="movement_type" />
-                            <field name="value" />
-                            <field name="saldo" />
-                            <field name="calculo_rendimiento" />
-                            <field name="estado" />
-                        </tree>
-                    </field>
+                    <h3 style="text-align: center;">Fondo de Capital Privado (FCP)</h3>
                     <group name="totales_fcp" string="Totales FCP">
                         <group>
                             <field name="compra_fcp" />
@@ -86,9 +75,7 @@
                                 </div>  
                             </div>
                     </group>
-
-                    <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
-                    <field name="recursos_recompra_fcl_ids">
+                    <field name="recursos_recompra_fcp_ids">
                         <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
                             <field name="date" />
                             <field name="investment_type" />
@@ -99,6 +86,8 @@
                             <field name="estado" />
                         </tree>
                     </field>
+
+                    <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
                     <group name="general_fcl" string="GENERAL FCL">
                         <group>
                             <field name="tasa_rendimiento_fcl" readonly="0"/>
@@ -123,9 +112,7 @@
                                 </div>  
                             </div>
                     </group>
-
-                    <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
-                    <field name="recursos_recompra_csf_ids">
+                    <field name="recursos_recompra_fcl_ids">
                         <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
                             <field name="date" />
                             <field name="investment_type" />
@@ -136,6 +123,8 @@
                             <field name="estado" />
                         </tree>
                     </field>
+
+                    <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
                     <group name="general_csf" string="GENERAL CSF">
                         <group>
                             <field name="tasa_rendimiento_csf" readonly="0"/>
@@ -198,6 +187,17 @@
                                 </div>
                             </div>
                     </group>
+                    <field name="recursos_recompra_csf_ids">
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
+                            <field name="date" />
+                            <field name="investment_type" />
+                            <field name="movement_type" />
+                            <field name="value" />
+                            <field name="saldo" />
+                            <field name="calculo_rendimiento" />
+                            <field name="estado" />
+                        </tree>
+                    </field>
                 </page>
             </page>
         </field>
