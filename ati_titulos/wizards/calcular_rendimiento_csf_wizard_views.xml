@@ -2,7 +2,7 @@
     <data>
         <record id="view_calcular_rendimiento_csf_wizard_form" model="ir.ui.view">
             <field name="name">calcular.rendimiento.csf.wizard.form</field>
-            <field name="model">ctm.cerrar_movimientos_rpr.wizard</field>
+            <field name="model">ctm.calcular_rendimiento_csf.wizard</field>
             <field name="arch" type="xml">
                 <form string="Calcular Rendimiento CSF">
                     <group>
