@@ -55,75 +55,6 @@
                 <page name="recursos_recompra" string="Recursos de Recompra">
                     <button name="button_recalcular_rpr" type="object" string="Recalcular RPR"/>
                     <button name="button_cerrar_rpr" type="object" string="Cerrar RPR"/>
-                    <h3 style="text-align: center;">Fondo de Capital Privado (FCP)</h3>
-                    <group name="totales_fcp" string="Totales FCP">
-                        <group>
-                            <field name="compra_fcp" />
-                            <field name="retiro_fcp" />
-                            <field name="administracion_fcp" />
-                        </group>
-                        <group>
-                            <field name="adicion_fcp" />
-                            <field name="aplicacion_recaudo_fcp" />
-                            <field name="rendimiento_fcp" />
-                        </group>
-                            <div class="o_group_col_12" style="text-align: right;">
-                                <label for="total_fcp" string="TOTAL FCP"/>
-                                <div class="o_row">                  
-                                    <label for="total_fcp" string="$"/>                     
-                                    <field name="total_fcp"/>      
-                                </div>  
-                            </div>
-                    </group>
-                    <field name="recursos_recompra_fcp_ids">
-                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
-                            <field name="date" />
-                            <field name="investment_type" />
-                            <field name="movement_type" />
-                            <field name="value" />
-                            <field name="saldo" />
-                            <field name="calculo_rendimiento" />
-                            <field name="estado" />
-                        </tree>
-                    </field>
-
-                    <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
-                    <group name="general_fcl" string="GENERAL FCL">
-                        <group>
-                            <field name="tasa_rendimiento_fcl" readonly="0"/>
-                        </group>
-                    </group>
-                    <group name="totales_fcl" string="Totales FCL">
-                        <group>
-                            <field name="compra_fcl" />
-                            <field name="retiro_fcl" />
-                            <field name="administracion_fcl" />
-                        </group>
-                        <group>
-                            <field name="adicion_fcl" />
-                            <field name="aplicacion_recaudo_fcl" />
-                            <field name="rendimiento_fcl" />
-                        </group>
-                            <div class="o_group_col_12" style="text-align: right;">
-                                <label for="total_fcl" string="TOTAL FCL"/>
-                                <div class="o_row">                  
-                                    <label for="total_fcl" string="$"/>                     
-                                    <field name="total_fcl"/>      
-                                </div>  
-                            </div>
-                    </group>
-                    <field name="recursos_recompra_fcl_ids">
-                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
-                            <field name="date" />
-                            <field name="investment_type" />
-                            <field name="movement_type" />
-                            <field name="value" />
-                            <field name="saldo" />
-                            <field name="calculo_rendimiento" />
-                            <field name="estado" />
-                        </tree>
-                    </field>
-
                     <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
                     <group name="general_csf" string="GENERAL CSF">
                         <group>
@@ -188,6 +119,74 @@
                             </div>
                     </group>
                     <field name="recursos_recompra_csf_ids">
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
+                            <field name="date" />
+                            <field name="investment_type" />
+                            <field name="movement_type" />
+                            <field name="value" />
+                            <field name="saldo" />
+                            <field name="calculo_rendimiento" />
+                            <field name="estado" />
+                        </tree>
+                    </field>
+
+                    <h3 style="text-align: center;">Fideicomiso Cuantum Libranzas (FCL)</h3>
+                    <group name="general_fcl" string="GENERAL FCL">
+                        <group>
+                            <field name="tasa_rendimiento_fcl" readonly="0"/>
+                        </group>
+                    </group>
+                    <group name="totales_fcl" string="Totales FCL">
+                        <group>
+                            <field name="compra_fcl" />
+                            <field name="retiro_fcl" />
+                            <field name="administracion_fcl" />
+                        </group>
+                        <group>
+                            <field name="adicion_fcl" />
+                            <field name="aplicacion_recaudo_fcl" />
+                            <field name="rendimiento_fcl" />
+                        </group>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                <label for="total_fcl" string="TOTAL FCL"/>
+                                <div class="o_row">                  
+                                    <label for="total_fcl" string="$"/>                     
+                                    <field name="total_fcl"/>      
+                                </div>  
+                            </div>
+                    </group>
+                    <field name="recursos_recompra_fcl_ids">
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
+                            <field name="date" />
+                            <field name="investment_type" />
+                            <field name="movement_type" />
+                            <field name="value" />
+                            <field name="saldo" />
+                            <field name="calculo_rendimiento" />
+                            <field name="estado" />
+                        </tree>
+                    </field>
+                    <h3 style="text-align: center;">Fondo de Capital Privado (FCP)</h3>
+                    <group name="totales_fcp" string="Totales FCP">
+                        <group>
+                            <field name="compra_fcp" />
+                            <field name="retiro_fcp" />
+                            <field name="administracion_fcp" />
+                        </group>
+                        <group>
+                            <field name="adicion_fcp" />
+                            <field name="aplicacion_recaudo_fcp" />
+                            <field name="rendimiento_fcp" />
+                        </group>
+                            <div class="o_group_col_12" style="text-align: right;">
+                                <label for="total_fcp" string="TOTAL FCP"/>
+                                <div class="o_row">                  
+                                    <label for="total_fcp" string="$"/>                     
+                                    <field name="total_fcp"/>      
+                                </div>  
+                            </div>
+                    </group>
+                    <field name="recursos_recompra_fcp_ids">
                         <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
                             <field name="date" />
                             <field name="investment_type" />

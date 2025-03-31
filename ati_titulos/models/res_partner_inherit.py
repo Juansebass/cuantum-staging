@@ -232,7 +232,7 @@ class ResPartner(models.Model):
                 rec.recursos_recompra_fcp_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
             elif gestor_code == 'FCL':
                 rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
-            elif gestor_code == 'CSF':
+            elif gestor_code == 'CUANTUM':
                 total_rendimiento_csf = 0
                 last_saldo_csf = 0
                 for move in rec.recursos_recompra_csf_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date):
