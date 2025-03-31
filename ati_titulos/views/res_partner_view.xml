@@ -55,6 +55,7 @@
                 <page name="recursos_recompra" string="Recursos de Recompra">
                     <button name="button_recalcular_rpr" type="object" string="Recalcular RPR"/>
                     <button name="button_cerrar_rpr" type="object" string="Cerrar RPR"/>
+                    <button name="button_calcular_rendimiento_csf" type="object" string="Calcular Rendimiento CSF"/>
                     <h3 style="text-align: center;">Gestores Cuantum (CSF)</h3>
                     <group name="general_csf" string="GENERAL CSF">
                         <group>

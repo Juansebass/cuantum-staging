@@ -226,6 +226,42 @@ class ResPartner(models.Model):
             },
         }
 
+    def button_calcular_rendimiento_csf(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'ctm.calcular_rendimiento_csf.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_date': fields.Date.today(),
+                'active_ids': self.ids,
+            },
+        }
+
+    def calcular_rendimiento_csf(self, date):
+        for rec in self:
+            recursos_abiertos = rec.recursos_recompra_csf_ids.filtered(
+                lambda x: x.estado == 'abierto' and x.date <= date
+            )
+            total_rendimiento_csf = sum(
+                move.calculo_rendimiento for move in recursos_abiertos
+            )
+            previous_move = recursos_abiertos[-1] if recursos_abiertos else None
+            if rec.tasa_rendimiento_csf > 0:
+                self.env['ati.recurso.recompra.csf'].create({
+                    'date': date,
+                    'value': total_rendimiento_csf,
+                    'movement_type': self.env['ati.movement.type'].search(
+                        [('code', '=', 'RENDIMIENTO')], limit=1
+                    ).id,
+                    'buyer': rec.id,
+                    'estado': 'cerrado',
+                    'saldo': total_rendimiento_csf + recursos_abiertos[-1].saldo,
+                    'calculo_rendimiento': previous_move.saldo * (
+                        (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
+                    ) * (date - previous_move.date).days
+                })
+
     def cerrar_movimientos_rpr(self, date, gestor_code):
         for rec in self:
             if gestor_code == 'FCP':
@@ -234,19 +270,6 @@ class ResPartner(models.Model):
                 rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
             elif gestor_code == 'CUANTUM':
                 total_rendimiento_csf = 0
-                last_saldo_csf = 0
                 for move in rec.recursos_recompra_csf_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date):
                     move.estado = 'cerrado'
                     total_rendimiento_csf += move.calculo_rendimiento
-                    last_saldo_csf = move.saldo
-                if rec.tasa_rendimiento_csf > 0:
-                    self.env['ati.recurso.recompra.csf'].create({
-                        'date': date,
-                        'value': total_rendimiento_csf,
-                        'movement_type': self.env['ati.movement.type'].search(
-                            [('code', '=', 'RENDIMIENTO')], limit=1
-                        ).id,
-                        'buyer': rec.id,
-                        'estado': 'cerrado',
-                        'saldo': total_rendimiento_csf + last_saldo_csf
-                    })

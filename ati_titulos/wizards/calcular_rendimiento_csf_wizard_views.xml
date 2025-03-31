@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="view_calcular_rendimiento_csf_wizard_form" model="ir.ui.view">
+            <field name="name">calcular.rendimiento.csf.wizard.form</field>
+            <field name="model">ctm.cerrar_movimientos_rpr.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Calcular Rendimiento CSF">
+                    <group>
+                        <field name="date"/>
+                    </group>
+                    <footer>
+                        <button string="Calcular Rendimiento CSF" type="object" name="button_calcular_rendimiento_csf_wizard" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_calcular_rendimiento_csf_wizard" model="ir.actions.act_window">
+            <field name="name">Calcular Rendimiento CSF</field>
+            <field name="res_model">ctm.calcular_rendimiento_csf.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

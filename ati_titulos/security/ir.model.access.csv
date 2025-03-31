@@ -52,3 +52,4 @@ access_eliminar_rpr_user,eliminar.rpr.user,model_eliminar_rpr,base.group_user,1,
 
 access_import_tasas_rpr_user,import.tasas.rpr.user,model_import_tasas_rpr,base.group_user,1,1,1,1
 access_ctm_cerrar_movimientos_rpr_wizard_user,ctm.cerrar.movimientos.rpr.wizard.user,model_ctm_cerrar_movimientos_rpr_wizard,base.group_user,1,1,1,1
+access_ctm_calcular_rendimiento_csf_wizard_user,ctm.calcular.rendimiento.csf.wizard.user,model_ctm_calcular_rendimiento_csf_wizard,base.group_user,1,1,1,1

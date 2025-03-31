@@ -46,6 +46,7 @@
         'data/gestor_data.xml',
         'security/ir.model.access.csv',
         'wizards/cerrar_movimiento_rpr_wizard_views.xml',
+        'wizards/calcular_rendimiento_csf_wizard_views.xml',
         ],
     'installable': True,
     'application': True,
