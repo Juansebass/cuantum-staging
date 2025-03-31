@@ -248,18 +248,22 @@ class ResPartner(models.Model):
             )
             previous_move = recursos_abiertos[-1] if recursos_abiertos else None
             if rec.tasa_rendimiento_csf > 0:
+                calculo_rendimiento = (
+                    previous_move.saldo
+                    * ((1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1)
+                    * (date - previous_move.date).days
+                )
+                valor = previous_move.saldo + calculo_rendimiento
                 self.env['ati.recurso.recompra.csf'].create({
                     'date': date,
-                    'value': total_rendimiento_csf,
+                    'value': valor,
                     'movement_type': self.env['ati.movement.type'].search(
                         [('code', '=', 'RENDIMIENTO')], limit=1
                     ).id,
                     'buyer': rec.id,
                     'estado': 'cerrado',
-                    'saldo': total_rendimiento_csf + recursos_abiertos[-1].saldo,
-                    'calculo_rendimiento': previous_move.saldo * (
-                        (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
-                    ) * (date - previous_move.date).days
+                    'saldo': valor + recursos_abiertos[-1].saldo,
+                    'calculo_rendimiento': calculo_rendimiento,
                 })
 
     def cerrar_movimientos_rpr(self, date, gestor_code):
