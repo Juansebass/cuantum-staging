@@ -198,21 +198,18 @@ class ResPartner(models.Model):
             for move in rec.recursos_recompra_csf_ids.filtered(
                 lambda x: x.estado == 'abierto'
             ):
-                if move.movement_type.code in ['COMPRA', 'RETIRO']:
-                    move.saldo = previous_saldo - move.value
-                else:
-                    move.saldo = previous_saldo + move.value
+                calculo_rendimiento = 0
                 if previous_date:
-                    _logger.warning('*********** Calculo de rendimiento')
-                    _logger.warning('*********** previous_saldo: %s', previous_saldo)
-                    _logger.warning('*********** previous_date: %s', previous_date)
-                    _logger.warning('*********** move.date: %s', move.date)
-
-                    move.calculo_rendimiento = previous_saldo * (
+                    calculo_rendimiento = previous_saldo * (
                         (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
                     ) * (move.date - previous_date).days
+                    move.calculo_rendimiento = calculo_rendimiento
                 previous_date = move.date
                 previous_saldo = move.saldo
+                if move.movement_type.code in ['COMPRA', 'RETIRO']:
+                    move.saldo = previous_saldo - move.value + calculo_rendimiento
+                else:
+                    move.saldo = previous_saldo + move.value + calculo_rendimiento
 
     def button_cerrar_rpr(self):
         return {
