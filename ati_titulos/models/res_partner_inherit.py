@@ -253,7 +253,7 @@ class ResPartner(models.Model):
                     * ((1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1)
                     * (date - previous_move.date).days
                 )
-                valor = previous_move.saldo + calculo_rendimiento
+                valor = total_rendimiento_csf + calculo_rendimiento
                 self.env['ati.recurso.recompra.csf'].create({
                     'date': date,
                     'value': valor,
@@ -261,8 +261,8 @@ class ResPartner(models.Model):
                         [('code', '=', 'RENDIMIENTO')], limit=1
                     ).id,
                     'buyer': rec.id,
-                    'estado': 'cerrado',
-                    'saldo': valor + recursos_abiertos[-1].saldo,
+                    'estado': 'abierto',
+                    'saldo': valor + previous_move.saldo,
                     'calculo_rendimiento': calculo_rendimiento,
                 })
 
