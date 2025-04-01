@@ -204,12 +204,12 @@ class ResPartner(models.Model):
                         (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
                     ) * (move.date - previous_date).days
                     move.calculo_rendimiento = calculo_rendimiento
-                previous_date = move.date
-                previous_saldo = move.saldo
                 if move.movement_type.code in ['COMPRA', 'RETIRO']:
                     move.saldo = previous_saldo - move.value + calculo_rendimiento
                 else:
                     move.saldo = previous_saldo + move.value + calculo_rendimiento
+                previous_date = move.date
+                previous_saldo = move.saldo
 
     def button_cerrar_rpr(self):
         return {
