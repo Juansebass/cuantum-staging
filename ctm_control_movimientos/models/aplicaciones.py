@@ -26,7 +26,7 @@ class Aplicaciones(models.Model):
                 ('name', '=', name),
                 ('flujo', '=', self.flujo),
                 ('cdg', '=', self.cdg)
-            ]).limit(1)
+            ], limit=1)
             if flujo_id:
                 record.actualizar_flujo(flujo_id)
             else:
