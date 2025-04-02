@@ -22,11 +22,11 @@ class Aplicaciones(models.Model):
     def procesar_movimiento(self):
         for record in self:
             name = f'{self.partner_id.name} - {self.investment_type_id.code} - {self.gestor_id.code}'
-            flujo_id = self.env['ctm.flujos'].search([(
-                'name', '=', name,
-                'flujo', '=', self.flujo,
-                'cdg', '=', self.cdg
-            )]).limit(1)
+            flujo_id = self.env['ctm.flujos'].search([
+                ('name', '=', name),
+                ('flujo', '=', self.flujo),
+                ('cdg', '=', self.cdg)
+            ]).limit(1)
             if flujo_id:
                 record.actualizar_flujo(flujo_id)
             else:
