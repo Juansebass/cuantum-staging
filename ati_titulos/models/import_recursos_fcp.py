@@ -102,6 +102,7 @@ class ImportRecursosFCP(models.Model):
                     #Creamos recurso en proceso de recompra
 
                     rpr_id = self.env['ati.recurso.recompra.fcp'].sudo().create(vals)
+                    rpr_id.buyer.button_recalcular_rpr()
 
 
                     _procesados += "{0};{1};{2};{3} \n".format(fecha, comprador, documento, rpr_id.id)
