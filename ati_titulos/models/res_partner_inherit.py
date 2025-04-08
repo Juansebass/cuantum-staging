@@ -200,11 +200,11 @@ class ResPartner(models.Model):
                 lambda x: x.estado == 'abierto'
             ):
                 calculo_rendimiento = 0
-                if previous_date:
-                    calculo_rendimiento = previous_saldo * (
-                        (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
-                    ) * (move.date - previous_date).days
-                    move.calculo_rendimiento = calculo_rendimiento
+                # if previous_date:
+                #     calculo_rendimiento = previous_saldo * (
+                #         (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
+                #     ) * (move.date - previous_date).days
+                #     move.calculo_rendimiento = calculo_rendimiento
                 if move.movement_type.code in ['COMPRA', 'RETIRO']:
                     move.saldo = previous_saldo - move.value + calculo_rendimiento
                 else:
