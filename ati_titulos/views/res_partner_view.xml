@@ -24,17 +24,6 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <!-- <xpath expr="//header" position="after">
-                <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;" attrs="{'invisible':[('alerta_csf_enabled', '=', False)]}">
-                    <field name="alerta_csf" widget="html" readonly="1"/>
-                </div>
-                <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;" attrs="{'invisible':[('alerta_fcl_enabled', '=', False)]}">
-                    <field name="alerta_fcl" widget="html" readonly="1"/>
-                </div>
-                <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;" attrs="{'invisible':[('alerta_fcp_enabled', '=', False)]}">
-                    <field name="alerta_fcp" widget="html" readonly="1"/>
-                </div>
-            </xpath> -->
             <field name="vat" position="after">
                 <field name="act_in" />
                 <field name="vinculado" />
@@ -241,6 +230,19 @@
         <field name="code">
             if records:
                 action = records.button_cerrar_rpr()
+        </field>
+    </record>
+
+    <record id="generar_informe_alertas_action" model="ir.actions.server">
+        <field name="name">Generar Informe de Alertas RPR</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="binding_model_id" ref="model_res_partner" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.generar_informe_alertas_rpr()
         </field>
     </record>
 </odoo>
