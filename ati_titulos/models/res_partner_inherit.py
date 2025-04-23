@@ -329,59 +329,58 @@ class ResPartner(models.Model):
                     move.estado = 'cerrado'
                     total_rendimiento_csf += move.calculo_rendimiento
 
+    def generar_informe_alertas_rpr(self):
+        
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
 
-def generar_informe_alertas_rpr(self):
-    
-    output = io.BytesIO()
-    workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-    worksheet = workbook.add_worksheet()
+        headers = [
+            'CLIENTE', 'TOTAL CSF', 'SALDO CSF', 'DIFERENCIA CSF',
+            'TOTAL FCL', 'SALDO FCL', 'DIFERENCIA FCL',
+            'TOTAL FCP', 'SALDO FCP', 'DIFERENCIA FCP',
+        ]
 
-    headers = [
-        'CLIENTE', 'TOTAL CSF', 'SALDO CSF', 'DIFERENCIA CSF',
-        'TOTAL FCL', 'SALDO FCL', 'DIFERENCIA FCL',
-        'TOTAL FCP', 'SALDO FCP', 'DIFERENCIA FCP',
-    ]
+        for col_num, header in enumerate(headers):
+            worksheet.write(0, col_num, header)
+        
+        row = 1
+        for rec in self:
+            cliente = rec.name
+            total_csf = rec.total_csf
+            saldo_csf = rec.recursos_recompra_csf_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1].saldo if rec.recursos_recompra_csf_ids else 0
+            diferencia_csf = total_csf - saldo_csf
+            total_fcl = rec.total_fcl
+            saldo_fcl = rec.recursos_recompra_fcl_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1].saldo if rec.recursos_recompra_fcl_ids else 0
+            diferencia_fcl = total_fcl - saldo_fcl
+            total_fcp = rec.total_fcp
+            saldo_fcp = rec.recursos_recompra_fcp_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1].saldo if rec.recursos_recompra_fcp_ids else 0
+            diferencia_fcp = total_fcp - saldo_fcp
+            worksheet.write(row, 0, cliente)
+            worksheet.write(row, 1, total_csf)
+            worksheet.write(row, 2, saldo_csf)
+            worksheet.write(row, 3, diferencia_csf)
+            worksheet.write(row, 4, total_fcl)
+            worksheet.write(row, 5, saldo_fcl)
+            worksheet.write(row, 6, diferencia_fcl)
+            worksheet.write(row, 7, total_fcp)
+            worksheet.write(row, 8, saldo_fcp)
+            worksheet.write(row, 9, diferencia_fcp)
+            row += 1
+        workbook.close()
+        output.seek(0)
+        archivo_excel = base64.b64encode(output.read())
 
-    for col_num, header in enumerate(headers):
-        worksheet.write(0, col_num, header)
-    
-    row = 1
-    for rec in self:
-        cliente = rec.name
-        total_csf = rec.total_csf
-        saldo_csf = rec.recursos_recompra_csf_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1].saldo if rec.recursos_recompra_csf_ids else 0
-        diferencia_csf = total_csf - saldo_csf
-        total_fcl = rec.total_fcl
-        saldo_fcl = rec.recursos_recompra_fcl_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1].saldo if rec.recursos_recompra_fcl_ids else 0
-        diferencia_fcl = total_fcl - saldo_fcl
-        total_fcp = rec.total_fcp
-        saldo_fcp = rec.recursos_recompra_fcp_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1].saldo if rec.recursos_recompra_fcp_ids else 0
-        diferencia_fcp = total_fcp - saldo_fcp
-        worksheet.write(row, 0, cliente)
-        worksheet.write(row, 1, total_csf)
-        worksheet.write(row, 2, saldo_csf)
-        worksheet.write(row, 3, diferencia_csf)
-        worksheet.write(row, 4, total_fcl)
-        worksheet.write(row, 5, saldo_fcl)
-        worksheet.write(row, 6, diferencia_fcl)
-        worksheet.write(row, 7, total_fcp)
-        worksheet.write(row, 8, saldo_fcp)
-        worksheet.write(row, 9, diferencia_fcp)
-        row += 1
-    workbook.close()
-    output.seek(0)
-    archivo_excel = base64.b64encode(output.read())
+        attachment = self.env['ir.attachment'].create({
+            'name': "Alertas RPR.xlsx",
+            'type': 'binary',
+            'datas': archivo_excel,
+            'res_model': 'res.partner',
+            'res_id': self[0].id,
+        })
 
-    attachment = self.env['ir.attachment'].create({
-        'name': "Alertas RPR.xlsx",
-        'type': 'binary',
-        'datas': archivo_excel,
-        'res_model': 'res.partner',
-        'res_id': self[0].id,
-    })
-
-    return {
-        'type': 'ir.actions.act_url',
-        'url': f'/web/content/{attachment.id}?download=true',
-        'target': 'new',
-    }
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'new',
+        }
