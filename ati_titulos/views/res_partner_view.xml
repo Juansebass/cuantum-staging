@@ -24,6 +24,17 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <!-- <xpath expr="//header" position="after">
+                <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;" attrs="{'invisible':[('alerta_csf_enabled', '=', False)]}">
+                    <field name="alerta_csf" widget="html" readonly="1"/>
+                </div>
+                <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;" attrs="{'invisible':[('alerta_fcl_enabled', '=', False)]}">
+                    <field name="alerta_fcl" widget="html" readonly="1"/>
+                </div>
+                <div class="alert alert-info" role="alert" style="height: 40px; margin-bottom:0px;" attrs="{'invisible':[('alerta_fcp_enabled', '=', False)]}">
+                    <field name="alerta_fcp" widget="html" readonly="1"/>
+                </div>
+            </xpath> -->
             <field name="vat" position="after">
                 <field name="act_in" />
                 <field name="vinculado" />
@@ -120,7 +131,7 @@
                             </div>
                     </group>
                     <field name="recursos_recompra_csf_ids">
-                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc, movement_type asc">
                             <field name="date" />
                             <field name="investment_type" />
                             <field name="movement_type" />
@@ -157,7 +168,7 @@
                             </div>
                     </group>
                     <field name="recursos_recompra_fcl_ids">
-                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc, movement_type asc">
                             <field name="date" />
                             <field name="investment_type" />
                             <field name="movement_type" />
@@ -188,7 +199,7 @@
                             </div>
                     </group>
                     <field name="recursos_recompra_fcp_ids">
-                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc">
+                        <tree string="Recursos de Recompra" editable="bottom" default_order="date asc, movement_type asc">
                             <field name="date" />
                             <field name="investment_type" />
                             <field name="movement_type" />

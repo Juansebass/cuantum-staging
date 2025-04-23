@@ -154,6 +154,14 @@ class ResPartner(models.Model):
     aplicacion_mut_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
     total_mut_csf = fields.Float('Total Mutuos CSF', compute=_compute_totales_csf)
 
+    # Alertas
+    alerta_csf_enabled = fields.Boolean('Alerta CSF', default=False)
+    alerta_csf = fields.Text('Alerta CSF')
+    alerta_fcl_enabled = fields.Boolean('Alerta FCL', default=False)
+    alerta_fcl = fields.Text('Alerta FCL')
+    alerta_fcp_enabled = fields.Boolean('Alerta FCP', default=False)
+    alerta_fcp = fields.Text('Alerta FCP')
+
     def enviar_calificado_crm(self):
         for rec in self:
             if rec.doc_enviada and rec.documentacion_completa and rec.busqueda_lista and rec.vinculado:
@@ -168,28 +176,52 @@ class ResPartner(models.Model):
         for rec in self:
             last_move_closed = rec.recursos_recompra_fcp_ids.filtered(
                 lambda x: x.estado == 'cerrado'
-            ).sorted(key=lambda x: x.date, reverse=True)
+            ).sorted(key=lambda x: (x.date, x.id), reverse=False)
             previous_saldo = (
                 last_move_closed[-1].saldo if last_move_closed else 0
             )
-            for move in rec.recursos_recompra_fcp_ids.filtered(
+            recursos_fcp = rec.recursos_recompra_fcp_ids.filtered(
                 lambda x: x.estado == 'abierto'
-            ):
-                if move.movement_type.code in ['COMPRA', 'RETIRO']:
+            ).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
+            for move in recursos_fcp:
+                if move.movement_type.code in ['COMPRA', 'RETIRO', 'ADMINISTRACION']:
                     move.saldo = previous_saldo - move.value
                 else:
                     move.saldo = previous_saldo + move.value
                 previous_saldo = move.saldo
+            # rec.alerta_fcp_enabled = False
+            # if previous_saldo != rec.total_fcp:
+            #     rec.alerta_fcp_enabled = True
+            #     rec.alerta_fcp = (
+            #         f"El saldo del último movimiento FCP no coincide con el saldo total. "
+            #         f"Ultimo movimiento: {previous_saldo} "
+            #         f"Saldo total: {rec.total_fcp}"
+            #     )
             last_move_closed = rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'cerrado')
             previous_saldo = last_move_closed[0].saldo if last_move_closed else 0
-            for move in rec.recursos_recompra_fcl_ids.filtered(
+            recursos_fcl = rec.recursos_recompra_fcl_ids.filtered(
                 lambda x: x.estado == 'abierto'
-            ).sorted(key=lambda x: x.date, reverse=False):
-                if move.movement_type.code in ['COMPRA', 'RETIRO']:
+            ).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
+            for move in recursos_fcl:
+                _logger.error(
+                    f"Recursos Recompra FCL {move.date} - {move.movement_type.code} - {move.value}"
+                )
+                _logger.error(
+                    f"Anterior {previous_saldo}"
+                )
+                if move.movement_type.code in ['COMPRA', 'RETIRO', 'ADMINISTRACION']:
                     move.saldo = previous_saldo - move.value
                 else:
                     move.saldo = previous_saldo + move.value
                 previous_saldo = move.saldo
+            # rec.alerta_fcl_enabled = False
+            # if previous_saldo != rec.total_fcl:
+            #     rec.alerta_fcl_enabled = True
+            #     rec.alerta_fcl = (
+            #         f"El saldo del último movimiento FCL no coincide con el saldo total. "
+            #         f"Ultimo movimiento: {previous_saldo}"
+            #         f"Saldo total: {rec.total_fcl}"
+            #     )
 
             last_move_closed = rec.recursos_recompra_csf_ids.filtered(
                 lambda x: x.estado == 'cerrado'
@@ -198,21 +230,30 @@ class ResPartner(models.Model):
             previous_date = (
                 last_move_closed[-1].date if last_move_closed else None
             )
-            for move in rec.recursos_recompra_csf_ids.filtered(
+            recursos_csf = rec.recursos_recompra_csf_ids.filtered(
                 lambda x: x.estado == 'abierto'
-            ).sorted(key=lambda x: x.date, reverse=False):
+            ).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
+            for move in recursos_csf:
                 calculo_rendimiento = 0
-                if previous_date:
-                    calculo_rendimiento = previous_saldo * (
-                        (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
-                    ) * (move.date - previous_date).days
-                    move.calculo_rendimiento = calculo_rendimiento
-                if move.movement_type.code in ['COMPRA', 'RETIRO']:
+                # if previous_date:
+                #     calculo_rendimiento = previous_saldo * (
+                #         (1 + (rec.tasa_rendimiento_csf / 100)) ** (1 / 365) - 1
+                #     ) * (move.date - previous_date).days
+                move.calculo_rendimiento = calculo_rendimiento
+                if move.movement_type.code in ['COMPRA', 'RETIRO', 'ADMINISTRACION']:
                     move.saldo = previous_saldo - move.value + calculo_rendimiento
                 else:
                     move.saldo = previous_saldo + move.value + calculo_rendimiento
                 previous_date = move.date
                 previous_saldo = move.saldo
+            # rec.alerta_csf_enabled = False
+            # if previous_saldo != rec.total_csf:
+            #     rec.alerta_csf_enabled = True
+            #     rec.alerta_csf = (
+            #         f"El saldo del último movimiento CSF no coincide con el saldo total. "
+            #         f"Ultimo movimiento: {previous_saldo}"
+            #         f"Saldo total: {rec.total_csf}"
+            #     )
 
     def button_cerrar_rpr(self):
         return {
@@ -269,11 +310,26 @@ class ResPartner(models.Model):
     def cerrar_movimientos_rpr(self, date, gestor_code):
         for rec in self:
             if gestor_code == 'FCP':
+                last_record = rec.recursos_recompra_fcp_ids[-1] if rec.recursos_recompra_fcp_ids else None
+                if last_record.saldo != rec.total_fcp:
+                    raise ValidationError(
+                        ("El saldo del último movimiento FCP no coincide con el saldo total")
+                    )
                 rec.recursos_recompra_fcp_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
             elif gestor_code == 'FCL':
+                last_record = rec.recursos_recompra_fcl_ids[-1] if rec.recursos_recompra_fcl_ids else None
+                if last_record.saldo != rec.total_fcl:
+                    raise ValidationError(
+                        ("El saldo del último movimiento FCL no coincide con el saldo total")
+                    )
                 rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
             elif gestor_code == 'CUANTUM':
                 total_rendimiento_csf = 0
+                last_record = rec.recursos_recompra_csf_ids[-1] if rec.recursos_recompra_csf_ids else None
+                if last_record.saldo != rec.total_csf:
+                    raise ValidationError(
+                        ("El saldo del último movimiento CSF no coincide con el saldo total")
+                    )
                 for move in rec.recursos_recompra_csf_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date):
                     move.estado = 'cerrado'
                     total_rendimiento_csf += move.calculo_rendimiento

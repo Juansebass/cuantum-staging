@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 class RecursoRecompraCSF(models.Model):
     _name = 'ati.recurso.recompra.csf'
-    _order = 'date asc'
 
     date = fields.Date('Fecha')
     value = fields.Float('Valores')

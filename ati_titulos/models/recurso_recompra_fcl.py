@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 class RecursoRecompra(models.Model):
     _name = 'ati.recurso.recompra.fcl'
-    _order = 'date asc'
 
     date = fields.Date('Fecha')
     value = fields.Float('Valores')
