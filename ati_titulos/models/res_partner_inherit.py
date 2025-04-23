@@ -2,7 +2,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 import io
-import xlswriter
+import xlsxwriter
 import base64
 
 import logging
