@@ -4,6 +4,8 @@ from odoo.exceptions import ValidationError
 import io
 import xlsxwriter
 import base64
+import numpy as np
+import numpy_financial as npf
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -231,8 +233,12 @@ class ResPartner(models.Model):
             for move in recursos_csf:
                 calculo_rendimiento = 0
                 if previous_date:
-                    calculo_rendimiento = previous_saldo * (
-                        (1 + (rec.tasa_rendimiento_csf / 100)) ** ((move.date - previous_date).days)
+                    calculo_rendimiento = npf.fv(
+                        rate=rec.tasa_rendimiento_csf / 100,
+                        nper=(move.date - previous_date).days,
+                        pmt=0,
+                        pv=-previous_saldo,
+                        when='end'
                     )
                 move.calculo_rendimiento = calculo_rendimiento - previous_saldo
                 if move.movement_type.code in ['COMPRA', 'RETIRO', 'ADMINISTRACION']:
