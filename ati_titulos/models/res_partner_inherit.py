@@ -234,7 +234,7 @@ class ResPartner(models.Model):
                     calculo_rendimiento = previous_saldo * (
                         (1 + (rec.tasa_rendimiento_csf / 100)) ** ((move.date - previous_date).days)
                     )
-                move.calculo_rendimiento = calculo_rendimiento
+                move.calculo_rendimiento = calculo_rendimiento - previous_saldo
                 if move.movement_type.code in ['COMPRA', 'RETIRO', 'ADMINISTRACION']:
                     move.saldo = previous_saldo - move.value + calculo_rendimiento
                 else:
