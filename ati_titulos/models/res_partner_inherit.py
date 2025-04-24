@@ -235,7 +235,7 @@ class ResPartner(models.Model):
                 if previous_date:
                     calculo_rendimiento = npf.fv(
                         rate=rec.tasa_rendimiento_csf / 100,
-                        nper=(move.date - previous_date).days,
+                        nper=((move.date - previous_date).days) / 365,
                         pmt=0,
                         pv=-previous_saldo,
                         when='end'
