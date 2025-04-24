@@ -245,6 +245,12 @@ class ResPartner(models.Model):
                     move.saldo = previous_saldo - move.value + calculo_rendimiento
                 else:
                     move.saldo = previous_saldo + move.value + calculo_rendimiento
+                logging.error(
+                    f"Recursos Recompra CSF {move.date} - {move.movement_type.code} - valor movimiento {move.value}"
+                )
+                logging.error(
+                    f"Anterior saldo: {previous_saldo} - anterior fecha {previous_date} - calculo rendimiento {calculo_rendimiento}"
+                )
                 previous_date = move.date
                 previous_saldo = move.saldo
             # rec.alerta_csf_enabled = False
