@@ -245,4 +245,17 @@
                 action = records.generar_informe_alertas_rpr()
         </field>
     </record>
+
+    <record id="recalcular_rpr_action" model="ir.actions.server">
+        <field name="name">Recalcular RPR</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="binding_model_id" ref="model_res_partner" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.button_recalcular_rpr()
+        </field>
+    </record>
 </odoo>

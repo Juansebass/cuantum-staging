@@ -232,15 +232,16 @@ class ResPartner(models.Model):
             ).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
             for move in recursos_csf:
                 calculo_rendimiento = 0
-                if previous_date:
-                    calculo_rendimiento = npf.fv(
-                        rate=rec.tasa_rendimiento_csf / 100,
-                        nper=((move.date - previous_date).days) / 365,
-                        pmt=0,
-                        pv=-previous_saldo,
-                        when='end'
-                    )
-                move.calculo_rendimiento = calculo_rendimiento - previous_saldo
+                # if previous_date:
+                #     calculo_rendimiento = npf.fv(
+                #         rate=rec.tasa_rendimiento_csf / 100,
+                #         nper=((move.date - previous_date).days) / 365,
+                #         pmt=0,
+                #         pv=-previous_saldo,
+                #         when='end'
+                #     )
+                # move.calculo_rendimiento = calculo_rendimiento - previous_saldo
+                move.calculo_rendimiento = calculo_rendimiento
                 if move.movement_type.code in ['COMPRA', 'RETIRO', 'ADMINISTRACION']:
                     move.saldo = previous_saldo - move.value + move.calculo_rendimiento
                 else:
