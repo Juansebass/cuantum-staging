@@ -96,15 +96,19 @@ class ResPartner(models.Model):
                 lambda x: x.movement_type.code == 'ADMINISTRACION'))
             rec.total_csf = sum([rec.total_mut_csf,rec.total_sen_csf,rec.total_lib_csf,rec.total_fac_csf, rec.adicion_total_csf, rec.rendimiento_total_csf]) - rec.retiro_total_csf - sum([rec.administracion_csf])
 
-    #Campos informativos
-    rep_legal = fields.Many2one('res.partner','Representante Legal')
-    cuantum_contact = fields.Many2one('res.partner','Contacto')
-    freelance = fields.Many2one('res.partner','Freelance')
+    # Campos informativos
+    rep_legal = fields.Many2one('res.partner', 'Representante Legal')
+    cuantum_contact = fields.Many2one('res.partner', 'Contacto')
+
+    rep_legal_ids = fields.One2many('res.partner', 'rep_legal', 'Representante Legal')
+    cuantum_contact_ids = fields.One2many('res.partner', 'cuantum_contact', 'Contacto')
+
+    freelance = fields.Many2one('res.partner', 'Freelance')
     num_encargo = fields.Char('Nº de encargo')
 
-    #Emisor / Pagador
-    emisor = fields.Boolean('Emisor',default=False)
-    pagador = fields.Boolean('Pagador',default=False)
+    # Emisor / Pagador
+    emisor = fields.Boolean('Emisor', default=False)
+    pagador = fields.Boolean('Pagador', default=False)
 
     #Variable utilizada para confirmar la vinculacion por el departamento de legales
     vinculado = fields.Boolean('Vinculado',default=False)

@@ -199,6 +199,20 @@
                         </tree>
                     </field>
                 </page>
+                <page name="es_contacto_de" string="Es Contacto de">
+                    <group>
+                        <field name="rep_legal_ids">
+                            <tree string="Representante legal" editable="bottom">
+                                <field name="rep_legal" />
+                            </tree>
+                        </field>
+                        <field name="cuantum_contact_ids">
+                            <tree string="Contacto Cuantum" editable="bottom">
+                                <field name="cuantum_contact" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
             </page>
         </field>
     </record>
