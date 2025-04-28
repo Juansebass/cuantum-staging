@@ -21,6 +21,7 @@ class ResPartner(models.Model):
         if (res.vinculado or res.emisor) and not res.pagador:
             if not res.user_id:
                 raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio."))
+        self.agregar_seguidores()
         return res
 
     def write(self, vals):
@@ -29,6 +30,7 @@ class ResPartner(models.Model):
             if not self.user_id:
                 raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio."))
         self.button_recalcular_rpr()
+        self.agregar_seguidores()
         return res
 
     # Sobreescribimos esta funcion para que no se envie el vat a los contactos hijos de una empresa, esta funcion es del core de odoo en /odoo/addons/base/models/res_partner.py
@@ -391,3 +393,32 @@ class ResPartner(models.Model):
             'url': f'/web/content/{attachment.id}?download=true',
             'target': 'new',
         }
+
+    def agregar_seguidores(self):
+        for rec in self:
+            if rec.rep_legal:
+                exists_relation = self.env['mail.followers'].sudo().search([
+                    ('partner_id', '=', rec.rep_legal.id),
+                    ('res_model', '=', 'res.partner'),
+                    ('res_id', '=', rec.id)
+                ])
+                if not exists_relation:
+                    self.env['mail.followers'].sudo().create({
+                        'partner_id': rec.rep_legal.id,
+                        'res_model': 'res.partner',
+                        'res_id': rec.id,
+                        'subtype_ids': [1, 3]
+                    })
+            if rec.cuantum_contact:
+                exists_relation = self.env['mail.followers'].sudo().search([
+                    ('partner_id', '=', rec.cuantum_contact.id),
+                    ('res_model', '=', 'res.partner'),
+                    ('res_id', '=', rec.id)
+                ])
+                if not exists_relation:
+                    self.env['mail.followers'].sudo().create({
+                        'partner_id': rec.cuantum_contact.id,
+                        'res_model': 'res.partner',
+                        'res_id': rec.id,
+                        'subtype_ids': [1, 3]
+                    })
