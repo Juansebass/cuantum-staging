@@ -103,7 +103,7 @@ class ResPartner(models.Model):
     rep_legal_ids = fields.One2many('res.partner', 'rep_legal', 'Representante Legal')
     cuantum_contact_ids = fields.One2many('res.partner', 'cuantum_contact', 'Contacto')
 
-    es_contacto_de = fields.Boolean('Es contacto de', default=False)
+    #es_contacto_de = fields.Boolean('Es contacto de', default=False)
 
     freelance = fields.Many2one('res.partner', 'Freelance')
     num_encargo = fields.Char('Nº de encargo')
