@@ -103,6 +103,8 @@ class ResPartner(models.Model):
     rep_legal_ids = fields.One2many('res.partner', 'rep_legal', 'Representante Legal')
     cuantum_contact_ids = fields.One2many('res.partner', 'cuantum_contact', 'Contacto')
 
+    es_contacto_de = fields.Boolean('Es contacto de', default=False)
+
     freelance = fields.Many2one('res.partner', 'Freelance')
     num_encargo = fields.Char('Nº de encargo')
 
@@ -413,6 +415,7 @@ class ResPartner(models.Model):
                         'res_id': rec.id,
                         'subtype_ids': [1, 3]
                     })
+                rec.es_contacto_de = True
             if rec.cuantum_contact:
                 exists_relation = self.env['mail.followers'].sudo().search([
                     ('partner_id', '=', rec.cuantum_contact.id),
@@ -426,3 +429,4 @@ class ResPartner(models.Model):
                         'res_id': rec.id,
                         'subtype_ids': [1, 3]
                     })
+                rec.es_contacto_de = True
