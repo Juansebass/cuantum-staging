@@ -415,7 +415,7 @@ class ResPartner(models.Model):
                         'res_id': rec.id,
                         'subtype_ids': [1, 3]
                     })
-                rec.es_contacto_de = True
+                rec.rep_legal.es_contacto_de = True
             if rec.cuantum_contact:
                 exists_relation = self.env['mail.followers'].sudo().search([
                     ('partner_id', '=', rec.cuantum_contact.id),
@@ -429,4 +429,4 @@ class ResPartner(models.Model):
                         'res_id': rec.id,
                         'subtype_ids': [1, 3]
                     })
-                rec.es_contacto_de = True
+                rec.cuantum_contact.es_contacto_de = True
