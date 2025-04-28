@@ -202,12 +202,12 @@
                 <page name="es_contacto_de" string="Es Contacto de">
                     <group>
                         <field name="rep_legal_ids">
-                            <tree string="Representante legal" editable="bottom">
+                            <tree string="Representante legal" create="false">
                                 <field name="name" />
                             </tree>
                         </field>
                         <field name="cuantum_contact_ids">
-                            <tree string="Contacto Cuantum" editable="bottom">
+                            <tree string="Contacto Cuantum" create="false">
                                 <field name="name" />
                             </tree>
                         </field>
