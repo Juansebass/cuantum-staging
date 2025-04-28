@@ -16,7 +16,7 @@
                 <field name="rep_legal" optional="hide"/>
                 <field name="cuantum_contact" optional="hide"/>
                 <field name="freelance" optional="hide"/>
-                <field name="es_contacto_de" optional="show"/>
+                
             </field>
         </field>
     </record>
