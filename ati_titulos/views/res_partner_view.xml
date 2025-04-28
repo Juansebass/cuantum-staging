@@ -203,12 +203,12 @@
                     <group>
                         <field name="rep_legal_ids">
                             <tree string="Representante legal" editable="bottom">
-                                <field name="rep_legal" />
+                                <field name="name" />
                             </tree>
                         </field>
                         <field name="cuantum_contact_ids">
                             <tree string="Contacto Cuantum" editable="bottom">
-                                <field name="cuantum_contact" />
+                                <field name="name" />
                             </tree>
                         </field>
                     </group>
