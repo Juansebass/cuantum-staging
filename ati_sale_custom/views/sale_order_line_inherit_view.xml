@@ -21,8 +21,9 @@
             </button>
             <xpath expr="//button[@name='action_quotation_send'][2]" position="replace"/>
             <xpath expr="//button[@name='action_quotation_send'][3]" position="replace"/>
-            <field name="validity_date" position="before">
-                <field name="fecha_celebracion" attrs="{'invisible': [('state', '!=',  'draft'), ('state', '!=',  'sent')]}"/>
+            <field name="date_order" position="replace"/>
+            <field name="validity_date" position="replace">
+                <field name="fecha_celebracion"/>
             </field>
             <field name="partner_id" position="attributes">
                 <attribute name="options">{"always_reload": True, "no_quick_create": True, "no_create_edit": True,
@@ -32,8 +33,8 @@
                 <field name="offer_type" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
                 <field name="estado_oferta_fcl"/>
                 <separator string="Cargar Ofertas" colspan="1"/>
-                <field name="gestor_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
-                <field name="tipo_producto_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
+                <field name="gestor_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}" required="1"/>
+                <field name="tipo_producto_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}" required="1"/>
                 <field name="emisor_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
                 <field name="pagador_ofertar" attrs="{'readonly': [('state', '!=',  'draft')]}"/>
                 <field name="asignado" readonly="1"/>
