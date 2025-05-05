@@ -319,30 +319,41 @@ class ResPartner(models.Model):
 
     def cerrar_movimientos_rpr(self, date, gestor_code):
         for rec in self:
-            if gestor_code == 'FCP':
-                last_record = rec.recursos_recompra_fcp_ids[-1] if rec.recursos_recompra_fcp_ids else None
-                if last_record.saldo != rec.total_fcp:
-                    raise ValidationError(
-                        ("El saldo del último movimiento FCP no coincide con el saldo total")
-                    )
-                rec.recursos_recompra_fcp_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
-            elif gestor_code == 'FCL':
-                last_record = rec.recursos_recompra_fcl_ids[-1] if rec.recursos_recompra_fcl_ids else None
-                if last_record.saldo != rec.total_fcl:
-                    raise ValidationError(
-                        ("El saldo del último movimiento FCL no coincide con el saldo total")
-                    )
-                rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
-            elif gestor_code == 'CUANTUM':
-                total_rendimiento_csf = 0
-                last_record = rec.recursos_recompra_csf_ids[-1] if rec.recursos_recompra_csf_ids else None
-                if last_record.saldo != rec.total_csf:
-                    raise ValidationError(
-                        ("El saldo del último movimiento CSF no coincide con el saldo total")
-                    )
-                for move in rec.recursos_recompra_csf_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date):
-                    move.estado = 'cerrado'
-                    total_rendimiento_csf += move.calculo_rendimiento
+            try:
+                if gestor_code == 'FCP':
+                    last_record = rec.recursos_recompra_fcp_ids[-1] if rec.recursos_recompra_fcp_ids else None
+                    if last_record:
+                        if last_record.saldo != rec.total_fcp:
+                            raise ValidationError(
+                                ("El saldo del último movimiento FCP no coincide con el saldo total")
+                            )
+                    if len(rec.recursos_recompra_fcp_ids) > 0:
+                        rec.recursos_recompra_fcp_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
+                elif gestor_code == 'FCL':
+                    last_record = rec.recursos_recompra_fcl_ids[-1] if rec.recursos_recompra_fcl_ids else None
+                    if last_record:
+                        if last_record.saldo != rec.total_fcl:
+                            raise ValidationError(
+                                ("El saldo del último movimiento FCL no coincide con el saldo total")
+                            )
+                    if len(rec.recursos_recompra_fcl_ids) > 0:
+                        rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
+                elif gestor_code == 'CUANTUM':
+                    total_rendimiento_csf = 0
+                    last_record = rec.recursos_recompra_csf_ids[-1] if rec.recursos_recompra_csf_ids else None
+                    if last_record:
+                        if last_record.saldo != rec.total_csf:
+                            raise ValidationError(
+                                ("El saldo del último movimiento CSF no coincide con el saldo total")
+                            )
+                    if len(rec.recursos_recompra_csf_ids) > 0:
+                        for move in rec.recursos_recompra_csf_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date):
+                            move.estado = 'cerrado'
+                            total_rendimiento_csf += move.calculo_rendimiento
+            except Exception as e:
+                raise ValidationError(
+                    _(f"Error al cerrar los movimientos para el cliente {rec.name}: {str(e)}")
+                )
 
     def generar_informe_alertas_rpr(self):
         
