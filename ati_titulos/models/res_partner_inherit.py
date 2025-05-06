@@ -30,7 +30,8 @@ class ResPartner(models.Model):
             if not self.user_id:
                 raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio."))
         self.button_recalcular_rpr()
-        self.agregar_seguidores()
+        if not self.env.context.get('prevent_recursion'):
+            self.with_context(prevent_recursion=True).agregar_seguidores()
         return res
 
     # Sobreescribimos esta funcion para que no se envie el vat a los contactos hijos de una empresa, esta funcion es del core de odoo en /odoo/addons/base/models/res_partner.py
