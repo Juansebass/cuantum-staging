@@ -113,23 +113,23 @@ class ResPartner(models.Model):
     emisor = fields.Boolean('Emisor', default=False)
     pagador = fields.Boolean('Pagador', default=False)
 
-    #Variable utilizada para confirmar la vinculacion por el departamento de legales
-    vinculado = fields.Boolean('Vinculado',default=False)
-    #Variable utilizada para verificacion si el cliente esta activo o inactivo
-    act_in = fields.Selection([ ('activo', 'Activo'),('inactivo', 'Inactivo'),],'Estado',default='inactivo')
+    # Variable utilizada para confirmar la vinculacion por el departamento de legales
+    vinculado = fields.Boolean('Vinculado', default=False)
+    # Variable utilizada para verificacion si el cliente esta activo o inactivo
+    act_in = fields.Selection([('activo', 'Activo'), ('inactivo', 'Inactivo'),], 'Estado', default='inactivo')
 
-    #RIESGOS
-    #Variable para confirmar que la documentacion para una posible vinculacion con el cliente fue enviada
+    # RIESGOS
+    # Variable para confirmar que la documentacion para una posible vinculacion con el cliente fue enviada
     doc_enviada = fields.Boolean('Documentacion enviada', default=False)
     documentacion_completa = fields.Boolean('Documentacion completa', default=False)
     busqueda_lista = fields.Boolean('Busqueda en listas', default=False)
     nota_riesgos = fields.Text('Notas extras')
 
-    #Recursos de recompra
-    recursos_recompra_fcl_ids = fields.One2many('ati.recurso.recompra.fcl','buyer','Recuros de recompra FCL')
-    recursos_recompra_fcp_ids = fields.One2many('ati.recurso.recompra.fcp','buyer','Recuros de recompra FCP')
-    recursos_recompra_csf_ids = fields.One2many('ati.recurso.recompra.csf','buyer','Recuros de recompra CSF')
-    #TOTALES FCP
+    # Recursos de recompra
+    recursos_recompra_fcl_ids = fields.One2many('ati.recurso.recompra.fcl', 'buyer', 'Recuros de recompra FCL')
+    recursos_recompra_fcp_ids = fields.One2many('ati.recurso.recompra.fcp', 'buyer', 'Recuros de recompra FCP')
+    recursos_recompra_csf_ids = fields.One2many('ati.recurso.recompra.csf', 'buyer', 'Recuros de recompra CSF')
+    # TOTALES FCP
     compra_fcp = fields.Float('Total Compra', compute=_compute_totales_fcp)
     retiro_fcp = fields.Float('Total Retiro', compute=_compute_totales_fcp)
     adicion_fcp = fields.Float('Total Adicion', compute=_compute_totales_fcp)
@@ -137,7 +137,7 @@ class ResPartner(models.Model):
     rendimiento_fcp = fields.Float('Total Rendimiento', compute=_compute_totales_fcp)
     administracion_fcp = fields.Float('Total Administración', compute=_compute_totales_fcp)
     total_fcp = fields.Float('Total FCL', compute=_compute_totales_fcp)
-    #TOTALES FCL
+    # TOTALES FCL
     compra_fcl = fields.Float('Total Compra', compute=_compute_totales_fcl)
     retiro_fcl = fields.Float('Total Retiro', compute=_compute_totales_fcl)
     adicion_fcl = fields.Float('Total Adicion', compute=_compute_totales_fcl)
@@ -145,28 +145,36 @@ class ResPartner(models.Model):
     rendimiento_fcl = fields.Float('Total Rendimiento', compute=_compute_totales_fcl)
     administracion_fcl = fields.Float('Total Administración', compute=_compute_totales_fcl)
     total_fcl = fields.Float('Total FCL', compute=_compute_totales_fcl)
-    #TOTALES CSF
+    # TOTALES CSF
     total_csf = fields.Float('Total CSF', compute=_compute_totales_csf)
     adicion_total_csf = fields.Float('Total Adicion CSF', compute=_compute_totales_csf)
     administracion_csf = fields.Float('Total Administración', compute=_compute_totales_csf)
     retiro_total_csf = fields.Float('Total Retiro CSF', compute=_compute_totales_csf)
     rendimiento_total_csf = fields.Float('Total Rendimiento CSF', compute=_compute_totales_csf)
-    #-Factoring CSF
+    # -Factoring CSF
     compra_fac_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
     aplicacion_fac_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
     total_fac_csf = fields.Float('Total Factoring CSF', compute=_compute_totales_csf)
-    #-Libranzas CSF
+    # -Libranzas CSF
     compra_lib_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
     aplicacion_lib_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
     total_lib_csf = fields.Float('Total Libranzas CSF', compute=_compute_totales_csf)
-    #-Sentencias CSF
+    # -Sentencias CSF
     compra_sen_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
     aplicacion_sen_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
     total_sen_csf = fields.Float('Total Sentencias CSF', compute=_compute_totales_csf)
-    #-Mutuos CSF
+    # -Mutuos CSF
     compra_mut_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
     aplicacion_mut_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
     total_mut_csf = fields.Float('Total Mutuos CSF', compute=_compute_totales_csf)
+
+    # Alertas
+    alerta_fcp = fields.Text('Alerta FCP')
+    alerta_fcp_enabled = fields.Boolean('Alerta FCP', default=False)
+    alerta_fcl = fields.Text('Alerta FCL')
+    alerta_fcl_enabled = fields.Boolean('Alerta FCL', default=False)
+    alerta_csf = fields.Text('Alerta CSF')
+    alerta_csf_enabled = fields.Boolean('Alerta CSF', default=False)
 
     def enviar_calificado_crm(self):
         for rec in self:

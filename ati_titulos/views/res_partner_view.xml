@@ -25,6 +25,23 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <sheet position="before">
+                <field name="alerta_fcp_enabled" invisible="1"/>
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                    attrs="{'invisible': [('alerta_fcp_enabled', '=', False)]}">
+                    <field name="alerta_fcp" readonly="1"/>
+                </div>
+                <field name="alerta_fcl_enabled" invisible="1"/>
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                    attrs="{'invisible': [('alerta_fcl_enabled', '=', False)]}">
+                    <field name="alerta_fcl" readonly="1"/>
+                </div>
+                <field name="alerta_csf_enabled" invisible="1"/>
+                <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                    attrs="{'invisible': [('alerta_csf_enabled', '=', False)]}">
+                    <field name="alerta_csf" readonly="1"/>
+                </div>
+            </sheet>
             <field name="vat" position="after">
                 <field name="act_in" />
                 <field name="vinculado" />
