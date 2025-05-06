@@ -16,6 +16,14 @@ class ResPartner(models.Model):
     tasa_rendimiento_fcl = fields.Float('Tasa Rendimiento')
     tasa_rendimiento_csf = fields.Float('Tasa Rendimiento')
 
+    # Alertas
+    alerta_fcp = fields.Text('Alerta FCP')
+    alerta_fcp_enabled = fields.Boolean('Alerta FCP', default=False)
+    alerta_fcl = fields.Text('Alerta FCL')
+    alerta_fcl_enabled = fields.Boolean('Alerta FCL', default=False)
+    alerta_csf = fields.Text('Alerta CSF')
+    alerta_csf_enabled = fields.Boolean('Alerta CSF', default=False)
+
     def create(self, vals):
         res = super(ResPartner, self).create(vals)
         if (res.vinculado or res.emisor) and not res.pagador:
@@ -167,14 +175,6 @@ class ResPartner(models.Model):
     compra_mut_csf = fields.Float('Total Compra', compute=_compute_totales_csf)
     aplicacion_mut_recaudo_csf = fields.Float('Total A. de Recuado', compute=_compute_totales_csf)
     total_mut_csf = fields.Float('Total Mutuos CSF', compute=_compute_totales_csf)
-
-    # Alertas
-    # alerta_fcp = fields.Text('Alerta FCP')
-    # alerta_fcp_enabled = fields.Boolean('Alerta FCP', default=False)
-    # alerta_fcl = fields.Text('Alerta FCL')
-    # alerta_fcl_enabled = fields.Boolean('Alerta FCL', default=False)
-    # alerta_csf = fields.Text('Alerta CSF')
-    # alerta_csf_enabled = fields.Boolean('Alerta CSF', default=False)
 
     def enviar_calificado_crm(self):
         for rec in self:
