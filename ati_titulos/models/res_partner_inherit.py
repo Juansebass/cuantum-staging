@@ -29,8 +29,8 @@ class ResPartner(models.Model):
         if (self.vinculado or self.emisor) and not self.pagador:
             if not self.user_id:
                 raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio."))
-        self.button_recalcular_rpr()
         if not self.env.context.get('prevent_recursion'):
+            self.with_context(prevent_recursion=True).button_recalcular_rpr()
             self.with_context(prevent_recursion=True).agregar_seguidores()
         return res
 
@@ -195,14 +195,14 @@ class ResPartner(models.Model):
                 else:
                     move.saldo = previous_saldo + move.value
                 previous_saldo = move.saldo
-            # rec.alerta_fcp_enabled = False
-            # if previous_saldo != rec.total_fcp:
-            #     rec.alerta_fcp_enabled = True
-            #     rec.alerta_fcp = (
-            #         f"El saldo del último movimiento FCP no coincide con el saldo total. "
-            #         f"Ultimo movimiento: {previous_saldo} "
-            #         f"Saldo total: {rec.total_fcp}"
-            #     )
+            rec.alerta_fcp_enabled = False
+            if previous_saldo != rec.total_fcp:
+                rec.alerta_fcp_enabled = True
+                rec.alerta_fcp = (
+                    f"El saldo del último movimiento FCP no coincide con el saldo total. "
+                    f"Ultimo movimiento: {previous_saldo} "
+                    f"Saldo total: {rec.total_fcp}"
+                )
             last_move_closed = rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'cerrado')
             previous_saldo = last_move_closed[0].saldo if last_move_closed else 0
             recursos_fcl = rec.recursos_recompra_fcl_ids.filtered(
@@ -220,14 +220,14 @@ class ResPartner(models.Model):
                 else:
                     move.saldo = previous_saldo + move.value
                 previous_saldo = move.saldo
-            # rec.alerta_fcl_enabled = False
-            # if previous_saldo != rec.total_fcl:
-            #     rec.alerta_fcl_enabled = True
-            #     rec.alerta_fcl = (
-            #         f"El saldo del último movimiento FCL no coincide con el saldo total. "
-            #         f"Ultimo movimiento: {previous_saldo}"
-            #         f"Saldo total: {rec.total_fcl}"
-            #     )
+            rec.alerta_fcl_enabled = False
+            if previous_saldo != rec.total_fcl:
+                rec.alerta_fcl_enabled = True
+                rec.alerta_fcl = (
+                    f"El saldo del último movimiento FCL no coincide con el saldo total. "
+                    f"Ultimo movimiento: {previous_saldo}"
+                    f"Saldo total: {rec.total_fcl}"
+                )
 
             last_move_closed = rec.recursos_recompra_csf_ids.filtered(
                 lambda x: x.estado == 'cerrado'
@@ -257,14 +257,14 @@ class ResPartner(models.Model):
                     move.saldo = previous_saldo + move.value + move.calculo_rendimiento
                 previous_date = move.date
                 previous_saldo = move.saldo
-            # rec.alerta_csf_enabled = False
-            # if previous_saldo != rec.total_csf:
-            #     rec.alerta_csf_enabled = True
-            #     rec.alerta_csf = (
-            #         f"El saldo del último movimiento CSF no coincide con el saldo total. "
-            #         f"Ultimo movimiento: {previous_saldo}"
-            #         f"Saldo total: {rec.total_csf}"
-            #     )
+            rec.alerta_csf_enabled = False
+            if previous_saldo != rec.total_csf:
+                rec.alerta_csf_enabled = True
+                rec.alerta_csf = (
+                    f"El saldo del último movimiento CSF no coincide con el saldo total. "
+                    f"Ultimo movimiento: {previous_saldo}"
+                    f"Saldo total: {rec.total_csf}"
+                )
 
     def button_cerrar_rpr(self):
         return {
