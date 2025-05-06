@@ -14,6 +14,7 @@
                         <field name="sentencia_id"/>
                         <field name="retencion_total"/>
                         <field name="intermediacion"/>
+                        <field name="comision_interna"/>
                         <field name="estructuracion"/>
                         <field name="ingreso_anticipado_cuantum"/>
                         <field name="valor_descuento_diluido"/>

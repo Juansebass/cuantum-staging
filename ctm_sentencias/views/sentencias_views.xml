@@ -56,6 +56,7 @@
                                 <field name="retencion_total" widget="percentage" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>
                                 <field name="estructuracion" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>
                                 <field name="intermediacion" widget="percentage" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>
+                                <field name="comision_interna" widget="percentage" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>
                                 <field name="descuento_diluido" widget="percentage" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>
                                 <field name="ingreso_anticipado_cuantum" widget="percentage" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>
                                 <field name="comision_gestion_cuantum" widget="percentage" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>

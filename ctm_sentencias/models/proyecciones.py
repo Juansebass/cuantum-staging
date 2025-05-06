@@ -31,6 +31,7 @@ class Proyecciones(models.Model):
     valor_esperado_neutral = fields.Float(string='Valor Esperado Neutral')
     valor_esperado_acido = fields.Float(string='Valor Esperado Ácido')
     valor_esperado_compra = fields.Float(string='Valor Esperado Compra')
+    comision_interna = fields.Float(string='Comisión Interna')
     # Liquidaciones Iniciales
     liquidacion_inicial_ids = fields.One2many('ctm.liquidacion_inicial', 'proyeccion_id', string='Liquidaciones Iniciales')
     valor_condena = fields.Float(string='Valor Condena', readonly=True)
@@ -54,22 +55,30 @@ class Proyecciones(models.Model):
                 record.sentencia_id.retencion_total * record.total_intereses
             )
             record.estructuracion = record.sentencia_id.estructuracion
-            record.intermediacion = (
-                record.sentencia_id.intermediacion * record.resultado
-            )
-            record.valor_descuento_diluido = (
-                record.resultado * record.sentencia_id.descuento_diluido
-            )
             record.ingreso_anticipado_cuantum = (
                 record.sentencia_id.ingreso_anticipado_cuantum *
                 record.resultado
             )
+            record.valor_descuento_diluido = (
+                record.resultado * record.sentencia_id.descuento_diluido
+            )
             record.total_descuentos = (
                 record.retencion_total +
                 record.estructuracion +
-                record.intermediacion +
                 record.ingreso_anticipado_cuantum +
                 record.valor_descuento_diluido
+            )
+            record.valor_compra_beneficiario = (
+                record.resultado -
+                record.total_descuentos
+            )
+            record.comision_interna = (
+                record.valor_compra_beneficiario *
+                record.sentencia_id.comision_interna
+            )
+            record.intermediacion = (
+                record.sentencia_id.intermediacion *
+                record.valor_compra_beneficiario
             )
             record.porcentaje_total_descuentos = (
                 record.total_descuentos / record.resultado
@@ -78,19 +87,16 @@ class Proyecciones(models.Model):
                 record.retencion_total +
                 record.estructuracion +
                 record.intermediacion +
-                record.ingreso_anticipado_cuantum
+                record.ingreso_anticipado_cuantum +
+                record.comision_interna
             )
             record.porcentaje_total_descuentos_gastos = (
                 record.total_descuentos_gastos / record.resultado
             )
-            record.valor_compra_beneficiario = (
-                record.resultado - record.total_descuentos
-            )
-
             record.valor_venta_inversionista = (
-                record.resultado -
-                record.total_descuentos +
-                record.total_descuentos_gastos
+                record.resultado +
+                record.total_descuentos_gastos -
+                record.valor_descuento_diluido
             )
 
             record.generar_proyeccion_venta()
@@ -198,10 +204,17 @@ class Proyecciones(models.Model):
     def generar_proyeccion_venta(self):
         for record in self:
             record.proyeccion_venta_ids.unlink()
+            codigo = record.sentencia_id.codigo
             fecha_liquidar = record.sentencia_id.fecha_liquidar
             fecha_acido = record.sentencia_id.fecha_liquidar_acido
             fecha_neutral = record.sentencia_id.fecha_liquidar_neutral
             fecha_optimista = record.sentencia_id.fecha_liquidar_optimista
+            fecha_ejecutoria = record.sentencia_id.fecha_ejecutoria
+            fechas_generacion
+            if codigo == "CPACA":
+                fecha_periodo_diez = fecha_ejecutoria + relativedelta(months=+10)
+                if fecha_periodo_diez > fecha_liquidar:
+                    fechas_generacion = [fecha_periodo_diez, fecha_optimista, fecha_neutral, fecha_acido]
 
             fechas_generacion = [fecha_optimista, fecha_neutral, fecha_acido]
             fecha_liquidar_fin = record.last_day_of_month(fecha_liquidar)
@@ -221,7 +234,7 @@ class Proyecciones(models.Model):
 
             if fecha_liquidar_fin == fecha_optimista:
                 raise ValidationError('La fecha de liquidación optimista no puede ser igual a la fecha de liquidación')
-            
+
             valor_esperado = 0
             for fecha in fechas:
                 # Buscando tasas
@@ -231,6 +244,9 @@ class Proyecciones(models.Model):
                 if not tasa_conf:
                     raise ValidationError('No hay una tasa configurada para la fecha {0}'.format(fecha))
                 tasa = tasa_conf.usura / 100
+                if codigo == "CPACA" and fecha <= fecha_periodo_diez:
+                    tasa = tasa_conf.dtf / 100
+
                 interes = record.valor_condena * ((1 + tasa) ** (1 / 365) - 1) * (fecha[1] - fecha[0]).days
 
                 if fecha[1] <= record.sentencia_id.fecha_liquidar_neutral:

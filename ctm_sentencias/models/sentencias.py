@@ -51,6 +51,7 @@ class Sentencias(models.Model):
     descuento_diluido = fields.Float('Descuento Diluido')
     comision_gestion_cuantum = fields.Float('Comisión Gestión Cuantum')
     ingreso_anticipado_cuantum = fields.Float('Ingreso Anticipado Cuantum')
+    comision_interna = fields.Float('Comisión Interna')
     # Poner regla cada nueva fecha debe ser mayor a las anteriores
     fecha_liquidar_neutral = fields.Date('Fecha a Liquidar Neutral')
     fecha_liquidar_optimista = fields.Date('Fecha a Liquidar Optimista')

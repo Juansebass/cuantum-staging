@@ -79,12 +79,13 @@ class CargarSentencias(models.Model):
                     retencion_total = lista[17]
                     estructuracion = lista[18]
                     intermediacion = lista[19]
-                    descuento_diluido = lista[20]
-                    comision_gestion_cuantum = lista[21]
-                    ingreso_anticipado_cuantum = lista[22]
-                    fecha_liquidar_neutral = lista[23]
-                    fecha_liquidar_optimista = lista[24]
-                    fecha_liquidar_acido = lista[25]
+                    comision_interna = lista[20]
+                    descuento_diluido = lista[21]
+                    comision_gestion_cuantum = lista[22]
+                    ingreso_anticipado_cuantum = lista[23]
+                    fecha_liquidar_neutral = lista[24]
+                    fecha_liquidar_optimista = lista[25]
+                    fecha_liquidar_acido = lista[26]
 
                     vals.clear()
 
@@ -169,6 +170,9 @@ class CargarSentencias(models.Model):
                         ),
                         "descuento_diluido": self._format_percent(
                             descuento_diluido
+                        ),
+                        "comision_interna": self._format_percent(
+                            comision_interna
                         ),
                         "comision_gestion_cuantum":
                             self._format_percent(comision_gestion_cuantum),
