@@ -119,6 +119,8 @@ class Proyecciones(models.Model):
             ]
             if codigo == "CPACA":
                 fecha_periodo_diez = fecha_ejecutoria + relativedelta(months=+10)
+                if fecha_periodo_diez > fecha_liquidar:
+                    fecha_periodo_diez = fecha_liquidar
                 fechas_base.append(fecha_periodo_diez)
             fechas_periodos = self.generate_last_days(fecha_ejecutoria, fecha_liquidar)
             fechas_periodos += fechas_base

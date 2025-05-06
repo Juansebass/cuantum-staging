@@ -233,7 +233,7 @@ class ResPartner(models.Model):
                 rec.alerta_fcl_enabled = True
                 rec.alerta_fcl = (
                     f"El saldo del último movimiento FCL no coincide con el saldo total. "
-                    f"Ultimo movimiento: {previous_saldo}"
+                    f"Ultimo movimiento: {previous_saldo} "
                     f"Saldo total: {rec.total_fcl}"
                 )
 
@@ -270,7 +270,7 @@ class ResPartner(models.Model):
                 rec.alerta_csf_enabled = True
                 rec.alerta_csf = (
                     f"El saldo del último movimiento CSF no coincide con el saldo total. "
-                    f"Ultimo movimiento: {previous_saldo}"
+                    f"Ultimo movimiento: {previous_saldo} "
                     f"Saldo total: {rec.total_csf}"
                 )
 
