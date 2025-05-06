@@ -169,12 +169,12 @@ class ResPartner(models.Model):
     total_mut_csf = fields.Float('Total Mutuos CSF', compute=_compute_totales_csf)
 
     # Alertas
-    alerta_fcp = fields.Text('Alerta FCP')
-    alerta_fcp_enabled = fields.Boolean('Alerta FCP', default=False)
-    alerta_fcl = fields.Text('Alerta FCL')
-    alerta_fcl_enabled = fields.Boolean('Alerta FCL', default=False)
-    alerta_csf = fields.Text('Alerta CSF')
-    alerta_csf_enabled = fields.Boolean('Alerta CSF', default=False)
+    # alerta_fcp = fields.Text('Alerta FCP')
+    # alerta_fcp_enabled = fields.Boolean('Alerta FCP', default=False)
+    # alerta_fcl = fields.Text('Alerta FCL')
+    # alerta_fcl_enabled = fields.Boolean('Alerta FCL', default=False)
+    # alerta_csf = fields.Text('Alerta CSF')
+    # alerta_csf_enabled = fields.Boolean('Alerta CSF', default=False)
 
     def enviar_calificado_crm(self):
         for rec in self:
