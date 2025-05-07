@@ -36,7 +36,7 @@ class ResPartner(models.Model):
         res = super(ResPartner, self).write(vals)
         if (self.vinculado or self.emisor) and not self.pagador:
             if not self.user_id:
-                raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio."))
+                raise ValidationError(_("El campo vendedor de la pestaña Venta y Compra no puede estar vacio. Cliente: %s") % self.name)
         if not self.env.context.get('prevent_recursion'):
             self.with_context(prevent_recursion=True).button_recalcular_rpr()
             self.with_context(prevent_recursion=True).agregar_seguidores()

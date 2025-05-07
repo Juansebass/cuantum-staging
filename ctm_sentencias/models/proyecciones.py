@@ -210,7 +210,7 @@ class Proyecciones(models.Model):
             fecha_neutral = record.sentencia_id.fecha_liquidar_neutral
             fecha_optimista = record.sentencia_id.fecha_liquidar_optimista
             fecha_ejecutoria = record.sentencia_id.fecha_ejecutoria
-            fechas_generacion
+            fechas_generacion = []
             if codigo == "CPACA":
                 fecha_periodo_diez = fecha_ejecutoria + relativedelta(months=+10)
                 if fecha_periodo_diez > fecha_liquidar:
