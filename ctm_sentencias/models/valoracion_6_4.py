@@ -61,7 +61,7 @@ class Valoracion64(models.Model):
         self._generar_valoraciones_resumen()
         self._genera_tir_compra_6_4()
 
-        self.valor_actual_6_4 = self.resultado / ((1 + self.tir_compra_6_4 * 0.01) ** ((self.fecha_liquidar - self.fecha_vencimiento).days / 365))
+        self.valor_actual_6_4 = self.resultado / ((1 + self.tir_compra_6_4 * 0.01) ** ((self.fecha_vencimiento - self.fecha_liquidar).days / 365))
         self.precio = (self.valor_actual_6_4 / self.valor_giro) * 100
         fecha_anterior = self.fecha_liquidar - timedelta(days=1)
         simulacion_anterior = self.simulacion_ids.filtered(lambda x: x.fecha_liquidar == fecha_anterior)
