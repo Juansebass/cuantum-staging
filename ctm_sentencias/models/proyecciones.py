@@ -267,7 +267,7 @@ class Proyecciones(models.Model):
                         'proyeccion_id': record.id,
                         'fecha_inicial': fecha[0],
                         'fecha_final': fecha[1],
-                        'tasa': tasa_conf.usura,
+                        'tasa': tasa * 100,
                         'interes': interes,
                         'descuento_diluido': descuento_diluido,
                         'rendimientos_totales': rendimientos_totales,
