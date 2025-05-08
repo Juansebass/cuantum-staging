@@ -211,12 +211,12 @@ class Proyecciones(models.Model):
             fecha_optimista = record.sentencia_id.fecha_liquidar_optimista
             fecha_ejecutoria = record.sentencia_id.fecha_ejecutoria
             fechas_generacion = []
+            fechas_generacion = [fecha_optimista, fecha_neutral, fecha_acido]
             if codigo == "CPACA":
                 fecha_periodo_diez = fecha_ejecutoria + relativedelta(months=+10)
                 if fecha_periodo_diez > fecha_liquidar:
                     fechas_generacion = [fecha_periodo_diez, fecha_optimista, fecha_neutral, fecha_acido]
 
-            fechas_generacion = [fecha_optimista, fecha_neutral, fecha_acido]
             fecha_liquidar_fin = record.last_day_of_month(fecha_liquidar)
             fechas = [(fecha_liquidar, fecha_liquidar_fin)]
             fecha_final = fecha_liquidar_fin
