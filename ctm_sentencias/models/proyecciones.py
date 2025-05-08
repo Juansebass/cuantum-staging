@@ -95,8 +95,8 @@ class Proyecciones(models.Model):
             )
             record.valor_venta_inversionista = (
                 record.resultado +
-                record.total_descuentos_gastos -
-                record.valor_descuento_diluido
+                record.total_descuentos_gastos
+                - record.valor_descuento_diluido
             )
 
             record.generar_proyeccion_venta()
