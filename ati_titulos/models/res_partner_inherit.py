@@ -204,12 +204,14 @@ class ResPartner(models.Model):
                     move.saldo = previous_saldo + move.value
                 previous_saldo = move.saldo
             rec.alerta_fcp_enabled = False
-            if previous_saldo != rec.total_fcp:
+            previous_saldo_validation = int(previous_saldo)
+            total_validation = int(rec.total_fcp)
+            if abs(previous_saldo_validation - total_validation) > 10:
                 rec.alerta_fcp_enabled = True
                 rec.alerta_fcp = (
                     f"El saldo del último movimiento FCP no coincide con el saldo total. "
-                    f"Ultimo movimiento: {previous_saldo} "
-                    f"Saldo total: {rec.total_fcp}"
+                    f"Ultimo movimiento: {previous_saldo_validation} "
+                    f"Saldo total: {total_validation}"
                 )
             last_move_closed = rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'cerrado')
             previous_saldo = last_move_closed[0].saldo if last_move_closed else 0
@@ -229,12 +231,14 @@ class ResPartner(models.Model):
                     move.saldo = previous_saldo + move.value
                 previous_saldo = move.saldo
             rec.alerta_fcl_enabled = False
-            if previous_saldo != rec.total_fcl:
+            previous_saldo_validation = int(previous_saldo)
+            total_validation = int(rec.total_fcl)
+            if abs(previous_saldo_validation - total_validation) > 10:
                 rec.alerta_fcl_enabled = True
                 rec.alerta_fcl = (
                     f"El saldo del último movimiento FCL no coincide con el saldo total. "
-                    f"Ultimo movimiento: {previous_saldo} "
-                    f"Saldo total: {rec.total_fcl}"
+                    f"Ultimo movimiento: {previous_saldo_validation} "
+                    f"Saldo total: {total_validation}"
                 )
 
             last_move_closed = rec.recursos_recompra_csf_ids.filtered(
@@ -266,12 +270,14 @@ class ResPartner(models.Model):
                 previous_date = move.date
                 previous_saldo = move.saldo
             rec.alerta_csf_enabled = False
-            if previous_saldo != rec.total_csf:
+            previous_saldo_validation = int(previous_saldo)
+            total_validation = int(rec.total_csf)
+            if abs(previous_saldo_validation - total_validation) > 10:
                 rec.alerta_csf_enabled = True
                 rec.alerta_csf = (
                     f"El saldo del último movimiento CSF no coincide con el saldo total. "
-                    f"Ultimo movimiento: {previous_saldo} "
-                    f"Saldo total: {rec.total_csf}"
+                    f"Ultimo movimiento: {previous_saldo_validation} "
+                    f"Saldo total: {total_validation}"
                 )
 
     def button_cerrar_rpr(self):
