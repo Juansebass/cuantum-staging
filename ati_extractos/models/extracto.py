@@ -1585,12 +1585,13 @@ class Extracto(models.Model):
                     recaudos = sum( [recurso.value for recurso in self.recursos_csf.filtered(
                         lambda x: x.investment_type.name == 'Factoring' and x.movement_type.name == 'Aplicación de recaudo'
                     )])
-                    valor_validado = (
+                    valor_validado = int(
                         line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
-                    validation = line.valor_actual != valor_validado
+                    valor_actual = int(line.valor_actual)
+                    validation = abs(valor_actual - valor_validado) > 10
                     if validation:
-                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Factoring no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Factoring no es correcta. Actual={0} Validado={1} \n'.format(valor_actual, valor_validado)
                 #Libranzas
                 if line.name == 'Libranzas':
                     compras = sum( [recurso.value for recurso in self.recursos_csf.filtered(
@@ -1602,9 +1603,10 @@ class Extracto(models.Model):
                     valor_validado = (
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
-                    validation = line.valor_actual != valor_validado
+                    valor_actual = int(line.valor_actual)
+                    validation = abs(valor_actual - valor_validado) > 10
                     if validation:
-                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Libranzas no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado)
+                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Libranzas no es correcta. Actual={0} Validado={1} \n'.format(valor_actual,valor_validado)
                 #Sentencias
                 if line.name == 'Sentencias':
                     compras = sum( [recurso.value for recurso in self.recursos_csf.filtered(
@@ -1616,9 +1618,10 @@ class Extracto(models.Model):
                     valor_validado = (
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
-                    validation = line.valor_actual != valor_validado
+                    valor_actual = int(line.valor_actual)
+                    validation = abs(valor_actual - valor_validado) > 10
                     if validation:
-                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Sentencias no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+                        self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Sentencias no es correcta. Actual={0} Validado={1} \n'.format(valor_actual,valor_validado )
 
                 # Sentencias
                 if line.name == 'Mutuos':
@@ -1632,10 +1635,11 @@ class Extracto(models.Model):
                     valor_validado = (
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
-                    validation = line.valor_actual != valor_validado
+                    valor_actual = int(line.valor_actual)
+                    validation = abs(valor_actual - valor_validado) > 10
                     if validation:
                         self.message_product_validation += 'Validación de totales para gestor CUANTUM producto Mutuos no es correcta. Actual={0} Validado={1} \n'.format(
-                            line.valor_actual, valor_validado)
+                            valor_actual, valor_validado)
             # Para FCL
             if line.gestor.code == 'FCL':
                 # Libranzas
@@ -1651,9 +1655,10 @@ class Extracto(models.Model):
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
 
-                    validation = line.valor_actual != valor_validado
+                    valor_actual = int(line.valor_actual)
+                    validation = abs(valor_actual - valor_validado) > 10
                     if validation:
-                        self.message_product_validation += 'Validación de totales para gestor FCL producto Libranzas no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+                        self.message_product_validation += 'Validación de totales para gestor FCL producto Libranzas no es correcta. Actual={0} Validado={1} \n'.format(valor_actual,valor_validado )
             # Para FCP
             if line.gestor.code == 'FCP':
                 if line.name == 'Statum I':
@@ -1666,9 +1671,10 @@ class Extracto(models.Model):
                     valor_validado = (
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
-                    validation = line.valor_actual != valor_validado
+                    valor_actual = int(line.valor_actual)
+                    validation = abs(valor_actual - valor_validado) > 10
                     if validation:
-                        self.message_product_validation += 'Validación de totales para gestor FCP producto Statum I no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+                        self.message_product_validation += 'Validación de totales para gestor FCP producto Statum I no es correcta. Actual={0} Validado={1} \n'.format(valor_actual,valor_validado )
                 if line.name == 'Statum II':
                     compras = sum( [recurso.value for recurso in self.recursos_fcp.filtered(
                         lambda x: x.investment_type.name == 'Statum II' and x.movement_type.name == 'Compra'
@@ -1679,16 +1685,18 @@ class Extracto(models.Model):
                     valor_validado = (
                             line.valor_anterior + compras + line.rendimiento_causado - recaudos - line.administracion
                     )
-                    validation = line.valor_actual != valor_validado
+                    valor_actual = int(line.valor_actual)
+                    validation = abs(valor_actual - valor_validado) > 10
                     if validation:
-                        self.message_product_validation += 'Validación de totales para gestor FCP producto Statum II no es correcta. Actual={0} Validado={1} \n'.format(line.valor_actual,valor_validado )
+                        self.message_product_validation += 'Validación de totales para gestor FCP producto Statum II no es correcta. Actual={0} Validado={1} \n'.format(valor_actual,valor_validado )
         
         
         valor_validado = self.valor_anterior_total_resumen + self.valor_rendimiento_causado - self.valor_administracion_resumen
-        valor_validado = round(self.validacion_detalle_movimientos(valor_validado), 2)
-        validation = valor_validado != round(self.valor_actual_total_resumen, 2)
+        valor_validado = int(self.validacion_detalle_movimientos(valor_validado))
+        valor_actual_validado = int(self.valor_actual_total_resumen)
+        validation = abs(valor_validado - valor_actual_validado) > 10
         if validation:
-            self.message_product_validation += 'Validación de totales no es correcta. Actual={0} Validado={1} \n'.format(round(self.valor_actual_total_resumen, 2), valor_validado)
+            self.message_product_validation += 'Validación de totales no es correcta. Actual={0} Validado={1} \n'.format(valor_actual_validado, valor_validado)
 
         if len(self.message_product_validation) > 0:
             self.show_alert_product_validation = True
