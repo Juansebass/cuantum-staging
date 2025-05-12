@@ -26,6 +26,7 @@ class Sentencias(models.Model):
             ('Statum Compartimento 7', 'Statum Compartimento 7'),
             ('Statum Compartimento 8', 'Statum Compartimento 8'),
             ('Statum Compartimento 9', 'Statum Compartimento 9'),
+            ('BPack Compartimiento 1', 'BPack Compartimiento 1'),
         ],
         default='CSF',
         required=True
