@@ -9,7 +9,7 @@
             <tree string="">
                 <field name="name" />
                 <field name="fecha_liquidar" />
-                <field name="statum"/>
+                <field name="vehiculo"/>
                 <field name="emisor" />
                 <field name="pagador" />
                 <field name="valor_condena" />

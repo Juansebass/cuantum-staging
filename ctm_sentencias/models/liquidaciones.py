@@ -34,7 +34,7 @@ class Liquidaciones(models.Model):
     tir_sentencia_bruta = fields.Float('TIR Sentencia Bruta')
 
     nit_fcp_statum = fields.Char('NIT FCP STATUM (Comp 1)', related='sentencia.nit_fcp_statum')
-    statum = fields.Selection(string='Statum', related='sentencia.statum')
+    vehiculo = fields.Many2one('ctm.vehiculos', 'Vehículo', required=1, related='sentencia.vehiculo')
     vendedor = fields.Char('Vendedor', related='sentencia.vendedor')
     nemotecnico = fields.Char('Nemotecnico', related='sentencia.nemotecnico')
     fecha_vencimiento = fields.Date('Fecha de Vencimiento', related='sentencia.fecha_vencimiento')
@@ -257,7 +257,7 @@ class Liquidaciones(models.Model):
         for rec in self:
             fecha = rec.fecha_liquidar.strftime('%Y%m%d')
             nit_fcp_statum = rec.nit_fcp_statum
-            descripcion = rec.statum
+            descripcion = rec.vehiculo.name
             if descripcion == 'CSF':
                 raise ValidationError('Alguna de las sentencias es de Cuantum, por lo que no se genera precio')
             demandante = rec.emisor.name
@@ -318,7 +318,7 @@ class Liquidaciones(models.Model):
         for rec in self:
             fecha = rec.fecha_liquidar.strftime('%Y%m%d')
             nit_fcp_statum = rec.nit_fcp_statum
-            descripcion = rec.statum
+            descripcion = rec.vehiculo.name
             if descripcion == 'CSF':
                 raise ValidationError('Alguna de las sentencias es de Cuantum, por lo que no se genera precio')
             demandante = rec.emisor.name

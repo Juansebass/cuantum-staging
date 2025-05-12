@@ -11,7 +11,7 @@
                 <field name="fecha_compra" />
                 <field name="fecha_liquidar" />
                 <field name="fecha_vencimiento" />
-                <field name="statum"/>
+                <field name="vehiculo"/>
                 <field name="emisor" />
                 <field name="pagador" />
                 <field name="valor_giro" />
