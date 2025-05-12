@@ -63,7 +63,7 @@ class CargarSentencias(models.Model):
                     emisor = lista[1]
                     pagador = lista[2]
                     codigo = lista[3]
-                    statum = lista[4]
+                    vehiculo = lista[4]
                     fecha_ejecutoria = lista[5]
                     fecha_cuenta_cobro = lista[6]
                     fecha_liquidar = lista[7]
@@ -117,6 +117,17 @@ class CargarSentencias(models.Model):
                             "El CSV no se procesara porque no se encuentra pagador "
                             "o no está vinculado {0}".format(pagador)
                         )
+                    vehiculo = self.env['ctm.vehiculos'].search(
+                        [('name', '=', vehiculo)])
+                    if len(vehiculo) > 1:
+                        raise ValidationError(
+                            "El CSV no se procesara por vehiculo con nombre repetido en sistema. "
+                            "El nombre {0} lo tienen dos o mas vehiculos".format(vehiculo))
+                    elif len(vehiculo) == 0:
+                        raise ValidationError(
+                            "El CSV no se procesara porque no se encuentra vehiculo "
+                            "o no está vinculado {0}".format(vehiculo)
+                        )
 
                     titulo_existente = self.env['ctm.sentencias'].search(
                         [('name', '=', titulo)], limit=1)
@@ -138,7 +149,7 @@ class CargarSentencias(models.Model):
                         "emisor": emisor.id,
                         "pagador": pagador.id,
                         "codigo": codigo,
-                        "statum": statum,
+                        "statum": vehiculo,
                         "fecha_ejecutoria": datetime.strptime(
                             fecha_ejecutoria, '%d/%m/%Y'
                         ),

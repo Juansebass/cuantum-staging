@@ -31,6 +31,7 @@ class Sentencias(models.Model):
         default='CSF',
         required=True
     )
+    vehiculo = fields.Many2one('ctm.vehiculos', 'Vehículo', required=1)
     fecha_ejecutoria = fields.Date('Fecha de Ejecutoría', required=1)
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
     fecha_liquidar = fields.Date('Fecha a Liquidar', required=1)
@@ -75,7 +76,7 @@ class Sentencias(models.Model):
     def create(self, vals):
         res = super(Sentencias, self).create(vals)
 
-        if res.statum != 'CSF':
+        if res.vehiculo.code != 'CSF':
             if not res.nit_fcp_statum:
                 raise ValidationError('Debe ingresar el NIT FCP STATUM')
             if not res.vendedor:
@@ -86,7 +87,7 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
             if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif res.statum == 'CSF':
+        elif res.vehiculo.code == 'CSF':
             if not res.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
             if not res.fecha_liquidar_optimista:
@@ -97,7 +98,7 @@ class Sentencias(models.Model):
 
     def write(self, vals):
         res = super(Sentencias, self).write(vals)
-        if self.statum != 'CSF':
+        if self.vehiculo.code != 'CSF':
             if not self.nit_fcp_statum:
                 raise ValidationError('Debe ingresar el NIT FCP STATUM')
             if not self.vendedor:
@@ -108,7 +109,7 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
             if not self.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif self.statum == 'CSF':
+        elif self.vehiculo.code == 'CSF':
             if not self.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
             if not self.fecha_liquidar_optimista:

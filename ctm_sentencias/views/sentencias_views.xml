@@ -34,7 +34,7 @@
                                         "no_create":True, "no_open":True}'
                         />
                         <field name="codigo"/>
-                        <field name="statum" string="Vehículo"/>
+                        <field name="vehiculo" string="Vehículo"/>
                         <field name="nit_fcp_statum"/>
                         <field name="vendedor"  attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                         <field name="nemotecnico" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
@@ -78,7 +78,7 @@
         <field name="arch" type="xml">
             <tree string="Sentencias">
                 <field name="name"/>
-                <field name="statum"/>
+                <field name="vehiculo"/>
                 <field name="pagador"/>
                 <field name="codigo"/>
                 <field name="state"/>
