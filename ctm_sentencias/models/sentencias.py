@@ -77,7 +77,7 @@ class Sentencias(models.Model):
     def create(self, vals):
         res = super(Sentencias, self).create(vals)
 
-        if res.vehiculo.code != 'CSF':
+        if res.vehiculo.name != 'CSF':
             if not res.nit_fcp_statum:
                 raise ValidationError('Debe ingresar el NIT FCP STATUM')
             if not res.vendedor:
@@ -88,7 +88,7 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
             if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif res.vehiculo.code == 'CSF':
+        elif res.vehiculo.name == 'CSF':
             if not res.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
             if not res.fecha_liquidar_optimista:
@@ -99,7 +99,7 @@ class Sentencias(models.Model):
 
     def write(self, vals):
         res = super(Sentencias, self).write(vals)
-        if self.vehiculo.code != 'CSF':
+        if self.vehiculo.name != 'CSF':
             if not self.nit_fcp_statum:
                 raise ValidationError('Debe ingresar el NIT FCP STATUM')
             if not self.vendedor:
@@ -110,7 +110,7 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
             if not self.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif self.vehiculo.code == 'CSF':
+        elif self.vehiculo.name == 'CSF':
             if not self.fecha_liquidar_neutral:
                 raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
             if not self.fecha_liquidar_optimista:
