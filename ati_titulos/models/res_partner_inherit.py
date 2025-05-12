@@ -338,7 +338,7 @@ class ResPartner(models.Model):
                 if gestor_code == 'FCP':
                     last_record = rec.recursos_recompra_fcp_ids[-1] if rec.recursos_recompra_fcp_ids else None
                     if last_record:
-                        if last_record.saldo != rec.total_fcp:
+                        if abs(last_record.saldo - rec.total_fcp) > 10:
                             raise ValidationError(
                                 ("El saldo del último movimiento FCP no coincide con el saldo total")
                             )
@@ -347,7 +347,7 @@ class ResPartner(models.Model):
                 elif gestor_code == 'FCL':
                     last_record = rec.recursos_recompra_fcl_ids[-1] if rec.recursos_recompra_fcl_ids else None
                     if last_record:
-                        if last_record.saldo != rec.total_fcl:
+                        if abs(last_record.saldo - rec.total_fcl) > 10:
                             raise ValidationError(
                                 ("El saldo del último movimiento FCL no coincide con el saldo total")
                             )
@@ -357,7 +357,7 @@ class ResPartner(models.Model):
                     total_rendimiento_csf = 0
                     last_record = rec.recursos_recompra_csf_ids[-1] if rec.recursos_recompra_csf_ids else None
                     if last_record:
-                        if last_record.saldo != rec.total_csf:
+                        if abs(last_record.saldo - rec.total_csf) > 10:
                             raise ValidationError(
                                 ("El saldo del último movimiento CSF no coincide con el saldo total")
                             )

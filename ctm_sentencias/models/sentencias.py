@@ -14,7 +14,7 @@ class Sentencias(models.Model):
     pagador = fields.Many2one('res.partner', 'Pagador', required=1)
     codigo = fields.Char('Código', required=1)
     statum = fields.Selection(
-        string='Statum',
+        string='Vehículo',
         selection=[
             ('CSF', 'CSF'),
             ('Statum Compartimento 1', 'Statum Compartimento 1'),

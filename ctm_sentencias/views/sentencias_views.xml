@@ -34,7 +34,7 @@
                                         "no_create":True, "no_open":True}'
                         />
                         <field name="codigo"/>
-                        <field name="statum"/>
+                        <field name="statum" string="Vehículo"/>
                         <field name="nit_fcp_statum"/>
                         <field name="vendedor"  attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
                         <field name="nemotecnico" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
