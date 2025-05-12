@@ -1,0 +1,29 @@
+<odoo>
+    <!-- Tree View for ctm.vehiculos -->
+    <record id="view_ctm_vehiculos_tree" model="ir.ui.view">
+        <field name="name">ctm.vehiculos.tree</field>
+        <field name="model">ctm.vehiculos</field>
+        <field name="arch" type="xml">
+            <tree string="Vehículos">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for ctm.vehiculos -->
+    <record id="view_ctm_vehiculos_form" model="ir.ui.view">
+        <field name="name">ctm.vehiculos.form</field>
+        <field name="model">ctm.vehiculos</field>
+        <field name="arch" type="xml">
+            <form string="Vehículo">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
