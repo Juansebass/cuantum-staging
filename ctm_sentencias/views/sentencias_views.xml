@@ -36,7 +36,7 @@
                         <field name="codigo"/>
                         <field name="vehiculo" string="Vehículo"/>
                         <field name="vehiculo_name" invisible="1"/>
-                        <field name="nit_fcp_statum"/>
+                        <field name="nit_fcp_statum" string="NIT Vehículo"/>
                         <field name="vendedor"  attrs="{'invisible': [('vehiculo_name', '=', 'CSF')]}"/>
                         <field name="nemotecnico" attrs="{'invisible': [('vehiculo_name', '=', 'CSF')]}"/>
                     </group>

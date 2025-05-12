@@ -7,4 +7,3 @@ class Vehiculo(models.Model):
     _description = 'Vehículos Sentencias'
 
     name = fields.Char('Nombre', required=True)
-    code = fields.Float('Código', required=True)
