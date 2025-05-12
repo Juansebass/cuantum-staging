@@ -121,7 +121,8 @@ class Sentencias(models.Model):
 
     def generar_proyeccion(self):
         for record in self:
-            record.proyeccion_ids.unlink()
+            # Verificar funcionalmente
+            # record.proyeccion_ids.unlink()
             proyeccion_id = self.env['ctm.proyecciones'].create({
                 'name': f"Proyección Sentencia - {record.name}",
                 'sentencia_id': record.id,
