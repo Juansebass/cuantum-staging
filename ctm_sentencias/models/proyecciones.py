@@ -40,6 +40,13 @@ class Proyecciones(models.Model):
     # Proyecciones de Venta
     proyeccion_venta_ids = fields.One2many('ctm.proyeccion_venta', 'proyeccion_id', string='Proyecciones de Venta')
 
+    emisor = fields.Many2one('res.partner', 'Emisor', required=1)
+    pagador = fields.Many2one('res.partner', 'Pagador', required=1)
+    codigo = fields.Char('Código', required=1)
+    vehiculo = fields.Many2one('ctm.vehiculos', 'Vehículo', required=1)
+    fecha_ejecutoria = fields.Date('Fecha de Ejecutoría', required=1)
+    fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
+
     # TODO Las proyecciones y acciones solo son visibles para sentencias de statum csf
 
     def calcular_proyeccion(self):

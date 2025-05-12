@@ -12,6 +12,12 @@
                     <group>
                         <field name="name"  readonly="1"/>
                         <field name="sentencia_id"/>
+                        <field name="emisor" readonly="1"/>
+                        <field name="pagador" readonly="1"/>
+                        <field name="codigo" readonly="1"/>
+                        <field name="vehiculo" readonly="1"/>
+                        <field name="fecha_ejecutoria" readonly="1"/>
+                        <field name="fecha_cuenta_cobro" readonly="1"/>
                         <field name="retencion_total"/>
                         <field name="intermediacion"/>
                         <field name="comision_interna"/>
