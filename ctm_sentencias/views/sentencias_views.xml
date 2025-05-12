@@ -6,13 +6,13 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
-                    <button name="generar_proyeccion" type="object" string="Generar Proyección" attrs="{'invisible': ['|', ('statum', '!=', 'CSF'), ('state', '=', 'venta_completa')]}"/>
+                    <button name="generar_proyeccion" type="object" string="Generar Proyección" attrs="{'invisible': ['|', ('vehiculo_name', '!=', 'CSF'), ('state', '=', 'venta_completa')]}"/>
                     <button name="action_view_proyecciones"
                             type="object"
                             string="Proyecciones"
                             class="oe_stat_button"
                             icon="fa-calculator"
-                            attrs="{'invisible': [('statum', '!=', 'CSF')]}"
+                            attrs="{'invisible': [('vehiculo_name', '!=', 'CSF')]}"
                     />
                     <button name="vendida"
                             type="object"
@@ -35,23 +35,24 @@
                         />
                         <field name="codigo"/>
                         <field name="vehiculo" string="Vehículo"/>
+                        <field name="vehiculo_name" invisible="1"/>
                         <field name="nit_fcp_statum"/>
-                        <field name="vendedor"  attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
-                        <field name="nemotecnico" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
+                        <field name="vendedor"  attrs="{'invisible': [('vehiculo_name', '=', 'CSF')]}"/>
+                        <field name="nemotecnico" attrs="{'invisible': [('vehiculo_name', '=', 'CSF')]}"/>
                     </group>
                     <group name="derecha">
                         <field name="fecha_ejecutoria"/>
                         <field name="fecha_cuenta_cobro"/>
                         <field name="fecha_compra"/>
                         <field name="fecha_liquidar"/>
-                        <field name="fecha_vencimiento" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
-                        <field name="valor_giro" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
-                        <field name="comision" attrs="{'invisible': [('statum', '=', 'CSF')]}"/>
+                        <field name="fecha_vencimiento" attrs="{'invisible': [('vehiculo_name', '=', 'CSF')]}"/>
+                        <field name="valor_giro" attrs="{'invisible': [('vehiculo_name', '=', 'CSF')]}"/>
+                        <field name="comision" attrs="{'invisible': [('vehiculo_name', '=', 'CSF')]}"/>
                         <field name="valor_condena"/>
                         <field name="costas"/>
                     </group>
                     <notebook>
-                        <page string="Datos Compraventa" attrs="{'invisible': [('statum', '!=', 'CSF')]}">
+                        <page string="Datos Compraventa" attrs="{'invisible': [('vehiculo_name', '!=', 'CSF')]}">
                             <group string="Descuentos">
                                 <field name="retencion_total" widget="percentage" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>
                                 <field name="estructuracion" attrs="{'readonly': [('state', '=', 'venta_completa')]}"/>

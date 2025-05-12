@@ -32,6 +32,7 @@ class Sentencias(models.Model):
         required=True
     )
     vehiculo = fields.Many2one('ctm.vehiculos', 'Vehículo', required=1)
+    vehiculo_name = fields.Char('Nombre Vehículo', related='vehiculo.name')
     fecha_ejecutoria = fields.Date('Fecha de Ejecutoría', required=1)
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
     fecha_liquidar = fields.Date('Fecha a Liquidar', required=1)
