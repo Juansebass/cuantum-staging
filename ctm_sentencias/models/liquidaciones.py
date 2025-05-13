@@ -294,6 +294,45 @@ class Liquidaciones(models.Model):
             'target': 'new',
         }
 
+    def create_txt_bpac(self):
+        fechas = self.mapped('fecha_liquidar')
+
+        if len(set(fechas)) > 1:
+            raise ValidationError('Todos los registros deben tener la misma fecha de liquidación')
+
+        contenido_txt = ""
+        for rec in self:
+            if 'BPAC' not in rec.vehiculo.name:
+                raise ValidationError(f'No se puede generar el archivo BPAC para la liquidación {rec.name} porque no es de este vehículo')
+
+            fecha = rec.fecha_liquidar.strftime('%Y%m%d')
+            nemotecnico = rec.nemotecnico
+            emision = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
+            fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
+            tasa = 0.000000
+            periodicidad = "NO"
+            precio = precio = round(rec.precio, 6)
+            metodo_valoracion_351 = 13
+            portafolio = "P.FCPBPACSI"
+
+            contenido_txt += f"{fecha};{nemotecnico};{emision};{fecha_vencimiento};{tasa:0.7f};{periodicidad};{precio:0.7f};{metodo_valoracion_351};{portafolio};\n"
+
+        archivo_txt = base64.b64encode(contenido_txt.encode('utf-8'))
+
+        attachment = self.env['ir.attachment'].create({
+            'name': f"{fecha}.txt",
+            'type': 'binary',
+            'datas': archivo_txt,
+            'res_model': 'ctm.liquidaciones',
+            'res_id': self[0].id,  # Puedes modificar este ID si es necesario
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'new',
+        }
+
     def create_excel(self):
         fechas = self.mapped('fecha_liquidar')
 
