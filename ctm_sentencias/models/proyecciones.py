@@ -106,6 +106,13 @@ class Proyecciones(models.Model):
                 - record.valor_descuento_diluido
             )
 
+            record.emisor = record.sentencia_id.emisor
+            record.pagador = record.sentencia_id.pagador
+            record.codigo = record.sentencia_id.codigo
+            record.vehiculo = record.sentencia_id.vehiculo
+            record.fecha_ejecutoria = record.sentencia_id.fecha_ejecutoria
+            record.fecha_cuenta_cobro = record.sentencia_id.fecha_cuenta_cobro
+
             record.generar_proyeccion_venta()
 
     def generar_liquidacion_inicial(self):
