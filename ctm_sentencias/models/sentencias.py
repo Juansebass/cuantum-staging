@@ -79,7 +79,7 @@ class Sentencias(models.Model):
 
         if res.vehiculo.name != 'CSF':
             if not res.nit_fcp_statum:
-                raise ValidationError('Debe ingresar el NIT FCP STATUM')
+                raise ValidationError('Debe ingresar el NIT Vehículo')
             if not res.vendedor:
                 raise ValidationError('Debe ingresar el Vendedor')
             if not res.nemotecnico:
@@ -101,7 +101,7 @@ class Sentencias(models.Model):
         res = super(Sentencias, self).write(vals)
         if self.vehiculo.name != 'CSF':
             if not self.nit_fcp_statum:
-                raise ValidationError('Debe ingresar el NIT FCP STATUM')
+                raise ValidationError('Debe ingresar el NIT Vehículo')
             if not self.vendedor:
                 raise ValidationError('Debe ingresar el Vendedor')
             if not self.nemotecnico:

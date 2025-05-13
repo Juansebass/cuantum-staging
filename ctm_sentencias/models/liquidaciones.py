@@ -406,6 +406,66 @@ class Liquidaciones(models.Model):
             'target': 'new',
         }
 
+    def create_excel_bpac(self):
+        fechas = self.mapped('fecha_liquidar')
+
+        if len(set(fechas)) > 1:
+            raise ValidationError('Todos los registros deben tener la misma fecha de liquidación')
+
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        headers = [
+            'FECHA', 'NEMOTECNICO', 'EMISION', 'VENCIMIENTO', 'TASA', 'PERIODICIDAD',
+            'PRECIO', 'METODOVALORACION351', 'PORTAFOLIO'
+        ]
+
+        for col_num, header in enumerate(headers):
+            worksheet.write(0, col_num, header)
+
+        row = 1
+        for rec in self:
+            if 'BPAC' not in rec.vehiculo.name:
+                raise ValidationError(f'No se puede generar el archivo BPAC para la liquidación {rec.name} porque no es de este vehículo')
+
+            fecha = rec.fecha_liquidar.strftime('%Y%m%d')
+            nemotecnico = rec.nemotecnico
+            emision = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
+            fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
+            tasa = 0.000000
+            periodicidad = "NO"
+            precio = round(rec.precio, 6)
+            metodo_valoracion_351 = 13
+            portafolio = "P.FCPBPACSI"
+
+            data = [
+                fecha, nemotecnico, emision, fecha_vencimiento, tasa,
+                periodicidad, precio, metodo_valoracion_351, portafolio
+            ]
+
+            for col_num, cell_data in enumerate(data):
+                worksheet.write(row, col_num, cell_data)
+            row += 1
+
+        workbook.close()
+        output.seek(0)
+        archivo_excel = base64.b64encode(output.read())
+
+        attachment = self.env['ir.attachment'].create({
+            'name': f"{fecha}.xlsx",
+            'type': 'binary',
+            'datas': archivo_excel,
+            'res_model': 'ctm.liquidaciones',
+            'res_id': self[0].id,
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'new',
+        }
+
     def generate_simulations(self):
         return {
             'type': 'ir.actions.act_window',
