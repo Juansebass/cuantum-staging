@@ -132,6 +132,7 @@ class SaleOrder(models.Model):
                     'movement_type': compra_type.id,
                     'buyer': rec.partner_id.id,
                 })
+                rec.partner_id.button_recalcular_rpr()
             if rec.gestor_ofertar.code == 'CUANTUM':
                 self.env['ati.recurso.recompra.csf'].create({
                     'date': self.fecha_celebracion,
@@ -140,6 +141,7 @@ class SaleOrder(models.Model):
                     'movement_type': compra_type.id,
                     'buyer': rec.partner_id.id,
                 })
+                rec.partner_id.button_recalcular_rpr()
             if rec.gestor_ofertar.code == 'FCP':
                 self.env['ati.recurso.recompra.fcp'].create({
                     'date': self.fecha_celebracion,
@@ -148,6 +150,7 @@ class SaleOrder(models.Model):
                     'movement_type': compra_type.id,
                     'buyer': rec.partner_id.id,
                 })
+                rec.partner_id.button_recalcular_rpr()
         return res
 
     def action_assign(self):
