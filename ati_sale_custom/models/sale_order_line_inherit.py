@@ -129,7 +129,7 @@ class SaleOrder(models.Model):
                     'date': self.fecha_celebracion,
                     'value': rec.amount_total,
                     'investment_type': rec.tipo_producto_ofertar.id,
-                    'movement_type': compra_type,
+                    'movement_type': compra_type.id,
                     'buyer': rec.partner_id.id,
                 })
             if rec.gestor_ofertar.code == 'CUANTUM':
@@ -137,7 +137,7 @@ class SaleOrder(models.Model):
                     'date': self.fecha_celebracion,
                     'value': rec.amount_total,
                     'investment_type': rec.tipo_producto_ofertar.id,
-                    'movement_type': compra_type,
+                    'movement_type': compra_type.id,
                     'buyer': rec.partner_id.id,
                 })
             if rec.gestor_ofertar.code == 'FCP':
@@ -145,7 +145,7 @@ class SaleOrder(models.Model):
                     'date': self.fecha_celebracion,
                     'value': rec.amount_total,
                     'investment_type': rec.tipo_producto_ofertar.id,
-                    'movement_type': compra_type,
+                    'movement_type': compra_type.id,
                     'buyer': rec.partner_id.id,
                 })
         return res
