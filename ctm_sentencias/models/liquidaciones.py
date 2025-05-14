@@ -424,6 +424,9 @@ class Liquidaciones(models.Model):
         for col_num, header in enumerate(headers):
             worksheet.write(0, col_num, header)
 
+        precio_format = workbook.add_format({'num_format': '0.000000'})
+        worksheet.set_column('G:G', None, precio_format)
+
         row = 1
         for rec in self:
             if 'BPAC' not in rec.vehiculo.name:
