@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <tree string="Pagadores">
                 <field name="name"/>
+                <field name="plazo"/>
             </tree>
         </field>
     </record>
@@ -19,6 +20,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="plazo"/>
                     </group>
                 </sheet>
             </form>

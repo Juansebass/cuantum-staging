@@ -7,3 +7,4 @@ class Pagador(models.Model):
     _description = 'Pagadores Sentencias'
 
     name = fields.Many2one('res.partner', 'Pagador', required=1)
+    plazo = fields.Integer('Plazo (Meses)', required=1)
