@@ -12,7 +12,7 @@ class Sentencias(models.Model):
     name = fields.Char('Nombre', required=1)
     emisor = fields.Many2one('res.partner', 'Emisor', required=1)
     pagador = fields.Many2one('ctm.pagador', 'Pagador', required=1)
-    codigo = fields.Char('Código', required=1)
+    codigo = fields.Many2one('ctm.codigo.liquidacion', 'Código Liquidación', required=1)
     statum = fields.Selection(
         string='Vehículo',
         selection=[

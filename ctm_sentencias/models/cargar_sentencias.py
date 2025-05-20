@@ -103,10 +103,9 @@ class CargarSentencias(models.Model):
                             "El CSV no se procesara porque no se encuentra emisor o no está vinculado {0}".format(
                                 emisor)
                         )
-                    pagador = self.env['res.partner'].search(
+                    pagador = self.env['ctm.pagador'].search(
                         [
-                            (self.client_match, '=', pagador),
-                            ('act_in', '=', 'activo')
+                            ('name', '=', pagador)
                         ])
                     if len(emisor) > 1:
                         raise ValidationError(
@@ -127,6 +126,18 @@ class CargarSentencias(models.Model):
                         raise ValidationError(
                             "El CSV no se procesara porque no se encuentra vehiculo "
                             "o no está vinculado {0}".format(vehiculo)
+                        )
+
+                    codigo = self.env['ctm.codigo.liquidacion'].search(
+                        [('name', '=', codigo)])
+                    if len(codigo) > 1:
+                        raise ValidationError(
+                            "El CSV no se procesara por codigo con nombre repetido en sistema. "
+                            "El nombre {0} lo tienen dos o mas codigos".format(codigo))
+                    elif len(codigo) == 0:
+                        raise ValidationError(
+                            "El CSV no se procesara porque no se encuentra codigo "
+                            "o no está vinculado {0}".format(codigo)
                         )
 
                     titulo_existente = self.env['ctm.sentencias'].search(

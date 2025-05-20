@@ -23,6 +23,7 @@
         'views/valoracion_6_4_views.xml',
         'views/vehiculos_views.xml',
         'views/pagador_views.xml',
+        'views/codigo_liquidacion_views.xml',
         'wizards/simulation_wizard_view.xml',
         'wizards/valoracion_6_4_simulation_wizard_view.xml',
     ],

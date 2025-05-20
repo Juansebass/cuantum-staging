@@ -19,3 +19,4 @@ access_ctm_valoracion_simulacion_user,ctm.valoracion_simulacion.user,model_ctm_v
 access_ctm_valoracion_6_4_simulation_wizard_user,ctm.valoracion_6_4_simulation_wizard.user,model_ctm_valoracion_6_4_simulation_wizard,base.group_user,1,1,1,1
 access_ctm_vehiculos_user,ctm.vehiculos.user,model_ctm_vehiculos,base.group_user,1,1,1,1
 access_ctm_pagador_user,ctm.pagador.user,model_ctm_pagador,base.group_user,1,1,1,1
+access_ctm_codigo_liquidacion_user,ctm.codigo_liquidacion.user,model_ctm_codigo_liquidacion,base.group_user,1,1,1,1

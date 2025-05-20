@@ -48,7 +48,7 @@ class Valoracion64(models.Model):
     def generar_valoracion(self):
         self.emisor = self.sentencia.emisor
         self.pagador = self.sentencia.pagador
-        self.codigo = self.sentencia.codigo
+        self.codigo = self.sentencia.codigo.name
         self.fecha_ejecutoria = self.sentencia.fecha_ejecutoria
         self.fecha_cuenta_cobro = self.sentencia.fecha_cuenta_cobro
         self.fecha_vencimiento = self.sentencia.fecha_vencimiento

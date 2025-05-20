@@ -108,7 +108,7 @@ class Proyecciones(models.Model):
 
             record.emisor = record.sentencia_id.emisor
             record.pagador = record.sentencia_id.pagador
-            record.codigo = record.sentencia_id.codigo
+            record.codigo = record.sentencia_id.codigo.name
             record.vehiculo = record.sentencia_id.vehiculo
             record.fecha_ejecutoria = record.sentencia_id.fecha_ejecutoria
             record.fecha_cuenta_cobro = record.sentencia_id.fecha_cuenta_cobro
@@ -117,7 +117,7 @@ class Proyecciones(models.Model):
 
     def generar_liquidacion_inicial(self):
         for record in self:
-            codigo = record.sentencia_id.codigo
+            codigo = record.sentencia_id.codigo.name
             fecha_ejecutoria = record.sentencia_id.fecha_ejecutoria
             fecha_periodo_cero = None
             fecha_cuenta_cobro = record.sentencia_id.fecha_cuenta_cobro
@@ -218,7 +218,7 @@ class Proyecciones(models.Model):
     def generar_proyeccion_venta(self):
         for record in self:
             record.proyeccion_venta_ids.unlink()
-            codigo = record.sentencia_id.codigo
+            codigo = record.sentencia_id.codigo.name
             fecha_liquidar = record.sentencia_id.fecha_liquidar
             fecha_acido = record.sentencia_id.fecha_liquidar_acido
             fecha_neutral = record.sentencia_id.fecha_liquidar_neutral
