@@ -1,0 +1,27 @@
+<odoo>
+    <!-- Tree View for ctm.pagadores -->
+    <record id="view_ctm_pagadores_tree" model="ir.ui.view">
+        <field name="name">ctm.pagadores.tree</field>
+        <field name="model">ctm.pagador</field>
+        <field name="arch" type="xml">
+            <tree string="Pagadores">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for ctm.pagadores -->
+    <record id="view_ctm_pagadores_form" model="ir.ui.view">
+        <field name="name">ctm.pagadores.form</field>
+        <field name="model">ctm.pagador</field>
+        <field name="arch" type="xml">
+            <form string="Pagador">
+                <sheet>
+                    <group>
+                        <field name="pagador"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

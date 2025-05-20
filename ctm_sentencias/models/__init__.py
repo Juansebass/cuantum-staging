@@ -9,3 +9,4 @@ from . import liquidacion_simulacion  # noqa
 from .import proyecciones  # noqa
 from . import valoracion_6_4  # noqa
 from . import vehiculos  # noqa
+from . import pagador  # noqa
