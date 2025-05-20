@@ -5,7 +5,7 @@
         <field name="model">ctm.pagador</field>
         <field name="arch" type="xml">
             <tree string="Pagadores">
-                <field name="name"/>
+                <field name="pagador"/>
             </tree>
         </field>
     </record>
