@@ -6,4 +6,4 @@ class Pagador(models.Model):
     _name = 'ctm.pagador'
     _description = 'Pagadores Sentencias'
 
-    pagador = fields.Many2one('res.partner', 'Pagador', required=1)
+    name = fields.Many2one('res.partner', 'Pagador', required=1)
