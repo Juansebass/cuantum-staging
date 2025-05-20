@@ -77,7 +77,7 @@
     <menuitem id="menu_tasas" name="Tasas" parent="menu_configuraciones" action="action_open_tasas"/>
     <menuitem id="menu_vehiculos" name="Vehículos" parent="menu_configuraciones" action="action_open_vehiculos"/>
     <menuitem id="menu_pagadores" name="Pagadores" parent="menu_configuraciones" action="action_open_pagadores"/>
-    <menuitem id="menu_codigo_liquidacion" name="Códigos" parent="menu_codigos" action="action_open_codigos"/>
+    <menuitem id="menu_codigo_liquidacion" name="Códigos" parent="menu_configuraciones" action="action_open_codigos"/>
     <menuitem id="menu_liquidaciones" name="Liquidaciones" parent="menu_liquidaciones_main" action="action_open_liquidaciones"/>
     <menuitem id="menu_crear_sentencias" name="Crear Liquidaciones" parent="menu_liquidaciones_main" action="action_crear_sentencias"/>
 </odoo>
