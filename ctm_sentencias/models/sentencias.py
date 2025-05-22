@@ -45,7 +45,7 @@ class Sentencias(models.Model):
     valor_giro = fields.Float('Valor Giro')
     comision = fields.Float('Comisión', default=0.0)
     valor_contable_ayer = fields.Float('Valor Contable Ayer')
-    precio = fields.Float('Precio', required=1)
+    precio = fields.Float('Precio')
     costas = fields.Float('Costas')
 
     #  Descuentos
