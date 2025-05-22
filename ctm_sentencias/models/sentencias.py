@@ -110,13 +110,6 @@ class Sentencias(models.Model):
                 raise ValidationError('Debe ingresar la Fecha de Vencimiento')
             if not self.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
-        elif self.vehiculo.name == 'CSF':
-            if not self.fecha_liquidar_neutral:
-                raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
-            if not self.fecha_liquidar_optimista:
-                raise ValidationError('Debe ingresar la Fecha a Liquidar Optimista')
-            if not self.fecha_liquidar_acido:
-                raise ValidationError('Debe ingresar la Fecha a Liquidar Ácido')
         return res
 
     def generar_proyeccion(self):
