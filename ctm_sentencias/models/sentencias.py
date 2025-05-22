@@ -92,7 +92,7 @@ class Sentencias(models.Model):
         elif res.vehiculo.name == 'CSF':
             plazo = res.pagador.plazo
             days_difference = (res.fecha_liquidar - res.fecha_cuenta_cobro).days
-            res.fecha_liquidar_neutral = res.fecha_liquidar + timedelta(months=(plazo - (days_difference / 30)))
+            res.fecha_liquidar_neutral = res.fecha_liquidar + timedelta(days=((plazo * 30) - (days_difference)))
             res.fecha_liquidar_optimista = res.fecha_liquidar_neutral - timedelta(days=120)
             res.fecha_liquidar_acido = res.fecha_liquidar_neutral + timedelta(days=120)
         return res
