@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api   # type: ignore
 from odoo.exceptions import ValidationError  # type: ignore
+from datetime import timedelta
 
 
 class Sentencias(models.Model):
@@ -89,12 +90,11 @@ class Sentencias(models.Model):
             if not res.fecha_compra:
                 raise ValidationError('Debe ingresar la Fecha de Compra')
         elif res.vehiculo.name == 'CSF':
-            if not res.fecha_liquidar_neutral:
-                raise ValidationError('Debe ingresar la Fecha a Liquidar Neutral')
-            if not res.fecha_liquidar_optimista:
-                raise ValidationError('Debe ingresar la Fecha a Liquidar Optimista')
-            if not res.fecha_liquidar_acido:
-                raise ValidationError('Debe ingresar la Fecha a Liquidar Ácido')
+            plazo = res.pagador.plazo
+            days_difference = (res.fecha_liquidar - res.fecha_cuenta_cobro).days
+            res.fecha_liquidar_neutral = res.fecha_liquidar + timedelta(days=(plazo - (days_difference / 30)))
+            res.fecha_liquidar_optimista = res.fecha_liquidar_neutral - timedelta(days=120)
+            res.fecha_liquidar_acido = res.fecha_liquidar_neutral + timedelta(days=120)
         return res
 
     def write(self, vals):
