@@ -47,6 +47,10 @@ class Proyecciones(models.Model):
     fecha_ejecutoria = fields.Date('Fecha de Ejecutoría', required=1)
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
 
+    comision_gestion_neutral = fields.Float('Comisión Gestión Neutral')
+    comision_gestion_optimista = fields.Float('Comisión Gestión Optimista')
+    comision_gestion_acido = fields.Float('Comisión Gestión Ácido')
+
     # TODO Las proyecciones y acciones solo son visibles para sentencias de statum csf
 
     def calcular_proyeccion(self):
@@ -250,6 +254,7 @@ class Proyecciones(models.Model):
                 raise ValidationError('La fecha de liquidación optimista no puede ser igual a la fecha de liquidación')
 
             valor_esperado = 0
+            valor_comision_gestion_acumulado = 0
             for fecha in fechas:
                 # Buscando tasas
                 tasa_conf = self.env['ctm.tasas'].search(
@@ -291,9 +296,11 @@ class Proyecciones(models.Model):
                     }
                 )
                 # Generando TIR
+                valor_comision_gestion_acumulado += valor_comision_gestion
                 if row == 0:
                     cash_flows.append((-valor_esperado, fecha[0]))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_optimista:
+                    record.comision_gestion_optimista = valor_comision_gestion_acumulado
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_optimista = record._generar_tir(cash_flows)
@@ -302,6 +309,7 @@ class Proyecciones(models.Model):
                     except Exception:
                         raise ValidationError('Error al calcular la TIR Optimista con flujo de caja {0}'.format(cash_flows))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_neutral:
+                    record.comision_gestion_neutral = valor_comision_gestion_acumulado
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_neutral = record._generar_tir(cash_flows)
@@ -310,6 +318,7 @@ class Proyecciones(models.Model):
                     except Exception:
                         raise ValidationError('Error al calcular la TIR Neutral con flujo de caja {0}'.format(cash_flows))
                 if fecha[1] == record.sentencia_id.fecha_liquidar_acido:
+                    record.comision_gestion_acido = valor_comision_gestion_acumulado
                     cash_flows.append((valor_esperado, fecha[1]))
                     try:
                         record.tir_acido = record._generar_tir(cash_flows)
