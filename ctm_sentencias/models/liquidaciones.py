@@ -432,15 +432,15 @@ class Liquidaciones(models.Model):
             if 'BPAC' not in rec.vehiculo.name:
                 raise ValidationError(f'No se puede generar el archivo BPAC para la liquidación {rec.name} porque no es de este vehículo')
 
-            fecha = rec.fecha_liquidar.strftime('%Y%m%d')
+            fecha = rec.fecha_liquidar.strftime('%d%m%Y')
             nemotecnico = rec.nemotecnico
-            emision = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
-            fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
+            emision = rec.fecha_compra.strftime('%d%m%Y') if rec.fecha_compra else ''
+            fecha_vencimiento = rec.fecha_vencimiento.strftime('%d%m%Y') if rec.fecha_vencimiento else ''
             tasa = 0.000000
             periodicidad = "NO"
             precio = round(rec.precio, 6)
             metodo_valoracion_351 = 13
-            portafolio = "P.FCPBPACSI"
+            portafolio = "FCPBPACSI"
 
             data = [
                 fecha, nemotecnico, emision, fecha_vencimiento, tasa,

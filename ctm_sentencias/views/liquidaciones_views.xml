@@ -111,7 +111,7 @@
         </field>
     </record>
 
-    <record id="create_txt_bpac_action" model="ir.actions.server">
+    <!-- <record id="create_txt_bpac_action" model="ir.actions.server">
         <field name="name">Crear TXT BPAC</field>
         <field name="state">code</field>
         <field name="type">ir.actions.server</field>
@@ -122,7 +122,7 @@
             if records:
                 action = records.create_txt_bpac()
         </field>
-    </record>
+    </record> -->
     <record id="create_excel_bpac_action" model="ir.actions.server">
         <field name="name">Crear Excel BPAC</field>
         <field name="state">code</field>
