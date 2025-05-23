@@ -26,10 +26,10 @@
                         <field name="valor_descuento_diluido"/>
                         <field name="valor_compra_beneficiario"/>
                         <field name="valor_venta_inversionista"/>
-                        <field name="total_descuentos"/>
-                        <field name="porcentaje_total_descuentos" widget="percentage"/>
-                        <field name="total_descuentos_gastos"/>
-                        <field name="porcentaje_total_descuentos_gastos" widget="percentage"/>
+                        <field name="total_descuentos_vendedor"/>
+                        <field name="porcentaje_total_descuentos_vendedor" widget="percentage"/>
+                        <field name="total_descuentos_comprador"/>
+                        <field name="porcentaje_total_descuentos_comprador" widget="percentage"/>
                     </group>
                     <group string="TIR">
                         <field name="tir_optimista"/>
@@ -100,10 +100,10 @@
                 <field name="valor_descuento_diluido" optional="hide"/>
                 <field name="valor_compra_beneficiario" optional="hide"/>
                 <field name="valor_venta_inversionista" optional="hide"/>
-                <field name="total_descuentos" optional="hide"/>
-                <field name="porcentaje_total_descuentos" optional="hide"/>
-                <field name="total_descuentos_gastos" optional="hide"/>
-                <field name="porcentaje_total_descuentos_gastos" optional="hide"/>
+                <field name="total_descuentos_vendedor" optional="hide"/>
+                <field name="porcentaje_total_descuentos_vendedor" optional="hide"/>
+                <field name="total_descuentos_comprador" optional="hide"/>
+                <field name="porcentaje_total_descuentos_comprador" optional="hide"/>
                 <field name="tir_optimista" optional="hide"/>
                 <field name="tir_neutral" optional="hide"/>
                 <field name="tir_acido" optional="hide"/>
