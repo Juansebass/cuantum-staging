@@ -19,7 +19,7 @@ class Liquidaciones(models.Model):
     name = fields.Char('Nombre')
     sentencia = fields.Many2one('ctm.sentencias', 'Sentencia', required=1)
     emisor = fields.Many2one('res.partner', 'Emisor')
-    pagador = fields.Many2one('res.partner', 'Pagador')
+    pagador = fields.Many2one('ctm.pagador', 'Pagador')
     codigo = fields.Char('Código')
     fecha_ejecutoria = fields.Date('Fecha de Ejecutoría')
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro')
