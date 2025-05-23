@@ -19,10 +19,10 @@ class Proyecciones(models.Model):
     valor_descuento_diluido = fields.Float(string='Valor Descuento Diluido')
     valor_compra_beneficiario = fields.Float(string='Valor Compra Beneficiario')
     valor_venta_inversionista = fields.Float(string='Valor Venta Inversionista')
-    total_descuentos = fields.Float(string='Total Descuentos')
-    total_descuentos_gastos = fields.Float(string='Total Descuentos Gastos')
-    porcentaje_total_descuentos = fields.Float(string='Porcentaje Total Descuentos')
-    porcentaje_total_descuentos_gastos = fields.Float(string='Porcentaje Total Descuentos Gastos')
+    total_descuentos_vendedor = fields.Float(string='Total Descuentos Vendedor')
+    total_descuentos_comprador = fields.Float(string='Total Descuentos Comprador')
+    porcentaje_total_descuentos_vendedor = fields.Float(string='Porcentaje Total Descuentos Vendedor')
+    porcentaje_total_descuentos_comprador = fields.Float(string='Porcentaje Total Descuentos Comprador')
     tir_optimista = fields.Float(string='TIR Optimista')
     tir_neutral = fields.Float(string='TIR Neutral')
     tir_acido = fields.Float(string='TIR Ácido')
@@ -61,7 +61,6 @@ class Proyecciones(models.Model):
             record.liquidacion_inicial_ids.unlink()
             record.generar_liquidacion_inicial()
             # Resultados
-
             record.retencion_total = (
                 record.sentencia_id.retencion_total * record.total_intereses
             )
@@ -73,15 +72,15 @@ class Proyecciones(models.Model):
             record.valor_descuento_diluido = (
                 record.resultado * record.sentencia_id.descuento_diluido
             )
-            record.total_descuentos = (
+            record.total_descuentos_vendedor = (
                 record.retencion_total +
                 record.estructuracion +
                 record.ingreso_anticipado_cuantum +
                 record.valor_descuento_diluido
             )
             record.valor_compra_beneficiario = (
-                record.resultado -
-                record.total_descuentos
+                record.resultado
+                - record.total_descuentos_vendedor
             )
             record.comision_interna = (
                 record.valor_compra_beneficiario *
@@ -91,23 +90,23 @@ class Proyecciones(models.Model):
                 record.sentencia_id.intermediacion *
                 record.valor_compra_beneficiario
             )
-            record.porcentaje_total_descuentos = (
-                record.total_descuentos / record.resultado
-            )
-            record.total_descuentos_gastos = (
-                record.retencion_total +
-                record.estructuracion +
+
+            record.total_descuentos_comprador = (
+                record.valor_descuento_diluido +
                 record.intermediacion +
-                record.ingreso_anticipado_cuantum +
                 record.comision_interna
             )
-            record.porcentaje_total_descuentos_gastos = (
-                record.total_descuentos_gastos / record.resultado
-            )
+
             record.valor_venta_inversionista = (
-                record.resultado +
-                record.total_descuentos_gastos
-                - record.valor_descuento_diluido
+                record.resultado -
+                record.total_descuentos_comprador
+            )
+            record.porcentaje_total_descuentos_comprador = (
+                record.total_descuentos_comprador / record.resultado
+            )
+
+            record.porcentaje_total_descuentos_vendedor = (
+                record.total_descuentos_vendedor / record.resultado
             )
 
             record.emisor = record.sentencia_id.emisor
