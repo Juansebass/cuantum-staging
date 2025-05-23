@@ -62,6 +62,11 @@
                             </field>
                         </page>
                         <page name="proyeccion_venta" string="Proyección para Venta">
+                            <group>
+                                <field name="comision_gestion_optimista" readonly="1"/>
+                                <field name="comision_gestion_neutral" readonly="1"/>
+                                <field name="comision_gestion_acido" readonly="1"/>
+                            </group>
                             <field name="proyeccion_venta_ids" readonly="1">
                                 <tree editable="bottom">
                                     <field name="fecha_inicial"/>
