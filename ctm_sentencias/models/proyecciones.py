@@ -42,7 +42,7 @@ class Proyecciones(models.Model):
 
     emisor = fields.Many2one('res.partner', 'Emisor')
     pagador = fields.Many2one('ctm.pagador', 'Pagador')
-    codigo = fields.Char('Código', required=1)
+    codigo = fields.Char('Código')
     vehiculo = fields.Many2one('ctm.vehiculos', 'Vehículo')
     fecha_ejecutoria = fields.Date('Fecha de Ejecutoría')
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro')
