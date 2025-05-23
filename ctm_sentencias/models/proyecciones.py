@@ -40,12 +40,12 @@ class Proyecciones(models.Model):
     # Proyecciones de Venta
     proyeccion_venta_ids = fields.One2many('ctm.proyeccion_venta', 'proyeccion_id', string='Proyecciones de Venta')
 
-    emisor = fields.Many2one('res.partner', 'Emisor', required=1)
-    pagador = fields.Many2one('ctm.pagador', 'Pagador', required=1)
+    emisor = fields.Many2one('res.partner', 'Emisor')
+    pagador = fields.Many2one('ctm.pagador', 'Pagador')
     codigo = fields.Char('Código', required=1)
-    vehiculo = fields.Many2one('ctm.vehiculos', 'Vehículo', required=1)
-    fecha_ejecutoria = fields.Date('Fecha de Ejecutoría', required=1)
-    fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro', required=1)
+    vehiculo = fields.Many2one('ctm.vehiculos', 'Vehículo')
+    fecha_ejecutoria = fields.Date('Fecha de Ejecutoría')
+    fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro')
 
     comision_gestion_neutral = fields.Float('Comisión Gestión Neutral')
     comision_gestion_optimista = fields.Float('Comisión Gestión Optimista')
