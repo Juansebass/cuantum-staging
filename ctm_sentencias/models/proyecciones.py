@@ -93,6 +93,7 @@ class Proyecciones(models.Model):
 
             record.total_descuentos_comprador = (
                 record.valor_descuento_diluido +
+                record.ingreso_anticipado_cuantum +
                 record.intermediacion +
                 record.comision_interna
             )
