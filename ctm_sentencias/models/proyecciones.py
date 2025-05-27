@@ -104,7 +104,7 @@ class Proyecciones(models.Model):
                 record.comision_interna
             )
             record.porcentaje_total_descuentos_vendedor = (
-                record.total_descuentos / record.resultado
+                record.total_descuentos_vendedor / record.resultado
             )
             record.total_descuentos_comprador = (
                 record.valor_descuento_diluido
