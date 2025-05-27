@@ -110,7 +110,7 @@ class Proyecciones(models.Model):
                 record.valor_descuento_diluido
             )
             record.porcentaje_total_descuentos_comprador = (
-                record.total_descuentos_gastos / record.resultado
+                record.total_descuentos_comprador / record.resultado
             )
 
             record.emisor = record.sentencia_id.emisor
