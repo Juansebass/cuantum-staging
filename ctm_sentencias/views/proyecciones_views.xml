@@ -19,18 +19,16 @@
                         <field name="fecha_ejecutoria" readonly="1"/>
                         <field name="fecha_cuenta_cobro" readonly="1"/>
                         <field name="retencion_total"/>
+                        <field name="estructuracion"/>
+                        <field name="valor_venta_inversionista"/>
+                        <field name="valor_descuento_diluido"/>
+                        <field name="ingreso_anticipado_cuantum"/>
+                        <field name="valor_sin_comisiones"/>
                         <field name="intermediacion"/>
                         <field name="comision_interna"/>
-                        <field name="estructuracion"/>
-                        <field name="ingreso_anticipado_cuantum"/>
-                        <field name="valor_descuento_diluido"/>
                         <field name="valor_compra_beneficiario"/>
-                        <field name="valor_sin_comisiones"/>
-                        <field name="valor_venta_inversionista"/>
                         <field name="total_descuentos_vendedor"/>
                         <field name="porcentaje_total_descuentos_vendedor" widget="percentage"/>
-                        <field name="total_descuentos_comprador"/>
-                        <field name="porcentaje_total_descuentos_comprador" widget="percentage"/>
                     </group>
                     <group string="TIR">
                         <field name="tir_optimista"/>
@@ -80,6 +78,17 @@
                                     <field name="valor_comision_gestion"/>
                                     <field name="valor_esperado"/>
                                 </tree>
+                            </field>
+                        </page>
+                        <page name="instruccion_tesoreria" string="Instrucción Tesorería">
+                            <group>
+                                <field name="valor_venta_inversionista" readonly="1"/>
+                                <field name="valor_compra_beneficiario" readonly="1"/>
+                                <field name="intermediacion" readonly="1"/>
+                                <field name="comision_interna" readonly="1"/>
+                                <field name="estructuracion" readonly="1"/>
+                                <field name="ingreso_anticipado_cuantum" readonly="1"/>
+                            </group>
                             </field>
                         </page>
                     </notebook>
