@@ -89,7 +89,6 @@
                                 <field name="estructuracion" readonly="1"/>
                                 <field name="ingreso_anticipado_cuantum" readonly="1"/>
                             </group>
-                            </field>
                         </page>
                     </notebook>
                 </sheet>
