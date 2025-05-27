@@ -32,6 +32,7 @@ class Proyecciones(models.Model):
     valor_esperado_acido = fields.Float(string='Valor Esperado Ácido')
     valor_esperado_compra = fields.Float(string='Valor Esperado Compra')
     comision_interna = fields.Float(string='Comisión Interna')
+    valor_sin_comisiones = fields.Float(string='Valor sin Comisiones')
     # Liquidaciones Iniciales
     liquidacion_inicial_ids = fields.One2many('ctm.liquidacion_inicial', 'proyeccion_id', string='Liquidaciones Iniciales')
     valor_condena = fields.Float(string='Valor Condena', readonly=True)
@@ -65,47 +66,51 @@ class Proyecciones(models.Model):
                 record.sentencia_id.retencion_total * record.total_intereses
             )
             record.estructuracion = record.sentencia_id.estructuracion
-            record.ingreso_anticipado_cuantum = (
-                record.sentencia_id.ingreso_anticipado_cuantum *
-                record.resultado
+            record.valor_venta_inversionista = (
+                record.resultado * (1 - record.sentencia_id.descuento_diluido)
             )
             record.valor_descuento_diluido = (
-                record.resultado * record.sentencia_id.descuento_diluido
+                record.resultado - record.valor_venta_inversionista
+            )
+            record.ingreso_anticipado_cuantum = (
+                record.valor_venta_inversionista *
+                record.sentencia_id.ingreso_anticipado_cuantum
+            )
+            record.valor_sin_comisiones = (
+                record.resultado -
+                record.estructuracion -
+                record.valor_descuento_diluido -
+                record.ingreso_anticipado_cuantum
+            )
+            record.intermediacion = (
+                record.sentencia_id.intermediacion *
+                record.valor_sin_comisiones
+            )
+            record.comision_interna = (
+                record.valor_sin_comisiones *
+                record.sentencia_id.comision_interna
+            )
+            record.valor_compra_beneficiario = (
+                record.valor_sin_comisiones -
+                record.intermediacion -
+                record.comision_interna
             )
             record.total_descuentos_vendedor = (
                 record.retencion_total +
                 record.estructuracion +
                 record.ingreso_anticipado_cuantum +
-                record.valor_descuento_diluido
-            )
-            record.valor_compra_beneficiario = (
-                record.resultado
-                - record.total_descuentos_vendedor
-            )
-            record.comision_interna = (
-                record.valor_compra_beneficiario *
-                record.sentencia_id.comision_interna
-            )
-            record.intermediacion = (
-                record.sentencia_id.intermediacion *
-                record.valor_compra_beneficiario
-            )
-
-            record.total_descuentos_comprador = (
+                record.valor_descuento_diluido +
                 record.intermediacion +
                 record.comision_interna
             )
-
-            record.valor_venta_inversionista = (
-                record.resultado -
-                record.total_descuentos_comprador
+            record.porcentaje_total_descuentos_vendedor = (
+                record.total_descuentos / record.resultado
+            )
+            record.total_descuentos_comprador = (
+                record.valor_descuento_diluido
             )
             record.porcentaje_total_descuentos_comprador = (
-                record.total_descuentos_comprador / record.resultado
-            )
-
-            record.porcentaje_total_descuentos_vendedor = (
-                record.total_descuentos_vendedor / record.resultado
+                record.total_descuentos_gastos / record.resultado
             )
 
             record.emisor = record.sentencia_id.emisor
