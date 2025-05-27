@@ -25,6 +25,7 @@
                         <field name="ingreso_anticipado_cuantum"/>
                         <field name="valor_descuento_diluido"/>
                         <field name="valor_compra_beneficiario"/>
+                        <field name="valor_sin_comisiones"/>
                         <field name="valor_venta_inversionista"/>
                         <field name="total_descuentos_vendedor"/>
                         <field name="porcentaje_total_descuentos_vendedor" widget="percentage"/>
@@ -99,6 +100,7 @@
                 <field name="estructuracion" optional="hide"/>
                 <field name="valor_descuento_diluido" optional="hide"/>
                 <field name="valor_compra_beneficiario" optional="hide"/>
+                <field name="valor_sin_comisiones" optional="hide"/>
                 <field name="valor_venta_inversionista" optional="hide"/>
                 <field name="total_descuentos_vendedor" optional="hide"/>
                 <field name="porcentaje_total_descuentos_vendedor" optional="hide"/>
