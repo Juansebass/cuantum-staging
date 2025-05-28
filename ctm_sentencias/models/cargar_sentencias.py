@@ -159,8 +159,8 @@ class CargarSentencias(models.Model):
                         "name": titulo,
                         "emisor": emisor.id,
                         "pagador": pagador.id,
-                        "codigo": codigo,
-                        "vehiculo": vehiculo,
+                        "codigo": codigo.id,
+                        "vehiculo": vehiculo.id,
                         "fecha_ejecutoria": datetime.strptime(
                             fecha_ejecutoria, '%d/%m/%Y'
                         ),
