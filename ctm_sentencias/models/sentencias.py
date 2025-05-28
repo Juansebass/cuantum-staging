@@ -140,3 +140,19 @@ class Sentencias(models.Model):
     def generar_proyecciones(self):
         for record in self:
             record.generar_proyeccion()
+
+    def tir_deseada(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'ctm.tir_deseada.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_date': fields.Date.today(),
+                'active_ids': self.ids,
+            },
+        }
+
+    def generar_tir_deseada(self, tir_deseada):
+        for record in self:
+            pass

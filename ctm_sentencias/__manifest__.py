@@ -26,6 +26,7 @@
         'views/codigo_liquidacion_views.xml',
         'wizards/simulation_wizard_view.xml',
         'wizards/valoracion_6_4_simulation_wizard_view.xml',
+        'wizards/tir_deseada_wizard_view.xml',
     ],
     'installable': True,
     'application': True,
