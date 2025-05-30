@@ -267,8 +267,8 @@ class Liquidaciones(models.Model):
             fecha_cuenta_cobro = rec.fecha_cuenta_cobro.strftime('%Y%m%d')
             fecha_emision = rec.fecha_ejecutoria.strftime('%Y%m%d')
             fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
-            nit_emisor = rec.pagador.vat
-            nombre_emisor = rec.pagador.name
+            nit_emisor = rec.pagador.name.vat
+            nombre_emisor = rec.pagador.name.name
             fecha_compra = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
             nominal = round(rec.valor_condena, 2)
             valor_giro = round(rec.valor_giro, 2) if rec.valor_giro else 0
@@ -367,8 +367,8 @@ class Liquidaciones(models.Model):
             fecha_cuenta_cobro = rec.fecha_cuenta_cobro.strftime('%Y%m%d')
             fecha_emision = rec.fecha_ejecutoria.strftime('%Y%m%d')
             fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
-            nit_emisor = rec.pagador.vat
-            nombre_emisor = rec.pagador.name
+            nit_emisor = rec.pagador.name.vat
+            nombre_emisor = rec.pagador.name.name
             fecha_compra = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
             nominal = round(rec.valor_condena, 2)
             valor_giro = round(rec.valor_giro, 2) if rec.valor_giro else 0

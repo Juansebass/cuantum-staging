@@ -154,5 +154,4 @@ class Sentencias(models.Model):
         }
 
     def generar_tir_deseada(self, tir_deseada):
-        for record in self:
-            pass
+        pass

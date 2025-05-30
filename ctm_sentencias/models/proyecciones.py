@@ -52,6 +52,17 @@ class Proyecciones(models.Model):
     comision_gestion_optimista = fields.Float('Comisión Gestión Optimista')
     comision_gestion_acido = fields.Float('Comisión Gestión Ácido')
 
+    ultima_generada = fields.Boolean(string='Última Proyección Generada', default=False)
+
+    def create(self, vals):
+        proyecciones_existentes = self.search([('sentencia_id', '=', vals['sentencia_id'])])
+        if proyecciones_existentes:
+            for proyeccion in proyecciones_existentes:
+                proyeccion.ultima_generada = False
+        vals['ultima_generada'] = True
+
+        return super(Proyecciones, self).create(vals)
+
     # TODO Las proyecciones y acciones solo son visibles para sentencias de statum csf
 
     def calcular_proyeccion(self):
@@ -368,6 +379,19 @@ class Proyecciones(models.Model):
         irr = opt.root_scalar(npv, bracket=[-0.99, 5], method='brentq').root
         tir = irr * 100
         return tir
+
+    def calcular_proyeccion_tir_deseada(self, tir_deseada):
+        for record in self:
+            record.liquidacion_inicial_ids.unlink()
+            record.generar_liquidacion_inicial()
+
+            record.emisor = record.sentencia_id.emisor
+            record.pagador = record.sentencia_id.pagador
+            record.codigo = record.sentencia_id.codigo.name
+            record.vehiculo = record.sentencia_id.vehiculo
+
+
+
 
 
 class LiquidacionInicial(models.Model):

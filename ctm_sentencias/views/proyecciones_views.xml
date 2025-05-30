@@ -12,6 +12,7 @@
                     <group>
                         <field name="name"  readonly="1"/>
                         <field name="sentencia_id"/>
+                        <field name="ultima_generada"/>
                         <field name="emisor" readonly="1"/>
                         <field name="pagador" readonly="1"/>
                         <field name="codigo" readonly="1"/>
@@ -103,6 +104,7 @@
             <tree string="Proyecciones">
                 <field name="name" optional="show" readonly="1"/>
                 <field name="sentencia_id" optional="show"/>
+                <field name="ultima_generada" optional="show"/>
                 <field name="retencion_total" optional="hide"/>
                 <field name="intermediacion" optional="hide"/>
                 <field name="estructuracion" optional="hide"/>
@@ -119,6 +121,16 @@
                 <field name="tir_acido" optional="hide"/>
                 <field name="tir_compra" optional="hide"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="view_ctm_proyecciones_filter" model="ir.ui.view">
+        <field name="name">ctm.proyecciones.filter</field>
+        <field name="model">ctm.proyecciones</field>
+        <field name="arch" type="xml">
+            <search string="Proyecciones">
+                <field name="ultima_generada"/>
+            </search>
         </field>
     </record>
 </odoo>
