@@ -129,7 +129,7 @@
         <field name="model">ctm.proyecciones</field>
         <field name="arch" type="xml">
             <search string="Proyecciones">
-                <field name="ultima_generada"/>
+                <filter name="ultima_generada" string="Última Proyección Generada" domain="[('ultima_generada', '=', True)]"/>
             </search>
         </field>
     </record>
