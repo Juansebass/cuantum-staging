@@ -126,7 +126,7 @@ class SaleOrder(models.Model):
                 # Agregando fecha de celebración a la orden
                 self.date_order = self.fecha_celebracion
                 # Agregando control de movimeiento
-                self.env['ctm.compras'].create({
+                compra_id = self.env['ctm.compras'].create({
                     'name': rec.name,
                     'partner_id': rec.partner_id.id,
                     'fecha': rec.fecha_celebracion,
@@ -139,6 +139,7 @@ class SaleOrder(models.Model):
                     'pagador_id': ol.pagador_line.id,
                     'titulo_id': ol.n_titulo
                 })
+                compra_id.procesar_movimiento()
             compra_type = self.env['ati.movement.type'].search([('code', '=', 'COMPRA')])
             if rec.gestor_ofertar.code == 'FCL':
                 self.env['ati.recurso.recompra.fcl'].create({
