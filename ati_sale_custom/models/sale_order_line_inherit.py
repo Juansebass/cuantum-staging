@@ -126,7 +126,7 @@ class SaleOrder(models.Model):
                 # Agregando fecha de celebración a la orden
                 self.date_order = self.fecha_celebracion
                 # Agregando control de movimeiento
-                self.env['ati.control.movimiento'].create({
+                self.env['ctm.compras'].create({
                     'name': rec.name,
                     'partner_id': rec.partner_id.id,
                     'fecha': rec.fecha_celebracion,
