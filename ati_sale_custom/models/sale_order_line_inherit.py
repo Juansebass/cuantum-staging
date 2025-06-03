@@ -107,7 +107,7 @@ class SaleOrder(models.Model):
                     'titulo_oferta' : o.id,
                     'price_unit' : o.value,
                     'product_id' : producto.id,
-                    'fujo' : o.flujo,
+                    'flujo' : o.flujo,
                     'cdg' : o.cdg,
                 })]
 
