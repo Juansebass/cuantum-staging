@@ -34,7 +34,7 @@ class ImportOfertaTitulos(models.Model):
             if self.skip_first_line and i == 0:
                 continue
             lista = line.split(self.delimiter)
-            if len(lista) > 6:
+            if len(lista) > 8:
                 titulo = lista[0]
                 emisor = lista[1]
                 pagador = lista[2]
@@ -42,12 +42,14 @@ class ImportOfertaTitulos(models.Model):
                 fch_vencimiento = lista[4]
                 tasa_desc = lista[5]
                 vpn_des = lista[6]
+                flujo = lista[7]
+                cdg = lista[8]
 
                 vals.clear()
-                
+
                 partner_emisor = self.env['res.partner']
                 if emisor != '':
-                    partner_emisor = self.env['res.partner'].search([('name','=',emisor)], limit=1)
+                    partner_emisor = self.env['res.partner'].search([('name', '=' , emisor)], limit=1)
                     if len(partner_emisor) > 0:
                         vals['issuing'] = partner_emisor.id
                     else:
@@ -85,11 +87,21 @@ class ImportOfertaTitulos(models.Model):
                     vpn_des = vpn_des.replace('$','').replace(' ', '').replace('.', '').replace(',', '.')
                     vals['value'] = vpn_des
 
+                    if flujo != '':
+                        vals['flujo'] = float(flujo.replace('$','').replace(' ', '').replace('.', '').replace(',', '.'))
+                    else:
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el flujo esta vacio, contenido de linea: {1}".format(i, line))
+
+                    if cdg != '':
+                        vals['cdg'] = float(cdg.replace('$','').replace(' ', '').replace('.', '').replace(',', '.'))
+                    else:
+                        raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el cdg esta vacio, contenido de linea: {1}".format(i, line))
+
                     # Buscamos si el titulo ya existe
                     titulo_existente = self.env['ati.titulo.oferta'].search([('name','=',titulo)],limit=1)
                     if len(titulo_existente) > 0:
                         raise ValidationError("El CSV no se procesara por estar mal formado en la linea {0}, el titulo: {1} ya existe como un titulo para ofertar".format(i, titulo))
-                    
+
                     titulo_creado = self.env['ati.titulo.oferta'].sudo().create(vals)
 
                     _procesados += "{} \n".format(titulo_creado.name)

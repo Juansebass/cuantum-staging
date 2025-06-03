@@ -106,7 +106,9 @@ class SaleOrder(models.Model):
                     'name' : o.name,
                     'titulo_oferta' : o.id,
                     'price_unit' : o.value,
-                    'product_id' : producto.id
+                    'product_id' : producto.id,
+                    'fujo' : o.flujo,
+                    'cdg' : o.cdg,
                 })]
 
     def action_confirm(self):
@@ -123,6 +125,20 @@ class SaleOrder(models.Model):
                         ol.titulo_oferta.cliente = rec.partner_id.id
                 # Agregando fecha de celebración a la orden
                 self.date_order = self.fecha_celebracion
+                # Agregando control de movimeiento
+                self.env['ati.control.movimiento'].create({
+                    'name': rec.name,
+                    'partner_id': rec.partner_id.id,
+                    'fecha': rec.fecha_celebracion,
+                    'investment_type_id': rec.tipo_producto_ofertar.id,
+                    'gestor_id': rec.gestor_ofertar.id,
+                    'valor': ol.price_unit,
+                    'flujo': ol.fujo,
+                    'cdg': ol.cdg,
+                    'emisor_id': ol.emisor_line.id,
+                    'pagador_id': ol.pagador_line.id,
+                    'titulo_id': ol.n_titulo
+                })
             compra_type = self.env['ati.movement.type'].search([('code', '=', 'COMPRA')])
             if rec.gestor_ofertar.code == 'FCL':
                 self.env['ati.recurso.recompra.fcl'].create({
@@ -245,3 +261,5 @@ class SaleOrderLine(models.Model):
     n_titulo = fields.Char('Nº Titulo')
     reserva = fields.Float('Reserva')
     titulo_oferta = fields.Many2one('ati.titulo.oferta', 'Titulo oferta')
+    flujo = fields.Float('Flujo')
+    cdg = fields.Float('CDG')

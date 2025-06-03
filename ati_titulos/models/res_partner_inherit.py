@@ -253,16 +253,15 @@ class ResPartner(models.Model):
             ).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
             for move in recursos_csf:
                 calculo_rendimiento = 0
-                # if previous_date:
-                #     calculo_rendimiento = npf.fv(
-                #         rate=rec.tasa_rendimiento_csf / 100,
-                #         nper=((move.date - previous_date).days) / 365,
-                #         pmt=0,
-                #         pv=-previous_saldo,
-                #         when='end'
-                #     )
-                # move.calculo_rendimiento = calculo_rendimiento - previous_saldo
-                move.calculo_rendimiento = calculo_rendimiento
+                if previous_date:
+                    calculo_rendimiento = npf.fv(
+                        rate=rec.tasa_rendimiento_csf / 100,
+                        nper=((move.date - previous_date).days) / 365,
+                        pmt=0,
+                        pv=-previous_saldo,
+                        when='end'
+                    )
+                move.calculo_rendimiento = calculo_rendimiento - previous_saldo
                 if move.movement_type.code in ['COMPRA', 'RETIRO', 'ADMINISTRACION']:
                     move.saldo = previous_saldo - move.value + move.calculo_rendimiento
                 else:
@@ -336,26 +335,28 @@ class ResPartner(models.Model):
         for rec in self:
             try:
                 if gestor_code == 'FCP':
-                    last_record = rec.recursos_recompra_fcp_ids[-1] if rec.recursos_recompra_fcp_ids else None
+                    last_record = rec.recursos_recompra_fcp_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1] if rec.recursos_recompra_fcp_ids else None
                     if last_record:
                         if abs(last_record.saldo - rec.total_fcp) > 10:
                             raise ValidationError(
-                                ("El saldo del último movimiento FCP no coincide con el saldo total")
+                                (f"El saldo del último movimiento FCP no coincide con el saldo total. Ultimo movimiento: {last_record.saldo} "
+                                 f"Saldo total: {rec.total_fcp}")
                             )
                     if len(rec.recursos_recompra_fcp_ids) > 0:
                         rec.recursos_recompra_fcp_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
                 elif gestor_code == 'FCL':
-                    last_record = rec.recursos_recompra_fcl_ids[-1] if rec.recursos_recompra_fcl_ids else None
+                    last_record = rec.recursos_recompra_fcl_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1] if rec.recursos_recompra_fcl_ids else None
                     if last_record:
                         if abs(last_record.saldo - rec.total_fcl) > 10:
                             raise ValidationError(
-                                ("El saldo del último movimiento FCL no coincide con el saldo total")
+                                (f"El saldo del último movimiento FCL no coincide con el saldo total. Ultimo movimiento: {last_record.saldo} "
+                                 f"Saldo total: {rec.total_fcl}")
                             )
                     if len(rec.recursos_recompra_fcl_ids) > 0:
                         rec.recursos_recompra_fcl_ids.filtered(lambda x: x.estado == 'abierto' and x.date <= date).write({'estado': 'cerrado'})
                 elif gestor_code == 'CUANTUM':
                     total_rendimiento_csf = 0
-                    last_record = rec.recursos_recompra_csf_ids[-1] if rec.recursos_recompra_csf_ids else None
+                    last_record = rec.recursos_recompra_csf_ids.sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)[-1] if rec.recursos_recompra_csf_ids else None
                     if last_record:
                         if abs(last_record.saldo - rec.total_csf) > 10:
                             raise ValidationError(
