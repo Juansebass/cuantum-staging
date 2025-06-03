@@ -133,7 +133,7 @@ class SaleOrder(models.Model):
                     'investment_type_id': rec.tipo_producto_ofertar.id,
                     'gestor_id': rec.gestor_ofertar.id,
                     'valor': ol.price_unit,
-                    'flujo': ol.fujo,
+                    'flujo': ol.flujo,
                     'cdg': ol.cdg,
                     'emisor_id': ol.emisor_line.id,
                     'pagador_id': ol.pagador_line.id,
