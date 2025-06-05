@@ -1,0 +1,25 @@
+<odoo>
+    <template id="portal_my_account_inherit" inherit_id="portal.portal_my_details">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <div class="form-group">
+                <label for="document_file">Documento:</label>
+                <t t-if="partner.document_file">
+                    <a t-att-href="'/web/content/res.partner/' + str(partner.id) + '/document_file/' + (partner.document_filename or 'Documento')" target="_blank">
+                        <t t-esc="partner.document_filename or 'Descargar Documento'"/>
+                    </a>
+                </t>
+                <t t-else="">
+                    <span>No hay documento subido.</span>
+                </t>
+            </div>
+            <div class="form-group">
+                <label for="ingresos_mensuales">Ingresos Mensuales:</label>
+                <span t-esc="partner.ingresos_mensuales"/>
+            </div>
+            <div class="form-group">
+                <label for="gastos_mensuales">Gastos Mensuales:</label>
+                <span t-esc="partner.gastos_mensuales"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
