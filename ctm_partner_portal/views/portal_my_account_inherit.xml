@@ -1,6 +1,6 @@
 <odoo>
     <template id="portal_my_account_inherit" inherit_id="portal.portal_my_details">
-        <xpath expr="//div[@id='wrap']" position="inside">
+        <xpath expr="//div[@id='portal_content']" position="inside">
             <div class="form-group">
                 <label for="document_file">Documento:</label>
                 <t t-if="partner.document_file">
