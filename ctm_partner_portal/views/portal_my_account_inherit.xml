@@ -1,7 +1,7 @@
 <odoo>
     <template id="portal_my_account_inherit" inherit_id="portal.portal_my_details">
         <xpath expr="//div[contains(@class, 'row') and contains(@class, 'o_portal_details')]/div[contains(@class, 'col-lg-8')]/div[contains(@class, 'row')]" position="inside">
-            <div class="form-group">
+            <div class="form-group col-xl-6">
                 <label for="document_file">Documento:</label>
                 <t t-if="partner.document_file">
                     <a t-att-href="'/web/content/res.partner/' + str(partner.id) + '/document_file/' + (partner.document_filename or 'Documento')" target="_blank">
@@ -14,17 +14,16 @@
                 <!-- Input for uploading a new document -->
                 <form method="post" enctype="multipart/form-data" action="/my/account/upload_document">
                     <input type="file" name="document_file" class="form-control mb-2"/>
-                    <input type="text" name="document_filename" class="form-control mb-2" placeholder="Nombre del Documento"/>
                     <button type="submit" class="btn btn-primary btn-sm">Subir Documento</button>
                 </form>
             </div>
             <div class="form-group col-xl-6">
                 <label for="ingresos_mensuales">Ingresos Mensuales:</label>
-                <span t-esc="partner.ingresos_mensuales"/>
+                <input type="number" step="0.01" name="ingresos_mensuales" t-attf-class="form-control #{error.get('ingresos_mensuales') and 'is-invalid' or ''}" t-att-value="ingresos_mensuales or partner.ingresos_mensuales"/>
             </div>
             <div class="form-group col-xl-6">
                 <label class="col-form-label" for="gastos_mensuales">Gastos Mensuales:</label>
-                <input type="text" name="gastos_mensuales" t-attf-class="form-control #{error.get('gastos_mensuales') and 'is-invalid' or ''}" t-att-value="gastos_mensuales or partner.gastos_mensuales"/>
+                <input type="number" step="0.01" name="gastos_mensuales" t-attf-class="form-control #{error.get('gastos_mensuales') and 'is-invalid' or ''}" t-att-value="gastos_mensuales or partner.gastos_mensuales"/>
             </div>
         </xpath>
     </template>
