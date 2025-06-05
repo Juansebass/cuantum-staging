@@ -11,14 +11,20 @@
                 <t t-else="">
                     <span>No hay documento subido.</span>
                 </t>
+                <!-- Input for uploading a new document -->
+                <form method="post" enctype="multipart/form-data" action="/my/account/upload_document">
+                    <input type="file" name="document_file" class="form-control mb-2"/>
+                    <input type="text" name="document_filename" class="form-control mb-2" placeholder="Nombre del Documento"/>
+                    <button type="submit" class="btn btn-primary btn-sm">Subir Documento</button>
+                </form>
             </div>
-            <div class="form-group">
+            <div class="form-group col-xl-6">
                 <label for="ingresos_mensuales">Ingresos Mensuales:</label>
                 <span t-esc="partner.ingresos_mensuales"/>
             </div>
-            <div class="form-group">
-                <label for="gastos_mensuales">Gastos Mensuales:</label>
-                <span t-esc="partner.gastos_mensuales"/>
+            <div class="form-group col-xl-6">
+                <label class="col-form-label" for="gastos_mensuales">Gastos Mensuales:</label>
+                <input type="text" name="gastos_mensuales" t-attf-class="form-control #{error.get('gastos_mensuales') and 'is-invalid' or ''}" t-att-value="gastos_mensuales or partner.gastos_mensuales"/>
             </div>
         </xpath>
     </template>
