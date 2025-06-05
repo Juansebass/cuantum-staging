@@ -19,11 +19,11 @@
             </div>
             <div class="form-group col-xl-6">
                 <label for="ingresos_mensuales">Ingresos Mensuales:</label>
-                <input type="number" step="0.01" name="ingresos_mensuales" t-attf-class="form-control #{error.get('ingresos_mensuales') and 'is-invalid' or ''}" t-att-value="ingresos_mensuales or partner.ingresos_mensuales"/>
+                <input type="number" step="0.01" name="ingresos_mensuales" t-att-value="ingresos_mensuales or partner.ingresos_mensuales"/>
             </div>
             <div class="form-group col-xl-6">
                 <label class="col-form-label" for="gastos_mensuales">Gastos Mensuales:</label>
-                <input type="number" step="0.01" name="gastos_mensuales" t-attf-class="form-control #{error.get('gastos_mensuales') and 'is-invalid' or ''}" t-att-value="gastos_mensuales or partner.gastos_mensuales"/>
+                <input type="number" step="0.01" name="gastos_mensuales" t-att-value="gastos_mensuales or partner.gastos_mensuales"/>
             </div>
         </xpath>
     </template>
