@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_partner_form_inherit_ctm_partner_portal" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.ctm.partner.portal</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <group name="contact" position="after">
+                <group string="Información Financiera">
+                    <field name="ingresos_mensuales"/>
+                    <field name="gastos_mensuales"/>
+                    <field name="document_file"/>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

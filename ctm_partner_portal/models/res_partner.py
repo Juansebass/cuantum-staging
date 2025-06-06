@@ -7,4 +7,3 @@ class ResPartner(models.Model):
     ingresos_mensuales = fields.Float("Ingresos Mensuales")
     gastos_mensuales = fields.Float("Gastos mensuales")
     document_file = fields.Binary("Documento")
-    document_filename = fields.Char("Nombre del Documento")

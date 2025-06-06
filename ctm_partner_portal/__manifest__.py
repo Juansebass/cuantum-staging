@@ -12,6 +12,7 @@
     ],
     'data': [
         'views/portal_my_account_inherit.xml',
+        'views/res_partner_form_inherit.xml',
     ],
     'installable': True,
     'application': False,
