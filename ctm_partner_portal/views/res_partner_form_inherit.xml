@@ -4,13 +4,13 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <group name="category_id" position="after">
+            <field name="category_id" position="after">
                 <group string="Información Financiera">
                     <field name="ingresos_mensuales"/>
                     <field name="gastos_mensuales"/>
                     <field name="document_file"/>
                 </group>
-            </group>
+            </field>
         </field>
     </record>
 </odoo>
