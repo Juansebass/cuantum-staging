@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 
-from odoo import models, fields  # type: ignore
+from odoo import models, fields, api
 import logging
 
 logger = logging.getLogger(__name__)
-
 
 class TituloOferta(models.Model):
     _name = 'ati.titulo.oferta'

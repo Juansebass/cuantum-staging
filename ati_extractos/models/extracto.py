@@ -168,36 +168,15 @@ class Extracto(models.Model):
         Retorna el valor actual del rpr sumando y restando el histórico dle modulo contactos
         """
         valor_actual = 0
-        ultimo_dia = calendar.monthrange(int(self.year), int(self.month))[1]
-        fecha_actual = datetime(int(self.year), int(self.month), ultimo_dia).date()
-
         if gestor == 'CSF':
-            _temp_recursos = self.cliente.recursos_recompra_csf_ids.filtered(
-                lambda x: x.date <= fecha_actual
-            )
-            for recurso in _temp_recursos:
-                if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
-                    valor_actual += recurso.value
-                else:
-                    valor_actual -= recurso.value
+            _temp_recursos = self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year)).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
+            valor_actual = _temp_recursos[-1].saldo if _temp_recursos else 0
         elif gestor == 'FCL':
-            _temp_recursos = self.cliente.recursos_recompra_fcl_ids.filtered(
-                lambda x: x.date <= fecha_actual
-            )
-            for recurso in _temp_recursos:
-                if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
-                    valor_actual += recurso.value
-                else:
-                    valor_actual -= recurso.value
+            _temp_recursos = self.cliente.recursos_recompra_fcl_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year)).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
+            valor_actual = _temp_recursos[-1].saldo if _temp_recursos else 0
         elif gestor == 'FCP':
-            _temp_recursos = self.cliente.recursos_recompra_fcp_ids.filtered(
-                lambda x: x.date <= fecha_actual and x.investment_type.code == 'SEN'
-            )
-            for recurso in _temp_recursos:
-                if recurso.movement_type.name in ['Adición', 'Aplicación de recaudo', 'Rendimiento']:
-                    valor_actual += recurso.value
-                else:
-                    valor_actual -= recurso.value
+            _temp_recursos = self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year)).sorted(key=lambda x: (x.date, x.movement_type.code), reverse=False)
+            valor_actual = _temp_recursos[-1].saldo if _temp_recursos else 0
         return valor_actual
 
     def _generar_resumen_inversion(self):
@@ -272,7 +251,7 @@ class Extracto(models.Model):
         _administracion_rpr_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
                 self.year) and x.movement_type.code == 'ADMINISTRACION'))
-        _rendimient_rpr_csf = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
+        _rendimient_rpr_csf = sum(ldm['calculo_rendimiento'] for ldm in self.cliente.recursos_recompra_csf_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year)))
         _inversiones.append((0,0,{
                         'detalle': 'RPR CSF',
                         'valor_actual' : self._valor_actual_rpr('CSF'),
@@ -417,7 +396,6 @@ class Extracto(models.Model):
             _inversiones[n][2].update({'tasa_rendimiento' : round((_inversiones[n][2]['tasa_rendimiento'] / _inversiones[n][2]['cant_movimientos']), 2) if _inversiones[n][2]['cant_movimientos'] != 0 else 0})
         #Agregamos total de Recursos en proceso de recompra
         _rendimient_rpr_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO'))
-        _rendimient_rpr_fcp = sum(ldm['value'] for ldm in self.cliente.recursos_recompra_fcp_ids.filtered(lambda x: x.date.month == int(self.month) and x.date.year == int(self.year) and x.movement_type.code == 'RENDIMIENTO' and x.investment_type.code == 'SEN'))
         _inversiones.append((0,0,{
                         'detalle': 'RPR STATUM',
                         'valor_actual' : self._valor_actual_rpr('FCP'),
