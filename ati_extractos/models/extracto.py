@@ -180,6 +180,8 @@ class Extracto(models.Model):
         return valor_actual
 
     def _generar_resumen_inversion(self):
+        # TODO : SO
+
         #Seteamos fecha de inicio y fin para comparaciones de busquedas segun el periodo seleccionado del extracto
         fecha_inicio = datetime.strptime('01/' + str(self.month) +'/'+ str(self.year), '%d/%m/%Y')
         fecha_fin = datetime.strptime( str(calendar.monthrange(int(self.year), int(self.month))[1])+ '/' + str(self.month) +'/'+ str(self.year), '%d/%m/%Y')
@@ -468,6 +470,7 @@ class Extracto(models.Model):
         self.resumen_inversion_ids[-1].tasa_rendimiento += total_ponderacion
 
     def _generar_resumen_movimientos(self):
+        #  TODO: FUNCIONALIDAD INICIALMENTE INNECESARIA, SE DEJA POR SI SE REQUIERE EN EL FUTURO 
         ###Asignando recursos recompra
         _temp_recursos_csf = self.cliente.recursos_recompra_csf_ids.filtered(
             lambda x: x.date.month == int(self.month) and x.date.year == int(
@@ -877,6 +880,7 @@ class Extracto(models.Model):
                     })
         
         #si el titulo esta en esado pagado con valor pagado cero no lo incluimos
+        # TODO: VERIFICAR  LOGICA ELIMINAR
         for titulo in self.detalle_titulos_ids:
             if titulo.state_titulo.code == 'PAG' and titulo.paid_value == 0:
                 titulo.unlink()

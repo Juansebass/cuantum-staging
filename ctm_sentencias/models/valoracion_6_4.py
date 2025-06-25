@@ -9,6 +9,7 @@ import calendar
 import scipy.optimize as opt  # type: ignore
 import xlsxwriter  # type: ignore
 import io
+import numpy_financial as npf
 
 
 class Valoracion64(models.Model):
@@ -19,7 +20,7 @@ class Valoracion64(models.Model):
     name = fields.Char('Nombre')
     sentencia = fields.Many2one('ctm.sentencias', 'Sentencia', required=1)
     emisor = fields.Many2one('res.partner', 'Emisor')
-    pagador = fields.Many2one('res.partner', 'Pagador')
+    pagador = fields.Many2one('ctm.pagador', 'Pagador')
     codigo = fields.Char('Código')
     fecha_ejecutoria = fields.Date('Fecha de Ejecutoría')
     fecha_cuenta_cobro = fields.Date('Fecha de Cuenta de Cobro')
@@ -289,57 +290,144 @@ class Valoracion64(models.Model):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
 
-        headers = [
-            'Fecha', 'NIT FCP STATUM', 'Descripción', 'Demandante', 'Vendedor', 'ID Especie',
-            'Nemotecnico', 'Fecha Cuenta Cobro', 'Fecha Emisión', 'Fecha Vencimiento',
-            'NIT Emisor', 'Nombre Emisor', 'Fecha Compra', 'Nominal', 'Valor Giro',
-            'Comisión', 'Valor Contable Actual', 'Valor Contable Ayer', 'Precio'
-        ]
-
-        for col_num, header in enumerate(headers):
-            worksheet.write(0, col_num, header)
-
+        # Crear formato de título
+        title_format = workbook.add_format({
+            'bold': True,
+            'align': 'center',
+            'valign': 'vcenter',
+            'font_size': 14
+        })
+        # Formato bastardilla (cursiva)
+        italic_format = workbook.add_format({'italic': True})
+        worksheet.merge_range(0, 0, 0, 11, 'RELACIÓN DOCUMENTOS A DESCONTAR', title_format)
         row = 1
+        worksheet.write(row, 6, 'Valor Futuro', italic_format)
+        worksheet.write(row, 10, 'Valor de compra', italic_format)
+
+        row += 1
+        worksheet.write(row, 0, 'Fecha Opeación', italic_format)
+        worksheet.write(row, 3, fechas[0].strftime('%Y-%m-%d'))
+
+        row += 2
+        worksheet.merge_range(row, 4, row, 5, 'Información pagador')
+        worksheet.merge_range(row, 6, row, 9, 'Información operación')
+
+        headers = [
+            'Tipo Doc.', 'Nro. Doc.', 'Nit. Pagaduria - (GF Emisor)',
+            'Pagaduria - EMISOR', 'Nit. Pagador', 'NOMBRES - APELLIDOS',
+            'Vr. Futuro', 'Fecha vcmto Operación', 'Tasa Dcto e.a.', 'Plazo',
+            'Valor Compra', 'Código CIIU Emisor'
+        ]
+        row += 1
+        for col_num, header in enumerate(headers):
+            worksheet.write(row, col_num, header)
+        row += 1
+
+        vr_futuro_sum = 0
+        valor_compra_sum = 0
+        formula_va_sum = 0
         for rec in self:
-            fecha = rec.fecha_liquidar.strftime('%Y%m%d')
-            nit_fcp_statum = rec.nit_fcp_statum
-            descripcion = rec.vehiculo.name
-            if descripcion == 'CSF':
-                raise ValidationError('Alguna de las sentencias es de Cuantum, por lo que no se genera precio')
-            demandante = rec.emisor.name
-            vendedor = rec.vendedor
-            id_especie = rec.sentencia.name
-            nemotecnico = rec.nemotecnico
-            fecha_cuenta_cobro = rec.fecha_cuenta_cobro.strftime('%Y%m%d')
-            fecha_emision = rec.fecha_ejecutoria.strftime('%Y%m%d')
-            fecha_vencimiento = rec.fecha_vencimiento.strftime('%Y%m%d') if rec.fecha_vencimiento else ''
-            nit_emisor = rec.pagador.vat
-            nombre_emisor = rec.pagador.name
-            fecha_compra = rec.fecha_compra.strftime('%Y%m%d') if rec.fecha_compra else ''
-            nominal = round(rec.valor_condena, 2)
-            valor_giro = round(rec.valor_giro, 2) if rec.valor_giro else 0
-            comision = round(rec.comision, 2) if rec.comision else 0
-            valor_contable_actual = round(rec.valor_actual_6_4, 2)
-            valor_contable_ayer = round(rec.valor_contable_ayer, 2) if rec.valor_contable_ayer else 0
-            precio = round(rec.precio, 7)
+            tipo_doc = 'SENTENCIAS'
+            nro_doc = rec.sentencia.name
+            nit_pagaduria_emisor = rec.pagador.name.vat
+            pagaduria_emisor = rec.pagador.name.name
+            nit_pagador = rec.emisor.vat
+            nombres_apellidos = rec.emisor.name
+            vr_futuro = rec.resultado
+            fecha_vcmto_operacion = rec.fecha_vencimiento.strftime('%Y-%m-%d') if rec.fecha_vencimiento else ''
+            tasa_dcto_ea = rec.tir_compra_6_4
+            plazo = (rec.fecha_vencimiento - rec.fecha_liquidar).days if rec.fecha_vencimiento and rec.fecha_liquidar else 0
+            valor_compra = rec.valor_giro
+            codigo_ciiu_emisor = '000'
+            formula_va = npf.pv(
+                rec.tir_compra_6_4 / 100, plazo / 365, 0, -vr_futuro
+            )
+            diferencia_formula_va = valor_compra - formula_va
 
-            data = [
-                fecha, nit_fcp_statum, descripcion, demandante, vendedor, id_especie,
-                nemotecnico, fecha_cuenta_cobro, fecha_emision, fecha_vencimiento,
-                nit_emisor, nombre_emisor, fecha_compra, nominal, valor_giro,
-                comision, valor_contable_actual, valor_contable_ayer, precio
-            ]
+            vr_futuro_sum += vr_futuro
+            valor_compra_sum += valor_compra
+            formula_va_sum += formula_va
+            worksheet.write(row, 0, tipo_doc)
+            worksheet.write(row, 1, nro_doc)
+            worksheet.write(row, 2, nit_pagaduria_emisor)
+            worksheet.write(row, 3, pagaduria_emisor)
+            worksheet.write(row, 4, nit_pagador)
+            worksheet.write(row, 5, nombres_apellidos)
+            worksheet.write(row, 6, vr_futuro)
+            worksheet.write(row, 7, fecha_vcmto_operacion)
+            worksheet.write(row, 8, tasa_dcto_ea)
+            worksheet.write(row, 9, plazo)
+            worksheet.write(row, 10, valor_compra)
+            worksheet.write(row, 11, codigo_ciiu_emisor)
+            worksheet.write(row, 12, formula_va)
+            worksheet.write(row, 13, diferencia_formula_va)
+            row += 1
 
-            for col_num, cell_data in enumerate(data):
-                worksheet.write(row, col_num, cell_data)
+        row = 2
+        worksheet.write(row, 6, vr_futuro_sum)
+        worksheet.write(row, 10, valor_compra_sum)
+        worksheet.write(row, 12, formula_va_sum)
+
+        workbook.close()
+        output.seek(0)
+        archivo_excel = base64.b64encode(output.read())
+        attachment = self.env['ir.attachment'].create({
+            'name': 'relacion_documentos_a_descontar.xlsx',
+            'type': 'binary',
+            'datas': archivo_excel,
+            'res_model': 'ctm.valoracion_6_4',
+            'res_id': self[0].id,
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'new',
+        }
+
+    def create_excel_valoracion(self):
+        fechas = self.mapped('fecha_liquidar')
+
+        if len(set(fechas)) > 1:
+            raise ValidationError('Todos los registros deben tener la misma fecha a liquidar')
+
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+
+        row = 0
+        headers = [
+            'ID Portafolio', 'Fecha Reporte YYYY-MM-DD', 'Id Emisor',
+            'No titulo', 'Valoración día', 'Valor Mora',
+            'Valor deterioro'
+        ]
+        for col_num, header in enumerate(headers):
+            worksheet.write(row, col_num, header)
+
+        row += 1
+
+        for rec in self:
+            id_portafolio = '10246'
+            fecha_reporte = rec.fecha_liquidar.strftime('%Y%m%d')
+            id_emisor = rec.pagador.name.vat
+            no_titulo = rec.sentencia.name
+            valoracion_dia = rec.valor_actual_6_4
+            valor_mora = 0
+            valor_deterioro = 0
+            worksheet.write(row, 0, id_portafolio)
+            worksheet.write(row, 1, fecha_reporte)
+            worksheet.write(row, 2, id_emisor)
+            worksheet.write(row, 3, no_titulo)
+            worksheet.write(row, 4, valoracion_dia)
+            worksheet.write(row, 5, valor_mora)
+            worksheet.write(row, 6, valor_deterioro)
             row += 1
 
         workbook.close()
         output.seek(0)
         archivo_excel = base64.b64encode(output.read())
-
         attachment = self.env['ir.attachment'].create({
-            'name': f"{fecha}.xlsx",
+            'name': 'valoracion_archivo.xlsx',
             'type': 'binary',
             'datas': archivo_excel,
             'res_model': 'ctm.valoracion_6_4',

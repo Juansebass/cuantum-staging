@@ -91,7 +91,7 @@
         </field>
     </record>
 
-    <record id="create_valoracion_6_4_txt_action" model="ir.actions.server">
+    <!-- <record id="create_valoracion_6_4_txt_action" model="ir.actions.server">
         <field name="name">Crear TXT</field>
         <field name="state">code</field>
         <field name="type">ir.actions.server</field>
@@ -102,10 +102,10 @@
             if records:
                 action = records.create_txt()
         </field>
-    </record>
+    </record> -->
 
     <record id="create_valoracion_6_4_excel_action" model="ir.actions.server">
-        <field name="name">Crear Excel</field>
+        <field name="name">Crear Excel Compra</field>
         <field name="state">code</field>
         <field name="type">ir.actions.server</field>
         <field name="model_id" ref="model_ctm_valoracion_6_4"/>
@@ -114,6 +114,19 @@
         <field name="code">
             if records:
                 action = records.create_excel()
+        </field>
+    </record>
+
+    <record id="create_valoracion_6_4_excel_valoracion_action" model="ir.actions.server">
+        <field name="name">Crear Excel Valoración</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_ctm_valoracion_6_4"/>
+        <field name="binding_model_id" ref="model_ctm_valoracion_6_4" />
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            if records:
+                action = records.create_excel_valoracion()
         </field>
     </record>
 

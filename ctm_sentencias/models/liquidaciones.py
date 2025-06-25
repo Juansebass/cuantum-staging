@@ -68,6 +68,11 @@ class Liquidaciones(models.Model):
 
         self.resultado += self.sentencia.costas
         self.precio = (self.resultado / self.valor_condena) * 100
+        if 'BPAC' in self.vehiculo.name:
+            if self.fecha_compra == self.fecha_liquidar:
+                self.precio = self.valor_giro / self.valor_condena
+            else:
+                self.precio = self.resultado / self.valor_condena
         fecha_anterior = self.fecha_liquidar - timedelta(days=1)
         simulacion_anterior = self.simulacion_ids.filtered(lambda x: x.fecha_liquidar == fecha_anterior)
         if len(self.simulacion_ids) == 0:
@@ -130,8 +135,26 @@ class Liquidaciones(models.Model):
                 fecha_periodo_diez = self.fecha_liquidar
             fechas_base.append(fecha_periodo_diez)
 
-        fechas_periodos = self.generate_last_days(self.fecha_ejecutoria, self.fecha_liquidar)
+        fechas_periodos = []
+        if self.codigo == "CPACA":
+            fechas_periodos = self.generate_last_days(
+                fecha_periodo_diez, self.fecha_liquidar
+            )
+            fechas_tasas = self.env['ctm.tasas'].search(
+                [
+                    ('fecha_final', '>=', self.fecha_ejecutoria),
+                    ('fecha_final', '<=', fecha_periodo_diez)
+                ]
+            ).mapped('fecha_final')
+        else:
+            fechas_periodos = self.generate_last_days(
+                self.fecha_ejecutoria, self.fecha_liquidar
+            )
+
         fechas_periodos += fechas_base
+        if self.codigo == "CPACA":
+            fechas_periodos += fechas_tasas
+
         unique_fechas_periodos = sorted(list(set(fechas_periodos)))
         if unique_fechas_periodos[-1].month == unique_fechas_periodos[-2].month:
             unique_fechas_periodos.pop(-1)
@@ -441,7 +464,7 @@ class Liquidaciones(models.Model):
             emision = rec.fecha_compra.strftime('%d/%m/%Y') if rec.fecha_compra else ''
             fecha_vencimiento = rec.fecha_vencimiento.strftime('%d/%m/%Y') if rec.fecha_vencimiento else ''
             tasa = 0.000000
-            periodicidad = "NO"
+            periodicidad = "PV"
             precio = round(rec.precio, 6)
             metodo_valoracion_351 = 13
             portafolio = "FCPBPACSI"
