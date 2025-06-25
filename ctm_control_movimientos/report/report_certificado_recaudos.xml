@@ -50,42 +50,38 @@
                             <tr>
                                 <th style="border: 0.5px solid; vertical-align: middle;">Emisor</th>
                                 <th style="border: 0.5px solid; vertical-align: middle;">Pagador</th>
-                                <th style="border: 0.5px solid; width:8%; vertical-align: middle;"># Título</th>
                                 <th style="border: 0.5px solid; width:11%; vertical-align: middle;">Rendimientos</th>
                                 <th style="border: 0.5px solid; width:11%; vertical-align: middle;">Capital</th>
                                 <th style="border: 0.5px solid; width:23%; vertical-align: middle;">Total de Aplicación de Recaudo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr t-foreach="docs" t-as="doc">
-                                <td style="border: 0.5px solid;">
-                                    <t t-if="doc.tipo == 'compra'">
-                                        <t t-esc="doc.compra_id.emisor_id.name"/>
-                                    </t>
-                                    <t t-if="doc.tipo == 'aplicación'">
-                                        <t t-esc="doc.aplicacion_id.emisor_id.name"/>
-                                    </t>
-                                </td>
-                                <td style="border: 0.5px solid;">
-                                    <t t-if="doc.tipo == 'compra'">
-                                        <t t-esc="doc.compra_id.pagador_id.name"/>
-                                    </t>
-                                    <t t-if="doc.tipo == 'aplicación'">
-                                        <t t-esc="doc.aplicacion_id.pagador_id.name"/>
-                                    </t>
-                                </td>
-                                <td style="border: 0.5px solid;">
-                                    <t t-if="doc.tipo == 'compra'">
-                                        <t t-esc="doc.compra_id.titulo_id"/>
-                                    </t>
-                                    <t t-if="doc.tipo == 'aplicación'">
-                                        <t t-esc="doc.aplicacion_id.titulo_id"/>
-                                    </t>
-                                </td>
-                                <td style="border: 0.5px solid;" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-field="doc.pago_rendimientos"/></td>
-                                <td style="border: 0.5px solid;" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-field="doc.pago_capital"/></td>
-                                <td style="border: 0.5px solid;" class="text-right"><span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="doc.pago_rendimientos + doc.pago_capital"/></td>
-                            </tr>
+                        <!-- Agrupación por emisor y pagador -->
+                        <t t-set="agrupados" t-value="{}"/>
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-if="doc.tipo == 'aplicación'">
+                                <t t-set="key" t-value="(doc.aplicacion_id.emisor_id.id, doc.aplicacion_id.pagador_id.id)"/>
+                                <t t-if="key not in agrupados">
+                                    <t t-set="agrupados[key]" t-value="{'emisor': doc.aplicacion_id.emisor_id.name, 'pagador': doc.aplicacion_id.pagador_id.name, 'rendimientos': 0, 'capital': 0, 'total': 0}"/>
+                                </t>
+                                <t t-set="agrupados[key]['rendimientos']" t-value="agrupados[key]['rendimientos'] + doc.pago_rendimientos"/>
+                                <t t-set="agrupados[key]['capital']" t-value="agrupados[key]['capital'] + doc.pago_capital"/>
+                                <t t-set="agrupados[key]['total']" t-value="agrupados[key]['total'] + doc.pago_rendimientos + doc.pago_capital"/>
+                            </t>
+                        </t>
+                        <tr t-foreach="agrupados.values()" t-as="grupo">
+                            <td style="border: 0.5px solid;"><t t-esc="grupo['emisor']"/></td>
+                            <td style="border: 0.5px solid;"><t t-esc="grupo['pagador']"/></td>
+                            <td style="border: 0.5px solid;" class="text-right">
+                                <span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="grupo['rendimientos']"/>
+                            </td>
+                            <td style="border: 0.5px solid;" class="text-right">
+                                <span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="grupo['capital']"/>
+                            </td>
+                            <td style="border: 0.5px solid;" class="text-right">
+                                <span t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}" t-esc="grupo['total']"/>
+                            </td>
+                        </tr>
                             <tr>
                                 <td style="border: 0.5px solid;"></td>
                                 <td style="border: 0.5px solid;"></td>
