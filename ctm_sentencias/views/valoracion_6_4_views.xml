@@ -91,7 +91,7 @@
         </field>
     </record>
 
-    <!-- <record id="create_valoracion_6_4_txt_action" model="ir.actions.server">
+    <record id="create_valoracion_6_4_txt_action" model="ir.actions.server">
         <field name="name">Crear TXT</field>
         <field name="state">code</field>
         <field name="type">ir.actions.server</field>
@@ -102,7 +102,7 @@
             if records:
                 action = records.create_txt()
         </field>
-    </record> -->
+    </record>
 
     <record id="create_valoracion_6_4_excel_action" model="ir.actions.server">
         <field name="name">Crear Excel Compra</field>
